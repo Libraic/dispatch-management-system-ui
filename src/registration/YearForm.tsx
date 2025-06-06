@@ -2,12 +2,15 @@ import { MONTHS } from "../utils/global-constants.ts";
 import { useEffect, useState } from "react";
 import { getAvailableYears } from "../utils/util-functions.ts";
 import { SelectForm } from "./SelectForm.tsx";
+import * as React from "react";
 
-export const BirthDateForm = () => {
+export const YearForm: React.FC<{ endingYear: number }> = ({
+  endingYear,
+}) => {
   const [month, setMonth] = useState(1);
   const [days, setDays] = useState<number[]>([]);
   const [day, setDay] = useState(1);
-  const [year, setYear] = useState(2007);
+  const [year, setYear] = useState(endingYear);
 
   useEffect(() => {
     const daysInMonth = new Date(year, month, 0).getDate();
@@ -23,7 +26,7 @@ export const BirthDateForm = () => {
       <SelectForm
         label="Month"
         formWidth="w-[5rem]"
-        data={getAvailableYears(2007)}
+        data={getAvailableYears(endingYear)}
         setElement={setYear}
       />
       <SelectForm
