@@ -16,7 +16,8 @@ export const BasicInformation: React.FC<{
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
   const [isBirthDataExpanded, setIsBirthDataExpanded] = React.useState(true);
-  const [isEmploymentDataExpanded, setIsEmploymentDataExpanded] = React.useState(true);
+  const [isEmploymentDataExpanded, setIsEmploymentDataExpanded] =
+    React.useState(true);
   return (
     <>
       <RegistrationSectionHeader

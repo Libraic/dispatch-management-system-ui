@@ -15,3 +15,10 @@ export type RegistrationDataError = {
   confirmPasswordError: string;
   personalEmailError: string;
 };
+
+export type SelectFormData<T> = {
+  label: string;
+  formWidth: string;
+  data: T[];
+  setElement: (value: T) => void;
+};

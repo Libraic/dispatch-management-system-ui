@@ -1,7 +1,7 @@
 import { MONTHS } from "../utils/global-constants.ts";
 import { useEffect, useState } from "react";
 import { getAvailableYears } from "../utils/util-functions.ts";
-import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
+import { SelectForm } from "./SelectForm.tsx";
 
 export const BirthDateForm = () => {
   const [month, setMonth] = useState(1);
@@ -20,42 +20,24 @@ export const BirthDateForm = () => {
 
   return (
     <div className="flex flex-row gap-x-10 mb-5">
-      <div>
-        <p className={inputFormLabelStyle}>Year</p>
-        <select
-          className={`${inputFormStyle} w-[5rem]`}
-          onChange={(e) => setYear(parseInt(e.target.value))}
-        >
-          {getAvailableYears(2007).map((year, index) => (
-            <option key={index} value={index + 1}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <p className={inputFormLabelStyle}>Month</p>
-        <select
-          className={`${inputFormStyle} w-[5rem]`}
-          onChange={(e) => setMonth(parseInt(e.target.value))}
-        >
-          {MONTHS.map((name, index) => (
-            <option key={index} value={index + 1}>
-              {name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <p className={inputFormLabelStyle}>Day</p>
-        <select className={`${inputFormStyle} w-[3rem]`}>
-          {days.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
-      </div>
+      <SelectForm
+        label="Month"
+        formWidth="w-[5rem]"
+        data={getAvailableYears(2007)}
+        setElement={setYear}
+      />
+      <SelectForm
+        label="Month"
+        formWidth="w-[5rem]"
+        data={MONTHS}
+        setElement={setMonth}
+      />
+      <SelectForm
+        label="Day"
+        formWidth="w-[5rem]"
+        data={days}
+        setElement={setDay}
+      />
     </div>
   );
 };
