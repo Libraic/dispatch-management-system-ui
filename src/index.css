@@ -1,1 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+@theme {
+    --font-inter-300: "Inter", sans-serif;
+    --font-inter-300--font-variation-settings: "wght" 300;
+    --font-inter-400: "Inter", sans-serif;
+    --font-inter-400--font-variation-settings: "wght" 400;
+    --font-inter-500: "Inter", sans-serif;
+    --font-inter-500--font-variation-settings: "wght" 500;
+    --font-inter-600: "Inter", sans-serif;
+    --font-inter-600--font-variation-settings: "wght" 600;
+
+    --font-roboto-200: "Roboto", sans-serif;
+    --font-roboto-200--font-variation-settings: "wght" 200;
+    --font-roboto-400: "Roboto", sans-serif;
+    --font-roboto-400--font-variation-settings: "wght" 400;
+    --font-roboto-500: "Roboto", sans-serif;
+    --font-roboto-500--font-variation-settings: "wght" 500;
+
+    --color-solid-blue: #3A59D1;
+    --color-light-blue: #4E71FF;
+    --color-error-red: #BF3131;
+
+    --animate-rotate: rotate 1s ease-in-out infinite;
+    @keyframes rotate {
+        0%,
+        100% {
+            transform: rotate(90deg);
+        }
+    }
+}
+
+input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #000 !important;
+    font-family: inherit !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+}
