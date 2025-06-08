@@ -1,10 +1,10 @@
 import { SectionDivision } from "../SectionDivision.tsx";
 import { DateForm } from "../../../global/DateForm.tsx";
 import * as React from "react";
-import { useEffect } from "react";
 import type { RegistrationData } from "../../../types/authentication.ts";
 import { useDateObject } from "../../../hooks/useDateObject.ts";
 import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../utils/global-constants.ts";
+import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
 
 export const BirthData: React.FC<{
   registrationData: RegistrationData;
@@ -16,16 +16,7 @@ export const BirthData: React.FC<{
     registrationData.birthDate.month,
     registrationData.birthDate.year,
   );
-  useEffect(() => {
-    setRegistrationData((prev) => ({
-      ...prev,
-      birthDate: {
-        day: dateObject.day,
-        month: dateObject.month,
-        year: dateObject.year,
-      },
-    }));
-  }, [dateObject.day, dateObject.month, dateObject.year, setRegistrationData]);
+  usePrepopulateDate(setRegistrationData, dateObject, "birthDate");
 
   return (
     <>
