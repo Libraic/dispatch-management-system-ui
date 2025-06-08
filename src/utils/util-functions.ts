@@ -5,4 +5,4 @@ export const getAvailableYears = (lastYear: number): number[] => {
   }
 
   return availableYears;
-}
+};

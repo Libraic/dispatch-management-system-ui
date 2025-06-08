@@ -1,21 +1,23 @@
 import { RegistrationSection } from "./RegistrationSection.tsx";
 import { BasicInformation } from "./BasicInformation.tsx";
-import type {
-  RegistrationData,
-  RegistrationDataError,
+import {
+  type RegistrationData,
+  type RegistrationDataError,
+  SectionEnum,
 } from "../types/authentication.ts";
-import { BLANK_STRING } from "../utils/global-constants.ts";
-import { useState } from "react";
+import { BLANK_STRING, DEFAULT_BIRTH_DATE } from "../utils/global-constants.ts";
 import * as React from "react";
+import { useState } from "react";
 import { validateEmail, validatePassword } from "../utils/validation-utils.ts";
 import mandatoryFieldIcon from "../assets/mandatory-field.svg";
 import { colorTransitionStyle } from "../utils/tailwind.ts";
 import { Workload } from "./Workload.tsx";
+import { EmploymentInformation } from "./EmploymentInformation.tsx";
 
 export const RegistrationForm = () => {
-  const [isBasicInformation, setIsBasicInformation] = useState<boolean>(true);
-  const [isWorkload, setIsWorkload] = useState<boolean>(false);
-  const [isNotes, setIsNotes] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<SectionEnum>(
+    SectionEnum.BASIC_INFORMATION,
+  );
 
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     firstName: BLANK_STRING,
@@ -24,6 +26,12 @@ export const RegistrationForm = () => {
     password: BLANK_STRING,
     confirmPassword: BLANK_STRING,
     personalEmail: BLANK_STRING,
+    birthDate: DEFAULT_BIRTH_DATE,
+    employmentDate: {
+      day: new Date().getDate(),
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+    },
   });
 
   const [registrationDataError, setRegistrationDataError] =
@@ -66,65 +74,65 @@ export const RegistrationForm = () => {
       false,
     );
     setRegistrationDataError(error);
-    if (!isBasicInformationDataError(error)) {
-      setIsBasicInformation(false);
-      setIsWorkload(true);
-    }
-  };
-
-  const isBasicInformationDataError = (error: RegistrationDataError) => {
-    return (
-      error.firstNameError !== BLANK_STRING ||
-      error.lastNameError !== BLANK_STRING ||
-      error.emailError !== BLANK_STRING ||
-      error.passwordError !== BLANK_STRING ||
-      error.confirmPasswordError !== BLANK_STRING ||
-      error.personalEmailError !== BLANK_STRING
-    );
   };
 
   return (
     <div className="flex w-screen h-screen">
-      <div className="flex flex-col items-center gap-4 w-1/5 bg-[#f2f4fa] p-6">
+      <div className="flex flex-col items-center gap-7 w-1/10 bg-[#f2f4fa] p-6">
         <RegistrationSection
           sectionTitle="Basic Information"
           activateSection={() => {
-            setIsBasicInformation(true);
-            setIsWorkload(false);
+            setActiveSection(SectionEnum.BASIC_INFORMATION);
+          }}
+        />
+        <RegistrationSection
+          sectionTitle="Employment Information"
+          activateSection={() => {
+            setActiveSection(SectionEnum.EMPLOYMENT_INFORMATION);
           }}
         />
         <RegistrationSection
           sectionTitle="Workload"
           activateSection={() => {
-            setIsBasicInformation(false);
-            setIsWorkload(true);
+            setActiveSection(SectionEnum.WORKLOAD);
           }}
         />
-        <RegistrationSection sectionTitle="Notes" />
+        <RegistrationSection
+          sectionTitle="Notes"
+          activateSection={() => {
+            setActiveSection(SectionEnum.NOTES);
+          }}
+        />
       </div>
       <div className="flex-1 gap-y-5 bg-[#F7F7F7] py-4 pb-3 px-7 overflow-auto">
-        {isBasicInformation && (
+        {activeSection === SectionEnum.BASIC_INFORMATION && (
           <BasicInformation
             registrationData={registrationData}
             registrationDataError={registrationDataError}
             setRegistrationData={setRegistrationData}
           />
         )}
-        {isWorkload && <Workload />}
+        {activeSection === SectionEnum.EMPLOYMENT_INFORMATION && (
+          <EmploymentInformation
+            registrationData={registrationData}
+            setRegistrationData={setRegistrationData}
+          />
+        )}
+        {activeSection === SectionEnum.WORKLOAD && <Workload />}
         <div className="flex flex-row gap-x-1 mt-10">
           <img className="w-2" src={mandatoryFieldIcon} alt="Mandatory" />
-          <p className="font-inter-300 text-[0.6rem]">
+          <p className="font-inter-300 text-[0.8rem]">
             The fields marked with asterisk are mandatory
           </p>
         </div>
         <div className="flex gap-x-2 mt-11">
           <button
-            className={`border border-s border-[#60B5FF] rounded-3xl text-black bg-color-[#F7F7F7] text-[0.8rem] py-[0.2rem] px-[0.4rem] hover:border-solid-blue hover:text-white hover:bg-solid-blue font-roboto-500 ${colorTransitionStyle}`}
+            className={`border border-s border-[#60B5FF] rounded-3xl text-black bg-color-[#F7F7F7] text-[1rem] py-[0.2rem] px-[0.4rem] hover:border-solid-blue hover:text-white hover:bg-solid-blue font-roboto-500 ${colorTransitionStyle}`}
           >
             Cancel
           </button>
           <button
-            className={`border-none rounded-3xl text-white bg-[#60B5FF] text-[0.8rem] py-[0.2rem] px-[0.4rem] hover:bg-solid-blue font-roboto-500 ${colorTransitionStyle}`}
+            className={`border-none rounded-3xl text-white bg-[#60B5FF] text-[1rem] py-[0.2rem] px-[0.4rem] hover:bg-solid-blue font-roboto-500 ${colorTransitionStyle}`}
             onClick={validateRegistrationData}
           >
             Continue

@@ -5,13 +5,12 @@ import type {
 import * as React from "react";
 import { RegistrationSectionHeader } from "./RegistrationSectionHeader.tsx";
 import { AccountData } from "./AccountData.tsx";
-import { EmploymentData } from "./EmploymentData.tsx";
 import { BirthData } from "./BirthData.tsx";
 
 export const BasicInformation: React.FC<{
   registrationData: RegistrationData;
   registrationDataError: RegistrationDataError;
-  setRegistrationData: (registrationData: RegistrationData) => void;
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
 }> = ({ registrationData, registrationDataError, setRegistrationData }) => {
   return (
     <>
@@ -24,8 +23,10 @@ export const BasicInformation: React.FC<{
         registrationDataError={registrationDataError}
         setRegistrationData={setRegistrationData}
       />
-      <BirthData />
-      <EmploymentData />
+      <BirthData
+        registrationData={registrationData}
+        setRegistrationData={setRegistrationData}
+      />
     </>
   );
 };

@@ -1,5 +1,4 @@
 import { RegistrationSectionHeader } from "./RegistrationSectionHeader.tsx";
-import * as React from "react";
 
 export const Workload = () => {
   return (

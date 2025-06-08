@@ -1,3 +1,6 @@
+import type { YearData } from "./global.ts";
+import type { ReactNode } from "react";
+
 export type RegistrationData = {
   firstName: string;
   lastName: string;
@@ -5,6 +8,8 @@ export type RegistrationData = {
   password: string;
   confirmPassword: string;
   personalEmail: string;
+  birthDate: YearData;
+  employmentDate: YearData;
 };
 
 export type RegistrationDataError = {
@@ -16,9 +21,19 @@ export type RegistrationDataError = {
   personalEmailError: string;
 };
 
-export type SelectFormData<T> = {
+export type SelectFormData<T extends ReactNode> = {
   label: string;
   formWidth: string;
+  initialValue: number;
   data: T[];
-  setElement: (value: T) => void;
+  setElement: (value: string) => void;
 };
+
+export const SectionEnum = {
+  BASIC_INFORMATION: "BASIC_INFORMATION",
+  EMPLOYMENT_INFORMATION: "EMPLOYMENT_INFORMATION",
+  WORKLOAD: "WORKLOAD",
+  NOTES: "NOTES",
+} as const;
+
+export type SectionEnum = keyof typeof SectionEnum;

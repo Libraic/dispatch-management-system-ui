@@ -9,7 +9,7 @@ import type {
 export const AccountData: React.FC<{
   registrationData: RegistrationData;
   registrationDataError: RegistrationDataError;
-  setRegistrationData: (registrationData: RegistrationData) => void;
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
 }> = ({ registrationData, registrationDataError, setRegistrationData }) => {
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
@@ -108,6 +108,7 @@ export const AccountData: React.FC<{
               type="email"
               name="email"
               inputFieldValue={registrationData.personalEmail}
+              isMandatory={false}
               errorText={registrationDataError.personalEmailError}
               saveData={(value: string) => {
                 setRegistrationData((prev) => ({

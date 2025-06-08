@@ -1,10 +1,11 @@
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
-import * as React from "react";
 import type { SelectFormData } from "../types/authentication.ts";
+import type { ReactNode } from "react";
 
-export const SelectForm = <T,>({
+export const SelectForm = <T extends ReactNode>({
   label,
   formWidth,
+  initialValue,
   data,
   setElement,
 }: SelectFormData<T>) => {
@@ -13,6 +14,7 @@ export const SelectForm = <T,>({
       <p className={inputFormLabelStyle}>{label}</p>
       <select
         className={`${inputFormStyle} ${formWidth}`}
+        value={initialValue}
         onChange={(e) => setElement(e.target.value)}
       >
         {data.map((name, index) => (

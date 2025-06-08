@@ -6,7 +6,7 @@ import { colorTransitionStyle } from "../utils/tailwind.ts";
 export const SectionDivision: React.FC<{
   division: string;
   isExpanded: boolean;
-  setIsExpanded: (b: boolean) => void;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ division, isExpanded, setIsExpanded }) => {
   const textColor = isExpanded ? "text-black" : "text-[#999999]";
   const activeIcon = isExpanded ? expandedIcon : contractedIcon;
@@ -22,7 +22,7 @@ export const SectionDivision: React.FC<{
           onClick={() => setIsExpanded((prev) => !prev)}
         />
         <p
-          className={`font-roboto-400 text-[0.7rem] ${textColor} ${colorTransitionStyle}`}
+          className={`font-roboto-400 text-[1rem] ${textColor} ${colorTransitionStyle}`}
         >
           {division}
         </p>
