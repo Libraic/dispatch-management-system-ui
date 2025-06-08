@@ -10,7 +10,7 @@ export const RegistrationSection: React.FC<{
       className="flex justify-between items-center hover:bg-[#e7e8ee] hover:cursor-pointer rounded-xl min-h-6 w-40 transition-colors ease-in duration-200 pl-2 pr-2"
       onClick={activateSection}
     >
-      <p className="text-[0.8rem] font-inter-300">{sectionTitle}</p>
+      <p className="text-standard-size font-inter-300">{sectionTitle}</p>
       <img
         className="w-2.75 h-2.75"
         src={incompleteSectionIcon}

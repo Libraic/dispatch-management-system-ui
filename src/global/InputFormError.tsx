@@ -7,7 +7,7 @@ export const InputFormError: React.FC<{ errorMessage: string }> = ({
   return (
     <div className="flex flex-row items-center gap-x-1 mt-2">
       <img className="w-[1rem]" src={errorIcon} alt="error-icon" />
-      <p className="font-roboto-400 text-error-red text-[0.65rem]">
+      <p className="font-roboto-400 text-error-red text-standard-size">
         {errorMessage}
       </p>
     </div>

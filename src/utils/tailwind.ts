@@ -3,7 +3,7 @@ export const inputFormStyle =
   "pt-0.5 " +
   "pb-0.5 " +
   "font-roboto-300 " +
-  "text-[0.8rem] " +
+  "text-standard-size " +
   "bg-white " +
   "rounded-sm " +
   "border-transparent " +
@@ -13,6 +13,6 @@ export const inputFormStyle =
   "transition-colors " +
   "ease-in duration-150";
 
-export const inputFormLabelStyle = "text-[0.8rem] " + "font-roboto-500";
+export const inputFormLabelStyle = "text-standard-size " + "font-roboto-500";
 
 export const colorTransitionStyle = "transition-all " + "ease-in duration-150";

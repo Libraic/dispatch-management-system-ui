@@ -1,7 +1,7 @@
-import { RegistrationSectionHeader } from "./RegistrationSectionHeader.tsx";
-import { EmploymentData } from "./EmploymentData.tsx";
+import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
+import { EmploymentDate } from "./EmploymentDate.tsx";
 import * as React from "react";
-import type { RegistrationData } from "../types/authentication.ts";
+import type { RegistrationData } from "../../../types/authentication.ts";
 
 export const EmploymentInformation: React.FC<{
   registrationData: RegistrationData;
@@ -13,7 +13,7 @@ export const EmploymentInformation: React.FC<{
         header="Employment Information"
         subheader="Data related to the employment"
       />
-      <EmploymentData
+      <EmploymentDate
         registrationData={registrationData}
         setRegistrationData={setRegistrationData}
       />

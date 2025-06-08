@@ -1,7 +1,7 @@
-import expandedIcon from "../assets/expanded.svg";
-import contractedIcon from "../assets/contracted.svg";
+import expandedIcon from "../../assets/expanded.svg";
+import contractedIcon from "../../assets/contracted.svg";
 import * as React from "react";
-import { colorTransitionStyle } from "../utils/tailwind.ts";
+import { colorTransitionStyle } from "../../utils/tailwind.ts";
 
 export const SectionDivision: React.FC<{
   division: string;

@@ -1,11 +1,11 @@
-import { SectionDivision } from "./SectionDivision.tsx";
-import { DateForm } from "./DateForm.tsx";
+import { SectionDivision } from "../SectionDivision.tsx";
+import { DateForm } from "../../../global/DateForm.tsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import type { RegistrationData } from "../types/authentication.ts";
-import { useDateObject } from "../hooks/useDateObject.ts";
+import type { RegistrationData } from "../../../types/authentication.ts";
+import { useDateObject } from "../../../hooks/useDateObject.ts";
 
-export const EmploymentData: React.FC<{
+export const EmploymentDate: React.FC<{
   registrationData: RegistrationData;
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
 }> = ({ registrationData, setRegistrationData }) => {

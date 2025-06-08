@@ -1,10 +1,10 @@
-import { SectionDivision } from "./SectionDivision.tsx";
-import { InputForm } from "./InputForm.tsx";
+import { SectionDivision } from "../SectionDivision.tsx";
+import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import type {
   RegistrationData,
   RegistrationDataError,
-} from "../types/authentication.ts";
+} from "../../../types/authentication.ts";
 
 export const AccountData: React.FC<{
   registrationData: RegistrationData;

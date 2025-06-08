@@ -22,6 +22,8 @@
     --color-light-blue: #4E71FF;
     --color-error-red: #BF3131;
 
+    --text-standard-size: 0.8rem;
+
     --animate-rotate: rotate 1s ease-in-out infinite;
     @keyframes rotate {
         0%,

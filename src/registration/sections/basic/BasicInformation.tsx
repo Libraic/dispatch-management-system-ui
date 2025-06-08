@@ -1,9 +1,9 @@
 import type {
   RegistrationData,
   RegistrationDataError,
-} from "../types/authentication.ts";
+} from "../../../types/authentication.ts";
 import * as React from "react";
-import { RegistrationSectionHeader } from "./RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
 import { AccountData } from "./AccountData.tsx";
 import { BirthData } from "./BirthData.tsx";
 

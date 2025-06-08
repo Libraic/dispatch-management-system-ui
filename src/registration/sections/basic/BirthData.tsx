@@ -1,10 +1,10 @@
-import { SectionDivision } from "./SectionDivision.tsx";
-import { DateForm } from "./DateForm.tsx";
+import { SectionDivision } from "../SectionDivision.tsx";
+import { DateForm } from "../../../global/DateForm.tsx";
 import * as React from "react";
 import { useEffect } from "react";
-import type { RegistrationData } from "../types/authentication.ts";
-import { useDateObject } from "../hooks/useDateObject.ts";
-import { LAST_ADMITTABLE_BIRTH_YEAR } from "../utils/global-constants.ts";
+import type { RegistrationData } from "../../../types/authentication.ts";
+import { useDateObject } from "../../../hooks/useDateObject.ts";
+import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../utils/global-constants.ts";
 
 export const BirthData: React.FC<{
   registrationData: RegistrationData;
