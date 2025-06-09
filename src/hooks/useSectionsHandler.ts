@@ -115,7 +115,7 @@ export const useSectionsHandler = (): SectionData => {
           updated.set(section as SectionEnum, false);
           return updated;
         });
-
+        setFocusedSection(section);
         const updated = new Map(prev);
         updated.set(section, true);
         return updated;
