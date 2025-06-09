@@ -1,35 +1,63 @@
 import { RegistrationSection } from "./RegistrationSection.tsx";
-import { SectionEnum } from "../types/authentication.ts";
+import { type SectionData, SectionEnum } from "../types/authentication.ts";
 import * as React from "react";
 
 export const RegistrationSectionsList: React.FC<{
-  setActiveSection: (value: SectionEnum) => void;
-}> = ({ setActiveSection }) => {
+  sectionsHandler: SectionData;
+}> = ({ sectionsHandler }) => {
   return (
     <div className="flex flex-col items-center gap-7 w-1/10 bg-[#f2f4fa] p-6">
       <RegistrationSection
         sectionTitle="Basic Information"
-        activateSection={() => {
-          setActiveSection(SectionEnum.BASIC_INFORMATION);
+        setFocusedSection={() => {
+          sectionsHandler.setFocusedSection(SectionEnum.BASIC_INFORMATION);
         }}
+        isSectionComplete={sectionsHandler.isSectionComplete(
+          SectionEnum.BASIC_INFORMATION,
+        )}
+        isSectionActive={sectionsHandler.isSectionActive(
+          SectionEnum.BASIC_INFORMATION,
+        )}
+        isSectionError={sectionsHandler.isSectionWithErrors(
+          SectionEnum.BASIC_INFORMATION,
+        )}
       />
       <RegistrationSection
         sectionTitle="Employment Information"
-        activateSection={() => {
-          setActiveSection(SectionEnum.EMPLOYMENT_INFORMATION);
+        setFocusedSection={() => {
+          sectionsHandler.setFocusedSection(SectionEnum.EMPLOYMENT_INFORMATION);
         }}
+        isSectionComplete={sectionsHandler.isSectionComplete(
+          SectionEnum.EMPLOYMENT_INFORMATION,
+        )}
+        isSectionActive={sectionsHandler.isSectionActive(
+          SectionEnum.EMPLOYMENT_INFORMATION,
+        )}
+        isSectionError={sectionsHandler.isSectionWithErrors(
+          SectionEnum.EMPLOYMENT_INFORMATION,
+        )}
       />
       <RegistrationSection
         sectionTitle="Workload"
-        activateSection={() => {
-          setActiveSection(SectionEnum.WORKLOAD);
+        setFocusedSection={() => {
+          sectionsHandler.setFocusedSection(SectionEnum.WORKLOAD);
         }}
+        isSectionComplete={sectionsHandler.isSectionComplete(
+          SectionEnum.WORKLOAD,
+        )}
+        isSectionActive={sectionsHandler.isSectionActive(SectionEnum.WORKLOAD)}
+        isSectionError={sectionsHandler.isSectionWithErrors(
+          SectionEnum.WORKLOAD,
+        )}
       />
       <RegistrationSection
         sectionTitle="Notes"
-        activateSection={() => {
-          setActiveSection(SectionEnum.NOTES);
+        setFocusedSection={() => {
+          sectionsHandler.setFocusedSection(SectionEnum.NOTES);
         }}
+        isSectionComplete={sectionsHandler.isSectionComplete(SectionEnum.NOTES)}
+        isSectionActive={sectionsHandler.isSectionActive(SectionEnum.NOTES)}
+        isSectionError={sectionsHandler.isSectionWithErrors(SectionEnum.NOTES)}
       />
     </div>
   );

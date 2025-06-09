@@ -13,15 +13,15 @@ import { SubmitButton } from "../button/SubmitButton.tsx";
 import * as React from "react";
 import { useState } from "react";
 import {
-  areNoErrors,
   getBlankRegistrationData,
   getBlankRegistrationDataError,
+  getGroupedErrors,
   getRegistrationDataErrors,
 } from "../utils/registration-utils.ts";
 
 export const RegistrationInputSection: React.FC<{
-  sectionIterator: SectionData;
-}> = ({ sectionIterator }) => {
+  sectionsHandler: SectionData;
+}> = ({ sectionsHandler }) => {
   const [registrationData, setRegistrationData] = useState<RegistrationData>(
     getBlankRegistrationData(),
   );
@@ -33,12 +33,16 @@ export const RegistrationInputSection: React.FC<{
     e.preventDefault();
     const error = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(error);
-    if (areNoErrors(error)) {
-      sectionIterator.next();
+    const groupedErrors = getGroupedErrors(error);
+    console.log(groupedErrors);
+    if (groupedErrors.get(SectionEnum.BASIC_INFORMATION) ?? false) {
+      sectionsHandler.setError(SectionEnum.BASIC_INFORMATION);
+    } else {
+      sectionsHandler.next();
     }
   };
 
-  const activeSection = sectionIterator.getActiveSection();
+  const activeSection = sectionsHandler.getActiveSection();
 
   return (
     <div className="flex-1 gap-y-5 bg-[#F7F7F7] py-4 pb-3 px-7 overflow-auto">

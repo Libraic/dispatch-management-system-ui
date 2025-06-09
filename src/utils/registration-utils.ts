@@ -1,7 +1,8 @@
 import { BLANK_STRING, DEFAULT_BIRTH_DATE } from "./global-constants.ts";
-import type {
-  RegistrationData,
-  RegistrationDataError,
+import {
+  type RegistrationData,
+  type RegistrationDataError,
+  SectionEnum,
 } from "../types/authentication.ts";
 import { validateEmail, validatePassword } from "./validation-utils.ts";
 
@@ -64,14 +65,28 @@ export const getRegistrationDataErrors = (
   return registrationDataError;
 };
 
-export const areNoErrors = (
+export const getGroupedErrors = (
+  registrationDataError: RegistrationDataError,
+): Map<SectionEnum, boolean> => {
+  const groupedErrors = new Map<SectionEnum, boolean>();
+  groupedErrors.set(
+    SectionEnum.BASIC_INFORMATION,
+    areAccountErrors(registrationDataError),
+  );
+  groupedErrors.set(SectionEnum.EMPLOYMENT_INFORMATION, false);
+  groupedErrors.set(SectionEnum.WORKLOAD, false);
+  groupedErrors.set(SectionEnum.NOTES, false);
+  return groupedErrors;
+};
+
+const areAccountErrors = (
   registrationDataError: RegistrationDataError,
 ): boolean => {
   return (
-    registrationDataError.firstNameError === BLANK_STRING &&
-    registrationDataError.lastNameError === BLANK_STRING &&
-    registrationDataError.emailError === BLANK_STRING &&
-    registrationDataError.passwordError === BLANK_STRING &&
-    registrationDataError.personalEmailError === BLANK_STRING
+    registrationDataError.firstNameError !== BLANK_STRING ||
+    registrationDataError.lastNameError !== BLANK_STRING ||
+    registrationDataError.emailError !== BLANK_STRING ||
+    registrationDataError.passwordError !== BLANK_STRING ||
+    registrationDataError.personalEmailError !== BLANK_STRING
   );
 };

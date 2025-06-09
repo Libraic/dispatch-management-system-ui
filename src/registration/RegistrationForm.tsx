@@ -1,16 +1,14 @@
 import { RegistrationSectionsList } from "./RegistrationSectionsList.tsx";
 import { RegistrationInputSection } from "./RegistrationInputSection.tsx";
-import { useNextSection } from "../hooks/useNextSection.ts";
+import { useSectionsHandler } from "../hooks/useSectionsHandler.ts";
 
 export const RegistrationForm = () => {
-  const sectionIterator = useNextSection();
+  const sectionsHandler = useSectionsHandler();
 
   return (
     <div className="flex w-screen h-screen">
-      <RegistrationSectionsList
-        setActiveSection={sectionIterator.setActiveSection}
-      />
-      <RegistrationInputSection sectionIterator={sectionIterator} />
+      <RegistrationSectionsList sectionsHandler={sectionsHandler} />
+      <RegistrationInputSection sectionsHandler={sectionsHandler} />
     </div>
   );
 };
