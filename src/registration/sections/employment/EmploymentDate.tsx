@@ -22,7 +22,7 @@ export const EmploymentDate: React.FC<{
   return (
     <>
       <SectionDivision
-        division="Employment Data"
+        division="Employment Date"
         isExpanded={isEmploymentDataExpanded}
         setIsExpanded={setIsEmploymentDataExpanded}
       />

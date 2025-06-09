@@ -1,6 +1,7 @@
 import {
   type RegistrationData,
   type RegistrationDataError,
+  type SectionData,
   SectionEnum,
 } from "../types/authentication.ts";
 import { BasicInformation } from "./sections/basic/BasicInformation.tsx";
@@ -12,14 +13,15 @@ import { SubmitButton } from "../button/SubmitButton.tsx";
 import * as React from "react";
 import { useState } from "react";
 import {
+  areNoErrors,
   getBlankRegistrationData,
   getBlankRegistrationDataError,
   getRegistrationDataErrors,
 } from "../utils/registration-utils.ts";
 
 export const RegistrationInputSection: React.FC<{
-  activeSection: SectionEnum;
-}> = ({ activeSection }) => {
+  sectionIterator: SectionData;
+}> = ({ sectionIterator }) => {
   const [registrationData, setRegistrationData] = useState<RegistrationData>(
     getBlankRegistrationData(),
   );
@@ -31,7 +33,12 @@ export const RegistrationInputSection: React.FC<{
     e.preventDefault();
     const error = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(error);
+    if (areNoErrors(error)) {
+      sectionIterator.next();
+    }
   };
+
+  const activeSection = sectionIterator.getActiveSection();
 
   return (
     <div className="flex-1 gap-y-5 bg-[#F7F7F7] py-4 pb-3 px-7 overflow-auto">

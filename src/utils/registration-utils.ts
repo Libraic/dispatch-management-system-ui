@@ -63,3 +63,15 @@ export const getRegistrationDataErrors = (
 
   return registrationDataError;
 };
+
+export const areNoErrors = (
+  registrationDataError: RegistrationDataError,
+): boolean => {
+  return (
+    registrationDataError.firstNameError === BLANK_STRING &&
+    registrationDataError.lastNameError === BLANK_STRING &&
+    registrationDataError.emailError === BLANK_STRING &&
+    registrationDataError.passwordError === BLANK_STRING &&
+    registrationDataError.personalEmailError === BLANK_STRING
+  );
+};

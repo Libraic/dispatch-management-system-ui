@@ -1,17 +1,16 @@
-import { SectionEnum } from "../types/authentication.ts";
-import { useState } from "react";
 import { RegistrationSectionsList } from "./RegistrationSectionsList.tsx";
 import { RegistrationInputSection } from "./RegistrationInputSection.tsx";
+import { useNextSection } from "../hooks/useNextSection.ts";
 
 export const RegistrationForm = () => {
-  const [activeSection, setActiveSection] = useState<SectionEnum>(
-    SectionEnum.BASIC_INFORMATION,
-  );
+  const sectionIterator = useNextSection();
 
   return (
     <div className="flex w-screen h-screen">
-      <RegistrationSectionsList setActiveSection={setActiveSection} />
-      <RegistrationInputSection activeSection={activeSection} />
+      <RegistrationSectionsList
+        setActiveSection={sectionIterator.setActiveSection}
+      />
+      <RegistrationInputSection sectionIterator={sectionIterator} />
     </div>
   );
 };

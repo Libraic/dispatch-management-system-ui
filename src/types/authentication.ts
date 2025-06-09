@@ -1,5 +1,5 @@
 import type { YearData } from "./global.ts";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export type RegistrationData = {
   firstName: string;
@@ -37,3 +37,9 @@ export const SectionEnum = {
 } as const;
 
 export type SectionEnum = keyof typeof SectionEnum;
+
+export type SectionData = {
+  next: () => void;
+  setActiveSection: (sectionEnum: SectionEnum) => void;
+  getActiveSection: () => SectionEnum;
+};
