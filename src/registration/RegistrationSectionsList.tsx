@@ -6,7 +6,7 @@ export const RegistrationSectionsList: React.FC<{
   sectionsHandler: SectionData;
 }> = ({ sectionsHandler }) => {
   return (
-    <div className="flex flex-col items-center gap-7 w-1/10 bg-[#f2f4fa] p-6">
+    <div className="flex flex-col items-center gap-7 w-1/10 bg-[#212327] text-white p-6">
       <RegistrationSection
         sectionTitle="Basic Information"
         setFocusedSection={() => {
@@ -19,6 +19,9 @@ export const RegistrationSectionsList: React.FC<{
           SectionEnum.BASIC_INFORMATION,
         )}
         isSectionError={sectionsHandler.isSectionWithErrors(
+          SectionEnum.BASIC_INFORMATION,
+        )}
+        isSectionFocused={sectionsHandler.isSectionFocused(
           SectionEnum.BASIC_INFORMATION,
         )}
       />
@@ -36,6 +39,9 @@ export const RegistrationSectionsList: React.FC<{
         isSectionError={sectionsHandler.isSectionWithErrors(
           SectionEnum.EMPLOYMENT_INFORMATION,
         )}
+        isSectionFocused={sectionsHandler.isSectionFocused(
+          SectionEnum.EMPLOYMENT_INFORMATION,
+        )}
       />
       <RegistrationSection
         sectionTitle="Workload"
@@ -49,6 +55,9 @@ export const RegistrationSectionsList: React.FC<{
         isSectionError={sectionsHandler.isSectionWithErrors(
           SectionEnum.WORKLOAD,
         )}
+        isSectionFocused={sectionsHandler.isSectionFocused(
+          SectionEnum.WORKLOAD,
+        )}
       />
       <RegistrationSection
         sectionTitle="Notes"
@@ -58,6 +67,7 @@ export const RegistrationSectionsList: React.FC<{
         isSectionComplete={sectionsHandler.isSectionComplete(SectionEnum.NOTES)}
         isSectionActive={sectionsHandler.isSectionActive(SectionEnum.NOTES)}
         isSectionError={sectionsHandler.isSectionWithErrors(SectionEnum.NOTES)}
+        isSectionFocused={sectionsHandler.isSectionFocused(SectionEnum.NOTES)}
       />
     </div>
   );

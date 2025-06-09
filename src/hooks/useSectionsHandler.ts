@@ -64,8 +64,10 @@ export const useSectionsHandler = (): SectionData => {
 
   const getFirstIncompleteSectionIndex = () => {
     const values = [...completedSections.values()];
+    console.log(index);
     for (let i = 0; i < values.length; i++) {
       if (i !== index && !values[i]) {
+        console.log(i);
         return i;
       }
     }
@@ -87,7 +89,9 @@ export const useSectionsHandler = (): SectionData => {
 
         setErrors((prev) => {
           const updated = new Map(prev);
-          updated.set(focusedSection, false);
+          updated.forEach((_, key) => {
+            updated.set(key, false);
+          });
           return updated;
         });
 
@@ -95,7 +99,9 @@ export const useSectionsHandler = (): SectionData => {
 
         setCompletedSections((prev) => {
           const updated = new Map(prev);
-          updated.set(values[prevIndex] as SectionEnum, true);
+          for (let i = 0; i <= prevIndex; ++i) {
+            updated.set(values[i] as SectionEnum, true);
+          }
           return updated;
         });
 
@@ -116,6 +122,7 @@ export const useSectionsHandler = (): SectionData => {
           return updated;
         });
         setFocusedSection(section);
+        setIndex(Object.values(SectionEnum).indexOf(section));
         const updated = new Map(prev);
         updated.set(section, true);
         return updated;
@@ -134,5 +141,6 @@ export const useSectionsHandler = (): SectionData => {
       completedSections.get(section) ?? false,
     isSectionActive: (section: SectionEnum) =>
       activeSections.get(section) ?? false,
+    isSectionFocused: (section: SectionEnum) => section === focusedSection,
   };
 };

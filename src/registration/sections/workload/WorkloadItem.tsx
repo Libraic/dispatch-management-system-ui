@@ -62,21 +62,23 @@ export const WorkloadItem: React.FC<{
           }));
         }}
       />
-      <img
-        className="hover:cursor-pointer mt-6"
-        onClick={() =>
-          setRegistrationData((prev) => ({
-            ...prev,
-            workload: prev.workload.filter(
-              (w) => w.workloadId !== item.workloadId,
-            ),
-          }))
-        }
-        onMouseEnter={() => setRemoveActiveIcon(removeWorkloadFocused)}
-        onMouseLeave={() => setRemoveActiveIcon(removeWorkloadUnfocused)}
-        src={removeActiveIcon}
-        alt="remove-workload"
-      />
+      <div className="w-6 h-6 flex items-center justify-center">
+        <img
+          className="w-full h-full transition-transform duration-200 ease-in-out hover:scale-110 cursor-pointer mt-6"
+          onClick={() =>
+            setRegistrationData((prev) => ({
+              ...prev,
+              workload: prev.workload.filter(
+                (w) => w.workloadId !== item.workloadId,
+              ),
+            }))
+          }
+          onMouseEnter={() => setRemoveActiveIcon(removeWorkloadFocused)}
+          onMouseLeave={() => setRemoveActiveIcon(removeWorkloadUnfocused)}
+          src={removeActiveIcon}
+          alt="remove-workload"
+        />
+      </div>
     </div>
   );
 };

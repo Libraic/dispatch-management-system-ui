@@ -55,6 +55,7 @@ export type SectionData = {
   getActiveSection: () => SectionEnum;
   isSectionComplete: (sectionEnum: SectionEnum) => boolean;
   isSectionActive: (sectionEnum: SectionEnum) => boolean;
+  isSectionFocused: (sectionEnum: SectionEnum) => boolean;
 };
 
 export const RoleEnum = {

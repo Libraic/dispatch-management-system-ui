@@ -43,27 +43,29 @@ export const RegistrationInputSection: React.FC<{
   const activeSection = sectionsHandler.getActiveSection();
 
   return (
-    <div className="flex-1 gap-y-5 bg-[#F7F7F7] py-4 pb-3 px-7 overflow-auto">
-      {activeSection === SectionEnum.BASIC_INFORMATION && (
-        <BasicInformation
-          registrationData={registrationData}
-          registrationDataError={registrationDataError}
-          setRegistrationData={setRegistrationData}
-        />
-      )}
-      {activeSection === SectionEnum.EMPLOYMENT_INFORMATION && (
-        <EmploymentInformation
-          registrationData={registrationData}
-          setRegistrationData={setRegistrationData}
-        />
-      )}
-      {activeSection === SectionEnum.WORKLOAD && (
-        <Workload
-          registrationData={registrationData}
-          setRegistrationData={setRegistrationData}
-        />
-      )}
-      <div className="flex gap-x-2 mt-11">
+    <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
+      <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
+        {activeSection === SectionEnum.BASIC_INFORMATION && (
+          <BasicInformation
+            registrationData={registrationData}
+            registrationDataError={registrationDataError}
+            setRegistrationData={setRegistrationData}
+          />
+        )}
+        {activeSection === SectionEnum.EMPLOYMENT_INFORMATION && (
+          <EmploymentInformation
+            registrationData={registrationData}
+            setRegistrationData={setRegistrationData}
+          />
+        )}
+        {activeSection === SectionEnum.WORKLOAD && (
+          <Workload
+            registrationData={registrationData}
+            setRegistrationData={setRegistrationData}
+          />
+        )}
+      </div>
+      <div className="flex gap-x-3 mx-5 my-5">
         <CancelButton actionText="Cancel" action={() => {}} />
         <SubmitButton actionText="Continue" action={validateRegistrationData} />
       </div>
