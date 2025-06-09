@@ -6,6 +6,7 @@ import * as React from "react";
 import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
 import { AccountData } from "./AccountData.tsx";
 import { BirthData } from "./BirthData.tsx";
+import { Information } from "../../../global/Information.tsx";
 
 export const BasicInformation: React.FC<{
   registrationData: RegistrationData;
@@ -27,6 +28,7 @@ export const BasicInformation: React.FC<{
         registrationData={registrationData}
         setRegistrationData={setRegistrationData}
       />
+      <Information />
     </>
   );
 };

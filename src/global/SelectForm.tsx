@@ -18,9 +18,7 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
         onChange={(e) => setElement(e.target.value)}
       >
         {data.map((name, index) => (
-          <option key={index} value={index + 1}>
-            {name}
-          </option>
+          <option key={index}>{name}</option>
         ))}
       </select>
     </div>

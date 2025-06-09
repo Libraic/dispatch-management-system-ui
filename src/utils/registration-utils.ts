@@ -25,6 +25,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
     },
     role: RoleEnum.EMPLOYEE,
     position: PositionEnum.ACCOUNTANT,
+    workload: [],
   };
 };
 

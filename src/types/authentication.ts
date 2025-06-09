@@ -1,6 +1,12 @@
 import type { YearData } from "./global.ts";
 import { type ReactNode } from "react";
 
+export type WorkloadData = {
+  workloadId: string;
+  companyId: string;
+  commission: number;
+};
+
 export type RegistrationData = {
   firstName: string;
   lastName: string;
@@ -12,6 +18,7 @@ export type RegistrationData = {
   employmentDate: YearData;
   role: string;
   position: string;
+  workload: WorkloadData[];
 };
 
 export type RegistrationDataError = {

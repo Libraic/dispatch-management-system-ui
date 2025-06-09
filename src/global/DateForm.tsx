@@ -20,9 +20,11 @@ export const DateForm: React.FC<{
       <SelectForm
         label="Month"
         formWidth="w-[7rem]"
-        initialValue={dateObject.month}
+        initialValue={MONTHS[dateObject.month - 1]}
         data={MONTHS}
-        setElement={(month: string) => dateObject.setMonth(parseInt(month))}
+        setElement={(month: string) => {
+          dateObject.setMonth(MONTHS.indexOf(month) + 1);
+        }}
       />
       <SelectForm
         label="Day"

@@ -66,7 +66,6 @@ export const useSectionsHandler = (): SectionData => {
     const values = [...completedSections.values()];
     for (let i = 0; i < values.length; i++) {
       if (i !== index && !values[i]) {
-        console.log(i);
         return i;
       }
     }

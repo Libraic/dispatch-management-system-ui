@@ -7,7 +7,6 @@ import {
 import { BasicInformation } from "./sections/basic/BasicInformation.tsx";
 import { EmploymentInformation } from "./sections/employment/EmploymentInformation.tsx";
 import { Workload } from "./sections/workload/Workload.tsx";
-import { Information } from "../global/Information.tsx";
 import { CancelButton } from "../button/CancelButton.tsx";
 import { SubmitButton } from "../button/SubmitButton.tsx";
 import * as React from "react";
@@ -34,7 +33,6 @@ export const RegistrationInputSection: React.FC<{
     const error = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(error);
     const groupedErrors = getGroupedErrors(error);
-    console.log(groupedErrors);
     if (groupedErrors.get(SectionEnum.BASIC_INFORMATION) ?? false) {
       sectionsHandler.setError(SectionEnum.BASIC_INFORMATION);
     } else {
@@ -59,8 +57,12 @@ export const RegistrationInputSection: React.FC<{
           setRegistrationData={setRegistrationData}
         />
       )}
-      {activeSection === SectionEnum.WORKLOAD && <Workload />}
-      <Information />
+      {activeSection === SectionEnum.WORKLOAD && (
+        <Workload
+          registrationData={registrationData}
+          setRegistrationData={setRegistrationData}
+        />
+      )}
       <div className="flex gap-x-2 mt-11">
         <CancelButton actionText="Cancel" action={() => {}} />
         <SubmitButton actionText="Continue" action={validateRegistrationData} />
