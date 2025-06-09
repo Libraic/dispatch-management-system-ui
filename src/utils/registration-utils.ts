@@ -1,7 +1,9 @@
 import { BLANK_STRING, DEFAULT_BIRTH_DATE } from "./global-constants.ts";
 import {
+  PositionEnum,
   type RegistrationData,
   type RegistrationDataError,
+  RoleEnum,
   SectionEnum,
 } from "../types/authentication.ts";
 import { validateEmail, validatePassword } from "./validation-utils.ts";
@@ -21,6 +23,8 @@ export const getBlankRegistrationData = (): RegistrationData => {
       month: date.getMonth() + 1,
       year: date.getFullYear(),
     },
+    role: RoleEnum.EMPLOYEE,
+    position: PositionEnum.ACCOUNTANT,
   };
 };
 

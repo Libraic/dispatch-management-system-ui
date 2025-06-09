@@ -10,6 +10,8 @@ export type RegistrationData = {
   personalEmail: string;
   birthDate: YearData;
   employmentDate: YearData;
+  role: string;
+  position: string;
 };
 
 export type RegistrationDataError = {
@@ -21,10 +23,10 @@ export type RegistrationDataError = {
   personalEmailError: string;
 };
 
-export type SelectFormData<T extends ReactNode> = {
+export type SelectFormData<T extends ReactNode, D extends string | number> = {
   label: string;
   formWidth: string;
-  initialValue: number;
+  initialValue: D;
   data: T[];
   setElement: (value: string) => void;
 };
@@ -47,3 +49,16 @@ export type SectionData = {
   isSectionComplete: (sectionEnum: SectionEnum) => boolean;
   isSectionActive: (sectionEnum: SectionEnum) => boolean;
 };
+
+export const RoleEnum = {
+  EMPLOYEE: "Employee",
+};
+
+export type RoleEnum = keyof typeof RoleEnum;
+
+export const PositionEnum = {
+  ACCOUNTANT: "Accountant",
+  FLATBED_DISPATCHER: "Flatbed Dispatcher",
+};
+
+export type PositionEnum = keyof typeof PositionEnum;
