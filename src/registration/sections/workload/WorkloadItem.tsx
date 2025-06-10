@@ -1,23 +1,18 @@
 import { SelectForm } from "../../../global/SelectForm.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
-import removeWorkloadFocused from "../../../assets/remove-focused.svg";
-import removeWorkloadUnfocused from "../../../assets/remove-unfocused.svg";
 import * as React from "react";
 import type {
   RegistrationData,
   WorkloadData,
 } from "../../../types/authentication.ts";
 import type { CompanyData } from "../../../types/api-types.ts";
+import { Delete } from "../../../button/Delete.tsx";
 
 export const WorkloadItem: React.FC<{
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
   item: WorkloadData;
   companies: CompanyData[];
 }> = ({ setRegistrationData, item, companies }) => {
-  const [removeActiveIcon, setRemoveActiveIcon] = React.useState(
-    removeWorkloadUnfocused,
-  );
-
   return (
     <div key={item.workloadId} className="flex flex-row items-center gap-x-10">
       <SelectForm
@@ -62,23 +57,16 @@ export const WorkloadItem: React.FC<{
           }));
         }}
       />
-      <div className="w-6 h-6 flex items-center justify-center">
-        <img
-          className="w-full h-full transition-transform duration-200 ease-in-out hover:scale-110 cursor-pointer mt-6"
-          onClick={() =>
-            setRegistrationData((prev) => ({
-              ...prev,
-              workload: prev.workload.filter(
-                (w) => w.workloadId !== item.workloadId,
-              ),
-            }))
-          }
-          onMouseEnter={() => setRemoveActiveIcon(removeWorkloadFocused)}
-          onMouseLeave={() => setRemoveActiveIcon(removeWorkloadUnfocused)}
-          src={removeActiveIcon}
-          alt="remove-workload"
-        />
-      </div>
+      <Delete
+        onClick={() =>
+          setRegistrationData((prev) => ({
+            ...prev,
+            workload: prev.workload.filter(
+              (w) => w.workloadId !== item.workloadId,
+            ),
+          }))
+        }
+      />
     </div>
   );
 };
