@@ -6,7 +6,11 @@ import {
   RoleEnum,
   SectionEnum,
 } from "../types/authentication.ts";
-import { validateEmail, validatePassword } from "./validation-utils.ts";
+import {
+  validateEmail,
+  validateNotes,
+  validatePassword,
+} from "./validation-utils.ts";
 
 export const getBlankRegistrationData = (): RegistrationData => {
   const date = new Date();
@@ -26,6 +30,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
     role: RoleEnum.EMPLOYEE,
     position: PositionEnum.ACCOUNTANT,
     workload: [],
+    notes: [],
   };
 };
 
@@ -37,6 +42,7 @@ export const getBlankRegistrationDataError = (): RegistrationDataError => {
     passwordError: BLANK_STRING,
     confirmPasswordError: BLANK_STRING,
     personalEmailError: BLANK_STRING,
+    notesError: [],
   };
 };
 
@@ -67,6 +73,8 @@ export const getRegistrationDataErrors = (
     false,
   );
 
+  registrationDataError.notesError = validateNotes(registrationData.notes);
+
   return registrationDataError;
 };
 
@@ -80,7 +88,7 @@ export const getGroupedErrors = (
   );
   groupedErrors.set(SectionEnum.EMPLOYMENT_INFORMATION, false);
   groupedErrors.set(SectionEnum.WORKLOAD, false);
-  groupedErrors.set(SectionEnum.NOTES, false);
+  groupedErrors.set(SectionEnum.NOTES, areNotesErrors(registrationDataError));
   return groupedErrors;
 };
 
@@ -95,3 +103,7 @@ const areAccountErrors = (
     registrationDataError.personalEmailError !== BLANK_STRING
   );
 };
+
+const areNotesErrors = (
+  registrationDataError: RegistrationDataError,
+): boolean => registrationDataError.notesError.length > 0;

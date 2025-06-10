@@ -1,4 +1,5 @@
-import { BLANK_STRING } from "./global-constants.ts";
+import { BLANK_STRING, NOTE_MAX_LENGTH } from "./global-constants.ts";
+import type { NoteData, NoteError } from "../types/authentication.ts";
 
 export const validateEmail = (value: string, isMandatory: boolean): string => {
   if (value === BLANK_STRING) {
@@ -35,4 +36,23 @@ export const validatePassword = (
   }
 
   return BLANK_STRING;
+};
+
+export const validateNotes = (notes: NoteData[]) => {
+  const errors: NoteError[] = [];
+  if (notes.length === 0) {
+    return errors;
+  }
+
+  for (let note of notes) {
+    if (note.note.length > NOTE_MAX_LENGTH) {
+      errors.push({
+        noteId: note.noteId,
+        errorMessage:
+          "The note exceeds the maximum number of allowed characters",
+      });
+    }
+  }
+
+  return errors;
 };

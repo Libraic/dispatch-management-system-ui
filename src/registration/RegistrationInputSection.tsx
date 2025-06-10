@@ -17,6 +17,7 @@ import {
   getGroupedErrors,
   getRegistrationDataErrors,
 } from "../utils/registration-utils.ts";
+import { Notes } from "./sections/notes/Notes.tsx";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -33,9 +34,15 @@ export const RegistrationInputSection: React.FC<{
     const error = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(error);
     const groupedErrors = getGroupedErrors(error);
-    if (groupedErrors.get(SectionEnum.BASIC_INFORMATION) ?? false) {
-      sectionsHandler.setError(SectionEnum.BASIC_INFORMATION);
-    } else {
+    let errors = 0;
+    for (const [section, hasErrors] of groupedErrors) {
+      if (hasErrors) {
+        ++errors;
+        sectionsHandler.setError(section);
+      }
+    }
+
+    if (errors === 0) {
       sectionsHandler.next();
     }
   };
@@ -61,6 +68,13 @@ export const RegistrationInputSection: React.FC<{
         {activeSection === SectionEnum.WORKLOAD && (
           <Workload
             registrationData={registrationData}
+            setRegistrationData={setRegistrationData}
+          />
+        )}
+        {activeSection === SectionEnum.NOTES && (
+          <Notes
+            registrationData={registrationData}
+            registrationDataError={registrationDataError}
             setRegistrationData={setRegistrationData}
           />
         )}

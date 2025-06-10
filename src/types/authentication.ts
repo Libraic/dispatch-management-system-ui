@@ -7,6 +7,11 @@ export type WorkloadData = {
   commission: number;
 };
 
+export type NoteData = {
+  noteId: string;
+  note: string;
+};
+
 export type RegistrationData = {
   firstName: string;
   lastName: string;
@@ -19,6 +24,12 @@ export type RegistrationData = {
   role: string;
   position: string;
   workload: WorkloadData[];
+  notes: NoteData[];
+};
+
+export type NoteError = {
+  noteId: string;
+  errorMessage: string;
 };
 
 export type RegistrationDataError = {
@@ -28,6 +39,7 @@ export type RegistrationDataError = {
   passwordError: string;
   confirmPasswordError: string;
   personalEmailError: string;
+  notesError: NoteError[];
 };
 
 export type SelectFormData<T extends ReactNode, D extends string | number> = {
