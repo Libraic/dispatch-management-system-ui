@@ -61,7 +61,8 @@ export type SectionEnum = keyof typeof SectionEnum;
 
 export type SectionData = {
   next: () => void;
-  setError: (sectionEnum: SectionEnum) => void;
+  setErrors: (sectionsWithErrors: SectionEnum[]) => void;
+  removeError: (sectionEnum: SectionEnum) => void;
   isSectionWithErrors: (sectionEnum: SectionEnum) => boolean;
   setFocusedSection: (sectionEnum: SectionEnum) => void;
   getActiveSection: () => SectionEnum;

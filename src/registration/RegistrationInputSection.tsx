@@ -34,15 +34,18 @@ export const RegistrationInputSection: React.FC<{
     const error = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(error);
     const groupedErrors = getGroupedErrors(error);
-    let errors = 0;
+    const errors: SectionEnum[] = [];
     for (const [section, hasErrors] of groupedErrors) {
       if (hasErrors) {
-        ++errors;
-        sectionsHandler.setError(section);
+        errors.push(section);
+      } else {
+        sectionsHandler.removeError(section);
       }
     }
 
-    if (errors === 0) {
+    sectionsHandler.setErrors(errors);
+
+    if (errors.length === 0) {
       sectionsHandler.next();
     }
   };
