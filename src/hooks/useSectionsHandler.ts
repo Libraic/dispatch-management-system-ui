@@ -1,146 +1,132 @@
 import { useState } from "react";
 import { type SectionData, SectionEnum } from "../types/authentication.ts";
 
+const allSections: SectionEnum[] = Object.keys(SectionEnum) as SectionEnum[];
+
 /**
- * A custom hook that manages the state for navigating and controlling sections in an application.
+ * A custom hook that returns an object used to handle the Sections and store
+ * information about their completeness, activeness and errors found during
+ * their completion.
  *
- * **index** - an internal variable used as the position of the current Section enum
- * in the overall Section enums array
+ * A section is **focused** if it is the one that is rendered to the UI at the moment.
  *
- * **focusedSection** - the Section currently rendered on UI
+ * A section is **active** if it was opened at some point during the completion of the registration form.
  *
- * **completedSections** - a map that holds the information about what Sections
- * were fully completed
+ * A section is **complete** if all the forms were completed as per the requirements.
  *
- * **activeSections** - a map that holds the information about what Sections are
- * navigable. The section n is made available once the section n-1 was fully completed
- * (without errors). Once a section was completed, the user can go back and modify some
- * data, which can cause errors. This will not make the active sections inactive,
- * just incomplete.
+ * A section has **errors** if some fields do not meet the requirements after completion.
  *
- * **errors** - a map that holds the information about what Sections have erroneous data.
- *
- * @returns {SectionData} The state management methods and utilities for handling sections.
+ * Initially, the **Basic Information** section is active. If the user completes it correctly,
+ * the next section will be opened (made active). If not, it will be considered as a
+ * section with errors; hence, the next one will not be available until the user does
+ * not fix all the errors. If the user switches to a previous section that was completed and
+ * changes some data so that it becomes a section with errors, unlocking a new section
+ * will not be possible until the user resolves all errors. If the user completed a section,
+ * and it has no errors but did not press the **Continue** button and switched to a previous one,
+ * where some data was modified, the Section that has no errors will be marked as **completed**.
  */
 export const useSectionsHandler = (): SectionData => {
-  const [index, setIndex] = useState(0);
   const [focusedSection, setFocusedSection] = useState<SectionEnum>(
     SectionEnum.BASIC_INFORMATION,
   );
-
-  // TODO: Consider having a single Map that will have an object containing all three booleans
-  const [completedSections, setCompletedSections] = useState<
-    Map<SectionEnum, boolean>
-  >(
-    () =>
-      new Map<SectionEnum, boolean>([
-        [SectionEnum.BASIC_INFORMATION, false],
-        [SectionEnum.EMPLOYMENT_INFORMATION, false],
-        [SectionEnum.WORKLOAD, false],
-        [SectionEnum.NOTES, false],
-      ]),
+  const [sectionsWithErrors, setSectionsWithErrors] = useState<SectionEnum[]>(
+    [],
   );
-  const [activeSections, setActiveSections] = useState<
-    Map<SectionEnum, boolean>
-  >(
-    () =>
-      new Map<SectionEnum, boolean>([
-        [SectionEnum.BASIC_INFORMATION, true],
-        [SectionEnum.EMPLOYMENT_INFORMATION, false],
-        [SectionEnum.WORKLOAD, false],
-        [SectionEnum.NOTES, false],
-      ]),
-  );
-
-  const [errors, setErrors] = useState<Map<SectionEnum, boolean>>(
-    () =>
-      new Map<SectionEnum, boolean>([
-        [SectionEnum.BASIC_INFORMATION, false],
-        [SectionEnum.EMPLOYMENT_INFORMATION, false],
-        [SectionEnum.WORKLOAD, false],
-        [SectionEnum.NOTES, false],
-      ]),
-  );
-
-  const getFirstIncompleteSectionIndex = () => {
-    const values = [...completedSections.values()];
-    console.log(index);
-    for (let i = 0; i < values.length; i++) {
-      if (i !== index && !values[i]) {
-        console.log(i);
-        return i;
-      }
-    }
-
-    return values.length - 1;
-  };
+  const [sectionsCompleted, setSectionsCompleted] = useState<SectionEnum[]>([]);
+  const [sectionsActive, setSectionsActive] = useState<SectionEnum[]>([
+    SectionEnum.BASIC_INFORMATION,
+  ]);
 
   return {
     next: () => {
-      setIndex((prevIndex) => {
-        const values = Object.values(SectionEnum);
-        const isCurrentSectionWithErrors = errors.get(focusedSection) ?? false;
-        const newIndex = isCurrentSectionWithErrors
-          ? getFirstIncompleteSectionIndex()
-          : prevIndex === values.length - 1
-            ? 0
-            : prevIndex + 1;
-        const newSection = values[newIndex];
+      setSectionsActive((prev) => {
+        // Remove the errors for all Sections
+        setSectionsWithErrors([]);
 
-        setErrors((prev) => {
-          const updated = new Map(prev);
-          updated.forEach((_, key) => {
-            updated.set(key, false);
-          });
-          return updated;
-        });
-
-        setFocusedSection(newSection as SectionEnum);
-
-        setCompletedSections((prev) => {
-          const updated = new Map(prev);
-          for (let i = 0; i <= prevIndex; ++i) {
-            updated.set(values[i] as SectionEnum, true);
+        // If the next() method is called, it means no errors were found on any
+        // active section. This means that all the active sections will be
+        // treated as completed, because the User willingly clicked on the
+        // Continue button.
+        const completed: SectionEnum[] = [];
+        for (const s of allSections) {
+          if (prev.indexOf(s) >= 0 || completed.indexOf(s) >= 0) {
+            completed.push(s);
           }
-          return updated;
-        });
+        }
 
-        setActiveSections((prev) => {
-          const updated = new Map(prev);
-          updated.set(newSection as SectionEnum, true);
-          return updated;
-        });
+        setSectionsCompleted(completed);
 
-        return newIndex;
+        // We take the index of the last completed section, so we can advance
+        // to the next section.
+        const indexOfLastCompletedSection = allSections.indexOf(
+          allSections[completed.length - 1],
+        );
+
+        // When all the sections are completed, we will have a dedicated approach,
+        // namely to send the data to the backend. This will be rewritten.
+        const focused =
+          indexOfLastCompletedSection === allSections.length - 1
+            ? allSections[0]
+            : allSections[indexOfLastCompletedSection + 1];
+        setFocusedSection(focused);
+
+        // The active sections are basically the previously completed one and
+        // the new focused one.
+        return [...completed, focused];
       });
     },
-    setError: (section: SectionEnum) => {
-      setErrors((prev) => {
-        setCompletedSections((prev) => {
-          const updated = new Map(prev);
-          updated.set(section as SectionEnum, false);
-          return updated;
-        });
-        setFocusedSection(section);
-        setIndex(Object.values(SectionEnum).indexOf(section));
-        const updated = new Map(prev);
-        updated.set(section, true);
-        return updated;
+    setErrors: (sectionsWithErrors: SectionEnum[]) => {
+      setSectionsWithErrors((prevErrors) => {
+        // The sections that are completed are basically the sections that were
+        // completed previously and have no errors.
+        const completed: SectionEnum[] = [];
+        for (const s of allSections) {
+          if (sectionsWithErrors.indexOf(s) < 0) {
+            completed.push(s);
+          }
+        }
+        setSectionsCompleted(completed);
+
+        // The focused section will be the last one from the list of sections with errors.
+        setFocusedSection(sectionsWithErrors[sectionsWithErrors.length - 1]);
+
+        // The sections with errors will be the previous one + the new ones.
+        // We do this iteration to avoid duplicates
+        const errors: SectionEnum[] = [];
+        for (const s of allSections) {
+          if (
+            sectionsWithErrors.indexOf(s) >= 0 ||
+            prevErrors.indexOf(s) >= 0
+          ) {
+            errors.push(s);
+          }
+        }
+        return errors;
       });
     },
-    isSectionWithErrors: (section: SectionEnum) => errors.get(section) ?? false,
+    removeError: (section: SectionEnum) =>
+      setSectionsWithErrors((prev) => {
+        const completed: SectionEnum[] = [];
+        for (const s of allSections) {
+          if (s === section || sectionsCompleted.indexOf(s) >= 0) {
+            completed.push(s);
+          }
+        }
+        setSectionsCompleted(completed);
+        return prev.filter((s) => s !== section);
+      }),
+    isSectionWithErrors: (section: SectionEnum) =>
+      sectionsWithErrors.indexOf(section) >= 0,
     setFocusedSection: (section: SectionEnum) => {
-      if (activeSections.get(section) ?? false) {
+      if (sectionsActive.indexOf(section) >= 0) {
         setFocusedSection(section);
-        const values = Object.values(SectionEnum);
-        setIndex(values.indexOf(section));
       }
     },
     getActiveSection: () => focusedSection,
     isSectionComplete: (section: SectionEnum) =>
-      completedSections.get(section) ?? false,
+      sectionsCompleted.indexOf(section) >= 0,
     isSectionActive: (section: SectionEnum) =>
-      activeSections.get(section) ?? false,
-    isSectionFocused: (section: SectionEnum) => section === focusedSection,
+      sectionsActive.indexOf(section) >= 0,
+    isSectionFocused: (section: SectionEnum) => focusedSection === section,
   };
 };
