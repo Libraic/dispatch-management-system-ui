@@ -7,12 +7,14 @@ import type {
 } from "../../../types/authentication.ts";
 import type { CompanyData } from "../../../types/api-types.ts";
 import { Delete } from "../../../button/Delete.tsx";
+import type { Pagination } from "../../../types/global.ts";
 
 export const WorkloadItem: React.FC<{
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
   item: WorkloadData;
   companies: CompanyData[];
-}> = ({ setRegistrationData, item, companies }) => {
+  pagination?: Pagination;
+}> = ({ setRegistrationData, item, companies, pagination }) => {
   return (
     <div key={item.workloadId} className="flex flex-row items-center gap-x-10">
       <SelectForm
@@ -22,6 +24,7 @@ export const WorkloadItem: React.FC<{
           companies.find((c) => c.uuid === item.companyId)?.name ?? ""
         }
         data={companies.map((company) => company.name)}
+        pagination={pagination}
         setElement={(selectedName: string) => {
           const selectedCompany = companies.find(
             (c) => c.name === selectedName,

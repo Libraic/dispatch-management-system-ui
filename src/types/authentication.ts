@@ -1,4 +1,4 @@
-import type { YearData } from "./global.ts";
+import type { Pagination, YearData } from "./global.ts";
 import { type ReactNode } from "react";
 
 export type WorkloadData = {
@@ -47,6 +47,7 @@ export type SelectFormData<T extends ReactNode, D extends string | number> = {
   formWidth: string;
   initialValue: D;
   data: T[];
+  pagination?: Pagination;
   setElement: (value: string) => void;
 };
 
