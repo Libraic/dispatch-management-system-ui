@@ -1,11 +1,9 @@
 import axios from "axios";
-import { FETCH_ALL_COMPANIES } from "../utils/api-paths.ts";
-import type { ApiResponse, CompanyData } from "../types/api-types.ts";
+import type { ApiResponse, GetCompaniesResponse } from "../types/api-types.ts";
 
-export const fetchCompanies = async () => {
+export const fetchCompanies = async (url: string) => {
   try {
-    const response =
-      await axios.get<ApiResponse<CompanyData[]>>(FETCH_ALL_COMPANIES);
+    const response = await axios.get<ApiResponse<GetCompaniesResponse>>(url);
     return response.data.data;
   } catch (error) {
     console.error("Failed to fetch companies:", error);

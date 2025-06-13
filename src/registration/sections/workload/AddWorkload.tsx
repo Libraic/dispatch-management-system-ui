@@ -3,12 +3,14 @@ import * as React from "react";
 import type { CompanyData } from "../../../types/api-types.ts";
 import { WorkloadItem } from "./WorkloadItem.tsx";
 import { Add } from "../../../button/Add.tsx";
+import type { Pagination } from "../../../types/global.ts";
 
 export const AddWorkload: React.FC<{
   registrationData: RegistrationData;
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
   companies: CompanyData[];
-}> = ({ registrationData, setRegistrationData, companies }) => {
+  pagination?: Pagination;
+}> = ({ registrationData, setRegistrationData, companies, pagination }) => {
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row items-center gap-x-3">
@@ -36,6 +38,7 @@ export const AddWorkload: React.FC<{
             setRegistrationData={setRegistrationData}
             item={item}
             companies={companies}
+            pagination={pagination}
           />
         ))}
       </div>
