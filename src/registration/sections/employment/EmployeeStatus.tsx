@@ -1,17 +1,16 @@
 import { SelectForm } from "../../../global/SelectForm.tsx";
-import {
-  PositionEnum,
-  type RegistrationData,
-  RoleEnum,
-} from "../../../types/authentication.ts";
+import { PositionEnum, RoleEnum } from "../../../types/authentication.ts";
 import * as React from "react";
 import { useState } from "react";
 import { SectionDivision } from "../SectionDivision.tsx";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const EmployeeStatus: React.FC<{
-  registrationData: RegistrationData;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-}> = ({ registrationData, setRegistrationData }) => {
+export const EmployeeStatus = () => {
+  const context = React.useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+  const { registrationData, setRegistrationData } = context;
   const [isStatusDataExpanded, setIsStatusDataExpanded] = useState(true);
   return (
     <>

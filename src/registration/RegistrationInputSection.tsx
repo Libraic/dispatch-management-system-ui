@@ -18,6 +18,11 @@ import {
   getRegistrationDataErrors,
 } from "../utils/registration-utils.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
+import {
+  RegistrationContext,
+  type RegistrationContextData,
+} from "../context/RegistrationContext.ts";
+import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -51,36 +56,27 @@ export const RegistrationInputSection: React.FC<{
   };
 
   const activeSection = sectionsHandler.getActiveSection();
+  const paginatedCompanies = useFetchPaginatedCompanies();
+  const registrationContextData: RegistrationContextData = {
+    registrationData: registrationData,
+    setRegistrationData: setRegistrationData,
+    registrationDataError: registrationDataError,
+    companies: paginatedCompanies.data,
+    pagination: paginatedCompanies.pagination,
+  };
+  const sectionComponents: Record<SectionEnum, React.ReactNode> = {
+    BASIC_INFORMATION: <BasicInformation />,
+    EMPLOYMENT_INFORMATION: <EmploymentInformation />,
+    WORKLOAD: <Workload />,
+    NOTES: <Notes />,
+  };
 
   return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
-        {activeSection === SectionEnum.BASIC_INFORMATION && (
-          <BasicInformation
-            registrationData={registrationData}
-            registrationDataError={registrationDataError}
-            setRegistrationData={setRegistrationData}
-          />
-        )}
-        {activeSection === SectionEnum.EMPLOYMENT_INFORMATION && (
-          <EmploymentInformation
-            registrationData={registrationData}
-            setRegistrationData={setRegistrationData}
-          />
-        )}
-        {activeSection === SectionEnum.WORKLOAD && (
-          <Workload
-            registrationData={registrationData}
-            setRegistrationData={setRegistrationData}
-          />
-        )}
-        {activeSection === SectionEnum.NOTES && (
-          <Notes
-            registrationData={registrationData}
-            registrationDataError={registrationDataError}
-            setRegistrationData={setRegistrationData}
-          />
-        )}
+        <RegistrationContext value={registrationContextData}>
+          {sectionComponents[activeSection]}
+        </RegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
         <CancelButton actionText="Cancel" action={() => {}} />

@@ -1,15 +1,18 @@
 import { SectionDivision } from "../SectionDivision.tsx";
 import { DateForm } from "../../../global/DateForm.tsx";
 import * as React from "react";
-import type { RegistrationData } from "../../../types/authentication.ts";
 import { useDateObject } from "../../../hooks/useDateObject.ts";
 import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../utils/global-constants.ts";
 import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const BirthData: React.FC<{
-  registrationData: RegistrationData;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-}> = ({ registrationData, setRegistrationData }) => {
+export const BirthData = () => {
+  const context = React.useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+
+  const { registrationData, setRegistrationData } = context;
   const [isBirthDataExpanded, setIsBirthDataExpanded] = React.useState(true);
   const dateObject = useDateObject(
     registrationData.birthDate.day,

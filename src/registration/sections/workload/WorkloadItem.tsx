@@ -1,20 +1,20 @@
 import { SelectForm } from "../../../global/SelectForm.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
-import type {
-  RegistrationData,
-  WorkloadData,
-} from "../../../types/authentication.ts";
-import type { CompanyData } from "../../../types/api-types.ts";
+import { useContext } from "react";
+import type { WorkloadData } from "../../../types/authentication.ts";
 import { Delete } from "../../../button/Delete.tsx";
-import type { Pagination } from "../../../types/global.ts";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const WorkloadItem: React.FC<{
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
   item: WorkloadData;
-  companies: CompanyData[];
-  pagination?: Pagination;
-}> = ({ setRegistrationData, item, companies, pagination }) => {
+}> = ({ item }) => {
+  const context = useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+  const companies = context.companies;
+  const pagination = context.pagination;
   return (
     <div key={item.workloadId} className="flex flex-row items-center gap-x-10">
       <SelectForm
@@ -30,7 +30,7 @@ export const WorkloadItem: React.FC<{
             (c) => c.name === selectedName,
           );
           if (selectedCompany) {
-            setRegistrationData((prev) => ({
+            context.setRegistrationData((prev) => ({
               ...prev,
               workload: prev.workload.map((w) =>
                 w.workloadId === item.workloadId
@@ -50,7 +50,7 @@ export const WorkloadItem: React.FC<{
         isMandatory={false}
         errorText=""
         saveData={(value: string) => {
-          setRegistrationData((prev) => ({
+          context.setRegistrationData((prev) => ({
             ...prev,
             workload: prev.workload.map((w) =>
               w.workloadId === item.workloadId
@@ -62,7 +62,7 @@ export const WorkloadItem: React.FC<{
       />
       <Delete
         onClick={() =>
-          setRegistrationData((prev) => ({
+          context.setRegistrationData((prev) => ({
             ...prev,
             workload: prev.workload.filter(
               (w) => w.workloadId !== item.workloadId,
