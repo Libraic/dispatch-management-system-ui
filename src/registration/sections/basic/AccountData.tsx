@@ -1,18 +1,20 @@
 import { SectionDivision } from "../SectionDivision.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
-import type {
-  RegistrationData,
-  RegistrationDataError,
-} from "../../../types/authentication.ts";
+import { useContext } from "react";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const AccountData: React.FC<{
-  registrationData: RegistrationData;
-  registrationDataError: RegistrationDataError;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-}> = ({ registrationData, registrationDataError, setRegistrationData }) => {
+export const AccountData = () => {
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
+  const context = useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+
+  const { registrationData, registrationDataError, setRegistrationData } =
+    context;
+
   return (
     <>
       <SectionDivision

@@ -1,15 +1,17 @@
 import { SectionDivision } from "../SectionDivision.tsx";
 import { DateForm } from "../../../global/DateForm.tsx";
-import * as React from "react";
 import { useState } from "react";
-import type { RegistrationData } from "../../../types/authentication.ts";
 import { useDateObject } from "../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import * as React from "react";
 
-export const EmploymentDate: React.FC<{
-  registrationData: RegistrationData;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-}> = ({ registrationData, setRegistrationData }) => {
+export const EmploymentDate = () => {
+  const context = React.useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+  const { registrationData, setRegistrationData } = context;
   const [isEmploymentDataExpanded, setIsEmploymentDataExpanded] =
     useState(true);
   const dateObject = useDateObject(

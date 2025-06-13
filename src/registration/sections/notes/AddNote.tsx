@@ -1,16 +1,15 @@
 import * as React from "react";
-import type {
-  RegistrationData,
-  RegistrationDataError,
-} from "../../../types/authentication.ts";
 import { Add } from "../../../button/Add.tsx";
 import { NoteItem } from "./NoteItem.tsx";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const AddNote: React.FC<{
-  registrationData: RegistrationData;
-  registrationDataError: RegistrationDataError;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-}> = ({ registrationData, registrationDataError, setRegistrationData }) => {
+export const AddNote = () => {
+  const context = React.useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+  const { registrationData, setRegistrationData, registrationDataError } =
+    context;
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row items-center gap-x-3">
