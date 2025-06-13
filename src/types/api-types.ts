@@ -1,3 +1,5 @@
+import type { Pagination } from "./global.ts";
+
 export type Link = {
   rel: string;
   href: string;
@@ -30,8 +32,7 @@ export type GetCompaniesResponse = {
   page: PageInfo;
 };
 
-export type InternalCompanyInfo = {
-  id: string;
-  name: string;
-  uuid: string;
+export type PaginatedData<T> = {
+  data: T[];
+  pagination: Pagination;
 };

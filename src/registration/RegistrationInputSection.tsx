@@ -18,6 +18,11 @@ import {
   getRegistrationDataErrors,
 } from "../utils/registration-utils.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
+import {
+  RegistrationContext,
+  type RegistrationContextData,
+} from "../context/RegistrationContext.ts";
+import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -35,22 +40,29 @@ export const RegistrationInputSection: React.FC<{
     setRegistrationDataError(error);
     const groupedErrors = getGroupedErrors(error);
     const errors: SectionEnum[] = [];
-    for (const [section, hasErrors] of groupedErrors) {
-      if (hasErrors) {
-        errors.push(section);
-      } else {
-        sectionsHandler.removeError(section);
-      }
-    }
-
-    sectionsHandler.setErrors(errors);
-
-    if (errors.length === 0) {
-      sectionsHandler.next();
-    }
+    // for (const [section, hasErrors] of groupedErrors) {
+    //   if (hasErrors) {
+    //     errors.push(section);
+    //   } else {
+    //     sectionsHandler.removeError(section);
+    //   }
+    // }
+    //
+    // sectionsHandler.setErrors(errors);
+    //
+    // if (errors.length === 0) {
+    sectionsHandler.next();
+    // }
   };
 
   const activeSection = sectionsHandler.getActiveSection();
+  const paginatedCompanies = useFetchPaginatedCompanies();
+  const registrationContextData: RegistrationContextData = {
+    registrationData: registrationData,
+    setRegistrationData: setRegistrationData,
+    companies: paginatedCompanies.data,
+    pagination: paginatedCompanies.pagination,
+  };
 
   return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
@@ -69,10 +81,9 @@ export const RegistrationInputSection: React.FC<{
           />
         )}
         {activeSection === SectionEnum.WORKLOAD && (
-          <Workload
-            registrationData={registrationData}
-            setRegistrationData={setRegistrationData}
-          />
+          <RegistrationContext value={registrationContextData}>
+            <Workload />
+          </RegistrationContext>
         )}
         {activeSection === SectionEnum.NOTES && (
           <Notes

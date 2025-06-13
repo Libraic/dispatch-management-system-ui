@@ -1,22 +1,20 @@
-import type { RegistrationData } from "../../../types/authentication.ts";
-import * as React from "react";
-import type { CompanyData } from "../../../types/api-types.ts";
+import { useContext } from "react";
 import { WorkloadItem } from "./WorkloadItem.tsx";
 import { Add } from "../../../button/Add.tsx";
-import type { Pagination } from "../../../types/global.ts";
+import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const AddWorkload: React.FC<{
-  registrationData: RegistrationData;
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
-  companies: CompanyData[];
-  pagination?: Pagination;
-}> = ({ registrationData, setRegistrationData, companies, pagination }) => {
+export const AddWorkload = () => {
+  const context = useContext(RegistrationContext);
+  if (context === undefined) {
+    throw new Error("Context is undefined");
+  }
+  const companies = context.companies;
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row items-center gap-x-3">
         <Add
           onClick={() =>
-            setRegistrationData((prev) => ({
+            context.setRegistrationData((prev) => ({
               ...prev,
               workload: [
                 ...prev.workload,
@@ -33,13 +31,8 @@ export const AddWorkload: React.FC<{
       </div>
 
       <div className="flex flex-col gap-y-15">
-        {registrationData.workload.map((item) => (
-          <WorkloadItem
-            setRegistrationData={setRegistrationData}
-            item={item}
-            companies={companies}
-            pagination={pagination}
-          />
+        {context.registrationData.workload.map((item) => (
+          <WorkloadItem item={item} />
         ))}
       </div>
     </div>
