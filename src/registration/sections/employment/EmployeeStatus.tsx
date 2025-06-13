@@ -6,10 +6,7 @@ import { SectionDivision } from "../SectionDivision.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const EmployeeStatus = () => {
-  const context = React.useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
+  const context = React.useContext(RegistrationContext)!;
   const { registrationData, setRegistrationData } = context;
   const [isStatusDataExpanded, setIsStatusDataExpanded] = useState(true);
   return (

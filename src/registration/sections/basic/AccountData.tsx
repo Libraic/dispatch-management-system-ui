@@ -7,10 +7,7 @@ import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 export const AccountData = () => {
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
-  const context = useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
+  const context = useContext(RegistrationContext)!;
 
   const { registrationData, registrationDataError, setRegistrationData } =
     context;

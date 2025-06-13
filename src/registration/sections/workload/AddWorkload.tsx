@@ -4,10 +4,7 @@ import { Add } from "../../../button/Add.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const AddWorkload = () => {
-  const context = useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
+  const context = useContext(RegistrationContext)!;
   const companies = context.companies;
   return (
     <div className="flex flex-col gap-y-5">

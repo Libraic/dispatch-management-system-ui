@@ -9,10 +9,7 @@ import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 export const WorkloadItem: React.FC<{
   item: WorkloadData;
 }> = ({ item }) => {
-  const context = useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
+  const context = useContext(RegistrationContext)!;
   const companies = context.companies;
   const pagination = context.pagination;
   return (

@@ -4,10 +4,7 @@ import { NoteItem } from "./NoteItem.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const AddNote = () => {
-  const context = React.useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
+  const context = React.useContext(RegistrationContext)!;
   const { registrationData, setRegistrationData, registrationDataError } =
     context;
   return (

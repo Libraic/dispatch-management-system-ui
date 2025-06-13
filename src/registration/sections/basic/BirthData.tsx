@@ -7,11 +7,7 @@ import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const BirthData = () => {
-  const context = React.useContext(RegistrationContext);
-  if (context === undefined) {
-    throw new Error("Context is undefined");
-  }
-
+  const context = React.useContext(RegistrationContext)!;
   const { registrationData, setRegistrationData } = context;
   const [isBirthDataExpanded, setIsBirthDataExpanded] = React.useState(true);
   const dateObject = useDateObject(
