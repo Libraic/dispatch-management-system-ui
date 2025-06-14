@@ -26,10 +26,14 @@ export const RegistrationSection: React.FC<{
   const iconStylesClass = isSectionComplete
     ? "w-[1rem] h-[1rem]"
     : "w-[0.85rem] h-[0.85rem]";
+  const cursor = isSectionActive
+    ? "hover:cursor-pointer"
+    : "hover:cursor-not-allowed";
   const textColor = isSectionActive ? "text-white" : "text-[#999999]";
+  const backgroundColor = isSectionFocused ? "bg-solid-blue" : "bg-[#212327]";
   return (
     <div
-      className={`${isSectionFocused ? "bg-solid-blue" : "bg-[#212327]"} flex justify-between items-center hover:bg-solid-blue hover:cursor-pointer rounded-xl min-h-6 w-40 transition-colors ease-in duration-200 pl-2 pr-2`}
+      className={`${backgroundColor} flex justify-between items-center hover:bg-solid-blue ${cursor} rounded-xl min-h-6 w-40 transition-colors ease-in duration-200 pl-2 pr-2`}
       onClick={setFocusedSection}
     >
       <p className={`text-standard-size font-inter-500 ${textColor}`}>
