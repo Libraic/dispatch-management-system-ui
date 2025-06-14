@@ -4,13 +4,17 @@ import * as React from "react";
 import { useContext } from "react";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
-export const AccountData = () => {
+export const AccountData: React.FC<{
+  setShouldDisplayInformation: (value: boolean) => void;
+}> = ({ setShouldDisplayInformation }) => {
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
   const context = useContext(RegistrationContext)!;
 
   const { registrationData, registrationDataError, setRegistrationData } =
     context;
+
+  setShouldDisplayInformation(isAccountDataExpanded);
 
   return (
     <>
