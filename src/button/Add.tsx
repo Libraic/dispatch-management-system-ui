@@ -1,5 +1,5 @@
-import addWorkloadHoveredIcon from "../assets/add-hovered.svg";
-import addWorkloadIcon from "../assets/add.svg";
+import addWorkloadHoveredIcon from "../assets/global/add-hovered.svg";
+import addWorkloadIcon from "../assets/global/add.svg";
 import * as React from "react";
 
 export const Add: React.FC<{ onClick: () => void }> = ({ onClick }) => {

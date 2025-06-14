@@ -1,6 +1,6 @@
-import incompleteSectionIcon from "../assets/section-in-progress.svg";
-import incompleteSectionErrorIcon from "../assets/section-in-progress-error.svg";
-import completedSectionIcon from "../assets/completed-section.svg";
+import incompleteSectionIcon from "../assets/registration/sections/section-in-progress.svg";
+import incompleteSectionErrorIcon from "../assets/registration/sections/section-in-progress-error.svg";
+import completedSectionIcon from "../assets/registration/sections/completed-section.svg";
 import * as React from "react";
 
 export const RegistrationSection: React.FC<{

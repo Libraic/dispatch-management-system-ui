@@ -2,7 +2,7 @@ import * as React from "react";
 import type { ChangeEvent } from "react";
 import { BLANK_STRING } from "../utils/global-constants.ts";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
-import mandatoryFieldIcon from "../assets/mandatory-field.svg";
+import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { InputFormError } from "./InputFormError.tsx";
 
 export const InputForm: React.FC<{

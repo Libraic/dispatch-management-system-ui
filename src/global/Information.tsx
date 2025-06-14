@@ -1,4 +1,4 @@
-import mandatoryFieldIcon from "../assets/mandatory-field.svg";
+import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 
 export const Information = () => {
   return (
