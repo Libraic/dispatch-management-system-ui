@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { CompanyData, PaginatedData } from "../types/api-types.ts";
+import type { CompanyData, Error, PaginatedData } from "../types/api-types.ts";
 import { usePagination } from "./usePagination.ts";
 import { FETCH_COMPANIES_IN_BATCHES } from "../utils/api-paths.ts";
 import { fetchCompanies } from "../service/companyService.ts";
@@ -7,6 +7,7 @@ import { PAGE_NEXT_ELEMENT } from "../utils/global-constants.ts";
 
 export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
+  const [error, setError] = useState<Error | undefined>(undefined);
   const pagination = usePagination(FETCH_COMPANIES_IN_BATCHES);
 
   const loadCompanies = (append: boolean) => {
@@ -20,7 +21,7 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
           append ? [...prev, ...data.content] : data.content,
         );
       })
-      .catch(console.error)
+      .catch((err) => setError({ message: `${err.message}. Try again later` }))
       .finally(() => pagination.setLoadNext(false));
   };
 
@@ -48,5 +49,6 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
   return {
     data: companies,
     pagination: pagination,
+    error: error,
   };
 };

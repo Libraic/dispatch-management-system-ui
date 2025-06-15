@@ -2,7 +2,7 @@ import type {
   RegistrationData,
   RegistrationDataError,
 } from "../types/authentication.ts";
-import type { CompanyData } from "../types/api-types.ts";
+import type { CompanyData, Error } from "../types/api-types.ts";
 import type { Pagination } from "../types/global.ts";
 import * as React from "react";
 import { createContext } from "react";
@@ -13,6 +13,7 @@ export type RegistrationContextData = {
   registrationDataError: RegistrationDataError;
   companies: CompanyData[];
   pagination?: Pagination;
+  error: Error | undefined;
 };
 
 export const RegistrationContext = createContext<

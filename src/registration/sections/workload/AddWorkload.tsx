@@ -10,7 +10,7 @@ export const AddWorkload = () => {
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row items-center gap-x-3">
         <Add
-          onClick={() =>
+          onClick={() => {
             context.setRegistrationData((prev) => ({
               ...prev,
               workload: [
@@ -21,12 +21,11 @@ export const AddWorkload = () => {
                   commission: 0.0,
                 },
               ],
-            }))
-          }
+            }));
+          }}
         />
         <p className="font-roboto-400">Add Workload</p>
       </div>
-
       <div className="flex flex-col gap-y-15">
         {context.registrationData.workload.map((item) => (
           <WorkloadItem item={item} />
