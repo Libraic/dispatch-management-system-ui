@@ -35,4 +35,5 @@ export type GetCompaniesResponse = {
 export type PaginatedData<T> = {
   data: T[];
   pagination: Pagination;
+  error: Error | undefined;
 };

@@ -23,6 +23,7 @@ import {
   type RegistrationContextData,
 } from "../context/RegistrationContext.ts";
 import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
+import { Toast } from "../toast/Toast.tsx";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -57,12 +58,14 @@ export const RegistrationInputSection: React.FC<{
 
   const activeSection = sectionsHandler.getActiveSection();
   const paginatedCompanies = useFetchPaginatedCompanies();
+  const error = paginatedCompanies.error;
   const registrationContextData: RegistrationContextData = {
     registrationData: registrationData,
     setRegistrationData: setRegistrationData,
     registrationDataError: registrationDataError,
     companies: paginatedCompanies.data,
     pagination: paginatedCompanies.pagination,
+    error: paginatedCompanies.error,
   };
   const sectionComponents: Record<SectionEnum, React.ReactNode> = {
     BASIC_INFORMATION: <BasicInformation />,
@@ -71,7 +74,7 @@ export const RegistrationInputSection: React.FC<{
     NOTES: <Notes />,
   };
 
-  return (
+  return error === undefined ? (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <RegistrationContext value={registrationContextData}>
@@ -83,5 +86,7 @@ export const RegistrationInputSection: React.FC<{
         <SubmitButton actionText="Continue" action={validateRegistrationData} />
       </div>
     </div>
+  ) : (
+    <Toast message={error.message} />
   );
 };
