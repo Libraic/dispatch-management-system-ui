@@ -14,6 +14,7 @@ export type PageInfo = {
 
 export type Error = {
   message: string;
+  field: string | null;
 };
 
 export type ApiResponse<T> = {
@@ -36,4 +37,28 @@ export type PaginatedData<T> = {
   data: T[];
   pagination: Pagination;
   error: Error | undefined;
+};
+
+export type CreateWorkloadRequest = {
+  companyUuid: string;
+  commission: number;
+};
+
+export type CreateUserRequest = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  personalEmail: string | null;
+  birthDate: string;
+  employmentDate: string;
+  role: string;
+  position: string;
+  supervisorUuid: string | null;
+  workloads: CreateWorkloadRequest[];
+  notes: string[];
+};
+
+export type UserData = {
+  uuid: string;
 };

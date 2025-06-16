@@ -26,7 +26,7 @@ export const Toast: React.FC<{ message: string }> = ({ message }) => {
 
   return (
     <div
-      className={`flex items-center justify-center rounded-2xl border border-[#BF3131] bg-[#fcefea] text-black absolute top-6 left-1/2 -translate-x-1/2 w-[23rem] h-[3.5rem] font-inter-400 text-[1.25rem] shadow-md transition-all duration-300 ease-in-out
+      className={`flex items-center justify-center py-8 rounded-2xl border border-[#BF3131] bg-[#fcefea] text-black absolute top-6 left-1/2 -translate-x-1/2 w-[30rem] h-[3.5rem] font-inter-400 text-[1.25rem] shadow-md transition-all duration-300 ease-in-out
         ${
           animateOut
             ? "opacity-0 -translate-y-5"
@@ -35,7 +35,7 @@ export const Toast: React.FC<{ message: string }> = ({ message }) => {
               : "opacity-0 -translate-y-5"
         }`}
     >
-      <div className="flex flex-row justify-evenly gap-x-4 items-center">
+      <div className="flex flex-row justify-evenly gap-x-4 items-center mx-2">
         <img className="w-7" src={errorIcon} alt="error-icon" />
         <div>
           <p className="text-black font-inter-400 text-[1rem]">

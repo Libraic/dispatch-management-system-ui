@@ -10,12 +10,13 @@ import { Workload } from "./sections/workload/Workload.tsx";
 import { CancelButton } from "../button/CancelButton.tsx";
 import { SubmitButton } from "../button/SubmitButton.tsx";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getBlankRegistrationData,
   getBlankRegistrationDataError,
-  getGroupedErrors,
+  getCreateUserRequestFromRegistrationData,
   getRegistrationDataErrors,
+  getSectionsWithErrors,
 } from "../utils/registration-utils.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import {
@@ -24,6 +25,9 @@ import {
 } from "../context/RegistrationContext.ts";
 import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
 import { Toast } from "../toast/Toast.tsx";
+import type { CreateUserRequest } from "../types/api-types.ts";
+import { saveUser } from "../service/userService.ts";
+import { BLANK_STRING } from "../utils/global-constants.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -35,26 +39,9 @@ export const RegistrationInputSection: React.FC<{
   const [registrationDataError, setRegistrationDataError] =
     useState<RegistrationDataError>(getBlankRegistrationDataError());
 
-  const validateRegistrationData = (e: React.FormEvent) => {
-    e.preventDefault();
-    const error = getRegistrationDataErrors(registrationData);
-    setRegistrationDataError(error);
-    const groupedErrors = getGroupedErrors(error);
-    const errors: SectionEnum[] = [];
-    for (const [section, hasErrors] of groupedErrors) {
-      if (hasErrors) {
-        errors.push(section);
-      } else {
-        sectionsHandler.removeError(section);
-      }
-    }
-
-    sectionsHandler.setErrors(errors);
-
-    if (errors.length === 0) {
-      sectionsHandler.next();
-    }
-  };
+  const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
+  const [errorMessage, setErrorMessage] = useState<string>(BLANK_STRING);
+  const [toastId, setToastId] = useState<string | null>(null);
 
   const activeSection = sectionsHandler.getActiveSection();
   const paginatedCompanies = useFetchPaginatedCompanies();
@@ -74,7 +61,88 @@ export const RegistrationInputSection: React.FC<{
     NOTES: <Notes />,
   };
 
-  return error === undefined ? (
+  useEffect(() => {
+    const buttonText = sectionsHandler.isSectionFocused(SectionEnum.NOTES)
+      ? "Submit"
+      : "Continue";
+    setSubmitButtonText(buttonText);
+    if (error !== undefined) {
+      setErrorMessage(error.message);
+      setToastId(Date.now().toString());
+    }
+  }, [
+    activeSection,
+    setSubmitButtonText,
+    error,
+    setErrorMessage,
+    sectionsHandler,
+  ]);
+
+  useEffect(() => {
+    async function k() {
+      if (sectionsHandler.areAllSectionsComplete()) {
+        const createUserRequest: CreateUserRequest =
+          getCreateUserRequestFromRegistrationData(registrationData);
+        const apiResponse = await saveUser(createUserRequest);
+        if (apiResponse.error !== null) {
+          const apiErrorMessage = apiResponse.error.message;
+          if (apiResponse.error.field !== null) {
+            setRegistrationDataError((prev) => {
+              const updated = {
+                ...prev,
+                [apiResponse.error.field as string]: apiErrorMessage,
+              };
+              const sectionsErrors = getSectionsWithErrors(updated);
+              sectionsHandler.setErrors(sectionsErrors);
+              return updated;
+            });
+          } else {
+            setErrorMessage(apiErrorMessage);
+            setToastId(Date.now().toString());
+          }
+        } else {
+          setErrorMessage("User created successfully.");
+          setToastId(Date.now().toString());
+        }
+      }
+    }
+    k();
+  }, [registrationData, sectionsHandler]);
+
+  const validateRegistrationData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errors = getRegistrationDataErrors(registrationData);
+    setRegistrationDataError(errors);
+    const sectionsErrorsPriorSubmitting = getSectionsWithErrors(errors);
+    sectionsHandler.setErrors(sectionsErrorsPriorSubmitting);
+    if (sectionsErrorsPriorSubmitting.length === 0) {
+      sectionsHandler.next();
+      // if (sectionsHandler.areAllSectionsComplete()) {
+      //   const createUserRequest: CreateUserRequest =
+      //     getCreateUserRequestFromRegistrationData(registrationData);
+      //   const apiResponse = await saveUser(createUserRequest);
+      //   if (apiResponse.error !== null) {
+      //     const apiErrorMessage = apiResponse.error.message;
+      //     if (apiResponse.error.field !== null) {
+      //       setRegistrationDataError((prev) => {
+      //         const updated = {
+      //           ...prev,
+      //           [apiResponse.error.field as string]: apiErrorMessage,
+      //         };
+      //         const sectionsErrors = getSectionsWithErrors(updated);
+      //         sectionsHandler.setErrors(sectionsErrors);
+      //         return updated;
+      //       });
+      //     } else {
+      //       setErrorMessage(apiErrorMessage);
+      //       setToastId(Date.now().toString());
+      //     }
+      //   }
+      // }
+    }
+  };
+
+  return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <RegistrationContext value={registrationContextData}>
@@ -83,10 +151,14 @@ export const RegistrationInputSection: React.FC<{
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
         <CancelButton actionText="Cancel" action={() => {}} />
-        <SubmitButton actionText="Continue" action={validateRegistrationData} />
+        <SubmitButton
+          actionText={submitButtonText}
+          action={validateRegistrationData}
+        />
       </div>
+      {errorMessage.length !== 0 && (
+        <Toast key={toastId} message={errorMessage} />
+      )}
     </div>
-  ) : (
-    <Toast message={error.message} />
   );
 };

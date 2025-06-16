@@ -66,7 +66,7 @@ export const useSectionsHandler = (): SectionData => {
         // namely to send the data to the backend. This will be rewritten.
         const focused =
           indexOfLastCompletedSection === allSections.length - 1
-            ? allSections[0]
+            ? allSections[indexOfLastCompletedSection]
             : allSections[indexOfLastCompletedSection + 1];
         setFocusedSection(focused);
 
@@ -76,33 +76,21 @@ export const useSectionsHandler = (): SectionData => {
       });
     },
     setErrors: (sectionsWithErrors: SectionEnum[]) => {
-      setSectionsWithErrors((prevErrors) => {
-        // The sections that are completed are basically the sections that were
-        // completed previously and have no errors.
-        const completed: SectionEnum[] = [];
-        for (const s of allSections) {
-          if (sectionsWithErrors.indexOf(s) < 0) {
-            completed.push(s);
-          }
+      // The sections that are completed are basically the sections that were
+      // completed previously and have no errors.
+      const completed: SectionEnum[] = [];
+      for (const s of allSections) {
+        if (sectionsWithErrors.indexOf(s) < 0) {
+          completed.push(s);
         }
-        setSectionsCompleted(completed);
+      }
+      setSectionsCompleted(completed);
 
-        // The focused section will be the last one from the list of sections with errors.
-        setFocusedSection(sectionsWithErrors[sectionsWithErrors.length - 1]);
+      // The focused section will be the first one from the list of sections with errors.
+      setFocusedSection(sectionsWithErrors[0]);
 
-        // The sections with errors will be the previous one + the new ones.
-        // We do this iteration to avoid duplicates
-        const errors: SectionEnum[] = [];
-        for (const s of allSections) {
-          if (
-            sectionsWithErrors.indexOf(s) >= 0 ||
-            prevErrors.indexOf(s) >= 0
-          ) {
-            errors.push(s);
-          }
-        }
-        return errors;
-      });
+      // Set the new Sections with Errors
+      setSectionsWithErrors(sectionsWithErrors);
     },
     removeError: (section: SectionEnum) =>
       setSectionsWithErrors((prev) => {
@@ -128,5 +116,13 @@ export const useSectionsHandler = (): SectionData => {
     isSectionActive: (section: SectionEnum) =>
       sectionsActive.indexOf(section) >= 0,
     isSectionFocused: (section: SectionEnum) => focusedSection === section,
+    areAllSectionsComplete: () => {
+      for (const section of allSections) {
+        if (!sectionsCompleted.includes(section)) {
+          return false;
+        }
+      }
+      return true;
+    },
   };
 };

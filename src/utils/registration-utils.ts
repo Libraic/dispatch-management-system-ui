@@ -11,6 +11,11 @@ import {
   validateNotes,
   validatePassword,
 } from "./validation-utils.ts";
+import type {
+  CreateUserRequest,
+  CreateWorkloadRequest,
+} from "../types/api-types.ts";
+import { convertDateToLittleEndian } from "./util-functions.ts";
 
 export const getBlankRegistrationData = (): RegistrationData => {
   const date = new Date();
@@ -78,7 +83,42 @@ export const getRegistrationDataErrors = (
   return registrationDataError;
 };
 
-export const getGroupedErrors = (
+export const getSectionsWithErrors = (errors: RegistrationDataError) => {
+  const groupedErrors = getGroupedErrors(errors);
+  const sectionsErrors: SectionEnum[] = [];
+  for (const [section, hasErrors] of groupedErrors) {
+    if (hasErrors) {
+      sectionsErrors.push(section);
+    }
+  }
+  return sectionsErrors;
+};
+
+export const getCreateUserRequestFromRegistrationData = (
+  registrationData: RegistrationData,
+): CreateUserRequest => {
+  return {
+    firstName: registrationData.firstName,
+    lastName: registrationData.lastName,
+    email: registrationData.email,
+    password: registrationData.password,
+    personalEmail: registrationData.personalEmail,
+    birthDate: convertDateToLittleEndian(registrationData.birthDate),
+    employmentDate: convertDateToLittleEndian(registrationData.employmentDate),
+    role: registrationData.role,
+    position: registrationData.position,
+    supervisorUuid: null,
+    workloads: registrationData.workload.map(
+      (workload): CreateWorkloadRequest => ({
+        companyUuid: workload.companyId,
+        commission: workload.commission,
+      }),
+    ),
+    notes: registrationData.notes.map((note) => note.note),
+  };
+};
+
+const getGroupedErrors = (
   registrationDataError: RegistrationDataError,
 ): Map<SectionEnum, boolean> => {
   const groupedErrors = new Map<SectionEnum, boolean>();

@@ -21,7 +21,9 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
           append ? [...prev, ...data.content] : data.content,
         );
       })
-      .catch((err) => setError({ message: `${err.message}. Try again later` }))
+      .catch((err) =>
+        setError({ message: `${err.message}. Try again later`, field: null }),
+      )
       .finally(() => pagination.setLoadNext(false));
   };
 

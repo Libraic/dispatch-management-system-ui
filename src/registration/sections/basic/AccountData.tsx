@@ -1,7 +1,7 @@
 import { SectionDivision } from "../SectionDivision.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 
 export const AccountData: React.FC<{
@@ -14,7 +14,9 @@ export const AccountData: React.FC<{
   const { registrationData, registrationDataError, setRegistrationData } =
     context;
 
-  setShouldDisplayInformation(isAccountDataExpanded);
+  useEffect(() => {
+    setShouldDisplayInformation(isAccountDataExpanded);
+  }, [isAccountDataExpanded, setShouldDisplayInformation]);
 
   return (
     <>
