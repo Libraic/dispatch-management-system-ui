@@ -1,6 +1,5 @@
 import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
 import { EmploymentDate } from "./EmploymentDate.tsx";
-import * as React from "react";
 import { EmployeeStatus } from "./EmployeeStatus.tsx";
 
 export const EmploymentInformation = () => {

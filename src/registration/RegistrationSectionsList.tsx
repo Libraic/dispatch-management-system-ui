@@ -1,6 +1,9 @@
 import { RegistrationSection } from "./RegistrationSection.tsx";
-import { type SectionData, SectionEnum } from "../types/authentication.ts";
 import * as React from "react";
+import {
+  type SectionData,
+  SectionEnum,
+} from "../types/registration/section.ts";
 
 export const RegistrationSectionsList: React.FC<{
   sectionsHandler: SectionData;

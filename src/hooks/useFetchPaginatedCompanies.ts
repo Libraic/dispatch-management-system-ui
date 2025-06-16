@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import type { CompanyData, Error, PaginatedData } from "../types/api-types.ts";
+import type { CompanyData } from "../types/api/registration-api.ts";
 import { usePagination } from "./usePagination.ts";
 import { FETCH_COMPANIES_IN_BATCHES } from "../utils/api-paths.ts";
 import { fetchCompanies } from "../service/companyService.ts";
 import { PAGE_NEXT_ELEMENT } from "../utils/global-constants.ts";
+import type { Error, Link, PaginatedData } from "../types/api/common.ts";
 
 export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
@@ -15,7 +16,9 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
 
     fetchCompanies(pagination.getNextUrl() as string)
       .then((data) => {
-        const next = data.links.find((link) => link.rel === PAGE_NEXT_ELEMENT);
+        const next = data.links.find(
+          (link: Link) => link.rel === PAGE_NEXT_ELEMENT,
+        );
         pagination.setNextUrl(next?.href || null);
         setCompanies((prev) =>
           append ? [...prev, ...data.content] : data.content,

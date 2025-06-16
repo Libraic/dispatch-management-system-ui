@@ -1,12 +1,12 @@
 import type { ChangeEvent } from "react";
 import * as React from "react";
-import type {
-  NoteData,
-  RegistrationData,
-} from "../../../types/authentication.ts";
 import { Delete } from "../../../button/Delete.tsx";
 import { inputFormStyle } from "../../../utils/tailwind.ts";
 import { InputFormError } from "../../../global/InputFormError.tsx";
+import type {
+  NoteData,
+  RegistrationData,
+} from "../../../types/registration/registration-data.ts";
 
 export const NoteItem: React.FC<{
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;

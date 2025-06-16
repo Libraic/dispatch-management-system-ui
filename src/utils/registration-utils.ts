@@ -1,11 +1,5 @@
 import { BLANK_STRING, DEFAULT_BIRTH_DATE } from "./global-constants.ts";
-import {
-  PositionEnum,
-  type RegistrationData,
-  type RegistrationDataError,
-  RoleEnum,
-  SectionEnum,
-} from "../types/authentication.ts";
+
 import {
   validateEmail,
   validateNotes,
@@ -14,8 +8,15 @@ import {
 import type {
   CreateUserRequest,
   CreateWorkloadRequest,
-} from "../types/api-types.ts";
+} from "../types/api/registration-api.ts";
 import { convertDateToLittleEndian } from "./util-functions.ts";
+import {
+  PositionEnum,
+  type RegistrationData,
+  type RegistrationDataError,
+  RoleEnum,
+} from "../types/registration/registration-data.ts";
+import { SectionEnum } from "../types/registration/section.ts";
 
 export const getBlankRegistrationData = (): RegistrationData => {
   const date = new Date();

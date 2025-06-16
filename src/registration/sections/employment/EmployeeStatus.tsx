@@ -1,9 +1,12 @@
 import { SelectForm } from "../../../global/SelectForm.tsx";
-import { PositionEnum, RoleEnum } from "../../../types/authentication.ts";
 import * as React from "react";
 import { useState } from "react";
 import { SectionDivision } from "../SectionDivision.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import {
+  PositionEnum,
+  RoleEnum,
+} from "../../../types/registration/registration-data.ts";
 
 export const EmployeeStatus = () => {
   const context = React.useContext(RegistrationContext)!;

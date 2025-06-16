@@ -1,5 +1,6 @@
 import axios from "axios";
-import type { ApiResponse, GetCompaniesResponse } from "../types/api-types.ts";
+import type { GetCompaniesResponse } from "../types/api/registration-api.ts";
+import type { ApiResponse } from "../types/api/common.ts";
 
 export const fetchCompanies = async (url: string) => {
   try {

@@ -2,9 +2,9 @@ import { SelectForm } from "../../../global/SelectForm.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext } from "react";
-import type { WorkloadData } from "../../../types/authentication.ts";
 import { Delete } from "../../../button/Delete.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import type { WorkloadData } from "../../../types/registration/registration-data.ts";
 
 export const WorkloadItem: React.FC<{
   item: WorkloadData;

@@ -1,5 +1,4 @@
 import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
-import * as React from "react";
 import { AddNote } from "./AddNote.tsx";
 
 export const Notes = () => {

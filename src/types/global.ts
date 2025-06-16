@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type YearData = {
   day: number;
   month: number;
@@ -19,4 +21,13 @@ export type Pagination = {
   setNextUrl: (url: string | null) => void;
   shouldLoadNext: () => boolean;
   setLoadNext: (loadNext: boolean) => void;
+};
+
+export type SelectFormData<T extends ReactNode, D extends string | number> = {
+  label: string;
+  formWidth: string;
+  initialValue: D;
+  data: T[];
+  pagination?: Pagination;
+  setElement: (value: string) => void;
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
-import type { RegistrationData } from "../types/authentication.ts";
 import type { DateObject } from "../types/global.ts";
+import type { RegistrationData } from "../types/registration/registration-data.ts";
 
 export const usePrepopulateDate = (
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,

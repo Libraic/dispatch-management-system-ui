@@ -1,5 +1,8 @@
 import { BLANK_STRING, NOTE_MAX_LENGTH } from "./global-constants.ts";
-import type { NoteData, NoteError } from "../types/authentication.ts";
+import type {
+  NoteData,
+  NoteError,
+} from "../types/registration/registration-data.ts";
 
 export const validateEmail = (value: string, isMandatory: boolean): string => {
   if (value === BLANK_STRING) {

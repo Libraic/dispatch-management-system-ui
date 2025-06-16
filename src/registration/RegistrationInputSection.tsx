@@ -1,9 +1,3 @@
-import {
-  type RegistrationData,
-  type RegistrationDataError,
-  type SectionData,
-  SectionEnum,
-} from "../types/authentication.ts";
 import { BasicInformation } from "./sections/basic/BasicInformation.tsx";
 import { EmploymentInformation } from "./sections/employment/EmploymentInformation.tsx";
 import { Workload } from "./sections/workload/Workload.tsx";
@@ -25,9 +19,17 @@ import {
 } from "../context/RegistrationContext.ts";
 import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
 import { Toast } from "../toast/Toast.tsx";
-import type { CreateUserRequest } from "../types/api-types.ts";
+import type { CreateUserRequest } from "../types/api/registration-api.ts";
 import { saveUser } from "../service/userService.ts";
 import { BLANK_STRING } from "../utils/global-constants.ts";
+import {
+  type SectionData,
+  SectionEnum,
+} from "../types/registration/section.ts";
+import type {
+  RegistrationData,
+  RegistrationDataError,
+} from "../types/registration/registration-data.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -106,6 +108,7 @@ export const RegistrationInputSection: React.FC<{
         }
       }
     }
+
     k();
   }, [registrationData, sectionsHandler]);
 

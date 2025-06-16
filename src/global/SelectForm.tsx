@@ -1,7 +1,7 @@
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
-import type { SelectFormData } from "../types/authentication.ts";
 import type { ReactNode } from "react";
 import { LOAD_MORE_ELEMENTS } from "../utils/global-constants.ts";
+import type { SelectFormData } from "../types/global.ts";
 
 export const SelectForm = <T extends ReactNode, D extends string | number>({
   label,
