@@ -30,6 +30,7 @@ import type {
   RegistrationData,
   RegistrationDataError,
 } from "../types/registration/registration-data.ts";
+import { ToastTypeEnum } from "../types/toast.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -44,6 +45,9 @@ export const RegistrationInputSection: React.FC<{
   const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
   const [errorMessage, setErrorMessage] = useState<string>(BLANK_STRING);
   const [toastId, setToastId] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<ToastTypeEnum>(
+    ToastTypeEnum.ERROR,
+  );
 
   const activeSection = sectionsHandler.getActiveSection();
   const paginatedCompanies = useFetchPaginatedCompanies();
@@ -71,6 +75,7 @@ export const RegistrationInputSection: React.FC<{
     if (error !== undefined) {
       setErrorMessage(error.message);
       setToastId(Date.now().toString());
+      setToastType(ToastTypeEnum.ERROR);
     }
   }, [
     activeSection,
@@ -101,10 +106,12 @@ export const RegistrationInputSection: React.FC<{
           } else {
             setErrorMessage(apiErrorMessage);
             setToastId(Date.now().toString());
+            setToastType(ToastTypeEnum.ERROR);
           }
         } else {
           setErrorMessage("User created successfully.");
           setToastId(Date.now().toString());
+          setToastType(ToastTypeEnum.SUCCESS);
         }
       }
     }
@@ -160,7 +167,7 @@ export const RegistrationInputSection: React.FC<{
         />
       </div>
       {errorMessage.length !== 0 && (
-        <Toast key={toastId} message={errorMessage} />
+        <Toast key={toastId} message={errorMessage} type={toastType} />
       )}
     </div>
   );
