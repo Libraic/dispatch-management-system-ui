@@ -19,6 +19,7 @@ export type CreateWorkloadRequest = {
 export type CreateUserRequest = {
   firstName: string;
   lastName: string;
+  nickname: string | null;
   email: string;
   password: string;
   personalEmail: string | null;

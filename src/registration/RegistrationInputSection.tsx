@@ -86,7 +86,7 @@ export const RegistrationInputSection: React.FC<{
   ]);
 
   useEffect(() => {
-    async function k() {
+    async function handleUserCreation() {
       if (sectionsHandler.areAllSectionsComplete()) {
         const createUserRequest: CreateUserRequest =
           getCreateUserRequestFromRegistrationData(registrationData);
@@ -116,7 +116,8 @@ export const RegistrationInputSection: React.FC<{
       }
     }
 
-    k();
+    // TODO: Redirect to a new page
+    handleUserCreation().then(() => {});
   }, [registrationData, sectionsHandler]);
 
   const validateRegistrationData = async (e: React.FormEvent) => {
@@ -127,32 +128,10 @@ export const RegistrationInputSection: React.FC<{
     sectionsHandler.setErrors(sectionsErrorsPriorSubmitting);
     if (sectionsErrorsPriorSubmitting.length === 0) {
       sectionsHandler.next();
-      // if (sectionsHandler.areAllSectionsComplete()) {
-      //   const createUserRequest: CreateUserRequest =
-      //     getCreateUserRequestFromRegistrationData(registrationData);
-      //   const apiResponse = await saveUser(createUserRequest);
-      //   if (apiResponse.error !== null) {
-      //     const apiErrorMessage = apiResponse.error.message;
-      //     if (apiResponse.error.field !== null) {
-      //       setRegistrationDataError((prev) => {
-      //         const updated = {
-      //           ...prev,
-      //           [apiResponse.error.field as string]: apiErrorMessage,
-      //         };
-      //         const sectionsErrors = getSectionsWithErrors(updated);
-      //         sectionsHandler.setErrors(sectionsErrors);
-      //         return updated;
-      //       });
-      //     } else {
-      //       setErrorMessage(apiErrorMessage);
-      //       setToastId(Date.now().toString());
-      //     }
-      //   }
-      // }
     }
   };
 
-  return (
+  return errorMessage.length === 0 ? (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <RegistrationContext value={registrationContextData}>
@@ -166,9 +145,8 @@ export const RegistrationInputSection: React.FC<{
           action={validateRegistrationData}
         />
       </div>
-      {errorMessage.length !== 0 && (
-        <Toast key={toastId} message={errorMessage} type={toastType} />
-      )}
     </div>
+  ) : (
+    <Toast key={toastId} message={errorMessage} type={toastType} />
   );
 };

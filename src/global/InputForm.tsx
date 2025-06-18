@@ -1,7 +1,11 @@
-import * as React from "react";
 import type { ChangeEvent } from "react";
+import * as React from "react";
 import { BLANK_STRING } from "../utils/global-constants.ts";
-import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
+import {
+  inputFormLabelStyle,
+  inputFormStyle,
+  inputFormStyleError,
+} from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { InputFormError } from "./InputFormError.tsx";
 
@@ -12,7 +16,7 @@ export const InputForm: React.FC<{
   name: string;
   inputFieldValue: string;
   isMandatory: boolean;
-  errorText: string;
+  errorText?: string;
   saveData: (value: string) => void;
 }> = ({
   label,
@@ -56,7 +60,7 @@ export const InputForm: React.FC<{
       </div>
 
       <input
-        className={`${inputFormStyle} w-[12rem]`}
+        className={`${errorText?.length ? inputFormStyleError : inputFormStyle} w-[19rem]`}
         type={type}
         name={name}
         placeholder={placeholderText}
@@ -66,7 +70,9 @@ export const InputForm: React.FC<{
         onChange={handleChange}
       />
 
-      {errorText.length > 0 && <InputFormError errorMessage={errorText} />}
+      <div className="min-h-[2.5rem]">
+        {!!errorText?.length && <InputFormError errorMessage={errorText} />}
+      </div>
     </div>
   );
 };

@@ -23,6 +23,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
   return {
     firstName: BLANK_STRING,
     lastName: BLANK_STRING,
+    nickname: BLANK_STRING,
     email: BLANK_STRING,
     password: BLANK_STRING,
     confirmPassword: BLANK_STRING,
@@ -101,9 +102,16 @@ export const getCreateUserRequestFromRegistrationData = (
   return {
     firstName: registrationData.firstName,
     lastName: registrationData.lastName,
+    nickname:
+      registrationData.nickname === BLANK_STRING
+        ? null
+        : registrationData.nickname,
     email: registrationData.email,
     password: registrationData.password,
-    personalEmail: registrationData.personalEmail,
+    personalEmail:
+      registrationData.personalEmail === BLANK_STRING
+        ? null
+        : registrationData.personalEmail,
     birthDate: convertDateToLittleEndian(registrationData.birthDate),
     employmentDate: convertDateToLittleEndian(registrationData.employmentDate),
     role: registrationData.role,

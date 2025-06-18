@@ -31,7 +31,7 @@ export const validatePassword = (
   }
 
   if (password.length < 8) {
-    return "Must be at least 8 characters long";
+    return "The password must be at least 8 characters long";
   }
 
   if (password !== confirmPassword) {

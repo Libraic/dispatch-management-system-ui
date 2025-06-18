@@ -59,6 +59,22 @@ export const AccountData: React.FC<{
               }}
             />
             <InputForm
+              label="Nickname"
+              placeholder="Jay"
+              type="text"
+              name="nick-name"
+              inputFieldValue={registrationData.nickname}
+              isMandatory={false}
+              saveData={(value: string) => {
+                setRegistrationData((prev) => ({
+                  ...prev,
+                  nickname: value,
+                }));
+              }}
+            />
+          </div>
+          <div className="flex gap-x-5.5 mb-10">
+            <InputForm
               label="E-mail"
               placeholder="john.doe@domain.com"
               type="email"
@@ -70,6 +86,21 @@ export const AccountData: React.FC<{
                 setRegistrationData((prev) => ({
                   ...prev,
                   email: value,
+                }));
+              }}
+            />
+            <InputForm
+              label="Personal E-mail"
+              placeholder="john.doe@domain.com"
+              type="email"
+              name="email"
+              inputFieldValue={registrationData.personalEmail}
+              isMandatory={false}
+              errorText={registrationDataError.personalEmailError}
+              saveData={(value: string) => {
+                setRegistrationData((prev) => ({
+                  ...prev,
+                  personalEmail: value,
                 }));
               }}
             />
@@ -102,23 +133,6 @@ export const AccountData: React.FC<{
                 setRegistrationData((prev) => ({
                   ...prev,
                   confirmPassword: value,
-                }));
-              }}
-            />
-          </div>
-          <div className="flex gap-x-5.5 mb-10">
-            <InputForm
-              label="Personal E-mail"
-              placeholder="john.doe@domain.com"
-              type="email"
-              name="email"
-              inputFieldValue={registrationData.personalEmail}
-              isMandatory={false}
-              errorText={registrationDataError.personalEmailError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  personalEmail: value,
                 }));
               }}
             />

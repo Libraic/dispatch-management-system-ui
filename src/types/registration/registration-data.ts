@@ -42,6 +42,7 @@ export type RegistrationDataError = {
 export type RegistrationData = {
   firstName: string;
   lastName: string;
+  nickname: string;
   email: string;
   password: string;
   confirmPassword: string;

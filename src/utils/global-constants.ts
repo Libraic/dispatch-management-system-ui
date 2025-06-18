@@ -1,6 +1,7 @@
 import type { YearData } from "../types/global.ts";
 
 export const BLANK_STRING = "";
+export const NULL = null;
 export const LAST_ADMITTABLE_BIRTH_YEAR = 2007;
 export const DEFAULT_BIRTH_DATE: YearData = {
   day: 1,

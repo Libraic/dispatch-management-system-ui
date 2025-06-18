@@ -13,6 +13,18 @@ export const inputFormStyle =
   "transition-colors " +
   "ease-in duration-150";
 
+export const inputFormStyleError =
+  "pl-2 " +
+  "pt-0.5 " +
+  "pb-0.5 " +
+  "font-roboto-300 " +
+  "text-standard-size " +
+  "bg-white " +
+  "rounded-sm " +
+  "border-error-red " +
+  "border-[0.09rem] " +
+  "outline-0 ";
+
 export const inputFormLabelStyle = "text-standard-size " + "font-roboto-500";
 
 export const colorTransitionStyle = "transition-all " + "ease-in duration-150";
