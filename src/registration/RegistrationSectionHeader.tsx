@@ -6,8 +6,8 @@ export const RegistrationSectionHeader: React.FC<{
 }> = ({ header, subheader }) => {
   return (
     <div className="flex items-center justify-center mb-[2rem] flex-col">
-      <p className="font-inter-600 text-[2rem]">{header}</p>
-      <p className="font-inter-400 text-[1rem]">{subheader}</p>
+      <p className="font-lato font-bold text-[2rem]">{header}</p>
+      <p className="font-lato font-normal text-[1rem]">{subheader}</p>
     </div>
   );
 };

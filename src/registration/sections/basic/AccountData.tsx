@@ -44,6 +44,20 @@ export const AccountData: React.FC<{
               }}
             />
             <InputForm
+              label="Nickname"
+              placeholder="Jay"
+              type="text"
+              name="nick-name"
+              inputFieldValue={registrationData.nickname}
+              isMandatory={false}
+              saveData={(value: string) => {
+                setRegistrationData((prev) => ({
+                  ...prev,
+                  nickname: value,
+                }));
+              }}
+            />
+            <InputForm
               label="Last Name"
               placeholder="Doe"
               type="text"
@@ -55,20 +69,6 @@ export const AccountData: React.FC<{
                 setRegistrationData((prev) => ({
                   ...prev,
                   lastName: value,
-                }));
-              }}
-            />
-            <InputForm
-              label="Nickname"
-              placeholder="Jay"
-              type="text"
-              name="nick-name"
-              inputFieldValue={registrationData.nickname}
-              isMandatory={false}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  nickname: value,
                 }));
               }}
             />
