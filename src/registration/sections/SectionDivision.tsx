@@ -22,16 +22,16 @@ export const SectionDivision: React.FC<{
           onClick={() => setIsExpanded((prev) => !prev)}
         />
         <p
-          className={`font-roboto-400 text-[1rem] ${textColor} ${colorTransitionStyle}`}
+          className={`font-lato font-medium text-[1rem] ${textColor} ${colorTransitionStyle}`}
         >
           {division}
         </p>
       </div>
-      <p
-        className={`font-roboto-200 m-0 p-0 tracking-tight ${textColor} ${colorTransitionStyle}`}
-      >
-        _______________________________________________________________________________________________________________________________________________________________
-      </p>
+      {/*<p*/}
+      {/*  className={`font-roboto-200 m-0 p-0 tracking-tight ${textColor} ${colorTransitionStyle}`}*/}
+      {/*>*/}
+      {/*  _______________________________________________________________________________________________________________________________________________________________*/}
+      {/*</p>*/}
     </div>
   );
 };

@@ -132,7 +132,7 @@ export const RegistrationInputSection: React.FC<{
   };
 
   return errorMessage.length === 0 ? (
-    <div className="flex flex-col flex-1 justify-between gap-y-5 bg-[#F7F7F7] overflow-y-auto">
+    <div className="flex flex-col flex-1 justify-between gap-y-5 bg-white overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <RegistrationContext value={registrationContextData}>
           {sectionComponents[activeSection]}

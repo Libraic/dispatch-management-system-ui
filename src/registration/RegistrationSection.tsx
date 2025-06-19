@@ -36,7 +36,7 @@ export const RegistrationSection: React.FC<{
       className={`${backgroundColor} flex justify-between items-center hover:bg-solid-blue ${cursor} rounded-xl min-h-6 w-40 transition-colors ease-in duration-200 pl-2 pr-2`}
       onClick={setFocusedSection}
     >
-      <p className={`text-standard-size font-inter-500 ${textColor}`}>
+      <p className={`font-lato font-bold text-[0.9rem] ${textColor}`}>
         {sectionTitle}
       </p>
       {isSectionActive && (
