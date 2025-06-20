@@ -57,6 +57,6 @@ export type RegistrationData = {
   supervisor: SupervisorData | null;
   role: string;
   position: string;
-  workload: WorkloadData[];
+  workloads: WorkloadData[];
   notes: NoteData[];
 };

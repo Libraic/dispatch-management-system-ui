@@ -11,17 +11,19 @@ import { BLANK_STRING } from "../../../utils/global-constants.ts";
 import { LiveSearchEndpoints } from "../../../types/forms.ts";
 import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import type { UserData } from "../../../types/api/registration-api.ts";
+import {
+  alterSupervisor,
+  getFullName,
+  prepopulatePosition,
+  prepopulateRole,
+  prepopulateSupervisor,
+} from "../../../utils/registration-utils.ts";
 
 export const EmployeeStatus = () => {
   const context = React.useContext(RegistrationContext)!;
   const { registrationData, setRegistrationData } = context;
   const [isStatusDataExpanded, setIsStatusDataExpanded] = useState(true);
 
-  const getFullName = (user: UserData) => {
-    return user.nickname !== null
-      ? `${user.firstName} "${user.nickname}" ${user.lastName}`
-      : `${user.firstName} ${user.lastName}`;
-  };
   return (
     <>
       <SectionDivision
@@ -37,17 +39,15 @@ export const EmployeeStatus = () => {
               formWidth="w-25"
               initialValue={registrationData.role}
               data={Object.values(RoleEnum)}
-              setElement={(value) =>
-                setRegistrationData((prev) => ({ ...prev, role: value }))
-              }
+              setElement={(role) => prepopulateRole(setRegistrationData, role)}
             />
             <SelectForm
               label="Position"
               formWidth="w-45"
               initialValue={registrationData.position}
               data={Object.values(PositionEnum)}
-              setElement={(value) =>
-                setRegistrationData((prev) => ({ ...prev, position: value }))
+              setElement={(position) =>
+                prepopulatePosition(setRegistrationData, position)
               }
             />
           </div>
@@ -58,26 +58,14 @@ export const EmployeeStatus = () => {
             endpoint={LiveSearchEndpoints.USER}
             searchField="fullName"
             isMandatory={false}
-            saveData={(userData: UserData) => {
-              setRegistrationData((prev) => ({
-                ...prev,
-                supervisor: {
-                  uuid: userData.uuid,
-                  name: getFullName(userData),
-                },
-              }));
-            }}
+            saveData={(userData: UserData) =>
+              alterSupervisor(setRegistrationData, userData)
+            }
             renderResult={(userData: UserData) => getFullName(userData)}
             getKey={(userData) => userData.uuid}
-            prepopulate={(value: string) => {
-              setRegistrationData((prev) => ({
-                ...prev,
-                supervisor: {
-                  uuid: BLANK_STRING,
-                  name: value,
-                },
-              }));
-            }}
+            prepopulate={(supervisorName) =>
+              prepopulateSupervisor(setRegistrationData, supervisorName)
+            }
           />
         </div>
       )}

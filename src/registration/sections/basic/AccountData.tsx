@@ -3,6 +3,7 @@ import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { setRegistrationDataStringField } from "../../../utils/registration-utils.ts";
 
 export const AccountData: React.FC<{
   setShouldDisplayInformation: (value: boolean) => void;
@@ -36,12 +37,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.firstName}
               isMandatory={true}
               errorText={registrationDataError.firstNameError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  firstName: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "firstName",
+                  value,
+                )
+              }
             />
             <InputForm
               label="Nickname"
@@ -50,12 +52,13 @@ export const AccountData: React.FC<{
               name="nick-name"
               inputFieldValue={registrationData.nickname}
               isMandatory={false}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  nickname: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "nickname",
+                  value,
+                )
+              }
             />
             <InputForm
               label="Last Name"
@@ -65,12 +68,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.lastName}
               isMandatory={true}
               errorText={registrationDataError.lastNameError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  lastName: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "lastName",
+                  value,
+                )
+              }
             />
           </div>
           <div className="flex gap-x-5.5 mb-10">
@@ -82,12 +86,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.email}
               isMandatory={true}
               errorText={registrationDataError.emailError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  email: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "email",
+                  value,
+                )
+              }
             />
             <InputForm
               label="Personal E-mail"
@@ -97,12 +102,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.personalEmail}
               isMandatory={false}
               errorText={registrationDataError.personalEmailError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  personalEmail: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "personalEmail",
+                  value,
+                )
+              }
             />
           </div>
           <div className="flex gap-x-5.5 mb-10">
@@ -114,12 +120,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.password}
               isMandatory={true}
               errorText={registrationDataError.passwordError}
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  password: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "password",
+                  value,
+                )
+              }
             />
             <InputForm
               label="Confirm Password"
@@ -129,12 +136,13 @@ export const AccountData: React.FC<{
               inputFieldValue={registrationData.confirmPassword}
               isMandatory={true}
               errorText=""
-              saveData={(value: string) => {
-                setRegistrationData((prev) => ({
-                  ...prev,
-                  confirmPassword: value,
-                }));
-              }}
+              saveData={(value: string) =>
+                setRegistrationDataStringField(
+                  setRegistrationData,
+                  "confirmPassword",
+                  value,
+                )
+              }
             />
           </div>
         </>
