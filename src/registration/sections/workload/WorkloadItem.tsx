@@ -5,67 +5,55 @@ import { useContext } from "react";
 import { Delete } from "../../../button/Delete.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 import type { WorkloadData } from "../../../types/registration/registration-data.ts";
+import {
+  alterWorkloadCommission,
+  alterWorkloads,
+  deleteWorkload,
+} from "../../../utils/registration-utils.ts";
 
 export const WorkloadItem: React.FC<{
-  item: WorkloadData;
-}> = ({ item }) => {
+  workloadData: WorkloadData;
+}> = ({ workloadData }) => {
   const context = useContext(RegistrationContext)!;
   const companies = context.companies;
   const pagination = context.pagination;
+  const setRegistrationData = context.setRegistrationData;
   return (
-    <div key={item.workloadId} className="flex flex-row items-center gap-x-10">
+    <div
+      key={workloadData.workloadId}
+      className="flex flex-row items-center gap-x-10"
+    >
       <SelectForm
         label="Company"
         formWidth="w-35"
         initialValue={
-          companies.find((c) => c.uuid === item.companyId)?.name ?? ""
+          companies.find((c) => c.uuid === workloadData.companyId)?.name ?? ""
         }
         data={companies.map((company) => company.name)}
         pagination={pagination}
-        setElement={(selectedName: string) => {
-          const selectedCompany = companies.find(
-            (c) => c.name === selectedName,
-          );
-          if (selectedCompany) {
-            context.setRegistrationData((prev) => ({
-              ...prev,
-              workload: prev.workload.map((w) =>
-                w.workloadId === item.workloadId
-                  ? { ...w, companyId: selectedCompany.uuid }
-                  : w,
-              ),
-            }));
-          }
-        }}
+        setElement={(selectedName: string) =>
+          alterWorkloads(
+            setRegistrationData,
+            companies,
+            workloadData,
+            selectedName,
+          )
+        }
       />
       <InputForm
         label="Commission (%)"
         placeholder="5.5"
         type="number"
         name="Commission"
-        inputFieldValue={item.commission.toString()}
+        inputFieldValue={workloadData.commission.toString()}
         isMandatory={false}
         errorText=""
-        saveData={(value: string) => {
-          context.setRegistrationData((prev) => ({
-            ...prev,
-            workload: prev.workload.map((w) =>
-              w.workloadId === item.workloadId
-                ? { ...w, commission: parseFloat(value) }
-                : w,
-            ),
-          }));
-        }}
+        saveData={(value: string) =>
+          alterWorkloadCommission(setRegistrationData, workloadData, value)
+        }
       />
       <Delete
-        onClick={() =>
-          context.setRegistrationData((prev) => ({
-            ...prev,
-            workload: prev.workload.filter(
-              (w) => w.workloadId !== item.workloadId,
-            ),
-          }))
-        }
+        onClick={() => deleteWorkload(setRegistrationData, workloadData)}
       />
     </div>
   );

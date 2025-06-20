@@ -6,17 +6,23 @@ import {
   validatePassword,
 } from "./validation-utils.ts";
 import type {
+  CompanyData,
   CreateUserRequest,
   CreateWorkloadRequest,
+  UserData,
 } from "../types/api/registration-api.ts";
 import { convertDateToLittleEndian } from "./util-functions.ts";
 import {
+  type NoteData,
   PositionEnum,
   type RegistrationData,
   type RegistrationDataError,
   RoleEnum,
+  type WorkloadData,
 } from "../types/registration/registration-data.ts";
 import { SectionEnum } from "../types/registration/section.ts";
+import type { ChangeEvent } from "react";
+import * as React from "react";
 
 export const getBlankRegistrationData = (): RegistrationData => {
   const date = new Date();
@@ -37,7 +43,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
     supervisor: null,
     role: RoleEnum.EMPLOYEE,
     position: PositionEnum.ACCOUNTANT,
-    workload: [],
+    workloads: [],
     notes: [],
   };
 };
@@ -118,7 +124,7 @@ export const getCreateUserRequestFromRegistrationData = (
     role: registrationData.role,
     position: registrationData.position,
     supervisorUuid: null,
-    workloads: registrationData.workload.map(
+    workloads: registrationData.workloads.map(
       (workload): CreateWorkloadRequest => ({
         companyUuid: workload.companyId,
         commission: workload.commission,
@@ -126,6 +132,174 @@ export const getCreateUserRequestFromRegistrationData = (
     ),
     notes: registrationData.notes.map((note) => note.note),
   };
+};
+
+export const setRegistrationDataStringField = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  field: keyof RegistrationData,
+  value: string,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
+
+export const getFullName = (user: UserData) => {
+  return user.nickname !== null
+    ? `${user.firstName} "${user.nickname}" ${user.lastName}`
+    : `${user.firstName} ${user.lastName}`;
+};
+
+export const alterSupervisor = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  userData: UserData,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    supervisor: {
+      uuid: userData.uuid,
+      name: getFullName(userData),
+    },
+  }));
+};
+
+export const prepopulateSupervisor = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  supervisorName: string,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    supervisor: {
+      uuid: BLANK_STRING,
+      name: supervisorName,
+    },
+  }));
+};
+
+export const prepopulateRole = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  role: string,
+) => {
+  setRegistrationData((prev) => ({ ...prev, role: role }));
+};
+
+export const prepopulatePosition = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  position: string,
+) => {
+  setRegistrationData((prev) => ({ ...prev, position: position }));
+};
+
+export const prepopulateWorkload = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  defaultCompanyUuid: string,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: [
+      ...prev.workloads,
+      {
+        workloadId: Date.now().toString(),
+        companyId: defaultCompanyUuid,
+        commission: 0.0,
+      },
+    ],
+  }));
+};
+
+export const alterWorkloads = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  companies: CompanyData[],
+  item: WorkloadData,
+  selectedName: string,
+) => {
+  const selectedCompany = companies.find((c) => c.name === selectedName);
+  if (selectedCompany) {
+    setRegistrationData((prev) => ({
+      ...prev,
+      workloads: prev.workloads.map((w) =>
+        w.workloadId === item.workloadId
+          ? { ...w, companyId: selectedCompany.uuid }
+          : w,
+      ),
+    }));
+  }
+};
+
+export const alterWorkloadCommission = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  workloadData: WorkloadData,
+  value: string,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: prev.workloads.map((w) =>
+      w.workloadId === workloadData.workloadId
+        ? { ...w, commission: parseFloat(value) }
+        : w,
+    ),
+  }));
+};
+
+export const deleteWorkload = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  item: WorkloadData,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: prev.workloads.filter((w) => w.workloadId !== item.workloadId),
+  }));
+};
+
+export const prepopulateNote = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    notes: [
+      ...prev.notes,
+      {
+        noteId: Date.now().toString(),
+        note: BLANK_STRING,
+      },
+    ],
+  }));
+};
+
+export const getNoteErrorMessage = (
+  registrationDataError: RegistrationDataError,
+  note: NoteData,
+): string => {
+  return (
+    registrationDataError.notesError
+      .filter((n) => n.noteId === note.noteId)
+      .map((n) => n.errorMessage)[0] ?? { errorMessage: BLANK_STRING }
+  );
+};
+
+export const alterNote = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  e: ChangeEvent<HTMLTextAreaElement>,
+  noteData: NoteData,
+) => {
+  const value = e.target.value;
+  setRegistrationData((prev) => ({
+    ...prev,
+    notes: prev.notes.map((note) =>
+      note.noteId === noteData.noteId ? { ...note, note: value } : note,
+    ),
+  }));
+};
+
+export const deleteNote = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  noteData: NoteData,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    notes: prev.notes.filter((n) => n.noteId !== noteData.noteId),
+  }));
 };
 
 const getGroupedErrors = (
