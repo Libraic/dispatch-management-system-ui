@@ -34,6 +34,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
       month: date.getMonth() + 1,
       year: date.getFullYear(),
     },
+    supervisor: null,
     role: RoleEnum.EMPLOYEE,
     position: PositionEnum.ACCOUNTANT,
     workload: [],

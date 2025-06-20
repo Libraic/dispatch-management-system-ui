@@ -26,7 +26,7 @@ export const EmploymentDate = () => {
         setIsExpanded={setIsEmploymentDataExpanded}
       />
       {isEmploymentDataExpanded && (
-        <div className="flex gap-x-11 mb-5">
+        <div className="flex gap-x-10 mb-5">
           <DateForm
             dateObject={dateObject}
             endingYear={new Date().getFullYear()}

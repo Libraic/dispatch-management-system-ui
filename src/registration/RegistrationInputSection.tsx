@@ -112,6 +112,8 @@ export const RegistrationInputSection: React.FC<{
           setErrorMessage("User created successfully.");
           setToastId(Date.now().toString());
           setToastType(ToastTypeEnum.SUCCESS);
+          setRegistrationData(getBlankRegistrationData());
+          setRegistrationDataError(getBlankRegistrationDataError());
         }
       }
     }
