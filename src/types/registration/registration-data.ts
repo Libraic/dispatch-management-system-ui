@@ -29,6 +29,11 @@ export type NoteError = {
   errorMessage: string;
 };
 
+export type SupervisorData = {
+  uuid: string;
+  name: string;
+};
+
 export type RegistrationDataError = {
   firstNameError: string;
   lastNameError: string;
@@ -49,6 +54,7 @@ export type RegistrationData = {
   personalEmail: string;
   birthDate: YearData;
   employmentDate: YearData;
+  supervisor: SupervisorData | null;
   role: string;
   position: string;
   workload: WorkloadData[];

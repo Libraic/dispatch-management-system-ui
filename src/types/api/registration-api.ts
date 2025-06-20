@@ -34,4 +34,7 @@ export type CreateUserRequest = {
 
 export type UserData = {
   uuid: string;
+  firstName: string;
+  nickname: string | null;
+  lastName: string;
 };
