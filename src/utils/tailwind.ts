@@ -1,6 +1,5 @@
 export const inputFormStyle =
-  "pt-0.5 " +
-  "pb-0.5 " +
+  "py-0.5 " +
   "font-open-sans " +
   "font-light " +
   "text-standard-size " +
@@ -12,8 +11,7 @@ export const inputFormStyle =
 export const selectFormStyle =
   "flex " +
   "items-center " +
-  "pt-0.5 " +
-  "pb-0.5 " +
+  "py-0.5 " +
   "font-open-sans " +
   "font-light " +
   "text-standard-size " +
@@ -23,6 +21,17 @@ export const selectFormStyle =
   "focus:outline-none " +
   "focus:ring-0 " +
   "text-center ";
+
+export const textAreaStyle =
+  "p-1 " +
+  "font-open-sans " +
+  "font-light " +
+  "text-standard-size " +
+  "bg-transparent " +
+  "rounded-sm " +
+  "border-[0.1rem] " +
+  "border-light-grey " +
+  "rounded-xl";
 
 export const inputFormLabelStyle =
   "text-[0.9rem] " + "font-open-sans font-medium";

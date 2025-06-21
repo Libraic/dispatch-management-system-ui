@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Delete } from "../../../button/Delete.tsx";
-import { inputFormStyle } from "../../../utils/tailwind.ts";
+import { textAreaStyle } from "../../../utils/tailwind.ts";
 import { InputFormError } from "../../../global/InputFormError.tsx";
 import type {
   NoteData,
@@ -15,6 +15,9 @@ export const NoteItem: React.FC<{
 }> = ({ setRegistrationData, errorMessage, noteData }) => {
   const noteLengthIndicatorColor =
     noteData.note.length > 200 ? "text-error-red" : "black";
+  const [placeholder, setPlaceholder] = React.useState(
+    "John Doe is the employee of the month.",
+  );
   return (
     <div key={noteData.noteId} className="flex flex-col">
       <p
@@ -22,9 +25,15 @@ export const NoteItem: React.FC<{
       >{`${noteData.note.length}/200`}</p>
       <div className="flex flex-row items-center gap-x-10">
         <textarea
-          className={`${inputFormStyle} w-[30rem] h-[5rem] resize-none`}
-          placeholder="Note"
+          className={`${textAreaStyle} w-[30rem] h-[5rem] resize-none`}
+          placeholder={placeholder}
           value={noteData.note}
+          onFocus={() => setPlaceholder("")}
+          onBlur={() => {
+            if (noteData.note.length === 0) {
+              setPlaceholder("John Doe is the employee of the month.");
+            }
+          }}
           onChange={(e) => alterNote(setRegistrationData, e, noteData)}
         />
         <Delete onClick={() => deleteNote(setRegistrationData, noteData)} />
