@@ -7,11 +7,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   getBlankRegistrationData,
-  getBlankRegistrationDataError,
   getCreateUserRequestFromRegistrationData,
-  getRegistrationDataErrors,
-  getSectionsWithErrors,
-} from "../utils/registration-utils.ts";
+} from "../utils/registration/registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import {
   RegistrationContext,
@@ -20,7 +17,7 @@ import {
 import { Toast } from "../toast/Toast.tsx";
 import type { CreateUserRequest } from "../types/api/registration-api.ts";
 import { saveUser } from "../service/userService.ts";
-import { BLANK_STRING } from "../utils/global-constants.ts";
+import { BLANK_STRING } from "../utils/constants/global.ts";
 import {
   type SectionData,
   SectionEnum,
@@ -33,7 +30,12 @@ import type {
 } from "../types/registration/registration-data.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import type { GroupErrorResponse } from "../types/api/common.ts";
-import { getSimpleErrorMessageFromRegistrationDataError } from "../utils/error-utils.ts";
+import {
+  getBlankRegistrationDataError,
+  getRegistrationDataErrors,
+  getSectionsWithErrors,
+  getSimpleErrorMessageFromRegistrationDataError,
+} from "../utils/registration/registration-errors.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;

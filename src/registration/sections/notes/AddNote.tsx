@@ -2,10 +2,8 @@ import * as React from "react";
 import { Add } from "../../../button/Add.tsx";
 import { NoteItem } from "./NoteItem.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
-import {
-  getNoteErrorMessage,
-  prepopulateNote,
-} from "../../../utils/registration-utils.ts";
+import { prepopulateNote } from "../../../utils/registration/registration.ts";
+import { getNoteErrorMessage } from "../../../utils/registration/registration-errors.ts";
 
 export const AddNote = () => {
   const context = React.useContext(RegistrationContext)!;

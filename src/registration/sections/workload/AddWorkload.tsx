@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { WorkloadItem } from "./WorkloadItem.tsx";
 import { Add } from "../../../button/Add.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
-import { prepopulateWorkload } from "../../../utils/registration-utils.ts";
-import { getWorkloadCompanyErrorMessage } from "../../../utils/error-utils.ts";
+import { prepopulateWorkload } from "../../../utils/registration/registration.ts";
+import { getWorkloadCompanyErrorMessage } from "../../../utils/registration/registration-errors.ts";
 
 export const AddWorkload = () => {
   const context = useContext(RegistrationContext)!;

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
-import { BLANK_STRING } from "../utils/global-constants.ts";
+import { BLANK_STRING } from "../utils/constants/global.ts";
 import { getData } from "../service/liveSearchService.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import { Toast } from "../toast/Toast.tsx";
@@ -70,8 +70,8 @@ export const LiveSearchInputForm = <T,>({
             setToastId(Date.now().toString());
             setToastType(ToastTypeEnum.ERROR);
           } else {
-            setErrorMessage("");
-            setResults(result.data);
+            setErrorMessage(BLANK_STRING);
+            setResults(result.data ?? []);
           }
         });
       } else {

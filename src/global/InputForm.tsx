@@ -1,6 +1,6 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
-import { BLANK_STRING } from "../utils/global-constants.ts";
+import { BLANK_STRING } from "../utils/constants/global.ts";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { InputFormError } from "./InputFormError.tsx";

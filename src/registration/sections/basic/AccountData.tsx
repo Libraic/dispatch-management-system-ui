@@ -3,7 +3,14 @@ import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
-import { setRegistrationDataStringField } from "../../../utils/registration-utils.ts";
+import { setRegistrationDataStringField } from "../../../utils/registration/registration.ts";
+import {
+  EMAIL_PLACEHOLDER,
+  FIRST_NAME_PLACEHOLDER,
+  LAST_NAME_PLACEHOLDER,
+  NICKNAME_PLACEHOLDER,
+  PASSWORD_PLACEHOLDER,
+} from "../../../utils/constants/placeholders.ts";
 
 export const AccountData: React.FC<{
   setShouldDisplayInformation: (value: boolean) => void;
@@ -31,7 +38,7 @@ export const AccountData: React.FC<{
           <div className="flex gap-5.5 mb-10">
             <InputForm
               label="First Name"
-              placeholder="John"
+              placeholder={FIRST_NAME_PLACEHOLDER}
               type="text"
               name="first-name"
               inputFieldValue={registrationData.firstName}
@@ -47,7 +54,7 @@ export const AccountData: React.FC<{
             />
             <InputForm
               label="Nickname"
-              placeholder="Jay"
+              placeholder={NICKNAME_PLACEHOLDER}
               type="text"
               name="nick-name"
               inputFieldValue={registrationData.nickname}
@@ -62,7 +69,7 @@ export const AccountData: React.FC<{
             />
             <InputForm
               label="Last Name"
-              placeholder="Doe"
+              placeholder={LAST_NAME_PLACEHOLDER}
               type="text"
               name="last-name"
               inputFieldValue={registrationData.lastName}
@@ -80,7 +87,7 @@ export const AccountData: React.FC<{
           <div className="flex gap-x-5.5 mb-10">
             <InputForm
               label="E-mail"
-              placeholder="john.doe@domain.com"
+              placeholder={EMAIL_PLACEHOLDER}
               type="email"
               name="email"
               inputFieldValue={registrationData.email}
@@ -96,7 +103,7 @@ export const AccountData: React.FC<{
             />
             <InputForm
               label="Personal E-mail"
-              placeholder="john.doe@domain.com"
+              placeholder={EMAIL_PLACEHOLDER}
               type="email"
               name="email"
               inputFieldValue={registrationData.personalEmail}
@@ -114,7 +121,7 @@ export const AccountData: React.FC<{
           <div className="flex gap-x-5.5 mb-10">
             <InputForm
               label="Password"
-              placeholder="********"
+              placeholder={PASSWORD_PLACEHOLDER}
               type="password"
               name="password"
               inputFieldValue={registrationData.password}
@@ -130,7 +137,7 @@ export const AccountData: React.FC<{
             />
             <InputForm
               label="Confirm Password"
-              placeholder="********"
+              placeholder={PASSWORD_PLACEHOLDER}
               type="password"
               name="confirm-password"
               inputFieldValue={registrationData.confirmPassword}

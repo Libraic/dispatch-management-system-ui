@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import type { CompanyData } from "../types/api/registration-api.ts";
 import { usePagination } from "./usePagination.ts";
-import { FETCH_COMPANIES_IN_BATCHES } from "../utils/api-paths.ts";
+import { FETCH_COMPANIES_IN_BATCHES } from "../utils/api/api-paths.ts";
 import { fetchCompanies } from "../service/companyService.ts";
-import { PAGE_NEXT_ELEMENT } from "../utils/global-constants.ts";
+import { PAGE_NEXT_ELEMENT } from "../utils/constants/global.ts";
 import type { Error, Link, PaginatedData } from "../types/api/common.ts";
 
 export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {

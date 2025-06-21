@@ -1,27 +1,18 @@
-import { BLANK_STRING, DEFAULT_BIRTH_DATE } from "./global-constants.ts";
-
-import {
-  validateEmail,
-  validateNotes,
-  validatePassword,
-} from "./validation-utils.ts";
+import { BLANK_STRING } from "../constants/global.ts";
 import type {
   CompanyData,
   CreateUserRequest,
   CreateWorkloadRequest,
   UserData,
-} from "../types/api/registration-api.ts";
-import { convertDateToLittleEndian } from "./util-functions.ts";
+} from "../../types/api/registration-api.ts";
+import { convertDateToLittleEndian, DEFAULT_BIRTH_DATE } from "../date.ts";
 import {
-  type ItemError,
   type NoteData,
   PositionEnum,
   type RegistrationData,
-  type RegistrationDataError,
   RoleEnum,
   type WorkloadData,
-} from "../types/registration/registration-data.ts";
-import { SectionEnum } from "../types/registration/section.ts";
+} from "../../types/registration/registration-data.ts";
 import type { ChangeEvent } from "react";
 import * as React from "react";
 
@@ -47,60 +38,6 @@ export const getBlankRegistrationData = (): RegistrationData => {
     workloads: [],
     notes: [],
   };
-};
-
-export const getBlankRegistrationDataError = (): RegistrationDataError => {
-  return {
-    firstName: BLANK_STRING,
-    lastName: BLANK_STRING,
-    email: BLANK_STRING,
-    password: BLANK_STRING,
-    confirmPassword: BLANK_STRING,
-    personalEmail: BLANK_STRING,
-    notes: [],
-    workloads: [],
-    supervisor: BLANK_STRING,
-  };
-};
-
-export const getRegistrationDataErrors = (
-  registrationData: RegistrationData,
-): RegistrationDataError => {
-  const registrationDataError = getBlankRegistrationDataError();
-  if (registrationData.firstName === BLANK_STRING) {
-    registrationDataError.firstName = "The first name is required";
-  }
-
-  if (registrationData.lastName === BLANK_STRING) {
-    registrationDataError.lastName = "The last name is required";
-  }
-
-  registrationDataError.email = validateEmail(registrationData.email, true);
-
-  registrationDataError.password = validatePassword(
-    registrationData.password,
-    registrationData.confirmPassword,
-  );
-
-  registrationDataError.personalEmail = validateEmail(
-    registrationData.personalEmail,
-    false,
-  );
-
-  registrationDataError.notes = validateNotes(registrationData.notes);
-
-  return registrationDataError;
-};
-
-export const getSectionsWithErrors = (errors: RegistrationDataError) => {
-  const groupedErrors = getGroupedErrors(errors);
-  const sectionsErrors: SectionEnum[] = [];
-  for (const [section, hasErrors] of groupedErrors) {
-    if (hasErrors) {
-      sectionsErrors.push(section);
-    }
-  }
-  return sectionsErrors;
 };
 
 export const getCreateUserRequestFromRegistrationData = (
@@ -287,25 +224,6 @@ export const prepopulateNote = (
   }));
 };
 
-export const getNoteErrorMessage = (
-  registrationDataError: RegistrationDataError,
-  note: NoteData,
-): string => {
-  if (registrationDataError.notes.length === 0) {
-    return BLANK_STRING;
-  }
-
-  const itemsErrors: ItemError[] = registrationDataError.notes.filter(
-    (n) => n.id === note.noteId,
-  );
-
-  if (itemsErrors.length === 0) {
-    return BLANK_STRING;
-  }
-
-  return itemsErrors[0].fieldErrors[0].errorMessage;
-};
-
 export const alterNote = (
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
   e: ChangeEvent<HTMLTextAreaElement>,
@@ -329,51 +247,3 @@ export const deleteNote = (
     notes: prev.notes.filter((n) => n.noteId !== noteData.noteId),
   }));
 };
-
-const getGroupedErrors = (
-  registrationDataError: RegistrationDataError,
-): Map<SectionEnum, boolean> => {
-  const groupedErrors = new Map<SectionEnum, boolean>();
-  groupedErrors.set(
-    SectionEnum.BASIC_INFORMATION,
-    areAccountErrors(registrationDataError),
-  );
-  groupedErrors.set(
-    SectionEnum.EMPLOYMENT_INFORMATION,
-    areEmploymentInformationErrors(registrationDataError),
-  );
-  groupedErrors.set(
-    SectionEnum.WORKLOAD,
-    areWorkloadErrors(registrationDataError),
-  );
-  groupedErrors.set(SectionEnum.NOTES, areNotesErrors(registrationDataError));
-  return groupedErrors;
-};
-
-const areAccountErrors = (
-  registrationDataError: RegistrationDataError,
-): boolean => {
-  return (
-    registrationDataError.firstName !== BLANK_STRING ||
-    registrationDataError.lastName !== BLANK_STRING ||
-    registrationDataError.email !== BLANK_STRING ||
-    registrationDataError.password !== BLANK_STRING ||
-    registrationDataError.personalEmail !== BLANK_STRING
-  );
-};
-
-const areWorkloadErrors = (
-  registrationDataError: RegistrationDataError,
-): boolean => {
-  return registrationDataError.workloads.length > 0;
-};
-
-const areEmploymentInformationErrors = (
-  registrationDataError: RegistrationDataError,
-): boolean => {
-  return registrationDataError.supervisor !== BLANK_STRING;
-};
-
-const areNotesErrors = (
-  registrationDataError: RegistrationDataError,
-): boolean => registrationDataError.notes.length > 0;

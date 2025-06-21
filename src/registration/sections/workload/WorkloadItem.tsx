@@ -9,7 +9,7 @@ import {
   alterWorkloads,
   deleteWorkload,
   prepopulateCompanyName,
-} from "../../../utils/registration-utils.ts";
+} from "../../../utils/registration/registration.ts";
 import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import { LiveSearchEndpoints } from "../../../types/forms.ts";
 import type { CompanyData } from "../../../types/api/registration-api.ts";

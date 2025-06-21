@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SAVE_USER } from "../utils/api-paths.ts";
+import { SAVE_USER } from "../utils/api/api-paths.ts";
 import type {
   CreateUserRequest,
   UserData,

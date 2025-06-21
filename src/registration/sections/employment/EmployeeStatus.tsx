@@ -7,7 +7,7 @@ import {
   PositionEnum,
   RoleEnum,
 } from "../../../types/registration/registration-data.ts";
-import { BLANK_STRING } from "../../../utils/global-constants.ts";
+import { BLANK_STRING } from "../../../utils/constants/global.ts";
 import { LiveSearchEndpoints } from "../../../types/forms.ts";
 import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import type { UserData } from "../../../types/api/registration-api.ts";
@@ -17,7 +17,7 @@ import {
   prepopulatePosition,
   prepopulateRole,
   prepopulateSupervisor,
-} from "../../../utils/registration-utils.ts";
+} from "../../../utils/registration/registration.ts";
 
 export const EmployeeStatus = () => {
   const context = React.useContext(RegistrationContext)!;

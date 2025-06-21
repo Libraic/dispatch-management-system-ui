@@ -1,6 +1,5 @@
-import { MONTHS } from "../utils/global-constants.ts";
 import * as React from "react";
-import { getAvailableYears } from "../utils/util-functions.ts";
+import { getAvailableYears, MONTHS } from "../utils/date.ts";
 import { SelectForm } from "./SelectForm.tsx";
 import type { DateObject } from "../types/global.ts";
 
