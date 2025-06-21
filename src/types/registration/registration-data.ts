@@ -15,6 +15,7 @@ export type PositionEnum = keyof typeof PositionEnum;
 
 export type WorkloadData = {
   workloadId: string;
+  companyName: string;
   companyId: string;
   commission: number;
 };
@@ -41,6 +42,7 @@ export type RegistrationDataError = {
   passwordError: string;
   confirmPasswordError: string;
   personalEmailError: string;
+  supervisorError: string;
   notesError: NoteError[];
 };
 

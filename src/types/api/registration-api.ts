@@ -11,6 +11,11 @@ export type GetCompaniesResponse = {
   page: PageInfo;
 };
 
+export type CreateSupervisorRequest = {
+  uuid: string | null;
+  fullName: string | null;
+};
+
 export type CreateWorkloadRequest = {
   companyUuid: string;
   commission: number;
@@ -27,7 +32,7 @@ export type CreateUserRequest = {
   employmentDate: string;
   role: string;
   position: string;
-  supervisorUuid: string | null;
+  supervisor: CreateSupervisorRequest;
   workloads: CreateWorkloadRequest[];
   notes: string[];
 };

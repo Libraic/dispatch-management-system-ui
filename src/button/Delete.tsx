@@ -9,12 +9,12 @@ export const Delete: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
     <div className="w-6 h-6 flex items-center justify-center">
       <img
-        className="w-full h-full transition-transform duration-200 ease-in-out hover:scale-110 cursor-pointer mt-6"
+        className="w-full transition-transform duration-200 ease-in-out hover:scale-110 cursor-pointer mb-8"
         onClick={onClick}
         onMouseEnter={() => setRemoveActiveIcon(removeWorkloadFocused)}
         onMouseLeave={() => setRemoveActiveIcon(removeWorkloadUnfocused)}
         src={removeActiveIcon}
-        alt="remove-workload"
+        alt="remove-item"
       />
     </div>
   );

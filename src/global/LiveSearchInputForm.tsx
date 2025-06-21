@@ -7,6 +7,7 @@ import { BLANK_STRING } from "../utils/global-constants.ts";
 import { getData } from "../service/liveSearchService.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import { Toast } from "../toast/Toast.tsx";
+import { InputFormError } from "./InputFormError.tsx";
 
 type LiveSearchInputFormProps<T> = {
   label: string;
@@ -15,6 +16,7 @@ type LiveSearchInputFormProps<T> = {
   endpoint: string;
   searchField: string;
   isMandatory: boolean;
+  errorText?: string;
   saveData: (value: T) => void;
   renderResult: (item: T) => React.ReactNode;
   getKey: (item: T) => string;
@@ -28,6 +30,7 @@ export const LiveSearchInputForm = <T,>({
   endpoint,
   searchField,
   isMandatory,
+  errorText,
   saveData,
   renderResult,
   getKey,
@@ -82,7 +85,7 @@ export const LiveSearchInputForm = <T,>({
   }, [debouncedSearch, query, saveData]);
 
   return (
-    <div className="flex flex-col gap-y-2 w-fit">
+    <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">
       <div
         className={`flex flex-col px-5 py-2 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] relative`}
       >
@@ -115,6 +118,7 @@ export const LiveSearchInputForm = <T,>({
                 key={getKey(item)}
                 className="w-full rounded hover:bg-[#edf2fe] hover:text-solid-blue hover:cursor-pointer text-standard-size font-lato font-light text-center"
                 onClick={() => {
+                  console.log(item);
                   setQuery(BLANK_STRING);
                   saveData(item);
                   setResults([]);
@@ -126,6 +130,7 @@ export const LiveSearchInputForm = <T,>({
           </div>
         )}
       </div>
+      {!!errorText?.length && <InputFormError errorMessage={errorText} />}
       {errorMessage.length > 0 && (
         <Toast key={toastId} message={errorMessage} type={toastType} />
       )}

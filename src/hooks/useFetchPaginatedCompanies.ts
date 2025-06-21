@@ -35,10 +35,10 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
   // see more companies (but that is not guaranteed; maybe he will find his desired
   // companies in the initial ones that were fetched). Therefore, we do not need
   // any dependency here because this will be run only once, on mounting.
-  useEffect(() => {
-    loadCompanies(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   loadCompanies(false);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // If the user decides to see the next elements, this useEffect() hook will be
   // invoked and will be tied to loadNext state only, because nextUrl is just
@@ -46,10 +46,10 @@ export const useFetchPaginatedCompanies = (): PaginatedData<CompanyData> => {
   // we do all the necessary computation in one go. But it should not affect
   // the re-render. The re-render is only affected by loadNext state variable,
   // which tells React that the user requested another batch of elements.
-  useEffect(() => {
-    if (pagination.shouldLoadNext()) loadCompanies(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagination.shouldLoadNext()]);
+  // useEffect(() => {
+  //   if (pagination.shouldLoadNext()) loadCompanies(true);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [pagination.shouldLoadNext()]);
 
   return {
     data: companies,

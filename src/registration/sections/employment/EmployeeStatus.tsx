@@ -21,7 +21,8 @@ import {
 
 export const EmployeeStatus = () => {
   const context = React.useContext(RegistrationContext)!;
-  const { registrationData, setRegistrationData } = context;
+  const { registrationData, setRegistrationData, registrationDataError } =
+    context;
   const [isStatusDataExpanded, setIsStatusDataExpanded] = useState(true);
 
   return (
@@ -58,6 +59,7 @@ export const EmployeeStatus = () => {
             endpoint={LiveSearchEndpoints.USER}
             searchField="fullName"
             isMandatory={false}
+            errorText={registrationDataError.supervisorError}
             saveData={(userData: UserData) =>
               alterSupervisor(setRegistrationData, userData)
             }
