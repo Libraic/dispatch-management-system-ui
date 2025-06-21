@@ -18,6 +18,8 @@ export type CreateSupervisorRequest = {
 
 export type CreateWorkloadRequest = {
   companyUuid: string;
+  companyName: string;
+  itemIdentifier: string;
   commission: number;
 };
 

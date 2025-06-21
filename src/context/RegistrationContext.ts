@@ -12,9 +12,6 @@ export type RegistrationContextData = {
   registrationData: RegistrationData;
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
   registrationDataError: RegistrationDataError;
-  companies: CompanyData[];
-  pagination?: Pagination;
-  error: Error | undefined;
 };
 
 export const RegistrationContext = createContext<

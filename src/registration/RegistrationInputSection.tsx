@@ -17,7 +17,6 @@ import {
   RegistrationContext,
   type RegistrationContextData,
 } from "../context/RegistrationContext.ts";
-import { useFetchPaginatedCompanies } from "../hooks/useFetchPaginatedCompanies.ts";
 import { Toast } from "../toast/Toast.tsx";
 import type { CreateUserRequest } from "../types/api/registration-api.ts";
 import { saveUser } from "../service/userService.ts";
@@ -27,10 +26,14 @@ import {
   SectionEnum,
 } from "../types/registration/section.ts";
 import type {
+  FieldError,
+  ItemError,
   RegistrationData,
   RegistrationDataError,
 } from "../types/registration/registration-data.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
+import type { GroupErrorResponse } from "../types/api/common.ts";
+import { getSimpleErrorMessageFromRegistrationDataError } from "../utils/error-utils.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -50,15 +53,10 @@ export const RegistrationInputSection: React.FC<{
   );
 
   const activeSection = sectionsHandler.getActiveSection();
-  const paginatedCompanies = useFetchPaginatedCompanies();
-  const error = paginatedCompanies.error;
   const registrationContextData: RegistrationContextData = {
     registrationData: registrationData,
     setRegistrationData: setRegistrationData,
     registrationDataError: registrationDataError,
-    companies: paginatedCompanies.data,
-    pagination: paginatedCompanies.pagination,
-    error: paginatedCompanies.error,
   };
   const sectionComponents: Record<SectionEnum, React.ReactNode> = {
     BASIC_INFORMATION: <BasicInformation />,
@@ -68,22 +66,12 @@ export const RegistrationInputSection: React.FC<{
   };
 
   useEffect(() => {
-    const buttonText = sectionsHandler.isSectionFocused(SectionEnum.NOTES)
-      ? "Submit"
-      : "Continue";
-    setSubmitButtonText(buttonText);
-    if (error !== undefined) {
-      setErrorMessage(error.message);
-      setToastId(Date.now().toString());
-      setToastType(ToastTypeEnum.ERROR);
+    if (sectionsHandler.isSectionFocused(SectionEnum.NOTES)) {
+      setSubmitButtonText("Submit");
+    } else {
+      setSubmitButtonText("Continue");
     }
-  }, [
-    activeSection,
-    setSubmitButtonText,
-    error,
-    setErrorMessage,
-    sectionsHandler,
-  ]);
+  }, [activeSection, setSubmitButtonText, setErrorMessage, sectionsHandler]);
 
   useEffect(() => {
     async function handleUserCreation() {
@@ -91,36 +79,72 @@ export const RegistrationInputSection: React.FC<{
         const createUserRequest: CreateUserRequest =
           getCreateUserRequestFromRegistrationData(registrationData);
         const apiResponse = await saveUser(createUserRequest);
-        if (apiResponse.error !== null) {
-          const apiErrorMessage = apiResponse.error.message;
-          if (apiResponse.error.field !== null) {
-            setRegistrationDataError((prev) => {
-              const updated = {
-                ...prev,
-                [apiResponse.error.field as string]: apiErrorMessage,
-              };
-              const sectionsErrors = getSectionsWithErrors(updated);
-              sectionsHandler.setErrors(sectionsErrors);
-              return updated;
-            });
-          } else {
-            setErrorMessage(apiErrorMessage);
-            setToastId(Date.now().toString());
-            setToastType(ToastTypeEnum.ERROR);
-          }
-        } else {
-          setErrorMessage("User created successfully.");
+        if (apiResponse === undefined) {
+          console.log("Here");
+          setErrorMessage(
+            "The server is not responding. Please try again later.",
+          );
           setToastId(Date.now().toString());
-          setToastType(ToastTypeEnum.SUCCESS);
-          setRegistrationData(getBlankRegistrationData());
-          setRegistrationDataError(getBlankRegistrationDataError());
+          setToastType(ToastTypeEnum.ERROR);
+        } else {
+          if (apiResponse.error !== null) {
+            const errors = apiResponse.error as GroupErrorResponse[];
+            for (const groupErrorResponse of errors) {
+              const itemsErrors: ItemError[] = [];
+              for (const itemError of groupErrorResponse.errors) {
+                const fieldErrors: FieldError[] = [];
+                for (const fieldError of itemError.groupItemFieldsErrors) {
+                  const field: FieldError = {
+                    field: fieldError.field,
+                    errorMessage: fieldError.errorMessage,
+                  };
+                  fieldErrors.push(field);
+                }
+                const item: ItemError = {
+                  id: itemError.itemIdentifier,
+                  fieldErrors: fieldErrors,
+                };
+                itemsErrors.push(item);
+              }
+
+              setRegistrationDataError((prev) => {
+                const updated =
+                  groupErrorResponse.impactedGroup === "workloads" ||
+                  groupErrorResponse.impactedGroup === "notes"
+                    ? {
+                        ...prev,
+                        [groupErrorResponse.impactedGroup as string]:
+                          itemsErrors,
+                      }
+                    : {
+                        ...prev,
+                        [groupErrorResponse.impactedGroup as string]:
+                          getSimpleErrorMessageFromRegistrationDataError(
+                            itemsErrors,
+                          ),
+                      };
+
+                const sectionsErrors = getSectionsWithErrors(updated);
+                sectionsHandler.setErrors(sectionsErrors);
+                return updated;
+              });
+            }
+          } else {
+            setErrorMessage("User created successfully.");
+            setToastId(Date.now().toString());
+            setToastType(ToastTypeEnum.SUCCESS);
+            setRegistrationData(getBlankRegistrationData());
+            setRegistrationDataError(getBlankRegistrationDataError());
+          }
         }
       }
     }
 
     // TODO: Redirect to a new page
-    handleUserCreation().then(() => {});
-  }, [registrationData, sectionsHandler]);
+    if (errorMessage === BLANK_STRING) {
+      handleUserCreation().then(() => {});
+    }
+  }, [errorMessage, registrationData, sectionsHandler]);
 
   const validateRegistrationData = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,9 +155,13 @@ export const RegistrationInputSection: React.FC<{
     if (sectionsErrorsPriorSubmitting.length === 0) {
       sectionsHandler.next();
     }
+
+    if (sectionsHandler.areAllSectionsComplete()) {
+      setErrorMessage(BLANK_STRING);
+    }
   };
 
-  return errorMessage.length === 0 ? (
+  return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-white overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <RegistrationContext value={registrationContextData}>
@@ -147,8 +175,9 @@ export const RegistrationInputSection: React.FC<{
           action={validateRegistrationData}
         />
       </div>
+      {errorMessage !== BLANK_STRING && (
+        <Toast key={toastId} message={errorMessage} type={toastType} />
+      )}
     </div>
-  ) : (
-    <Toast key={toastId} message={errorMessage} type={toastType} />
   );
 };

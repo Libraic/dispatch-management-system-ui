@@ -16,7 +16,8 @@ import type { CompanyData } from "../../../types/api/registration-api.ts";
 
 export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;
-}> = ({ workloadData }) => {
+  errorMessage: string;
+}> = ({ workloadData, errorMessage }) => {
   const context = useContext(RegistrationContext)!;
   const setRegistrationData = context.setRegistrationData;
   return (
@@ -31,6 +32,7 @@ export const WorkloadItem: React.FC<{
         endpoint={LiveSearchEndpoints.COMPANY}
         searchField="name"
         isMandatory={false}
+        errorText={errorMessage}
         saveData={(companyData: CompanyData) =>
           alterWorkloads(setRegistrationData, companyData, workloadData)
         }

@@ -25,9 +25,14 @@ export type NoteData = {
   note: string;
 };
 
-export type NoteError = {
-  noteId: string;
+export type FieldError = {
+  field: string | null;
   errorMessage: string;
+};
+
+export type ItemError = {
+  id: string | null;
+  fieldErrors: FieldError[];
 };
 
 export type SupervisorData = {
@@ -36,14 +41,15 @@ export type SupervisorData = {
 };
 
 export type RegistrationDataError = {
-  firstNameError: string;
-  lastNameError: string;
-  emailError: string;
-  passwordError: string;
-  confirmPasswordError: string;
-  personalEmailError: string;
-  supervisorError: string;
-  notesError: NoteError[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  personalEmail: string;
+  supervisor: string;
+  workloads: ItemError[];
+  notes: ItemError[];
 };
 
 export type RegistrationData = {

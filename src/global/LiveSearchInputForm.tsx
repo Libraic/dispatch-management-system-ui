@@ -8,6 +8,7 @@ import { getData } from "../service/liveSearchService.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { InputFormError } from "./InputFormError.tsx";
+import type { Error } from "../types/api/common.ts";
 
 type LiveSearchInputFormProps<T> = {
   label: string;
@@ -63,7 +64,7 @@ export const LiveSearchInputForm = <T,>({
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       if (value.trim().length > 0) {
-        getData<T[]>(endpoint, searchField, value).then((result) => {
+        getData<T[], Error>(endpoint, searchField, value).then((result) => {
           if (result.error !== null) {
             setErrorMessage(result.error.message);
             setToastId(Date.now().toString());

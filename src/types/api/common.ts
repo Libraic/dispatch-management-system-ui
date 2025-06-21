@@ -17,9 +17,24 @@ export type Error = {
   field: string | null;
 };
 
-export type ApiResponse<T> = {
-  data: T;
-  error: Error;
+export type FieldErrorResponse = {
+  field: string | null;
+  errorMessage: string;
+};
+
+export type ItemErrorResponse = {
+  itemIdentifier: string | null;
+  groupItemFieldsErrors: FieldErrorResponse[];
+};
+
+export type GroupErrorResponse = {
+  impactedGroup: string;
+  errors: ItemErrorResponse[];
+};
+
+export type ApiResponse<T, E extends Error | GroupErrorResponse[]> = {
+  data: T | null;
+  error: E | null;
 };
 
 export type PaginatedData<T> = {

@@ -36,7 +36,7 @@ export const AccountData: React.FC<{
               name="first-name"
               inputFieldValue={registrationData.firstName}
               isMandatory={true}
-              errorText={registrationDataError.firstNameError}
+              errorText={registrationDataError.firstName}
               saveData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
@@ -67,7 +67,7 @@ export const AccountData: React.FC<{
               name="last-name"
               inputFieldValue={registrationData.lastName}
               isMandatory={true}
-              errorText={registrationDataError.lastNameError}
+              errorText={registrationDataError.lastName}
               saveData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
@@ -85,7 +85,7 @@ export const AccountData: React.FC<{
               name="email"
               inputFieldValue={registrationData.email}
               isMandatory={true}
-              errorText={registrationDataError.emailError}
+              errorText={registrationDataError.email}
               saveData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
@@ -101,7 +101,7 @@ export const AccountData: React.FC<{
               name="email"
               inputFieldValue={registrationData.personalEmail}
               isMandatory={false}
-              errorText={registrationDataError.personalEmailError}
+              errorText={registrationDataError.personalEmail}
               saveData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
@@ -119,7 +119,7 @@ export const AccountData: React.FC<{
               name="password"
               inputFieldValue={registrationData.password}
               isMandatory={true}
-              errorText={registrationDataError.passwordError}
+              errorText={registrationDataError.password}
               saveData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,

@@ -59,7 +59,7 @@ export const EmployeeStatus = () => {
             endpoint={LiveSearchEndpoints.USER}
             searchField="fullName"
             isMandatory={false}
-            errorText={registrationDataError.supervisorError}
+            errorText={registrationDataError.supervisor}
             saveData={(userData: UserData) =>
               alterSupervisor(setRegistrationData, userData)
             }

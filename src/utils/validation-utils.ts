@@ -1,7 +1,7 @@
 import { BLANK_STRING, NOTE_MAX_LENGTH } from "./global-constants.ts";
 import type {
+  ItemError,
   NoteData,
-  NoteError,
 } from "../types/registration/registration-data.ts";
 
 export const validateEmail = (value: string, isMandatory: boolean): string => {
@@ -42,7 +42,7 @@ export const validatePassword = (
 };
 
 export const validateNotes = (notes: NoteData[]) => {
-  const errors: NoteError[] = [];
+  const errors: ItemError[] = [];
   if (notes.length === 0) {
     return errors;
   }
@@ -50,9 +50,8 @@ export const validateNotes = (notes: NoteData[]) => {
   for (let note of notes) {
     if (note.note.length > NOTE_MAX_LENGTH) {
       errors.push({
-        noteId: note.noteId,
-        errorMessage:
-          "The note exceeds the maximum number of allowed characters",
+        id: note.noteId,
+        fieldErrors: [{ field: null, errorMessage: "The note is too long" }],
       });
     }
   }

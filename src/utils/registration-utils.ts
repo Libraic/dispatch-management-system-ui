@@ -13,6 +13,7 @@ import type {
 } from "../types/api/registration-api.ts";
 import { convertDateToLittleEndian } from "./util-functions.ts";
 import {
+  type ItemError,
   type NoteData,
   PositionEnum,
   type RegistrationData,
@@ -50,14 +51,15 @@ export const getBlankRegistrationData = (): RegistrationData => {
 
 export const getBlankRegistrationDataError = (): RegistrationDataError => {
   return {
-    firstNameError: BLANK_STRING,
-    lastNameError: BLANK_STRING,
-    emailError: BLANK_STRING,
-    passwordError: BLANK_STRING,
-    confirmPasswordError: BLANK_STRING,
-    personalEmailError: BLANK_STRING,
-    notesError: [],
-    supervisorError: BLANK_STRING,
+    firstName: BLANK_STRING,
+    lastName: BLANK_STRING,
+    email: BLANK_STRING,
+    password: BLANK_STRING,
+    confirmPassword: BLANK_STRING,
+    personalEmail: BLANK_STRING,
+    notes: [],
+    workloads: [],
+    supervisor: BLANK_STRING,
   };
 };
 
@@ -66,29 +68,26 @@ export const getRegistrationDataErrors = (
 ): RegistrationDataError => {
   const registrationDataError = getBlankRegistrationDataError();
   if (registrationData.firstName === BLANK_STRING) {
-    registrationDataError.firstNameError = "The first name is required";
+    registrationDataError.firstName = "The first name is required";
   }
 
   if (registrationData.lastName === BLANK_STRING) {
-    registrationDataError.lastNameError = "The last name is required";
+    registrationDataError.lastName = "The last name is required";
   }
 
-  registrationDataError.emailError = validateEmail(
-    registrationData.email,
-    true,
-  );
+  registrationDataError.email = validateEmail(registrationData.email, true);
 
-  registrationDataError.passwordError = validatePassword(
+  registrationDataError.password = validatePassword(
     registrationData.password,
     registrationData.confirmPassword,
   );
 
-  registrationDataError.personalEmailError = validateEmail(
+  registrationDataError.personalEmail = validateEmail(
     registrationData.personalEmail,
     false,
   );
 
-  registrationDataError.notesError = validateNotes(registrationData.notes);
+  registrationDataError.notes = validateNotes(registrationData.notes);
 
   return registrationDataError;
 };
@@ -131,6 +130,8 @@ export const getCreateUserRequestFromRegistrationData = (
     workloads: registrationData.workloads.map(
       (workload): CreateWorkloadRequest => ({
         companyUuid: workload.companyId,
+        companyName: workload.companyName,
+        itemIdentifier: workload.workloadId,
         commission: workload.commission,
       }),
     ),
@@ -290,11 +291,19 @@ export const getNoteErrorMessage = (
   registrationDataError: RegistrationDataError,
   note: NoteData,
 ): string => {
-  return (
-    registrationDataError.notesError
-      .filter((n) => n.noteId === note.noteId)
-      .map((n) => n.errorMessage)[0] ?? { errorMessage: BLANK_STRING }
+  if (registrationDataError.notes.length === 0) {
+    return BLANK_STRING;
+  }
+
+  const itemsErrors: ItemError[] = registrationDataError.notes.filter(
+    (n) => n.id === note.noteId,
   );
+
+  if (itemsErrors.length === 0) {
+    return BLANK_STRING;
+  }
+
+  return itemsErrors[0].fieldErrors[0].errorMessage;
 };
 
 export const alterNote = (
@@ -333,7 +342,10 @@ const getGroupedErrors = (
     SectionEnum.EMPLOYMENT_INFORMATION,
     areEmploymentInformationErrors(registrationDataError),
   );
-  groupedErrors.set(SectionEnum.WORKLOAD, false);
+  groupedErrors.set(
+    SectionEnum.WORKLOAD,
+    areWorkloadErrors(registrationDataError),
+  );
   groupedErrors.set(SectionEnum.NOTES, areNotesErrors(registrationDataError));
   return groupedErrors;
 };
@@ -342,20 +354,26 @@ const areAccountErrors = (
   registrationDataError: RegistrationDataError,
 ): boolean => {
   return (
-    registrationDataError.firstNameError !== BLANK_STRING ||
-    registrationDataError.lastNameError !== BLANK_STRING ||
-    registrationDataError.emailError !== BLANK_STRING ||
-    registrationDataError.passwordError !== BLANK_STRING ||
-    registrationDataError.personalEmailError !== BLANK_STRING
+    registrationDataError.firstName !== BLANK_STRING ||
+    registrationDataError.lastName !== BLANK_STRING ||
+    registrationDataError.email !== BLANK_STRING ||
+    registrationDataError.password !== BLANK_STRING ||
+    registrationDataError.personalEmail !== BLANK_STRING
   );
+};
+
+const areWorkloadErrors = (
+  registrationDataError: RegistrationDataError,
+): boolean => {
+  return registrationDataError.workloads.length > 0;
 };
 
 const areEmploymentInformationErrors = (
   registrationDataError: RegistrationDataError,
 ): boolean => {
-  return registrationDataError.supervisorError !== BLANK_STRING;
+  return registrationDataError.supervisor !== BLANK_STRING;
 };
 
 const areNotesErrors = (
   registrationDataError: RegistrationDataError,
-): boolean => registrationDataError.notesError.length > 0;
+): boolean => registrationDataError.notes.length > 0;

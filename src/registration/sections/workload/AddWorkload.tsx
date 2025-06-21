@@ -3,6 +3,7 @@ import { WorkloadItem } from "./WorkloadItem.tsx";
 import { Add } from "../../../button/Add.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
 import { prepopulateWorkload } from "../../../utils/registration-utils.ts";
+import { getWorkloadCompanyErrorMessage } from "../../../utils/error-utils.ts";
 
 export const AddWorkload = () => {
   const context = useContext(RegistrationContext)!;
@@ -14,7 +15,13 @@ export const AddWorkload = () => {
       </div>
       <div className="flex flex-col gap-y-15">
         {context.registrationData.workloads.map((workloadData) => (
-          <WorkloadItem workloadData={workloadData} />
+          <WorkloadItem
+            workloadData={workloadData}
+            errorMessage={getWorkloadCompanyErrorMessage(
+              context.registrationDataError,
+              workloadData,
+            )}
+          />
         ))}
       </div>
     </div>

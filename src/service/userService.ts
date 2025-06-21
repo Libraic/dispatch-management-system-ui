@@ -4,15 +4,19 @@ import type {
   CreateUserRequest,
   UserData,
 } from "../types/api/registration-api.ts";
-import type { ApiResponse } from "../types/api/common.ts";
+import type { ApiResponse, GroupErrorResponse } from "../types/api/common.ts";
 
 export const saveUser = async (
   createUserRequest: CreateUserRequest,
-): Promise<ApiResponse<UserData>> => {
+): Promise<ApiResponse<UserData, GroupErrorResponse[]> | undefined> => {
   try {
     const response = await axios.post(SAVE_USER, createUserRequest);
     return response.data;
   } catch (error: any) {
+    if (error.code === "ERR_NETWORK") {
+      return Promise.resolve(undefined);
+    }
+
     return error.response.data;
   }
 };
