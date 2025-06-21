@@ -57,6 +57,7 @@ export const getBlankRegistrationDataError = (): RegistrationDataError => {
     confirmPasswordError: BLANK_STRING,
     personalEmailError: BLANK_STRING,
     notesError: [],
+    supervisorError: BLANK_STRING,
   };
 };
 
@@ -123,7 +124,10 @@ export const getCreateUserRequestFromRegistrationData = (
     employmentDate: convertDateToLittleEndian(registrationData.employmentDate),
     role: registrationData.role,
     position: registrationData.position,
-    supervisorUuid: null,
+    supervisor: {
+      uuid: registrationData.supervisor?.uuid ?? null,
+      fullName: registrationData.supervisor?.name ?? null,
+    },
     workloads: registrationData.workloads.map(
       (workload): CreateWorkloadRequest => ({
         companyUuid: workload.companyId,
@@ -193,7 +197,6 @@ export const prepopulatePosition = (
 
 export const prepopulateWorkload = (
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
-  defaultCompanyUuid: string,
 ) => {
   setRegistrationData((prev) => ({
     ...prev,
@@ -201,30 +204,46 @@ export const prepopulateWorkload = (
       ...prev.workloads,
       {
         workloadId: Date.now().toString(),
-        companyId: defaultCompanyUuid,
+        companyId: BLANK_STRING,
+        companyName: BLANK_STRING,
         commission: 0.0,
       },
     ],
   }));
 };
 
+export const prepopulateCompanyName = (
+  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  companyName: string,
+  workloadData: WorkloadData,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: prev.workloads.map((workload) =>
+      workload.workloadId === workloadData.workloadId
+        ? { ...workload, companyName }
+        : workload,
+    ),
+  }));
+};
+
 export const alterWorkloads = (
   setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
-  companies: CompanyData[],
-  item: WorkloadData,
-  selectedName: string,
+  companyData: CompanyData,
+  workloadData: WorkloadData,
 ) => {
-  const selectedCompany = companies.find((c) => c.name === selectedName);
-  if (selectedCompany) {
-    setRegistrationData((prev) => ({
-      ...prev,
-      workloads: prev.workloads.map((w) =>
-        w.workloadId === item.workloadId
-          ? { ...w, companyId: selectedCompany.uuid }
-          : w,
-      ),
-    }));
-  }
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: prev.workloads.map((w) =>
+      w.workloadId === workloadData.workloadId
+        ? {
+            ...w,
+            companyId: companyData.uuid,
+            companyName: companyData.name,
+          }
+        : w,
+    ),
+  }));
 };
 
 export const alterWorkloadCommission = (
@@ -310,7 +329,10 @@ const getGroupedErrors = (
     SectionEnum.BASIC_INFORMATION,
     areAccountErrors(registrationDataError),
   );
-  groupedErrors.set(SectionEnum.EMPLOYMENT_INFORMATION, false);
+  groupedErrors.set(
+    SectionEnum.EMPLOYMENT_INFORMATION,
+    areEmploymentInformationErrors(registrationDataError),
+  );
   groupedErrors.set(SectionEnum.WORKLOAD, false);
   groupedErrors.set(SectionEnum.NOTES, areNotesErrors(registrationDataError));
   return groupedErrors;
@@ -326,6 +348,12 @@ const areAccountErrors = (
     registrationDataError.passwordError !== BLANK_STRING ||
     registrationDataError.personalEmailError !== BLANK_STRING
   );
+};
+
+const areEmploymentInformationErrors = (
+  registrationDataError: RegistrationDataError,
+): boolean => {
+  return registrationDataError.supervisorError !== BLANK_STRING;
 };
 
 const areNotesErrors = (

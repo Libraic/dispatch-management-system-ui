@@ -1,4 +1,3 @@
-import { SelectForm } from "../../../global/SelectForm.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext } from "react";
@@ -9,35 +8,36 @@ import {
   alterWorkloadCommission,
   alterWorkloads,
   deleteWorkload,
+  prepopulateCompanyName,
 } from "../../../utils/registration-utils.ts";
+import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
+import { LiveSearchEndpoints } from "../../../types/forms.ts";
+import type { CompanyData } from "../../../types/api/registration-api.ts";
 
 export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;
 }> = ({ workloadData }) => {
   const context = useContext(RegistrationContext)!;
-  const companies = context.companies;
-  const pagination = context.pagination;
   const setRegistrationData = context.setRegistrationData;
   return (
     <div
       key={workloadData.workloadId}
       className="flex flex-row items-center gap-x-10"
     >
-      <SelectForm
+      <LiveSearchInputForm
         label="Company"
-        formWidth="w-35"
-        initialValue={
-          companies.find((c) => c.uuid === workloadData.companyId)?.name ?? ""
+        placeholder="Microsoft"
+        value={workloadData.companyName}
+        endpoint={LiveSearchEndpoints.COMPANY}
+        searchField="name"
+        isMandatory={false}
+        saveData={(companyData: CompanyData) =>
+          alterWorkloads(setRegistrationData, companyData, workloadData)
         }
-        data={companies.map((company) => company.name)}
-        pagination={pagination}
-        setElement={(selectedName: string) =>
-          alterWorkloads(
-            setRegistrationData,
-            companies,
-            workloadData,
-            selectedName,
-          )
+        renderResult={(companyData: CompanyData) => companyData.name}
+        getKey={(companyData: CompanyData) => companyData.uuid}
+        prepopulate={(companyName) =>
+          prepopulateCompanyName(setRegistrationData, companyName, workloadData)
         }
       />
       <InputForm
