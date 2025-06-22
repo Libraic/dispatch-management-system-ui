@@ -82,7 +82,6 @@ export const RegistrationInputSection: React.FC<{
           getCreateUserRequestFromRegistrationData(registrationData);
         const apiResponse = await saveUser(createUserRequest);
         if (apiResponse === undefined) {
-          console.log("Here");
           setErrorMessage(
             "The server is not responding. Please try again later.",
           );
