@@ -36,6 +36,7 @@ import {
   getSectionsWithErrors,
   getSimpleErrorMessageFromRegistrationDataError,
 } from "../utils/registration/registration-errors.ts";
+import { useNavigate } from "react-router-dom";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -46,6 +47,8 @@ export const RegistrationInputSection: React.FC<{
 
   const [registrationDataError, setRegistrationDataError] =
     useState<RegistrationDataError>(getBlankRegistrationDataError());
+
+  const navigate = useNavigate();
 
   const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
   const [errorMessage, setErrorMessage] = useState<string>(BLANK_STRING);
@@ -170,7 +173,7 @@ export const RegistrationInputSection: React.FC<{
         </RegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
-        <CancelButton actionText="Cancel" action={() => {}} />
+        <CancelButton actionText="Cancel" action={() => navigate("/")} />
         <SubmitButton
           actionText={submitButtonText}
           action={validateRegistrationData}
