@@ -3,7 +3,7 @@ import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
-import { setRegistrationDataStringField } from "../../../utils/registration/registration.ts";
+import { setRegistrationDataStringField } from "../../../utils/registration/user/user-registration.ts";
 import {
   EMAIL_PLACEHOLDER,
   FIRST_NAME_PLACEHOLDER,

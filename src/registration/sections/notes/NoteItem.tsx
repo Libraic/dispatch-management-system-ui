@@ -4,16 +4,18 @@ import { textAreaStyle } from "../../../utils/tailwind.ts";
 import { InputFormError } from "../../../global/InputFormError.tsx";
 import type {
   NoteData,
-  RegistrationData,
-} from "../../../types/registration/registration-data.ts";
+  UserRegistrationData,
+} from "../../../types/registration/user/user-registration-data.ts";
 import {
   alterNote,
   deleteNote,
-} from "../../../utils/registration/registration.ts";
+} from "../../../utils/registration/user/user-registration.ts";
 import { NOTE_PLACEHOLDER } from "../../../utils/constants/placeholders.ts";
 
 export const NoteItem: React.FC<{
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>;
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >;
   errorMessage: string;
   noteData: NoteData;
 }> = ({ setRegistrationData, errorMessage, noteData }) => {

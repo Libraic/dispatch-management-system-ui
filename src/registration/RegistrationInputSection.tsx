@@ -6,9 +6,9 @@ import { SubmitButton } from "../button/SubmitButton.tsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
-  getBlankRegistrationData,
+  getBlankUserRegistrationData,
   getCreateUserRequestFromRegistrationData,
-} from "../utils/registration/registration.ts";
+} from "../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import {
   RegistrationContext,
@@ -16,18 +16,18 @@ import {
 } from "../context/RegistrationContext.ts";
 import { Toast } from "../toast/Toast.tsx";
 import type { CreateUserRequest } from "../types/api/registration-api.ts";
-import { saveUser } from "../service/userService.ts";
+import { saveUser } from "../service/user-service.ts";
 import { BLANK_STRING } from "../utils/constants/global.ts";
 import {
   type SectionData,
   SectionEnum,
-} from "../types/registration/section.ts";
+} from "../types/registration/user/section.ts";
 import type {
   FieldError,
   ItemError,
-  RegistrationData,
   RegistrationDataError,
-} from "../types/registration/registration-data.ts";
+  UserRegistrationData,
+} from "../types/registration/user/user-registration-data.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import type { GroupErrorResponse } from "../types/api/common.ts";
 import {
@@ -35,15 +35,15 @@ import {
   getRegistrationDataErrors,
   getSectionsWithErrors,
   getSimpleErrorMessageFromRegistrationDataError,
-} from "../utils/registration/registration-errors.ts";
+} from "../utils/registration/user/user-registration-errors.ts";
 import { useNavigate } from "react-router-dom";
+import { HOME } from "../utils/routes/routes.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
 }> = ({ sectionsHandler }) => {
-  const [registrationData, setRegistrationData] = useState<RegistrationData>(
-    getBlankRegistrationData(),
-  );
+  const [registrationData, setRegistrationData] =
+    useState<UserRegistrationData>(getBlankUserRegistrationData());
 
   const [registrationDataError, setRegistrationDataError] =
     useState<RegistrationDataError>(getBlankRegistrationDataError());
@@ -137,7 +137,7 @@ export const RegistrationInputSection: React.FC<{
             setErrorMessage("User created successfully.");
             setToastId(Date.now().toString());
             setToastType(ToastTypeEnum.SUCCESS);
-            setRegistrationData(getBlankRegistrationData());
+            setRegistrationData(getBlankUserRegistrationData());
             setRegistrationDataError(getBlankRegistrationDataError());
           }
         }
@@ -173,7 +173,7 @@ export const RegistrationInputSection: React.FC<{
         </RegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
-        <CancelButton actionText="Cancel" action={() => navigate("/")} />
+        <CancelButton actionText="Cancel" action={() => navigate(HOME)} />
         <SubmitButton
           actionText={submitButtonText}
           action={validateRegistrationData}

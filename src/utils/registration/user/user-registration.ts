@@ -1,23 +1,26 @@
-import { BLANK_STRING } from "../constants/global.ts";
+import { BLANK_STRING } from "../../constants/global.ts";
 import type {
   CompanyData,
   CreateUserRequest,
   CreateWorkloadRequest,
   UserData,
-} from "../../types/api/registration-api.ts";
-import { convertDateToLittleEndian, DEFAULT_BIRTH_DATE } from "../date.ts";
+} from "../../../types/api/registration-api.ts";
+import {
+  convertDateToLittleEndian,
+  DEFAULT_BIRTH_DATE,
+  getCurrentYearData,
+} from "../../date.ts";
 import {
   type NoteData,
   PositionEnum,
-  type RegistrationData,
   RoleEnum,
+  type UserRegistrationData,
   type WorkloadData,
-} from "../../types/registration/registration-data.ts";
+} from "../../../types/registration/user/user-registration-data.ts";
 import type { ChangeEvent } from "react";
 import * as React from "react";
 
-export const getBlankRegistrationData = (): RegistrationData => {
-  const date = new Date();
+export const getBlankUserRegistrationData = (): UserRegistrationData => {
   return {
     firstName: BLANK_STRING,
     lastName: BLANK_STRING,
@@ -27,11 +30,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
     confirmPassword: BLANK_STRING,
     personalEmail: BLANK_STRING,
     birthDate: DEFAULT_BIRTH_DATE,
-    employmentDate: {
-      day: date.getDate(),
-      month: date.getMonth() + 1,
-      year: date.getFullYear(),
-    },
+    employmentDate: getCurrentYearData(),
     supervisor: null,
     role: RoleEnum.EMPLOYEE,
     position: PositionEnum.ACCOUNTANT,
@@ -41,7 +40,7 @@ export const getBlankRegistrationData = (): RegistrationData => {
 };
 
 export const getCreateUserRequestFromRegistrationData = (
-  registrationData: RegistrationData,
+  registrationData: UserRegistrationData,
 ): CreateUserRequest => {
   return {
     firstName: registrationData.firstName,
@@ -77,8 +76,10 @@ export const getCreateUserRequestFromRegistrationData = (
 };
 
 export const setRegistrationDataStringField = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
-  field: keyof RegistrationData,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
+  field: keyof UserRegistrationData,
   value: string,
 ) => {
   setRegistrationData((prev) => ({
@@ -94,7 +95,9 @@ export const getFullName = (user: UserData) => {
 };
 
 export const alterSupervisor = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   userData: UserData,
 ) => {
   setRegistrationData((prev) => ({
@@ -107,7 +110,9 @@ export const alterSupervisor = (
 };
 
 export const prepopulateSupervisor = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   supervisorName: string,
 ) => {
   setRegistrationData((prev) => ({
@@ -120,21 +125,27 @@ export const prepopulateSupervisor = (
 };
 
 export const prepopulateRole = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   role: string,
 ) => {
   setRegistrationData((prev) => ({ ...prev, role: role }));
 };
 
 export const prepopulatePosition = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   position: string,
 ) => {
   setRegistrationData((prev) => ({ ...prev, position: position }));
 };
 
 export const prepopulateWorkload = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
 ) => {
   setRegistrationData((prev) => ({
     ...prev,
@@ -151,7 +162,9 @@ export const prepopulateWorkload = (
 };
 
 export const prepopulateCompanyName = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   companyName: string,
   workloadData: WorkloadData,
 ) => {
@@ -166,7 +179,9 @@ export const prepopulateCompanyName = (
 };
 
 export const alterWorkloads = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   companyData: CompanyData,
   workloadData: WorkloadData,
 ) => {
@@ -185,7 +200,9 @@ export const alterWorkloads = (
 };
 
 export const alterWorkloadCommission = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   workloadData: WorkloadData,
   value: string,
 ) => {
@@ -200,7 +217,9 @@ export const alterWorkloadCommission = (
 };
 
 export const deleteWorkload = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   item: WorkloadData,
 ) => {
   setRegistrationData((prev) => ({
@@ -210,7 +229,9 @@ export const deleteWorkload = (
 };
 
 export const prepopulateNote = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
 ) => {
   setRegistrationData((prev) => ({
     ...prev,
@@ -225,7 +246,9 @@ export const prepopulateNote = (
 };
 
 export const alterNote = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   e: ChangeEvent<HTMLTextAreaElement>,
   noteData: NoteData,
 ) => {
@@ -239,7 +262,9 @@ export const alterNote = (
 };
 
 export const deleteNote = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
   noteData: NoteData,
 ) => {
   setRegistrationData((prev) => ({

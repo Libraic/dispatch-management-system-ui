@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { BLANK_STRING } from "../utils/constants/global.ts";
-import { getData } from "../service/liveSearchService.ts";
+import { getData } from "../service/live-search-service.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { InputFormError } from "./InputFormError.tsx";

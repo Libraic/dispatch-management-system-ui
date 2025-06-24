@@ -2,17 +2,17 @@ import type {
   FieldError,
   ItemError,
   NoteData,
-  RegistrationData,
+  UserRegistrationData,
   RegistrationDataError,
   WorkloadData,
-} from "../../types/registration/registration-data.ts";
-import { BLANK_STRING } from "../constants/global.ts";
+} from "../../../types/registration/user/user-registration-data.ts";
+import { BLANK_STRING } from "../../constants/global.ts";
 import {
   validateEmail,
   validateNotes,
   validatePassword,
-} from "./registration-validation.ts";
-import { SectionEnum } from "../../types/registration/section.ts";
+} from "./user-registration-validation.ts";
+import { SectionEnum } from "../../../types/registration/user/section.ts";
 
 export const getBlankRegistrationDataError = (): RegistrationDataError => {
   return {
@@ -29,7 +29,7 @@ export const getBlankRegistrationDataError = (): RegistrationDataError => {
 };
 
 export const getRegistrationDataErrors = (
-  registrationData: RegistrationData,
+  registrationData: UserRegistrationData,
 ): RegistrationDataError => {
   const registrationDataError = getBlankRegistrationDataError();
   if (registrationData.firstName === BLANK_STRING) {

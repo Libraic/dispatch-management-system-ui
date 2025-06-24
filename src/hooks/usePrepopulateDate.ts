@@ -1,15 +1,14 @@
 import * as React from "react";
 import { useEffect } from "react";
 import type { DateObject } from "../types/global.ts";
-import type { RegistrationData } from "../types/registration/registration-data.ts";
 
-export const usePrepopulateDate = (
-  setRegistrationData: React.Dispatch<React.SetStateAction<RegistrationData>>,
+export const usePrepopulateDate = <T>(
+  setterFunction: React.Dispatch<React.SetStateAction<T>>,
   dateObject: DateObject,
-  field: keyof RegistrationData,
+  field: keyof T,
 ) => {
   useEffect(() => {
-    setRegistrationData((prev) => ({
+    setterFunction((prev) => ({
       ...prev,
       [field]: {
         day: dateObject.day,
@@ -22,6 +21,6 @@ export const usePrepopulateDate = (
     dateObject.month,
     dateObject.year,
     field,
-    setRegistrationData,
+    setterFunction,
   ]);
 };

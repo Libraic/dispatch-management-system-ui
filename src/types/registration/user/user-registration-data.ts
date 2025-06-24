@@ -1,4 +1,4 @@
-import type { YearData } from "../global.ts";
+import type { YearData } from "../../global.ts";
 
 export const RoleEnum = {
   EMPLOYEE: "Employee",
@@ -52,7 +52,7 @@ export type RegistrationDataError = {
   notes: ItemError[];
 };
 
-export type RegistrationData = {
+export type UserRegistrationData = {
   firstName: string;
   lastName: string;
   nickname: string;

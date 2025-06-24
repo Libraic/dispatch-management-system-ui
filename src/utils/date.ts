@@ -35,3 +35,12 @@ export const convertDateToLittleEndian = (date: YearData) => {
   const month = date.month < 10 ? `0${date.month}` : date.month;
   return `${day}-${month}-${date.year}`;
 };
+
+export const getCurrentYearData = (): YearData => {
+  const date = new Date();
+  return {
+    day: date.getDate(),
+    month: date.getMonth() + 1,
+    year: date.getFullYear(),
+  };
+};

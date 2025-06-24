@@ -3,7 +3,7 @@ import * as React from "react";
 import {
   type SectionData,
   SectionEnum,
-} from "../types/registration/section.ts";
+} from "../types/registration/user/section.ts";
 
 export const RegistrationSectionsList: React.FC<{
   sectionsHandler: SectionData;

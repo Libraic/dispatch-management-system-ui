@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { SectionData } from "../types/registration/section.ts";
-import { SectionEnum } from "../types/registration/section.ts";
+import type { SectionData } from "../types/registration/user/section.ts";
+import { SectionEnum } from "../types/registration/user/section.ts";
 
 const allSections: SectionEnum[] = Object.keys(SectionEnum) as SectionEnum[];
 

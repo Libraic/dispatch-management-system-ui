@@ -3,13 +3,13 @@ import * as React from "react";
 import { useContext } from "react";
 import { Delete } from "../../../button/Delete.tsx";
 import { RegistrationContext } from "../../../context/RegistrationContext.ts";
-import type { WorkloadData } from "../../../types/registration/registration-data.ts";
+import type { WorkloadData } from "../../../types/registration/user/user-registration-data.ts";
 import {
   alterWorkloadCommission,
   alterWorkloads,
   deleteWorkload,
   prepopulateCompanyName,
-} from "../../../utils/registration/registration.ts";
+} from "../../../utils/registration/user/user-registration.ts";
 import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import { LiveSearchEndpoints } from "../../../types/forms.ts";
 import type { CompanyData } from "../../../types/api/registration-api.ts";
