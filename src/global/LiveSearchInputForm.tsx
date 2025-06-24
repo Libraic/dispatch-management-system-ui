@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
@@ -61,8 +61,8 @@ export const LiveSearchInputForm = <T,>({
     setBorderColor("border-light-grey");
   };
 
-  const debouncedSearch = useCallback(
-    debounce((value: string) => {
+  useEffect(() => {
+    const debounced = debounce((value: string) => {
       if (value.trim().length > 0) {
         getData<T[], Error>(endpoint, searchField, value).then((result) => {
           if (result.error !== null) {
@@ -77,13 +77,12 @@ export const LiveSearchInputForm = <T,>({
       } else {
         setResults([]);
       }
-    }, 300),
-    [endpoint, searchField, query],
-  );
+    }, 300);
 
-  useEffect(() => {
-    debouncedSearch(query);
-  }, [debouncedSearch, query, saveData]);
+    debounced(query);
+
+    return () => debounced.cancel();
+  }, [query, endpoint, searchField]);
 
   return (
     <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">

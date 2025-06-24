@@ -117,7 +117,10 @@ export const RegistrationInputSection: React.FC<{
     }
 
     if (sectionsHandler.areAllSectionsComplete()) {
-      handleUserCreation().then(() => {});
+      await handleUserCreation();
+      if (sectionsHandler.areAllSectionsComplete()) {
+        navigate(HOME);
+      }
     }
   };
 
