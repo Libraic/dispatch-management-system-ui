@@ -2,8 +2,8 @@ import type {
   FieldError,
   ItemError,
   NoteData,
-  UserRegistrationData,
   RegistrationDataError,
+  UserRegistrationData,
   WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
@@ -13,6 +13,7 @@ import {
   validatePassword,
 } from "./user-registration-validation.ts";
 import { SectionEnum } from "../../../types/registration/user/section.ts";
+import type { GroupErrorResponse } from "../../../types/api/common.ts";
 
 export const getBlankRegistrationDataError = (): RegistrationDataError => {
   return {
@@ -123,6 +124,24 @@ export const getWorkloadCompanyErrorMessage = (
   )[0];
 
   return field.errorMessage;
+};
+
+export const actualizeRegistrationDataErrorFromApiResponse = (
+  prev: RegistrationDataError,
+  groupErrorResponse: GroupErrorResponse,
+  itemsErrors: ItemError[],
+) => {
+  return groupErrorResponse.impactedGroup === "workloads" ||
+    groupErrorResponse.impactedGroup === "notes"
+    ? {
+        ...prev,
+        [groupErrorResponse.impactedGroup as string]: itemsErrors,
+      }
+    : {
+        ...prev,
+        [groupErrorResponse.impactedGroup as string]:
+          getSimpleErrorMessageFromRegistrationDataError(itemsErrors),
+      };
 };
 
 const getGroupedErrors = (

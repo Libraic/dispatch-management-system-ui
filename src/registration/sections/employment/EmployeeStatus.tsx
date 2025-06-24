@@ -13,10 +13,10 @@ import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import type { UserData } from "../../../types/api/registration-api.ts";
 import {
   alterSupervisor,
+  cleanSupervisor,
   getFullName,
   prepopulatePosition,
   prepopulateRole,
-  prepopulateSupervisor,
 } from "../../../utils/registration/user/user-registration.ts";
 
 export const EmployeeStatus = () => {
@@ -63,11 +63,9 @@ export const EmployeeStatus = () => {
             saveData={(userData: UserData) =>
               alterSupervisor(setRegistrationData, userData)
             }
+            cleanData={() => cleanSupervisor(setRegistrationData)}
             renderResult={(userData: UserData) => getFullName(userData)}
             getKey={(userData) => userData.uuid}
-            prepopulate={(supervisorName) =>
-              prepopulateSupervisor(setRegistrationData, supervisorName)
-            }
           />
         </div>
       )}

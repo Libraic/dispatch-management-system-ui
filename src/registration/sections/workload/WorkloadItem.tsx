@@ -7,8 +7,8 @@ import type { WorkloadData } from "../../../types/registration/user/user-registr
 import {
   alterWorkloadCommission,
   alterWorkloads,
+  cleanWorkload,
   deleteWorkload,
-  prepopulateCompanyName,
 } from "../../../utils/registration/user/user-registration.ts";
 import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
 import { LiveSearchEndpoints } from "../../../types/forms.ts";
@@ -36,11 +36,9 @@ export const WorkloadItem: React.FC<{
         saveData={(companyData: CompanyData) =>
           alterWorkloads(setRegistrationData, companyData, workloadData)
         }
+        cleanData={() => cleanWorkload(setRegistrationData, workloadData)}
         renderResult={(companyData: CompanyData) => companyData.name}
         getKey={(companyData: CompanyData) => companyData.uuid}
-        prepopulate={(companyName) =>
-          prepopulateCompanyName(setRegistrationData, companyName, workloadData)
-        }
       />
       <InputForm
         label="Commission (%)"

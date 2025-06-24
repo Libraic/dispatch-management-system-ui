@@ -109,6 +109,20 @@ export const alterSupervisor = (
   }));
 };
 
+export const cleanSupervisor = (
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    supervisor: {
+      uuid: BLANK_STRING,
+      name: BLANK_STRING,
+    },
+  }));
+};
+
 export const prepopulateSupervisor = (
   setRegistrationData: React.Dispatch<
     React.SetStateAction<UserRegistrationData>
@@ -193,6 +207,26 @@ export const alterWorkloads = (
             ...w,
             companyId: companyData.uuid,
             companyName: companyData.name,
+          }
+        : w,
+    ),
+  }));
+};
+
+export const cleanWorkload = (
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
+  workloadData: WorkloadData,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    workloads: prev.workloads.map((w) =>
+      w.workloadId === workloadData.workloadId
+        ? {
+            ...w,
+            companyId: BLANK_STRING,
+            companyName: BLANK_STRING,
           }
         : w,
     ),

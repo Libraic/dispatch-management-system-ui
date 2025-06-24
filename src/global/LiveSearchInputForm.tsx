@@ -19,9 +19,9 @@ type LiveSearchInputFormProps<T> = {
   isMandatory: boolean;
   errorText?: string;
   saveData: (value: T) => void;
+  cleanData: () => void;
   renderResult: (item: T) => React.ReactNode;
   getKey: (item: T) => string;
-  prepopulate: (value: string) => void;
 };
 
 export const LiveSearchInputForm = <T,>({
@@ -33,11 +33,11 @@ export const LiveSearchInputForm = <T,>({
   isMandatory,
   errorText,
   saveData,
+  cleanData,
   renderResult,
   getKey,
-  prepopulate,
 }: LiveSearchInputFormProps<T>) => {
-  const [query, setQuery] = useState(value);
+  const [query, setQuery] = useState(BLANK_STRING);
   const [results, setResults] = useState<T[]>([]);
   const [borderColor, setBorderColor] = useState("border-light-grey");
   const [placeholderText, setPlaceholderText] = React.useState(placeholder);
@@ -104,12 +104,14 @@ export const LiveSearchInputForm = <T,>({
         <input
           className={`${inputFormStyle} w-[19rem]`}
           placeholder={placeholderText}
-          value={value}
+          value={value !== BLANK_STRING ? value : query}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(e) => {
-            prepopulate(e.target.value);
             setQuery(e.target.value);
+            if (value !== BLANK_STRING) {
+              cleanData();
+            }
           }}
         />
         {errorMessage.length === 0 && results.length > 0 && (
@@ -119,7 +121,6 @@ export const LiveSearchInputForm = <T,>({
                 key={getKey(item)}
                 className="w-full rounded hover:bg-[#edf2fe] hover:text-solid-blue hover:cursor-pointer text-standard-size font-lato font-light text-center"
                 onClick={() => {
-                  console.log(item);
                   setQuery(BLANK_STRING);
                   saveData(item);
                   setResults([]);

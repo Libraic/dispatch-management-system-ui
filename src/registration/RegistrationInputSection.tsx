@@ -23,21 +23,20 @@ import {
   SectionEnum,
 } from "../types/registration/user/section.ts";
 import type {
-  FieldError,
-  ItemError,
   RegistrationDataError,
   UserRegistrationData,
 } from "../types/registration/user/user-registration-data.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 import type { GroupErrorResponse } from "../types/api/common.ts";
 import {
+  actualizeRegistrationDataErrorFromApiResponse,
   getBlankRegistrationDataError,
   getRegistrationDataErrors,
   getSectionsWithErrors,
-  getSimpleErrorMessageFromRegistrationDataError,
 } from "../utils/registration/user/user-registration-errors.ts";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../utils/routes/routes.ts";
+import { getItemsErrors } from "../utils/api/api-errors-handler.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -78,77 +77,34 @@ export const RegistrationInputSection: React.FC<{
     }
   }, [activeSection, setSubmitButtonText, setErrorMessage, sectionsHandler]);
 
-  useEffect(() => {
-    async function handleUserCreation() {
-      if (sectionsHandler.areAllSectionsComplete()) {
-        const createUserRequest: CreateUserRequest =
-          getCreateUserRequestFromRegistrationData(registrationData);
-        const apiResponse = await saveUser(createUserRequest);
-        if (apiResponse === undefined) {
-          setErrorMessage(
-            "The server is not responding. Please try again later.",
+  async function handleUserCreation() {
+    const createUserRequest: CreateUserRequest =
+      getCreateUserRequestFromRegistrationData(registrationData);
+    const apiResponse = await saveUser(createUserRequest);
+    if (apiResponse === undefined) {
+      setErrorMessage("The server is not responding. Please try again later.");
+      setToastId(Date.now().toString());
+      setToastType(ToastTypeEnum.ERROR);
+      return;
+    }
+
+    if (apiResponse.error !== null) {
+      const errors = apiResponse.error as GroupErrorResponse[];
+      for (const groupErrorResponse of errors) {
+        const itemsErrors = getItemsErrors(groupErrorResponse);
+        setRegistrationDataError((prev) => {
+          const updated = actualizeRegistrationDataErrorFromApiResponse(
+            prev,
+            groupErrorResponse,
+            itemsErrors,
           );
-          setToastId(Date.now().toString());
-          setToastType(ToastTypeEnum.ERROR);
-        } else {
-          if (apiResponse.error !== null) {
-            const errors = apiResponse.error as GroupErrorResponse[];
-            for (const groupErrorResponse of errors) {
-              const itemsErrors: ItemError[] = [];
-              for (const itemError of groupErrorResponse.errors) {
-                const fieldErrors: FieldError[] = [];
-                for (const fieldError of itemError.groupItemFieldsErrors) {
-                  const field: FieldError = {
-                    field: fieldError.field,
-                    errorMessage: fieldError.errorMessage,
-                  };
-                  fieldErrors.push(field);
-                }
-                const item: ItemError = {
-                  id: itemError.itemIdentifier,
-                  fieldErrors: fieldErrors,
-                };
-                itemsErrors.push(item);
-              }
-
-              setRegistrationDataError((prev) => {
-                const updated =
-                  groupErrorResponse.impactedGroup === "workloads" ||
-                  groupErrorResponse.impactedGroup === "notes"
-                    ? {
-                        ...prev,
-                        [groupErrorResponse.impactedGroup as string]:
-                          itemsErrors,
-                      }
-                    : {
-                        ...prev,
-                        [groupErrorResponse.impactedGroup as string]:
-                          getSimpleErrorMessageFromRegistrationDataError(
-                            itemsErrors,
-                          ),
-                      };
-
-                const sectionsErrors = getSectionsWithErrors(updated);
-                sectionsHandler.setErrors(sectionsErrors);
-                return updated;
-              });
-            }
-          } else {
-            setErrorMessage("User created successfully.");
-            setToastId(Date.now().toString());
-            setToastType(ToastTypeEnum.SUCCESS);
-            setRegistrationData(getBlankUserRegistrationData());
-            setRegistrationDataError(getBlankRegistrationDataError());
-          }
-        }
+          const sectionsErrors = getSectionsWithErrors(updated);
+          sectionsHandler.setErrors(sectionsErrors);
+          return updated;
+        });
       }
     }
-
-    // TODO: Redirect to a new page
-    if (errorMessage === BLANK_STRING) {
-      handleUserCreation().then(() => {});
-    }
-  }, [errorMessage, registrationData, sectionsHandler]);
+  }
 
   const validateRegistrationData = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,7 +117,7 @@ export const RegistrationInputSection: React.FC<{
     }
 
     if (sectionsHandler.areAllSectionsComplete()) {
-      setErrorMessage(BLANK_STRING);
+      handleUserCreation().then(() => {});
     }
   };
 
