@@ -47,8 +47,8 @@ export const WorkloadItem: React.FC<{
         name="Commission"
         inputFieldValue={workloadData.commission.toString()}
         isMandatory={false}
-        errorText=""
-        saveData={(value: string) =>
+        errorMessage=""
+        saveInputData={(value: string) =>
           alterWorkloadCommission(setRegistrationData, workloadData, value)
         }
       />

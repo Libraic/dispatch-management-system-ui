@@ -12,8 +12,8 @@ export const InputForm: React.FC<{
   name: string;
   inputFieldValue: string;
   isMandatory: boolean;
-  errorText?: string;
-  saveData: (value: string) => void;
+  errorMessage?: string;
+  saveInputData: (value: string) => void;
 }> = ({
   label,
   placeholder,
@@ -21,8 +21,8 @@ export const InputForm: React.FC<{
   name,
   inputFieldValue,
   isMandatory,
-  errorText,
-  saveData,
+  errorMessage,
+  saveInputData,
 }) => {
   const [placeholderText, setPlaceholderText] = React.useState(placeholder);
   const [value, setValue] = React.useState(inputFieldValue);
@@ -43,7 +43,7 @@ export const InputForm: React.FC<{
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    saveData(e.target.value);
+    saveInputData(e.target.value);
   };
 
   return (
@@ -73,7 +73,7 @@ export const InputForm: React.FC<{
           onChange={handleChange}
         />
       </div>
-      {!!errorText?.length && <InputFormError errorMessage={errorText} />}
+      {!!errorMessage?.length && <InputFormError errorMessage={errorMessage} />}
     </div>
   );
 };

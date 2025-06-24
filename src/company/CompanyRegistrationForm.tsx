@@ -56,7 +56,9 @@ export const CompanyRegistrationForm = () => {
         companyRegistrationData,
       );
     const companyData = await saveCompany(createCompanyRequest);
-    console.log(companyData);
+    if (companyData !== undefined && companyData.error === null) {
+      navigate(HOME);
+    }
   };
 
   return (
@@ -78,8 +80,8 @@ export const CompanyRegistrationForm = () => {
               name="name"
               inputFieldValue={companyRegistrationData.name}
               isMandatory={true}
-              errorText={companyRegistrationErrors.name}
-              saveData={(companyName: string) =>
+              errorMessage={companyRegistrationErrors.name}
+              saveInputData={(companyName: string) =>
                 alterCompanySimpleField(
                   setCompanyRegistrationData,
                   "name",
@@ -96,7 +98,7 @@ export const CompanyRegistrationForm = () => {
                 companyRegistrationData?.mcNumber ?? BLANK_STRING
               }
               isMandatory={false}
-              saveData={(mcNumber: string) =>
+              saveInputData={(mcNumber: string) =>
                 alterCompanySimpleField(
                   setCompanyRegistrationData,
                   "mcNumber",
@@ -111,7 +113,7 @@ export const CompanyRegistrationForm = () => {
               name="address"
               inputFieldValue={companyRegistrationData?.address ?? BLANK_STRING}
               isMandatory={false}
-              saveData={(address: string) =>
+              saveInputData={(address: string) =>
                 alterCompanySimpleField(
                   setCompanyRegistrationData,
                   "address",

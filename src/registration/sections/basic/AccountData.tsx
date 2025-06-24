@@ -43,8 +43,8 @@ export const AccountData: React.FC<{
               name="first-name"
               inputFieldValue={registrationData.firstName}
               isMandatory={true}
-              errorText={registrationDataError.firstName}
-              saveData={(value: string) =>
+              errorMessage={registrationDataError.firstName}
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "firstName",
@@ -59,7 +59,7 @@ export const AccountData: React.FC<{
               name="nick-name"
               inputFieldValue={registrationData.nickname}
               isMandatory={false}
-              saveData={(value: string) =>
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "nickname",
@@ -74,8 +74,8 @@ export const AccountData: React.FC<{
               name="last-name"
               inputFieldValue={registrationData.lastName}
               isMandatory={true}
-              errorText={registrationDataError.lastName}
-              saveData={(value: string) =>
+              errorMessage={registrationDataError.lastName}
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "lastName",
@@ -92,8 +92,8 @@ export const AccountData: React.FC<{
               name="email"
               inputFieldValue={registrationData.email}
               isMandatory={true}
-              errorText={registrationDataError.email}
-              saveData={(value: string) =>
+              errorMessage={registrationDataError.email}
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "email",
@@ -108,8 +108,8 @@ export const AccountData: React.FC<{
               name="email"
               inputFieldValue={registrationData.personalEmail}
               isMandatory={false}
-              errorText={registrationDataError.personalEmail}
-              saveData={(value: string) =>
+              errorMessage={registrationDataError.personalEmail}
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "personalEmail",
@@ -126,8 +126,8 @@ export const AccountData: React.FC<{
               name="password"
               inputFieldValue={registrationData.password}
               isMandatory={true}
-              errorText={registrationDataError.password}
-              saveData={(value: string) =>
+              errorMessage={registrationDataError.password}
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "password",
@@ -142,8 +142,8 @@ export const AccountData: React.FC<{
               name="confirm-password"
               inputFieldValue={registrationData.confirmPassword}
               isMandatory={true}
-              errorText=""
-              saveData={(value: string) =>
+              errorMessage=""
+              saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
                   "confirmPassword",
