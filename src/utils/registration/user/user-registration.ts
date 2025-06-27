@@ -3,6 +3,7 @@ import type {
   CompanyData,
   CreateUserRequest,
   CreateWorkloadRequest,
+  EmergencyContact,
   UserData,
 } from "../../../types/api/registration-api.ts";
 import {
@@ -11,6 +12,7 @@ import {
   getCurrentYearData,
 } from "../../date.ts";
 import {
+  type EmergencyContactData,
   type NoteData,
   PositionEnum,
   RoleEnum,
@@ -30,6 +32,7 @@ export const getBlankUserRegistrationData = (): UserRegistrationData => {
     confirmPassword: BLANK_STRING,
     personalEmail: BLANK_STRING,
     birthDate: DEFAULT_BIRTH_DATE,
+    emergencyContact: getBlankEmergencyContactData(),
     employmentDate: getCurrentYearData(),
     supervisor: null,
     role: RoleEnum.EMPLOYEE,
@@ -57,6 +60,9 @@ export const getCreateUserRequestFromRegistrationData = (
         : registrationData.personalEmail,
     birthDate: convertDateToLittleEndian(registrationData.birthDate),
     employmentDate: convertDateToLittleEndian(registrationData.employmentDate),
+    emergencyContact: createEmergencyContactFromEmergencyContactData(
+      registrationData.emergencyContact,
+    ),
     role: registrationData.role,
     position: registrationData.position,
     supervisor: {
@@ -85,6 +91,22 @@ export const setRegistrationDataStringField = (
   setRegistrationData((prev) => ({
     ...prev,
     [field]: value,
+  }));
+};
+
+export const setEmergencyContactField = (
+  setRegistrationData: React.Dispatch<
+    React.SetStateAction<UserRegistrationData>
+  >,
+  field: keyof EmergencyContactData,
+  value: string,
+) => {
+  setRegistrationData((prev) => ({
+    ...prev,
+    emergencyContact: {
+      ...prev.emergencyContact,
+      [field]: value,
+    },
   }));
 };
 
@@ -305,4 +327,29 @@ export const deleteNote = (
     ...prev,
     notes: prev.notes.filter((n) => n.noteId !== noteData.noteId),
   }));
+};
+
+const getBlankEmergencyContactData = (): EmergencyContactData => {
+  return {
+    name: BLANK_STRING,
+    relationship: BLANK_STRING,
+    phone: BLANK_STRING,
+  };
+};
+
+const createEmergencyContactFromEmergencyContactData = (
+  emergencyContactData: EmergencyContactData,
+): EmergencyContact | null => {
+  const name = emergencyContactData.name;
+  const relationship = emergencyContactData.relationship;
+  const phone = emergencyContactData.phone;
+  if (!name && !relationship && !phone) {
+    return null;
+  }
+
+  return {
+    name: name === BLANK_STRING ? null : name,
+    relationship: relationship === BLANK_STRING ? null : relationship,
+    phone: phone === BLANK_STRING ? null : phone,
+  };
 };

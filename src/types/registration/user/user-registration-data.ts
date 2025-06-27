@@ -52,6 +52,12 @@ export type RegistrationDataError = {
   notes: ItemError[];
 };
 
+export type EmergencyContactData = {
+  name: string;
+  relationship: string;
+  phone: string;
+};
+
 export type UserRegistrationData = {
   firstName: string;
   lastName: string;
@@ -61,6 +67,7 @@ export type UserRegistrationData = {
   confirmPassword: string;
   personalEmail: string;
   birthDate: YearData;
+  emergencyContact: EmergencyContactData;
   employmentDate: YearData;
   supervisor: SupervisorData | null;
   role: string;

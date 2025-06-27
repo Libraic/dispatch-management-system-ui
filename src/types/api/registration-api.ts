@@ -23,6 +23,12 @@ export type CreateWorkloadRequest = {
   commission: number;
 };
 
+export type EmergencyContact = {
+  name: string | null;
+  relationship: string | null;
+  phone: string | null;
+};
+
 export type CreateUserRequest = {
   firstName: string;
   lastName: string;
@@ -32,6 +38,7 @@ export type CreateUserRequest = {
   personalEmail: string | null;
   birthDate: string;
   employmentDate: string;
+  emergencyContact: EmergencyContact | null;
   role: string;
   position: string;
   supervisor: CreateSupervisorRequest;

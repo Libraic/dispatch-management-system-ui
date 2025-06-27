@@ -4,6 +4,7 @@ import { BLANK_STRING } from "../utils/constants/global.ts";
 import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { InputFormError } from "./InputFormError.tsx";
+import { FieldInformation } from "./FieldInformation.tsx";
 
 export const InputForm: React.FC<{
   label: string;
@@ -13,6 +14,7 @@ export const InputForm: React.FC<{
   inputFieldValue: string;
   isMandatory: boolean;
   errorMessage?: string;
+  information?: string;
   saveInputData: (value: string) => void;
 }> = ({
   label,
@@ -21,6 +23,7 @@ export const InputForm: React.FC<{
   name,
   inputFieldValue,
   isMandatory,
+  information,
   errorMessage,
   saveInputData,
 }) => {
@@ -60,6 +63,7 @@ export const InputForm: React.FC<{
             />
           )}
           <p className={inputFormLabelStyle}>{label}</p>
+          {information && <FieldInformation information={information} />}
         </div>
 
         <input
