@@ -15,12 +15,22 @@ import {
   type EmergencyContactData,
   type NoteData,
   PositionEnum,
+  type RegistrationDataError,
   RoleEnum,
   type UserRegistrationData,
   type WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import type { ChangeEvent } from "react";
 import * as React from "react";
+import { saveUser } from "../../../service/user-service.ts";
+import type { GroupErrorResponse } from "../../../types/api/common.ts";
+import { getItemsErrors } from "../../api/api-errors-handler.ts";
+import {
+  actualizeRegistrationDataErrorFromApiResponse,
+  getSectionsWithErrors,
+} from "./user-registration-errors.ts";
+import type { SectionData } from "../../../types/registration/user/section.ts";
+import type { ToastData } from "../../../hooks/useToast.ts";
 
 export const getBlankUserRegistrationData = (): UserRegistrationData => {
   return {
@@ -145,21 +155,6 @@ export const cleanSupervisor = (
   }));
 };
 
-export const prepopulateSupervisor = (
-  setRegistrationData: React.Dispatch<
-    React.SetStateAction<UserRegistrationData>
-  >,
-  supervisorName: string,
-) => {
-  setRegistrationData((prev) => ({
-    ...prev,
-    supervisor: {
-      uuid: BLANK_STRING,
-      name: supervisorName,
-    },
-  }));
-};
-
 export const prepopulateRole = (
   setRegistrationData: React.Dispatch<
     React.SetStateAction<UserRegistrationData>
@@ -194,23 +189,6 @@ export const prepopulateWorkload = (
         commission: 0.0,
       },
     ],
-  }));
-};
-
-export const prepopulateCompanyName = (
-  setRegistrationData: React.Dispatch<
-    React.SetStateAction<UserRegistrationData>
-  >,
-  companyName: string,
-  workloadData: WorkloadData,
-) => {
-  setRegistrationData((prev) => ({
-    ...prev,
-    workloads: prev.workloads.map((workload) =>
-      workload.workloadId === workloadData.workloadId
-        ? { ...workload, companyName }
-        : workload,
-    ),
   }));
 };
 
@@ -327,6 +305,45 @@ export const deleteNote = (
     ...prev,
     notes: prev.notes.filter((n) => n.noteId !== noteData.noteId),
   }));
+};
+
+export const handleUserCreation = async (
+  registrationData: UserRegistrationData,
+  setRegistrationDataError: React.Dispatch<
+    React.SetStateAction<RegistrationDataError>
+  >,
+  toastData: ToastData,
+  sectionsHandler: SectionData,
+): Promise<boolean> => {
+  const createUserRequest: CreateUserRequest =
+    getCreateUserRequestFromRegistrationData(registrationData);
+  const apiResponse = await saveUser(createUserRequest);
+  if (apiResponse === undefined) {
+    toastData.withErrorMessage(
+      "The server is not responding. Please try again later.",
+    );
+    return false;
+  }
+
+  if (apiResponse.error !== null) {
+    const errors = apiResponse.error as GroupErrorResponse[];
+    for (const groupErrorResponse of errors) {
+      const itemsErrors = getItemsErrors(groupErrorResponse);
+      setRegistrationDataError((prev) => {
+        const updated = actualizeRegistrationDataErrorFromApiResponse(
+          prev,
+          groupErrorResponse,
+          itemsErrors,
+        );
+        const sectionsErrors = getSectionsWithErrors(updated);
+        sectionsHandler.setErrors(sectionsErrors);
+        return updated;
+      });
+    }
+    return false;
+  }
+
+  return true;
 };
 
 const getBlankEmergencyContactData = (): EmergencyContactData => {

@@ -5,10 +5,10 @@ import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 import { BLANK_STRING } from "../utils/constants/global.ts";
 import { getData } from "../service/live-search-service.ts";
-import { ToastTypeEnum } from "../types/toast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { InputFormError } from "./InputFormError.tsx";
 import type { Error } from "../types/api/common.ts";
+import { useToast } from "../hooks/useToast.ts";
 
 type LiveSearchInputFormProps<T> = {
   label: string;
@@ -41,11 +41,7 @@ export const LiveSearchInputForm = <T,>({
   const [results, setResults] = useState<T[]>([]);
   const [borderColor, setBorderColor] = useState("border-light-grey");
   const [placeholderText, setPlaceholderText] = React.useState(placeholder);
-  const [errorMessage, setErrorMessage] = useState<string>(BLANK_STRING);
-  const [toastId, setToastId] = useState<string | null>(null);
-  const [toastType, setToastType] = useState<ToastTypeEnum>(
-    ToastTypeEnum.ERROR,
-  );
+  const toast = useToast();
 
   const handleFocus = () => {
     setPlaceholderText(BLANK_STRING);
@@ -66,11 +62,9 @@ export const LiveSearchInputForm = <T,>({
       if (value.trim().length > 0) {
         getData<T[], Error>(endpoint, searchField, value).then((result) => {
           if (result.error !== null) {
-            setErrorMessage(result.error.message);
-            setToastId(Date.now().toString());
-            setToastType(ToastTypeEnum.ERROR);
+            toast.withErrorMessage(result.error.message);
           } else {
-            setErrorMessage(BLANK_STRING);
+            toast.clear();
             setResults(result.data ?? []);
           }
         });
@@ -82,7 +76,7 @@ export const LiveSearchInputForm = <T,>({
     debounced(query);
 
     return () => debounced.cancel();
-  }, [query, endpoint, searchField]);
+  }, [query, endpoint, searchField, toast]);
 
   return (
     <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">
@@ -113,7 +107,7 @@ export const LiveSearchInputForm = <T,>({
             }
           }}
         />
-        {errorMessage.length === 0 && results.length > 0 && (
+        {toast.getMessage().length === 0 && results.length > 0 && (
           <div className="border-2 border-light-grey rounded-xl bg-white p-2 min-w-[8rem] absolute left-5 top-full mt-3 z-10">
             {results.map((item) => (
               <div
@@ -132,8 +126,12 @@ export const LiveSearchInputForm = <T,>({
         )}
       </div>
       {!!errorText?.length && <InputFormError errorMessage={errorText} />}
-      {errorMessage.length > 0 && (
-        <Toast key={toastId} message={errorMessage} type={toastType} />
+      {toast.getMessage().length > 0 && (
+        <Toast
+          key={toast.getIdentifier()}
+          message={toast.getMessage()}
+          type={toast.getOperationResult()}
+        />
       )}
     </div>
   );

@@ -7,7 +7,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   getBlankUserRegistrationData,
-  getCreateUserRequestFromRegistrationData,
+  handleUserCreation,
 } from "../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import {
@@ -15,8 +15,6 @@ import {
   type RegistrationContextData,
 } from "../context/RegistrationContext.ts";
 import { Toast } from "../toast/Toast.tsx";
-import type { CreateUserRequest } from "../types/api/registration-api.ts";
-import { saveUser } from "../service/user-service.ts";
 import { BLANK_STRING } from "../utils/constants/global.ts";
 import {
   type SectionData,
@@ -26,17 +24,14 @@ import type {
   RegistrationDataError,
   UserRegistrationData,
 } from "../types/registration/user/user-registration-data.ts";
-import { ToastTypeEnum } from "../types/toast.ts";
-import type { GroupErrorResponse } from "../types/api/common.ts";
 import {
-  actualizeRegistrationDataErrorFromApiResponse,
   getBlankRegistrationDataError,
   getRegistrationDataErrors,
   getSectionsWithErrors,
 } from "../utils/registration/user/user-registration-errors.ts";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../utils/routes/routes.ts";
-import { getItemsErrors } from "../utils/api/api-errors-handler.ts";
+import { useToast } from "../hooks/useToast.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -50,11 +45,7 @@ export const RegistrationInputSection: React.FC<{
   const navigate = useNavigate();
 
   const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
-  const [errorMessage, setErrorMessage] = useState<string>(BLANK_STRING);
-  const [toastId, setToastId] = useState<string | null>(null);
-  const [toastType, setToastType] = useState<ToastTypeEnum>(
-    ToastTypeEnum.ERROR,
-  );
+  const toastData = useToast();
 
   const activeSection = sectionsHandler.getActiveSection();
   const registrationContextData: RegistrationContextData = {
@@ -75,36 +66,22 @@ export const RegistrationInputSection: React.FC<{
     } else {
       setSubmitButtonText("Continue");
     }
-  }, [activeSection, setSubmitButtonText, setErrorMessage, sectionsHandler]);
+  }, [activeSection, setSubmitButtonText, sectionsHandler]);
 
-  async function handleUserCreation() {
-    const createUserRequest: CreateUserRequest =
-      getCreateUserRequestFromRegistrationData(registrationData);
-    const apiResponse = await saveUser(createUserRequest);
-    if (apiResponse === undefined) {
-      setErrorMessage("The server is not responding. Please try again later.");
-      setToastId(Date.now().toString());
-      setToastType(ToastTypeEnum.ERROR);
-      return;
+  useEffect(() => {
+    if (sectionsHandler.areAllSectionsComplete()) {
+      handleUserCreation(
+        registrationData,
+        setRegistrationDataError,
+        toastData,
+        sectionsHandler,
+      ).then((res) => {
+        if (res) {
+          navigate(HOME);
+        }
+      });
     }
-
-    if (apiResponse.error !== null) {
-      const errors = apiResponse.error as GroupErrorResponse[];
-      for (const groupErrorResponse of errors) {
-        const itemsErrors = getItemsErrors(groupErrorResponse);
-        setRegistrationDataError((prev) => {
-          const updated = actualizeRegistrationDataErrorFromApiResponse(
-            prev,
-            groupErrorResponse,
-            itemsErrors,
-          );
-          const sectionsErrors = getSectionsWithErrors(updated);
-          sectionsHandler.setErrors(sectionsErrors);
-          return updated;
-        });
-      }
-    }
-  }
+  }, [navigate, registrationData, sectionsHandler, toastData]);
 
   const validateRegistrationData = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,13 +91,6 @@ export const RegistrationInputSection: React.FC<{
     sectionsHandler.setErrors(sectionsErrorsPriorSubmitting);
     if (sectionsErrorsPriorSubmitting.length === 0) {
       sectionsHandler.next();
-    }
-
-    if (sectionsHandler.areAllSectionsComplete()) {
-      await handleUserCreation();
-      if (sectionsHandler.areAllSectionsComplete()) {
-        navigate(HOME);
-      }
     }
   };
 
@@ -138,8 +108,12 @@ export const RegistrationInputSection: React.FC<{
           action={validateRegistrationData}
         />
       </div>
-      {errorMessage !== BLANK_STRING && (
-        <Toast key={toastId} message={errorMessage} type={toastType} />
+      {toastData.getMessage() !== BLANK_STRING && (
+        <Toast
+          key={toastData.getIdentifier()}
+          message={toastData.getMessage()}
+          type={toastData.getOperationResult()}
+        />
       )}
     </div>
   );
