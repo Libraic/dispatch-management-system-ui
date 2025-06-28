@@ -5,7 +5,7 @@ export type CompanyData = {
   uuid: string;
   mcNumber: string | null;
   address: string | null;
-  serviceDate: string | null;
+  startDate: string;
 };
 
 export type GetCompaniesResponse = {
