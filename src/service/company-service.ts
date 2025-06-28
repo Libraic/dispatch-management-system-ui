@@ -23,7 +23,7 @@ export const saveCompany = async (
     const response = await axios.post(SAVE_COMPANY, createCompanyRequest);
     return response.data;
   } catch (error: any) {
-    if (error.code === "ERR_NETWORK") {
+    if (error.status === 500 || error.code === "ERR_NETWORK") {
       return Promise.resolve(undefined);
     }
 

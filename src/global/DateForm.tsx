@@ -8,7 +8,7 @@ export const DateForm: React.FC<{
   endingYear: number;
 }> = ({ dateObject, endingYear }) => {
   return (
-    <div className="flex flex-row gap-x-8 mb-5">
+    <div className="flex flex-row gap-x-8 mb-5 items-center">
       <SelectForm
         label="Year"
         formWidth="w-[5rem]"

@@ -10,6 +10,7 @@ export const getBlankCompanyRegistrationData = (): CompanyRegistrationData => {
   return {
     name: BLANK_STRING,
     serviceDate: getCurrentYearData(),
+    startDate: getCurrentYearData(),
   };
 };
 
@@ -34,5 +35,6 @@ export const createCreateCompanyRequestFromCompanyRegistrationData = (
     mcNumber: companyRegistrationData.mcNumber ?? null,
     address: companyRegistrationData.address ?? null,
     serviceDate: convertDateToLittleEndian(companyRegistrationData.serviceDate),
+    startDate: convertDateToLittleEndian(companyRegistrationData.startDate),
   };
 };

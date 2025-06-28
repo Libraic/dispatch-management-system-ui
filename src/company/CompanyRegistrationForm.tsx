@@ -14,7 +14,6 @@ import type {
 import { BLANK_STRING } from "../utils/constants/global.ts";
 import { useDateObject } from "../hooks/useDateObject.ts";
 import { getCurrentYearData } from "../utils/date.ts";
-import { DateForm } from "../global/DateForm.tsx";
 import { Information } from "../global/Information.tsx";
 import { RegistrationSectionHeader } from "../registration/RegistrationSectionHeader.tsx";
 import { CancelButton } from "../button/CancelButton.tsx";
@@ -28,6 +27,10 @@ import {
 } from "../utils/registration/company/company-registration-errors.ts";
 import { usePrepopulateDate } from "../hooks/usePrepopulateDate.ts";
 import { saveCompany } from "../service/company-service.ts";
+import { DatePick } from "../global/DatePick.tsx";
+import { useToast } from "../hooks/useToast.ts";
+import { Toast } from "../toast/Toast.tsx";
+import { INTERNAL_SERVER_ERROR } from "../utils/error-messages.ts";
 
 export const CompanyRegistrationForm = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
@@ -35,13 +38,28 @@ export const CompanyRegistrationForm = () => {
   const [companyRegistrationErrors, setCompanyRegistrationErrors] =
     useState<CompanyRegistrationError>(getBlankCompanyRegistrationErrors());
   const currentYearData = getCurrentYearData();
+
   const navigate = useNavigate();
-  const dateObject = useDateObject(
+
+  const serviceDateObject = useDateObject(
     currentYearData.day,
     currentYearData.month,
     currentYearData.year,
   );
-  usePrepopulateDate(setCompanyRegistrationData, dateObject, "serviceDate");
+  usePrepopulateDate(
+    setCompanyRegistrationData,
+    serviceDateObject,
+    "serviceDate",
+  );
+
+  const startDateObject = useDateObject(
+    currentYearData.day,
+    currentYearData.month,
+    currentYearData.year,
+  );
+  usePrepopulateDate(setCompanyRegistrationData, startDateObject, "startDate");
+
+  const toastData = useToast();
 
   const createCompany = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +74,9 @@ export const CompanyRegistrationForm = () => {
         companyRegistrationData,
       );
     const companyData = await saveCompany(createCompanyRequest);
-    if (companyData !== undefined && companyData.error === null) {
+    if (!companyData) {
+      toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
+    } else if (companyData.error === null) {
       navigate(HOME);
     }
   };
@@ -122,12 +142,9 @@ export const CompanyRegistrationForm = () => {
               }
             />
           </div>
-
-          <div className="flex gap-x-10 mb-5">
-            <DateForm
-              dateObject={dateObject}
-              endingYear={new Date().getFullYear()}
-            />
+          <div className="flex flex-row gap-x-10 items-center">
+            <DatePick label="Service Date" date={serviceDateObject} />
+            <DatePick label="Start Date" date={startDateObject} />
           </div>
           <Information />
         </div>
@@ -137,6 +154,13 @@ export const CompanyRegistrationForm = () => {
           <SubmitButton actionText="Submit" action={createCompany} />
         </div>
       </div>
+      {toastData.getMessage() !== BLANK_STRING && (
+        <Toast
+          key={toastData.getIdentifier()}
+          message={toastData.getMessage()}
+          type={toastData.getOperationResult()}
+        />
+      )}
     </div>
   );
 };

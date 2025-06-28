@@ -5,6 +5,7 @@ export type CompanyRegistrationData = {
   mcNumber?: string;
   address?: string;
   serviceDate: YearData;
+  startDate: YearData;
 };
 
 export type CompanyRegistrationError = {
@@ -16,4 +17,5 @@ export type CreateCompanyRequest = {
   mcNumber: string | null;
   address: string | null;
   serviceDate: string | null;
+  startDate: string;
 };
