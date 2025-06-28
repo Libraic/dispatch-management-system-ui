@@ -2,9 +2,20 @@ import { useEffect, useState } from "react";
 import { fetchCompanies } from "../service/company-service.ts";
 import { FETCH_COMPANIES } from "../utils/api/api-paths.ts";
 import type { CompanyData } from "../types/api/registration-api.ts";
+import backUnhoveredIcon from "../assets/global/back-icon-unhovered.svg";
+import backHoveredIcon from "../assets/global/back-icon-hovered.svg";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "../utils/routes/routes.ts";
+import {
+  getNameInitials,
+  getPropertySafe,
+  getSpentDays,
+} from "../utils/list/companies-list-utils.ts";
 
 export const CompaniesList = () => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
+  const [backIcon, setBackIcon] = useState(backUnhoveredIcon);
+  const navigate = useNavigate();
   useEffect(() => {
     fetchCompanies(FETCH_COMPANIES).then((data) => {
       if (data) {
@@ -13,45 +24,22 @@ export const CompaniesList = () => {
     });
   }, []);
 
-  const getNameInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((word) => word[0].toUpperCase())
-      .join("");
-  };
-
-  const getPropertySafe = (property: string | null) => {
-    return property ? property : "N/A";
-  };
-
-  const getSpentDays = (referenceDate: string) => {
-    const targetDate = new Date(referenceDate);
-    const today = new Date();
-
-    targetDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const diffInMs = today.getTime() - targetDate.getTime();
-
-    const diffInDays = Math.round(diffInMs / msPerDay);
-    if (diffInDays <= 0) {
-      return "today";
-    }
-
-    const years = Math.floor(diffInDays / 365);
-    const months = Math.floor((diffInDays - years * 365) / 30);
-    const days = diffInDays - 365 * years - 30 * months;
-
-    return `${years > 0 ? `${years}y ` : ""}${months > 0 ? `${months}m ` : ""}${days > 0 ? `${days}d` : ""}`;
-  };
-
   const columnsLayout = "grid-cols-[10%_15%_30%_15%_15%_15%]";
 
   return (
     <div className="w-screen flex flex-col items-center mt-10">
+      <div className="absolute top-5 left-5 border-2 border-solid-black rounded-[50%] hover:cursor-pointer hover:bg-solid-black">
+        <img
+          src={backIcon}
+          alt="back-icon"
+          className="w-8 h-8"
+          onMouseEnter={() => setBackIcon(backHoveredIcon)}
+          onMouseLeave={() => setBackIcon(backUnhoveredIcon)}
+          onClick={() => navigate(HOME)}
+        />
+      </div>
       <div
-        className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-open-sans font-regular rounded-[0.3rem] px-[3rem]`}
+        className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-open-sans font-regular rounded-[0.3rem] px-[3rem] mt-6`}
       >
         <div className="flex items-center">
           <input type="checkbox" className="w-4 h-4 cursor-pointer" />
