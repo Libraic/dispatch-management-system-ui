@@ -1,24 +1,23 @@
-import type { ReactNode } from "react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { colorTransitionStyle } from "../utils/tailwind.ts";
 
 export const Option: React.FC<{
-  unfocusedIcon: ReactNode;
-  focusedIcon: ReactNode;
+  unhoveredIcon: string;
+  hoveredIcon: string;
   header: string;
   description: string;
   bgColor: string;
   navigateTo: string;
 }> = ({
-  unfocusedIcon,
-  focusedIcon,
+  unhoveredIcon,
+  hoveredIcon,
   header,
   description,
   bgColor,
   navigateTo,
 }) => {
-  const [icon, setIcon] = React.useState(unfocusedIcon);
+  const [icon, setIcon] = React.useState(unhoveredIcon);
   const [borderColor, setBorderColor] = React.useState("border-light-grey");
   const navigate = useNavigate();
   return (
@@ -29,18 +28,18 @@ export const Option: React.FC<{
         className={`flex justify-center ${bgColor} rounded-xl w-[3.3rem] h-[3rem]`}
       >
         <div
-          className="w-fit h-fit hover:cursor-pointer"
+          className="hover:cursor-pointer flex items-center justify-center"
           onMouseEnter={() => {
-            setIcon(focusedIcon);
+            setIcon(hoveredIcon);
             setBorderColor("border-light-blue");
           }}
           onMouseLeave={() => {
-            setIcon(unfocusedIcon);
+            setIcon(unhoveredIcon);
             setBorderColor("border-light-grey");
           }}
           onClick={() => navigate(navigateTo)}
         >
-          {icon}
+          <img className="w-11 h-11" src={icon} alt="icon" />
         </div>
       </div>
       <div>

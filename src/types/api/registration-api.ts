@@ -3,6 +3,9 @@ import type { Link, PageInfo } from "./common.ts";
 export type CompanyData = {
   name: string;
   uuid: string;
+  mcNumber: string | null;
+  address: string | null;
+  serviceDate: string | null;
 };
 
 export type GetCompaniesResponse = {

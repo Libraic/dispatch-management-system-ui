@@ -1,18 +1,15 @@
 import axios from "axios";
-import type {
-  CompanyData,
-  GetCompaniesResponse,
-} from "../types/api/registration-api.ts";
+import type { CompanyData } from "../types/api/registration-api.ts";
 import type { ApiResponse, GroupErrorResponse } from "../types/api/common.ts";
 import { SAVE_COMPANY } from "../utils/api/api-paths.ts";
 import type { CreateCompanyRequest } from "../types/registration/company/company-registration-data.ts";
 
-export const fetchCompanies = async (url: string) => {
+export const fetchCompanies = async (
+  url: string,
+): Promise<CompanyData[] | null> => {
   try {
     const response =
-      await axios.get<ApiResponse<GetCompaniesResponse, GroupErrorResponse[]>>(
-        url,
-      );
+      await axios.get<ApiResponse<CompanyData[], GroupErrorResponse[]>>(url);
     return response.data.data;
   } catch (error) {
     throw error;
