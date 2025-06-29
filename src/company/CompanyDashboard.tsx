@@ -36,10 +36,15 @@ export const CompanyDashboard = () => {
         <CompanyMenuHeader
           companyName={company ? company.name : BLANK_STRING}
         />
-        <CompanyFunctionality label="Profile" icon={companyProfileIcon} />
+        <CompanyFunctionality
+          label="Profile"
+          icon={companyProfileIcon}
+          route={`/dashboard/${companyUuid}`}
+        />
         <CompanyFunctionality
           label="Trucks Board"
           icon={trucksBoardUnhoveredIcon}
+          route={`/dashboard/${companyUuid}/trucks-board`}
         />
       </div>
       <div className="w-9/10 flex flex-col gap-y-2 items-center">
