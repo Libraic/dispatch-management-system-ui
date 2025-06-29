@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { fetchCompanies } from "../service/company-service.ts";
-import { FETCH_COMPANIES } from "../utils/api/api-paths.ts";
 import type { CompanyData } from "../types/api/registration-api.ts";
 import backUnhoveredIcon from "../assets/global/back-icon-unhovered.svg";
 import backHoveredIcon from "../assets/global/back-icon-hovered.svg";
@@ -17,7 +16,7 @@ export const CompaniesList = () => {
   const [backIcon, setBackIcon] = useState(backUnhoveredIcon);
   const navigate = useNavigate();
   useEffect(() => {
-    fetchCompanies(FETCH_COMPANIES).then((data) => {
+    fetchCompanies().then((data) => {
       if (data) {
         setCompanies(data);
       }
@@ -57,6 +56,9 @@ export const CompaniesList = () => {
             index % 2 === 1 ? "bg-[#f6f6f6]" : "white"
           }`}
           key={index}
+          onClick={() =>
+            navigate(`/dashboard/${encodeURIComponent(company.uuid)}`)
+          }
         >
           <div className="flex items-center">
             <input type="checkbox" className="w-4 h-4 hover:cursor-pointer" />

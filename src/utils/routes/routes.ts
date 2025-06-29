@@ -2,3 +2,4 @@ export const HOME = "/";
 export const USER_REGISTRATION = "/user/registration";
 export const COMPANY_REGISTRATION = "/company/registration";
 export const COMPANIES_LIST = "/company/all";
+export const COMPANY_DASHBOARD = "/dashboard/:companyUuid";

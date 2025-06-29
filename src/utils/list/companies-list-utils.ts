@@ -1,4 +1,10 @@
+import { BLANK_STRING } from "../constants/global.ts";
+
 export const getNameInitials = (name: string) => {
+  if (name === BLANK_STRING) {
+    return BLANK_STRING;
+  }
+
   return name
     .split(" ")
     .map((word) => word[0].toUpperCase())
