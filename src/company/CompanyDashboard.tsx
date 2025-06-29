@@ -7,6 +7,7 @@ import { INTERNAL_SERVER_ERROR } from "../utils/error-messages.ts";
 import type { CompanyData } from "../types/api/registration-api.ts";
 import trucksBoardUnhoveredIcon from "../assets/company-menu/trucks-board-unhovered.svg";
 import companyProfileIcon from "../assets/company-menu/company-profile.svg";
+import addDriverIcon from "../assets/company-menu/add-driver.svg";
 import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../utils/constants/global.ts";
@@ -45,6 +46,11 @@ export const CompanyDashboard = () => {
           label="Trucks Board"
           icon={trucksBoardUnhoveredIcon}
           route={`/dashboard/${companyUuid}/trucks-board`}
+        />
+        <CompanyFunctionality
+          label="Add Driver"
+          icon={addDriverIcon}
+          route={`/dashboard/${companyUuid}`}
         />
       </div>
       <div className="w-9/10 flex flex-col gap-y-2 items-center">
