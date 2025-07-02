@@ -25,7 +25,6 @@ export type Pagination = {
 
 export type SelectFormData<T extends ReactNode, D extends string | number> = {
   label: string;
-  formWidth: string;
   initialValue: D;
   data: T[];
   pagination?: Pagination;

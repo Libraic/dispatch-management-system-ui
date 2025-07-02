@@ -5,7 +5,6 @@ import type { SelectFormData } from "../types/global.ts";
 
 export const SelectForm = <T extends ReactNode, D extends string | number>({
   label,
-  formWidth,
   initialValue,
   data,
   pagination,
@@ -18,7 +17,7 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
     <div className={`${borderColor}`}>
       <p className={`${inputFormLabelStyle} ml-2`}>{label}</p>
       <select
-        className={`${selectFormStyle} ${formWidth} ${borderColor}`}
+        className={`${selectFormStyle} ${borderColor} min-w-40`}
         value={initialValue}
         onFocus={() => setBorderColor("border-solid-blue")}
         onBlur={() => setBorderColor("border-light-grey")}

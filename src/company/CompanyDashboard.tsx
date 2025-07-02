@@ -11,11 +11,13 @@ import addDriverIcon from "../assets/company-menu/add-driver.svg";
 import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../utils/constants/global.ts";
+import { DRIVER_REGISTRATION, TRUCKS_BOARD } from "../utils/routes/routes.ts";
 
 export const CompanyDashboard = () => {
   const { companyUuid } = useParams();
   const toastData = useToast();
   const [company, setCompany] = useState<CompanyData | null>(null);
+  const baseRoute = `/dashboard/${companyUuid}`;
 
   useEffect(() => {
     if (companyUuid) {
@@ -40,17 +42,17 @@ export const CompanyDashboard = () => {
         <CompanyFunctionality
           label="Profile"
           icon={companyProfileIcon}
-          route={`/dashboard/${companyUuid}`}
+          route={baseRoute}
         />
         <CompanyFunctionality
           label="Trucks Board"
           icon={trucksBoardUnhoveredIcon}
-          route={`/dashboard/${companyUuid}/trucks-board`}
+          route={`${baseRoute}${TRUCKS_BOARD}`}
         />
         <CompanyFunctionality
           label="Add Driver"
           icon={addDriverIcon}
-          route={`/dashboard/${companyUuid}`}
+          route={`${baseRoute}${DRIVER_REGISTRATION}`}
         />
       </div>
       <div className="w-9/10 flex flex-col gap-y-2 items-center">
