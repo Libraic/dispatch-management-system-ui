@@ -1,9 +1,9 @@
-import { DatePick } from "../global/DatePick.tsx";
+import { DatePick } from "../../global/DatePick.tsx";
 import * as React from "react";
-import { useDateObject } from "../hooks/useDateObject.ts";
-import { usePrepopulateDate } from "../hooks/usePrepopulateDate.ts";
-import { getCurrentYearData } from "../utils/date.ts";
-import type { CompanyRegistrationData } from "../types/registration/company/company-registration-data.ts";
+import { useDateObject } from "../../hooks/useDateObject.ts";
+import { usePrepopulateDate } from "../../hooks/usePrepopulateDate.ts";
+import { getCurrentYearData } from "../../utils/date.ts";
+import type { CompanyRegistrationData } from "../../types/registration/company/company-registration-data.ts";
 
 export const StartAndServiceDate: React.FC<{
   setCompanyRegistrationData: React.Dispatch<

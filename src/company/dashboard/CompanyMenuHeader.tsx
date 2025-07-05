@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getNameInitials } from "../utils/list/companies-list-utils.ts";
+import { getNameInitials } from "../../utils/list/companies-list-utils.ts";
 
 export const CompanyMenuHeader: React.FC<{ companyName: string }> = ({
   companyName,

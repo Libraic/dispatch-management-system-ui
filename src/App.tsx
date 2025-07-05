@@ -1,7 +1,7 @@
 import { Home } from "./home/Home.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RegistrationForm } from "./registration/RegistrationForm.tsx";
-import { CompanyRegistrationForm } from "./company/CompanyRegistrationForm.tsx";
+import { CompanyRegistrationForm } from "./company/registration/CompanyRegistrationForm.tsx";
 import {
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
@@ -12,8 +12,8 @@ import {
   USER_REGISTRATION,
 } from "./utils/routes/routes.ts";
 import { CompaniesList } from "./company/CompaniesList.tsx";
-import { CompanyDashboard } from "./company/CompanyDashboard.tsx";
-import { TrucksBoard } from "./company/TrucksBoard.tsx";
+import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
+import { TrucksBoard } from "./company/dashboard/TrucksBoard.tsx";
 import { DriverRegistrationForm } from "./driver/DriverRegistrationForm.tsx";
 
 export const App = () => {

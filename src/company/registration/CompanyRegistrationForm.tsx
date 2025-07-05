@@ -1,30 +1,30 @@
 import {
   createCreateCompanyRequestFromCompanyRegistrationData,
   getBlankCompanyRegistrationData,
-} from "../utils/registration/company/company-registration-utils.ts";
+} from "../../utils/registration/company/company-registration-utils.ts";
 import * as React from "react";
 import { useState } from "react";
 import type {
   CompanyRegistrationData,
   CompanyRegistrationError,
   CreateCompanyRequest,
-} from "../types/registration/company/company-registration-data.ts";
-import { BLANK_STRING } from "../utils/constants/global.ts";
-import { Information } from "../global/Information.tsx";
-import { RegistrationSectionHeader } from "../registration/RegistrationSectionHeader.tsx";
-import { CancelButton } from "../button/CancelButton.tsx";
-import { SubmitButton } from "../button/SubmitButton.tsx";
+} from "../../types/registration/company/company-registration-data.ts";
+import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { Information } from "../../global/Information.tsx";
+import { RegistrationSectionHeader } from "../../registration/RegistrationSectionHeader.tsx";
+import { CancelButton } from "../../button/CancelButton.tsx";
+import { SubmitButton } from "../../button/SubmitButton.tsx";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../utils/routes/routes.ts";
+import { HOME } from "../../utils/routes/routes.ts";
 import {
   areErrors,
   getBlankCompanyRegistrationErrors,
   getCompanyRegistrationErrors,
-} from "../utils/registration/company/company-registration-errors.ts";
-import { saveCompany } from "../service/company-service.ts";
-import { useToast } from "../hooks/useToast.ts";
-import { Toast } from "../toast/Toast.tsx";
-import { INTERNAL_SERVER_ERROR } from "../utils/error-messages.ts";
+} from "../../utils/registration/company/company-registration-errors.ts";
+import { saveCompany } from "../../service/company-service.ts";
+import { useToast } from "../../hooks/useToast.ts";
+import { Toast } from "../../toast/Toast.tsx";
+import { INTERNAL_SERVER_ERROR } from "../../utils/error-messages.ts";
 import { StartAndServiceDate } from "./StartAndServiceDate.tsx";
 import { CompanyBasicData } from "./CompanyBasicData.tsx";
 

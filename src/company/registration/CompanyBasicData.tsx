@@ -1,11 +1,11 @@
-import { InputForm } from "../global/InputForm.tsx";
-import { alterCompanySimpleField } from "../utils/registration/company/company-registration-utils.ts";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { InputForm } from "../../global/InputForm.tsx";
+import { alterCompanySimpleField } from "../../utils/registration/company/company-registration-utils.ts";
+import { BLANK_STRING } from "../../utils/constants/global.ts";
 import * as React from "react";
 import type {
   CompanyRegistrationData,
   CompanyRegistrationError,
-} from "../types/registration/company/company-registration-data.ts";
+} from "../../types/registration/company/company-registration-data.ts";
 
 export const CompanyBasicData: React.FC<{
   companyRegistrationData: CompanyRegistrationData;
