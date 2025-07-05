@@ -33,7 +33,31 @@ export const DatePick: React.FC<{ label: string; date: DateObject }> = ({
         onChange={handleChange}
         enableAccessibleFieldDOMStructure={false}
         slots={{ textField: TextField }}
-        slotProps={{ textField: { variant: "outlined" } }}
+        slotProps={{
+          textField: {
+            variant: "outlined",
+            sx: {
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#3a59d1",
+                },
+              },
+            },
+          },
+          day: {
+            sx: {
+              // Selected day
+              "&.Mui-selected": {
+                backgroundColor: "#3a59d1",
+                color: "white",
+              },
+              // Hover on selected day
+              "&.Mui-selected:hover": {
+                backgroundColor: "#f2f2f2",
+              },
+            },
+          },
+        }}
       />
     </LocalizationProvider>
   );
