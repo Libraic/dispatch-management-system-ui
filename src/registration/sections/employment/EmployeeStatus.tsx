@@ -37,14 +37,12 @@ export const EmployeeStatus = () => {
           <div className="flex flex-row gap-x-15">
             <SelectForm
               label="Role"
-              formWidth="w-25"
               initialValue={registrationData.role}
               data={Object.values(RoleEnum)}
               setElement={(role) => prepopulateRole(setRegistrationData, role)}
             />
             <SelectForm
               label="Position"
-              formWidth="w-45"
               initialValue={registrationData.position}
               data={Object.values(PositionEnum)}
               setElement={(position) =>

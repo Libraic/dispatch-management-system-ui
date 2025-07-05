@@ -6,12 +6,15 @@ import {
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
   COMPANY_REGISTRATION,
+  DRIVER_REGISTRATION,
   HOME,
+  TRUCKS_BOARD,
   USER_REGISTRATION,
 } from "./utils/routes/routes.ts";
 import { CompaniesList } from "./company/CompaniesList.tsx";
 import { CompanyDashboard } from "./company/CompanyDashboard.tsx";
 import { TrucksBoard } from "./company/TrucksBoard.tsx";
+import { DriverRegistrationForm } from "./driver/DriverRegistrationForm.tsx";
 
 export const App = () => {
   return (
@@ -26,8 +29,12 @@ export const App = () => {
         <Route path={COMPANIES_LIST} element={<CompaniesList />} />
         <Route path={COMPANY_DASHBOARD} element={<CompanyDashboard />} />
         <Route
-          path={`${COMPANY_DASHBOARD}/trucks-board`}
+          path={`${COMPANY_DASHBOARD}${TRUCKS_BOARD}`}
           element={<TrucksBoard />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}
+          element={<DriverRegistrationForm />}
         />
       </Routes>
     </BrowserRouter>

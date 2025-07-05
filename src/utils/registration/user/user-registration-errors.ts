@@ -7,13 +7,13 @@ import type {
   WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
+import { SectionEnum } from "../../../types/registration/user/section.ts";
+import type { GroupErrorResponse } from "../../../types/api/common.ts";
+import { validateEmail } from "../registration-utils.ts";
 import {
-  validateEmail,
   validateNotes,
   validatePassword,
 } from "./user-registration-validation.ts";
-import { SectionEnum } from "../../../types/registration/user/section.ts";
-import type { GroupErrorResponse } from "../../../types/api/common.ts";
 
 export const getBlankRegistrationDataError = (): RegistrationDataError => {
   return {

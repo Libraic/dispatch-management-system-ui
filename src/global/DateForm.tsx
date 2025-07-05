@@ -11,14 +11,12 @@ export const DateForm: React.FC<{
     <div className="flex flex-row gap-x-8 mb-5 items-center">
       <SelectForm
         label="Year"
-        formWidth="w-[5rem]"
         initialValue={dateObject.year}
         data={getAvailableYears(endingYear)}
         setElement={(year: string) => dateObject.setYear(parseInt(year))}
       />
       <SelectForm
         label="Month"
-        formWidth="w-[7rem]"
         initialValue={MONTHS[dateObject.month - 1]}
         data={MONTHS}
         setElement={(month: string) => {
@@ -27,7 +25,6 @@ export const DateForm: React.FC<{
       />
       <SelectForm
         label="Day"
-        formWidth="w-[5rem]"
         initialValue={dateObject.day}
         data={dateObject.days}
         setElement={(day: string) => dateObject.setDay(parseInt(day))}
