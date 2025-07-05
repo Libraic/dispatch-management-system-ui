@@ -1,7 +1,7 @@
-import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
 import { AccountData } from "./AccountData.tsx";
 import { BirthData } from "./BirthData.tsx";
-import { Information } from "../../../global/Information.tsx";
+import { Information } from "../../../../global/Information.tsx";
 import { useState } from "react";
 import { EmergencyContact } from "./EmergencyContact.tsx";
 

@@ -1,9 +1,9 @@
 import { SectionDivision } from "../SectionDivision.tsx";
-import { DateForm } from "../../../global/DateForm.tsx";
+import { DateForm } from "../../../../global/DateForm.tsx";
 import { useState } from "react";
-import { useDateObject } from "../../../hooks/useDateObject.ts";
-import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
+import { useDateObject } from "../../../../hooks/useDateObject.ts";
+import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 import * as React from "react";
 
 export const EmploymentDate = () => {

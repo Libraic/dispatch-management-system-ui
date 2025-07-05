@@ -1,6 +1,6 @@
 import { Home } from "./home/Home.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RegistrationForm } from "./registration/RegistrationForm.tsx";
+import { UserRegistrationForm } from "./user/registration/UserRegistrationForm.tsx";
 import { CompanyRegistrationForm } from "./company/registration/CompanyRegistrationForm.tsx";
 import {
   COMPANIES_LIST,
@@ -21,7 +21,7 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path={HOME} element={<Home />} />
-        <Route path={USER_REGISTRATION} element={<RegistrationForm />} />
+        <Route path={USER_REGISTRATION} element={<UserRegistrationForm />} />
         <Route
           path={COMPANY_REGISTRATION}
           element={<CompanyRegistrationForm />}

@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useContext } from "react";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 import { SectionDivision } from "../SectionDivision.tsx";
-import { InputForm } from "../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/InputForm.tsx";
 import {
   EMERGENCY_CONTACT_NAME_PLACEHOLDER,
   EMERGENCY_CONTACT_PHONE_PLACEHOLDER,
   EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER,
-} from "../../../utils/constants/placeholders.ts";
-import { setEmergencyContactField } from "../../../utils/registration/user/user-registration.ts";
+} from "../../../../utils/constants/placeholders.ts";
+import { setEmergencyContactField } from "../../../../utils/registration/user/user-registration.ts";
 
 export const EmergencyContact = () => {
   const [isEmergencyContactExpanded, setIsEmergencyContactExpanded] =

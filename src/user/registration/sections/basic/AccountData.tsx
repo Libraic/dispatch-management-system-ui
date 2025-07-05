@@ -1,16 +1,16 @@
 import { SectionDivision } from "../SectionDivision.tsx";
-import { InputForm } from "../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
-import { setRegistrationDataStringField } from "../../../utils/registration/user/user-registration.ts";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
+import { setRegistrationDataStringField } from "../../../../utils/registration/user/user-registration.ts";
 import {
   EMAIL_PLACEHOLDER,
   FIRST_NAME_PLACEHOLDER,
   LAST_NAME_PLACEHOLDER,
   NICKNAME_PLACEHOLDER,
   PASSWORD_PLACEHOLDER,
-} from "../../../utils/constants/placeholders.ts";
+} from "../../../../utils/constants/placeholders.ts";
 
 export const AccountData: React.FC<{
   setShouldDisplayInformation: (value: boolean) => void;

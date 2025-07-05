@@ -11,7 +11,10 @@ import addDriverIcon from "../../assets/company-menu/add-driver.svg";
 import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
-import { DRIVER_REGISTRATION, TRUCKS_BOARD } from "../../utils/routes/routes.ts";
+import {
+  DRIVER_REGISTRATION,
+  TRUCKS_BOARD,
+} from "../../utils/routes/routes.ts";
 
 export const CompanyDashboard = () => {
   const { companyUuid } = useParams();

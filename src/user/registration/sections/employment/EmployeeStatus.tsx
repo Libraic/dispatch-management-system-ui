@@ -1,23 +1,23 @@
-import { SelectForm } from "../../../global/SelectForm.tsx";
+import { SelectForm } from "../../../../global/SelectForm.tsx";
 import * as React from "react";
 import { useState } from "react";
 import { SectionDivision } from "../SectionDivision.tsx";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 import {
   PositionEnum,
   RoleEnum,
-} from "../../../types/registration/user/user-registration-data.ts";
-import { BLANK_STRING } from "../../../utils/constants/global.ts";
-import { LiveSearchEndpoints } from "../../../types/forms.ts";
-import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
-import type { UserData } from "../../../types/api/registration-api.ts";
+} from "../../../../types/registration/user/user-registration-data.ts";
+import { BLANK_STRING } from "../../../../utils/constants/global.ts";
+import { LiveSearchEndpoints } from "../../../../types/forms.ts";
+import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
+import type { UserData } from "../../../../types/api/registration-api.ts";
 import {
   alterSupervisor,
   cleanSupervisor,
   getFullName,
   prepopulatePosition,
   prepopulateRole,
-} from "../../../utils/registration/user/user-registration.ts";
+} from "../../../../utils/registration/user/user-registration.ts";
 
 export const EmployeeStatus = () => {
   const context = React.useContext(UserRegistrationContext)!;

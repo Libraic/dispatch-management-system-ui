@@ -1,4 +1,4 @@
-import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
 import { AddWorkload } from "./AddWorkload.tsx";
 
 export const Workload = () => {

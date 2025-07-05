@@ -1,18 +1,18 @@
-import { InputForm } from "../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext } from "react";
-import { Delete } from "../../../button/Delete.tsx";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
-import type { WorkloadData } from "../../../types/registration/user/user-registration-data.ts";
+import { Delete } from "../../../../button/Delete.tsx";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
+import type { WorkloadData } from "../../../../types/registration/user/user-registration-data.ts";
 import {
   alterWorkloadCommission,
   alterWorkloads,
   cleanWorkload,
   deleteWorkload,
-} from "../../../utils/registration/user/user-registration.ts";
-import { LiveSearchInputForm } from "../../../global/LiveSearchInputForm.tsx";
-import { LiveSearchEndpoints } from "../../../types/forms.ts";
-import type { CompanyData } from "../../../types/api/registration-api.ts";
+} from "../../../../utils/registration/user/user-registration.ts";
+import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
+import { LiveSearchEndpoints } from "../../../../types/forms.ts";
+import type { CompanyData } from "../../../../types/api/registration-api.ts";
 
 export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;

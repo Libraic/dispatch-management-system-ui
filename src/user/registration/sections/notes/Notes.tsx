@@ -1,4 +1,4 @@
-import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
 import { AddNote } from "./AddNote.tsx";
 
 export const Notes = () => {

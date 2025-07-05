@@ -1,37 +1,37 @@
 import { BasicInformation } from "./sections/basic/BasicInformation.tsx";
 import { EmploymentInformation } from "./sections/employment/EmploymentInformation.tsx";
 import { Workload } from "./sections/workload/Workload.tsx";
-import { CancelButton } from "../button/CancelButton.tsx";
-import { SubmitButton } from "../button/SubmitButton.tsx";
+import { CancelButton } from "../../button/CancelButton.tsx";
+import { SubmitButton } from "../../button/SubmitButton.tsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   getBlankUserRegistrationData,
   handleUserCreation,
-} from "../utils/registration/user/user-registration.ts";
+} from "../../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
-import { Toast } from "../toast/Toast.tsx";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { Toast } from "../../toast/Toast.tsx";
+import { BLANK_STRING } from "../../utils/constants/global.ts";
 import {
   type SectionData,
   SectionEnum,
-} from "../types/registration/user/section.ts";
+} from "../../types/registration/user/section.ts";
 import type {
   UserRegistrationData,
   UserRegistrationErrors,
-} from "../types/registration/user/user-registration-data.ts";
+} from "../../types/registration/user/user-registration-data.ts";
 import {
   getBlankRegistrationDataError,
   getRegistrationDataErrors,
   getSectionsWithErrors,
-} from "../utils/registration/user/user-registration-errors.ts";
+} from "../../utils/registration/user/user-registration-errors.ts";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../utils/routes/routes.ts";
-import { useToast } from "../hooks/useToast.ts";
-import type { RegistrationContextData } from "../types/context/context-types.ts";
-import { UserRegistrationContext } from "../context/UserRegistrationContext.ts";
+import { HOME } from "../../utils/routes/routes.ts";
+import { useToast } from "../../hooks/useToast.ts";
+import type { RegistrationContextData } from "../../types/context/context-types.ts";
+import { UserRegistrationContext } from "../../context/UserRegistrationContext.ts";
 
-export const RegistrationInputSection: React.FC<{
+export const UserRegistrationInputArea: React.FC<{
   sectionsHandler: SectionData;
 }> = ({ sectionsHandler }) => {
   const [registrationData, setRegistrationData] =

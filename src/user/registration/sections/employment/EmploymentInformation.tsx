@@ -1,4 +1,4 @@
-import { RegistrationSectionHeader } from "../../RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
 import { EmploymentDate } from "./EmploymentDate.tsx";
 import { EmployeeStatus } from "./EmployeeStatus.tsx";
 

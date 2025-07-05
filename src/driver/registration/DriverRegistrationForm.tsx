@@ -22,7 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { EmploymentData } from "./registration-sections/EmploymentData.tsx";
 import type { RegistrationContextData } from "../../types/context/context-types.ts";
 import { DriverRegistrationContext } from "../../context/DriverRegistrationContext.ts";
-import { RegistrationSectionHeader } from "../../registration/RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
 
 const sections = Object.values(DriverRegistrationSectionEnum);
 const sectionComponents: Record<string, React.ReactNode> = {

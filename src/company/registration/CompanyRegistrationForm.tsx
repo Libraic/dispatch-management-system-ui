@@ -11,7 +11,7 @@ import type {
 } from "../../types/registration/company/company-registration-data.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
 import { Information } from "../../global/Information.tsx";
-import { RegistrationSectionHeader } from "../../registration/RegistrationSectionHeader.tsx";
+import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
 import { useNavigate } from "react-router-dom";

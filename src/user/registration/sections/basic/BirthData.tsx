@@ -1,10 +1,10 @@
 import { SectionDivision } from "../SectionDivision.tsx";
-import { DateForm } from "../../../global/DateForm.tsx";
+import { DateForm } from "../../../../global/DateForm.tsx";
 import * as React from "react";
-import { useDateObject } from "../../../hooks/useDateObject.ts";
-import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
-import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
-import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../utils/date.ts";
+import { useDateObject } from "../../../../hooks/useDateObject.ts";
+import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
+import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
+import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../../utils/date.ts";
 
 export const BirthData = () => {
   const context = React.useContext(UserRegistrationContext)!;

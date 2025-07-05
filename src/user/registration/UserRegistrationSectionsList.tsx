@@ -1,16 +1,16 @@
-import { RegistrationSection } from "./RegistrationSection.tsx";
+import { UserRegistrationSection } from "./UserRegistrationSection.tsx";
 import * as React from "react";
 import {
   type SectionData,
   SectionEnum,
-} from "../types/registration/user/section.ts";
+} from "../../types/registration/user/section.ts";
 
-export const RegistrationSectionsList: React.FC<{
+export const UserRegistrationSectionsList: React.FC<{
   sectionsHandler: SectionData;
 }> = ({ sectionsHandler }) => {
   return (
     <div className="flex flex-col items-center gap-7 w-1/10 bg-[#212327] text-white p-6">
-      <RegistrationSection
+      <UserRegistrationSection
         sectionTitle="Basic Information"
         setFocusedSection={() => {
           sectionsHandler.setFocusedSection(SectionEnum.BASIC_INFORMATION);
@@ -28,7 +28,7 @@ export const RegistrationSectionsList: React.FC<{
           SectionEnum.BASIC_INFORMATION,
         )}
       />
-      <RegistrationSection
+      <UserRegistrationSection
         sectionTitle="Employment Information"
         setFocusedSection={() => {
           sectionsHandler.setFocusedSection(SectionEnum.EMPLOYMENT_INFORMATION);
@@ -46,7 +46,7 @@ export const RegistrationSectionsList: React.FC<{
           SectionEnum.EMPLOYMENT_INFORMATION,
         )}
       />
-      <RegistrationSection
+      <UserRegistrationSection
         sectionTitle="Workload"
         setFocusedSection={() => {
           sectionsHandler.setFocusedSection(SectionEnum.WORKLOAD);
@@ -62,7 +62,7 @@ export const RegistrationSectionsList: React.FC<{
           SectionEnum.WORKLOAD,
         )}
       />
-      <RegistrationSection
+      <UserRegistrationSection
         sectionTitle="Notes"
         setFocusedSection={() => {
           sectionsHandler.setFocusedSection(SectionEnum.NOTES);
