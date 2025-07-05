@@ -24,7 +24,47 @@ export const TruckDetailsSection: React.FC<{
 }) => {
   return (
     <div>
-      <div className="flex flex-row gap-x-20">
+      <div className="flex flex-row items-center justify-center gap-x-20">
+        <SelectForm
+          label="Trailer"
+          initialValue={driverRegistrationData.trailerType}
+          data={trailerTypes}
+          setElement={(trailerType: string) =>
+            setDriverRegistrationData({
+              ...driverRegistrationData,
+              trailerType: trailerType,
+            })
+          }
+        />
+        <SelectForm
+          label="Length (ft)"
+          initialValue={driverRegistrationData.trailerLength}
+          data={trailerLengths}
+          setElement={(trailerLength: string) =>
+            setDriverRegistrationData({
+              ...driverRegistrationData,
+              trailerLength: trailerLength,
+            })
+          }
+        />
+      </div>
+      <div className="flex flex-row gap-x-20 mt-20">
+        <InputForm
+          label="Max Legal Weight Capacity (in lbs)"
+          placeholder="47000"
+          type="number"
+          name="name"
+          inputFieldValue={driverRegistrationData.maxLegalWeightCapacity}
+          isMandatory={true}
+          errorMessage={driverRegistrationError.maxLegalWeightCapacity}
+          saveInputData={(maxLegalWeightCapacity: string) =>
+            setObjectStringField(
+              setDriverRegistrationData,
+              "maxLegalWeightCapacity",
+              maxLegalWeightCapacity,
+            )
+          }
+        />
         <InputForm
           label="Truck Number"
           placeholder="105"
@@ -55,46 +95,6 @@ export const TruckDetailsSection: React.FC<{
               "trailerNumber",
               trailerNumber,
             )
-          }
-        />
-        <InputForm
-          label="Max Legal Weight Capacity (in lbs)"
-          placeholder="47000"
-          type="number"
-          name="name"
-          inputFieldValue={driverRegistrationData.maxLegalWeightCapacity}
-          isMandatory={true}
-          errorMessage={driverRegistrationError.maxLegalWeightCapacity}
-          saveInputData={(maxLegalWeightCapacity: string) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "maxLegalWeightCapacity",
-              maxLegalWeightCapacity,
-            )
-          }
-        />
-      </div>
-      <div className="flex flex-row items-center justify-center gap-x-20 mt-10">
-        <SelectForm
-          label="Trailer"
-          initialValue={driverRegistrationData.trailerType}
-          data={trailerTypes}
-          setElement={(trailerType: string) =>
-            setDriverRegistrationData({
-              ...driverRegistrationData,
-              trailerType: trailerType,
-            })
-          }
-        />
-        <SelectForm
-          label="Length (ft)"
-          initialValue={driverRegistrationData.trailerLength}
-          data={trailerLengths}
-          setElement={(trailerLength: string) =>
-            setDriverRegistrationData({
-              ...driverRegistrationData,
-              trailerLength: trailerLength,
-            })
           }
         />
       </div>
