@@ -3,11 +3,11 @@ import { DateForm } from "../../../global/DateForm.tsx";
 import { useState } from "react";
 import { useDateObject } from "../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../hooks/usePrepopulateDate.ts";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import * as React from "react";
 
 export const EmploymentDate = () => {
-  const context = React.useContext(RegistrationContext)!;
+  const context = React.useContext(UserRegistrationContext)!;
   const { registrationData, setRegistrationData } = context;
   const [isEmploymentDataExpanded, setIsEmploymentDataExpanded] =
     useState(true);

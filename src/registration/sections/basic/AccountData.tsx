@@ -2,7 +2,7 @@ import { SectionDivision } from "../SectionDivision.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import { setRegistrationDataStringField } from "../../../utils/registration/user/user-registration.ts";
 import {
   EMAIL_PLACEHOLDER,
@@ -17,7 +17,7 @@ export const AccountData: React.FC<{
 }> = ({ setShouldDisplayInformation }) => {
   const [isAccountDataExpanded, setIsAccountDataExpanded] =
     React.useState(true);
-  const context = useContext(RegistrationContext)!;
+  const context = useContext(UserRegistrationContext)!;
 
   const { registrationData, registrationDataError, setRegistrationData } =
     context;

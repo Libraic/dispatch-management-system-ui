@@ -1,17 +1,16 @@
-import { SelectForm } from "../../global/SelectForm.tsx";
-import * as React from "react";
-import type { DriverRegistrationData } from "../../types/registration/driver/driver-registration-types.ts";
+import { SelectForm } from "../../../global/SelectForm.tsx";
+import { useContext } from "react";
 import {
   documentsStatuses,
   driverPositions,
-} from "../../utils/registration/driver/driver-registration-utils.ts";
+} from "../../../utils/registration/driver/driver-registration-utils.ts";
+import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
 
-export const EmploymentData: React.FC<{
-  driverRegistrationData: DriverRegistrationData;
-  setDriverRegistrationData: React.Dispatch<
-    React.SetStateAction<DriverRegistrationData>
-  >;
-}> = ({ driverRegistrationData, setDriverRegistrationData }) => {
+export const EmploymentData = () => {
+  const context = useContext(DriverRegistrationContext)!;
+  const driverRegistrationData = context.registrationData;
+  const setDriverRegistrationData = context.setRegistrationData;
+
   return (
     <div className="flex flex-row gap-x-20">
       <SelectForm

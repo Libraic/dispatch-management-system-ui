@@ -10,10 +10,6 @@ import {
   handleUserCreation,
 } from "../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
-import {
-  RegistrationContext,
-  type RegistrationContextData,
-} from "../context/RegistrationContext.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { BLANK_STRING } from "../utils/constants/global.ts";
 import {
@@ -21,8 +17,8 @@ import {
   SectionEnum,
 } from "../types/registration/user/section.ts";
 import type {
-  RegistrationDataError,
   UserRegistrationData,
+  UserRegistrationErrors,
 } from "../types/registration/user/user-registration-data.ts";
 import {
   getBlankRegistrationDataError,
@@ -32,6 +28,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../utils/routes/routes.ts";
 import { useToast } from "../hooks/useToast.ts";
+import type { RegistrationContextData } from "../types/context/context-types.ts";
+import { UserRegistrationContext } from "../context/UserRegistrationContext.ts";
 
 export const RegistrationInputSection: React.FC<{
   sectionsHandler: SectionData;
@@ -40,7 +38,7 @@ export const RegistrationInputSection: React.FC<{
     useState<UserRegistrationData>(getBlankUserRegistrationData());
 
   const [registrationDataError, setRegistrationDataError] =
-    useState<RegistrationDataError>(getBlankRegistrationDataError());
+    useState<UserRegistrationErrors>(getBlankRegistrationDataError());
 
   const navigate = useNavigate();
 
@@ -48,7 +46,10 @@ export const RegistrationInputSection: React.FC<{
   const toastData = useToast();
 
   const activeSection = sectionsHandler.getActiveSection();
-  const registrationContextData: RegistrationContextData = {
+  const registrationContextData: RegistrationContextData<
+    UserRegistrationData,
+    UserRegistrationErrors
+  > = {
     registrationData: registrationData,
     setRegistrationData: setRegistrationData,
     registrationDataError: registrationDataError,
@@ -97,9 +98,9 @@ export const RegistrationInputSection: React.FC<{
   return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-white overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
-        <RegistrationContext value={registrationContextData}>
+        <UserRegistrationContext value={registrationContextData}>
           {sectionComponents[activeSection]}
-        </RegistrationContext>
+        </UserRegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
         <CancelButton actionText="Cancel" action={() => navigate(HOME)} />

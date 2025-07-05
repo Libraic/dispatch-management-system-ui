@@ -15,7 +15,7 @@ import {
   type EmergencyContactData,
   type NoteData,
   PositionEnum,
-  type RegistrationDataError,
+  type UserRegistrationErrors,
   RoleEnum,
   type UserRegistrationData,
   type WorkloadData,
@@ -310,7 +310,7 @@ export const deleteNote = (
 export const handleUserCreation = async (
   registrationData: UserRegistrationData,
   setRegistrationDataError: React.Dispatch<
-    React.SetStateAction<RegistrationDataError>
+    React.SetStateAction<UserRegistrationErrors>
   >,
   toastData: ToastData,
   sectionsHandler: SectionData,

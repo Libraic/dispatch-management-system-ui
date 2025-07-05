@@ -2,7 +2,7 @@ import { SelectForm } from "../../../global/SelectForm.tsx";
 import * as React from "react";
 import { useState } from "react";
 import { SectionDivision } from "../SectionDivision.tsx";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import {
   PositionEnum,
   RoleEnum,
@@ -20,7 +20,7 @@ import {
 } from "../../../utils/registration/user/user-registration.ts";
 
 export const EmployeeStatus = () => {
-  const context = React.useContext(RegistrationContext)!;
+  const context = React.useContext(UserRegistrationContext)!;
   const { registrationData, setRegistrationData, registrationDataError } =
     context;
   const [isStatusDataExpanded, setIsStatusDataExpanded] = useState(true);

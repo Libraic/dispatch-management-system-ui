@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import { SectionDivision } from "../SectionDivision.tsx";
 import { InputForm } from "../../../global/InputForm.tsx";
 import {
@@ -13,7 +13,7 @@ import { setEmergencyContactField } from "../../../utils/registration/user/user-
 export const EmergencyContact = () => {
   const [isEmergencyContactExpanded, setIsEmergencyContactExpanded] =
     React.useState(true);
-  const context = useContext(RegistrationContext)!;
+  const context = useContext(UserRegistrationContext)!;
 
   const { registrationData, setRegistrationData } = context;
 

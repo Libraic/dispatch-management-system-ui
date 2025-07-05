@@ -1,22 +1,13 @@
-import { InputForm } from "../../global/InputForm.tsx";
-import type {
-  DriverRegistrationData,
-  DriverRegistrationError,
-} from "../../types/registration/driver/driver-registration-types.ts";
-import * as React from "react";
-import { setObjectStringField } from "../../utils/registration/registration-utils.ts";
+import { InputForm } from "../../../global/InputForm.tsx";
+import { useContext } from "react";
+import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
+import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
 
-export const GeneralDetailsSection: React.FC<{
-  driverRegistrationData: DriverRegistrationData;
-  driverRegistrationError: DriverRegistrationError;
-  setDriverRegistrationData: React.Dispatch<
-    React.SetStateAction<DriverRegistrationData>
-  >;
-}> = ({
-  driverRegistrationData,
-  driverRegistrationError,
-  setDriverRegistrationData,
-}) => {
+export const GeneralDetailsSection = () => {
+  const context = useContext(DriverRegistrationContext)!;
+  const driverRegistrationData = context.registrationData;
+  const driverRegistrationError = context.registrationDataError;
+  const setDriverRegistrationData = context.setRegistrationData;
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row gap-x-20">

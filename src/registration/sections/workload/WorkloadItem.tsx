@@ -2,7 +2,7 @@ import { InputForm } from "../../../global/InputForm.tsx";
 import * as React from "react";
 import { useContext } from "react";
 import { Delete } from "../../../button/Delete.tsx";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import type { WorkloadData } from "../../../types/registration/user/user-registration-data.ts";
 import {
   alterWorkloadCommission,
@@ -18,7 +18,7 @@ export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;
   errorMessage: string;
 }> = ({ workloadData, errorMessage }) => {
-  const context = useContext(RegistrationContext)!;
+  const context = useContext(UserRegistrationContext)!;
   const setRegistrationData = context.setRegistrationData;
   return (
     <div

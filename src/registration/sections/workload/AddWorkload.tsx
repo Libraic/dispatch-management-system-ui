@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { WorkloadItem } from "./WorkloadItem.tsx";
 import { Add } from "../../../button/Add.tsx";
-import { RegistrationContext } from "../../../context/RegistrationContext.ts";
+import { UserRegistrationContext } from "../../../context/UserRegistrationContext.ts";
 import { prepopulateWorkload } from "../../../utils/registration/user/user-registration.ts";
 import { getWorkloadCompanyErrorMessage } from "../../../utils/registration/user/user-registration-errors.ts";
 
 export const AddWorkload = () => {
-  const context = useContext(RegistrationContext)!;
+  const context = useContext(UserRegistrationContext)!;
   return (
     <div className="flex flex-col gap-y-5">
       <div className="flex flex-row items-center gap-x-3">

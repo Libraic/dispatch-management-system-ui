@@ -1,27 +1,18 @@
-import * as React from "react";
-import type {
-  DriverRegistrationData,
-  DriverRegistrationError,
-} from "../../types/registration/driver/driver-registration-types.ts";
-import { setObjectStringField } from "../../utils/registration/registration-utils.ts";
-import { InputForm } from "../../global/InputForm.tsx";
-import { SelectForm } from "../../global/SelectForm.tsx";
+import { useContext } from "react";
+import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
+import { InputForm } from "../../../global/InputForm.tsx";
+import { SelectForm } from "../../../global/SelectForm.tsx";
 import {
   trailerLengths,
   trailerTypes,
-} from "../../utils/registration/driver/driver-registration-utils.ts";
+} from "../../../utils/registration/driver/driver-registration-utils.ts";
+import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
 
-export const TruckDetailsSection: React.FC<{
-  driverRegistrationData: DriverRegistrationData;
-  driverRegistrationError: DriverRegistrationError;
-  setDriverRegistrationData: React.Dispatch<
-    React.SetStateAction<DriverRegistrationData>
-  >;
-}> = ({
-  driverRegistrationData,
-  driverRegistrationError,
-  setDriverRegistrationData,
-}) => {
+export const TruckDetailsSection = () => {
+  const context = useContext(DriverRegistrationContext)!;
+  const driverRegistrationData = context.registrationData;
+  const driverRegistrationError = context.registrationDataError;
+  const setDriverRegistrationData = context.setRegistrationData;
   return (
     <div>
       <div className="flex flex-row items-center justify-center gap-x-20">

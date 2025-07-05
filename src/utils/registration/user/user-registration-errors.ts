@@ -2,7 +2,7 @@ import type {
   FieldError,
   ItemError,
   NoteData,
-  RegistrationDataError,
+  UserRegistrationErrors,
   UserRegistrationData,
   WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
@@ -15,7 +15,7 @@ import {
   validatePassword,
 } from "./user-registration-validation.ts";
 
-export const getBlankRegistrationDataError = (): RegistrationDataError => {
+export const getBlankRegistrationDataError = (): UserRegistrationErrors => {
   return {
     firstName: BLANK_STRING,
     lastName: BLANK_STRING,
@@ -31,7 +31,7 @@ export const getBlankRegistrationDataError = (): RegistrationDataError => {
 
 export const getRegistrationDataErrors = (
   registrationData: UserRegistrationData,
-): RegistrationDataError => {
+): UserRegistrationErrors => {
   const registrationDataError = getBlankRegistrationDataError();
   if (registrationData.firstName === BLANK_STRING) {
     registrationDataError.firstName = "The first name is required";
@@ -58,7 +58,7 @@ export const getRegistrationDataErrors = (
   return registrationDataError;
 };
 
-export const getSectionsWithErrors = (errors: RegistrationDataError) => {
+export const getSectionsWithErrors = (errors: UserRegistrationErrors) => {
   const groupedErrors = getGroupedErrors(errors);
   const sectionsErrors: SectionEnum[] = [];
   for (const [section, hasErrors] of groupedErrors) {
@@ -70,7 +70,7 @@ export const getSectionsWithErrors = (errors: RegistrationDataError) => {
 };
 
 export const getNoteErrorMessage = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
   note: NoteData,
 ): string => {
   if (registrationDataError.notes.length === 0) {
@@ -104,7 +104,7 @@ export const getSimpleErrorMessageFromRegistrationDataError = (
 };
 
 export const getWorkloadCompanyErrorMessage = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
   workload: WorkloadData,
 ) => {
   if (registrationDataError.workloads.length === 0) {
@@ -127,7 +127,7 @@ export const getWorkloadCompanyErrorMessage = (
 };
 
 export const actualizeRegistrationDataErrorFromApiResponse = (
-  prev: RegistrationDataError,
+  prev: UserRegistrationErrors,
   groupErrorResponse: GroupErrorResponse,
   itemsErrors: ItemError[],
 ) => {
@@ -145,7 +145,7 @@ export const actualizeRegistrationDataErrorFromApiResponse = (
 };
 
 const getGroupedErrors = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
 ): Map<SectionEnum, boolean> => {
   const groupedErrors = new Map<SectionEnum, boolean>();
   groupedErrors.set(
@@ -165,7 +165,7 @@ const getGroupedErrors = (
 };
 
 const areAccountErrors = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
 ): boolean => {
   return (
     registrationDataError.firstName !== BLANK_STRING ||
@@ -177,17 +177,17 @@ const areAccountErrors = (
 };
 
 const areWorkloadErrors = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
 ): boolean => {
   return registrationDataError.workloads.length > 0;
 };
 
 const areEmploymentInformationErrors = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
 ): boolean => {
   return registrationDataError.supervisor !== BLANK_STRING;
 };
 
 const areNotesErrors = (
-  registrationDataError: RegistrationDataError,
+  registrationDataError: UserRegistrationErrors,
 ): boolean => registrationDataError.notes.length > 0;

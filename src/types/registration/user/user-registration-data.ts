@@ -40,7 +40,7 @@ export type SupervisorData = {
   name: string;
 };
 
-export type RegistrationDataError = {
+export type UserRegistrationErrors = {
   firstName: string;
   lastName: string;
   email: string;

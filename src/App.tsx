@@ -14,7 +14,7 @@ import {
 import { CompaniesList } from "./company/CompaniesList.tsx";
 import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
 import { TrucksBoard } from "./company/dashboard/TrucksBoard.tsx";
-import { DriverRegistrationForm } from "./driver/DriverRegistrationForm.tsx";
+import { DriverRegistrationForm } from "./driver/registration/DriverRegistrationForm.tsx";
 
 export const App = () => {
   return (
