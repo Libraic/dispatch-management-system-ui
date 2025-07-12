@@ -1,4 +1,5 @@
 export interface Renderable {
-  render(): string;
+  renderOnList(): string;
+  renderOnForm(): string;
   getUuid(): string;
 }

@@ -1,3 +1,6 @@
+import { LiveSearchCell } from "../../matrix/LiveSearchCell.tsx";
+import { Driver } from "../../types/api/Driver.ts";
+
 export const TrucksBoard = () => {
   const columnsLayout =
     "grid-cols-[9rem_17rem_6rem_10rem_12rem_12rem_12rem_12rem_12rem_12rem_12rem]";
@@ -39,9 +42,9 @@ export const TrucksBoard = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center mt-10">
-      <div className="w-[90%] overflow-x-auto hide-scrollbar bg-[#d4ddf8]">
+      <div className="w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
         <div
-          className={`min-w-[1000px] ${columnsLayout} grid text-left font-open-sans font-medium rounded-[0.3rem] h-[3rem]`}
+          className={`min-w-[1000px] ${columnsLayout} grid text-left font-open-sans font-medium rounded-tl-[0.3rem] rounded-tr-[0.3rem] h-[3rem] bg-[#d4ddf8]`}
         >
           {columns.map((day, index) => (
             <div className="flex items-center px-4" key={index}>
@@ -51,17 +54,12 @@ export const TrucksBoard = () => {
         </div>
 
         <div
-          className={`min-w-[1000px] ${columnsLayout} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
+          className={`min-w-[1000px] min-h-[6rem] ${columnsLayout} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
         >
           <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">
             Sergio xt 103 (786-802-1867)
           </div>
-          <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">
-            Azamat Seitov / 850-775-8717 <br />
-            Trk# 105 Trl# 888 | 46 000 lbs <br />
-            Miami, FL / Work Permit <br />
-            7kazanova7@mail.ru
-          </div>
+          <LiveSearchCell searchKey="DRIVER" constructor={Driver} />
           <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">
             53' FB <br />
             Cong <br />

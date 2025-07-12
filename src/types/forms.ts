@@ -12,4 +12,8 @@ export const LiveSearchEndpoints: Record<string, LiveSearchEndpointConfig> = {
     endpoint: "http://localhost:8090/api/companies",
     searchField: "name",
   },
+  DRIVER: {
+    endpoint: "http://localhost:8090/api/drivers",
+    searchField: "fullName",
+  },
 } as const;
