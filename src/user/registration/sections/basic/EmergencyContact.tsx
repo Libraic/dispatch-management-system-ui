@@ -33,7 +33,6 @@ export const EmergencyContact = () => {
               type="text"
               name="name"
               inputFieldValue={registrationData.emergencyContact.name}
-              isMandatory={false}
               saveInputData={(value: string) =>
                 setEmergencyContactField(setRegistrationData, "name", value)
               }
@@ -44,7 +43,6 @@ export const EmergencyContact = () => {
               type="text"
               name="relationship"
               inputFieldValue={registrationData.emergencyContact.relationship}
-              isMandatory={false}
               information="The relationship between the employee and the person that was registered as the Emergency Contact."
               saveInputData={(value: string) =>
                 setEmergencyContactField(
@@ -60,7 +58,6 @@ export const EmergencyContact = () => {
               type="text"
               name="phone-number"
               inputFieldValue={registrationData.emergencyContact.phone}
-              isMandatory={false}
               saveInputData={(value: string) =>
                 setEmergencyContactField(setRegistrationData, "phone", value)
               }

@@ -42,7 +42,6 @@ export const CompanyBasicData: React.FC<{
         type="text"
         name="mc-number"
         inputFieldValue={companyRegistrationData?.mcNumber ?? BLANK_STRING}
-        isMandatory={false}
         saveInputData={(mcNumber: string) =>
           alterCompanySimpleField(
             setCompanyRegistrationData,
@@ -57,7 +56,6 @@ export const CompanyBasicData: React.FC<{
         type="text"
         name="address"
         inputFieldValue={companyRegistrationData?.address ?? BLANK_STRING}
-        isMandatory={false}
         saveInputData={(address: string) =>
           alterCompanySimpleField(
             setCompanyRegistrationData,

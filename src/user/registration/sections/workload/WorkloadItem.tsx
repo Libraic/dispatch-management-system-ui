@@ -11,8 +11,8 @@ import {
   deleteWorkload,
 } from "../../../../utils/registration/user/user-registration.ts";
 import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
-import { LiveSearchEndpoints } from "../../../../types/forms.ts";
-import type { CompanyData } from "../../../../types/api/registration-api.ts";
+import { Company } from "../../../../types/api/Company.ts";
+import type { Renderable } from "../../../../types/api/Renderable.ts";
 
 export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;
@@ -29,16 +29,13 @@ export const WorkloadItem: React.FC<{
         label="Company"
         placeholder="Microsoft"
         value={workloadData.companyName}
-        endpoint={LiveSearchEndpoints.COMPANY}
-        searchField="name"
-        isMandatory={false}
+        searchKey="COMPANY"
         errorText={errorMessage}
-        saveData={(companyData: CompanyData) =>
+        saveData={(companyData: Renderable) =>
           alterWorkloads(setRegistrationData, companyData, workloadData)
         }
         cleanData={() => cleanWorkload(setRegistrationData, workloadData)}
-        renderResult={(companyData: CompanyData) => companyData.name}
-        getKey={(companyData: CompanyData) => companyData.uuid}
+        constructor={Company}
       />
       <InputForm
         label="Commission (%)"
@@ -46,7 +43,6 @@ export const WorkloadItem: React.FC<{
         type="number"
         name="Commission"
         inputFieldValue={workloadData.commission.toString()}
-        isMandatory={false}
         errorMessage=""
         saveInputData={(value: string) =>
           alterWorkloadCommission(setRegistrationData, workloadData, value)

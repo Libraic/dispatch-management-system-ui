@@ -58,7 +58,6 @@ export const AccountData: React.FC<{
               type="text"
               name="nick-name"
               inputFieldValue={registrationData.nickname}
-              isMandatory={false}
               saveInputData={(value: string) =>
                 setRegistrationDataStringField(
                   setRegistrationData,
@@ -107,7 +106,6 @@ export const AccountData: React.FC<{
               type="email"
               name="email"
               inputFieldValue={registrationData.personalEmail}
-              isMandatory={false}
               errorMessage={registrationDataError.personalEmail}
               saveInputData={(value: string) =>
                 setRegistrationDataStringField(

@@ -1,10 +1,9 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
 import { BLANK_STRING } from "../utils/constants/global.ts";
-import { inputFormLabelStyle, inputFormStyle } from "../utils/tailwind.ts";
-import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
+import { inputFormStyle } from "../utils/tailwind.ts";
 import { InputFormError } from "./InputFormError.tsx";
-import { FieldInformation } from "./FieldInformation.tsx";
+import { InputFormLabel } from "./InputFormLabel.tsx";
 
 export const InputForm: React.FC<{
   label: string;
@@ -12,7 +11,7 @@ export const InputForm: React.FC<{
   type: string;
   name: string;
   inputFieldValue: string;
-  isMandatory: boolean;
+  isMandatory?: boolean;
   errorMessage?: string;
   information?: string;
   saveInputData: (value: string) => void;
@@ -54,17 +53,11 @@ export const InputForm: React.FC<{
       <div
         className={`flex flex-col px-5 py-2 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] max-w-[20rem]`}
       >
-        <div className="flex flex-row items-center gap-x-1">
-          {isMandatory && (
-            <img
-              className="w-[0.6rem]"
-              src={mandatoryFieldIcon}
-              alt="mandatory-icon"
-            />
-          )}
-          <p className={inputFormLabelStyle}>{label}</p>
-          {information && <FieldInformation information={information} />}
-        </div>
+        <InputFormLabel
+          label={label}
+          information={information}
+          isMandatory={isMandatory}
+        />
 
         <input
           className={`${inputFormStyle} w-[19rem]`}

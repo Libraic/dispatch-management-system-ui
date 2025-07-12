@@ -1,12 +1,12 @@
 import type { Link, PageInfo } from "./common.ts";
 
-export type CompanyData = {
-  name: string;
+export interface CompanyData {
   uuid: string;
+  name: string;
   mcNumber: string | null;
   address: string | null;
   startDate: string;
-};
+}
 
 export type GetCompaniesResponse = {
   links: Link[];
@@ -49,9 +49,9 @@ export type CreateUserRequest = {
   notes: string[];
 };
 
-export type UserData = {
+export interface UserData {
   uuid: string;
   firstName: string;
   nickname: string | null;
   lastName: string;
-};
+}

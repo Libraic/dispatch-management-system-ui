@@ -8,16 +8,15 @@ import {
   RoleEnum,
 } from "../../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../../../utils/constants/global.ts";
-import { LiveSearchEndpoints } from "../../../../types/forms.ts";
 import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
-import type { UserData } from "../../../../types/api/registration-api.ts";
 import {
   alterSupervisor,
   cleanSupervisor,
-  getFullName,
   prepopulatePosition,
   prepopulateRole,
 } from "../../../../utils/registration/user/user-registration.ts";
+import type { Renderable } from "../../../../types/api/Renderable.ts";
+import { User } from "../../../../types/api/User.ts";
 
 export const EmployeeStatus = () => {
   const context = React.useContext(UserRegistrationContext)!;
@@ -54,16 +53,13 @@ export const EmployeeStatus = () => {
             label="Supervisor"
             placeholder="John Doe"
             value={registrationData.supervisor?.name ?? BLANK_STRING}
-            endpoint={LiveSearchEndpoints.USER}
-            searchField="fullName"
-            isMandatory={false}
+            searchKey="USER"
             errorText={registrationDataError.supervisor}
-            saveData={(userData: UserData) =>
+            saveData={(userData: Renderable) =>
               alterSupervisor(setRegistrationData, userData)
             }
             cleanData={() => cleanSupervisor(setRegistrationData)}
-            renderResult={(userData: UserData) => getFullName(userData)}
-            getKey={(userData) => userData.uuid}
+            constructor={User}
           />
         </div>
       )}

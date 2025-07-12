@@ -1,10 +1,8 @@
 import { BLANK_STRING } from "../../constants/global.ts";
 import type {
-  CompanyData,
   CreateUserRequest,
   CreateWorkloadRequest,
   EmergencyContact,
-  UserData,
 } from "../../../types/api/registration-api.ts";
 import {
   convertDateToLittleEndian,
@@ -15,9 +13,9 @@ import {
   type EmergencyContactData,
   type NoteData,
   PositionEnum,
-  type UserRegistrationErrors,
   RoleEnum,
   type UserRegistrationData,
+  type UserRegistrationErrors,
   type WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import type { ChangeEvent } from "react";
@@ -31,6 +29,7 @@ import {
 } from "./user-registration-errors.ts";
 import type { SectionData } from "../../../types/registration/user/section.ts";
 import type { ToastData } from "../../../hooks/useToast.ts";
+import type { Renderable } from "../../../types/api/Renderable.ts";
 
 export const getBlankUserRegistrationData = (): UserRegistrationData => {
   return {
@@ -120,23 +119,17 @@ export const setEmergencyContactField = (
   }));
 };
 
-export const getFullName = (user: UserData) => {
-  return user.nickname !== null
-    ? `${user.firstName} "${user.nickname}" ${user.lastName}`
-    : `${user.firstName} ${user.lastName}`;
-};
-
 export const alterSupervisor = (
   setRegistrationData: React.Dispatch<
     React.SetStateAction<UserRegistrationData>
   >,
-  userData: UserData,
+  userData: Renderable,
 ) => {
   setRegistrationData((prev) => ({
     ...prev,
     supervisor: {
-      uuid: userData.uuid,
-      name: getFullName(userData),
+      uuid: userData.getUuid(),
+      name: userData.render(),
     },
   }));
 };
@@ -196,7 +189,7 @@ export const alterWorkloads = (
   setRegistrationData: React.Dispatch<
     React.SetStateAction<UserRegistrationData>
   >,
-  companyData: CompanyData,
+  companyData: Renderable,
   workloadData: WorkloadData,
 ) => {
   setRegistrationData((prev) => ({
@@ -205,8 +198,8 @@ export const alterWorkloads = (
       w.workloadId === workloadData.workloadId
         ? {
             ...w,
-            companyId: companyData.uuid,
-            companyName: companyData.name,
+            companyId: companyData.getUuid(),
+            companyName: companyData.render(),
           }
         : w,
     ),
