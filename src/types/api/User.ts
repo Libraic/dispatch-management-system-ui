@@ -14,10 +14,14 @@ export class User implements Renderable {
     this.lastName = userData.lastName;
   }
 
-  render(): string {
+  renderOnList(): string {
     return this.nickname !== null
       ? `${this.firstName} "${this.nickname}" ${this.lastName}`
       : `${this.firstName} ${this.lastName}`;
+  }
+
+  renderOnForm(): string {
+    return this.renderOnList();
   }
 
   getUuid(): string {

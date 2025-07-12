@@ -5,14 +5,14 @@ export const LiveSearchResultList = ({
   onClick,
 }: LiveSearchResultData) => {
   return (
-    <div className="border-2 border-light-grey rounded-xl bg-white p-2 min-w-[8rem] absolute left-5 top-full mt-3 z-10">
+    <div className="border-1 border-light-grey rounded-[0.3rem] bg-white p-2 min-w-[8rem] absolute top-16 z-10">
       {items.map((item) => (
         <div
           key={item.getUuid()}
-          className="w-full rounded hover:bg-[#edf2fe] hover:text-solid-blue hover:cursor-pointer text-standard-size font-lato font-light text-center"
+          className="w-full rounded hover:bg-[#edf2fe] hover:text-solid-blue hover:cursor-pointer text-standard-size font-lato font-normal text-center"
           onClick={() => onClick(item)}
         >
-          {item.render()}
+          {item.renderOnList()}
         </div>
       ))}
     </div>

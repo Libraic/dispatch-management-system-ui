@@ -10,7 +10,11 @@ export class Company implements Renderable {
     this.name = company.name;
   }
 
-  render(): string {
+  renderOnList(): string {
+    return this.name;
+  }
+
+  renderOnForm(): string {
     return this.name;
   }
 

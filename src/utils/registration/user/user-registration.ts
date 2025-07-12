@@ -129,7 +129,7 @@ export const alterSupervisor = (
     ...prev,
     supervisor: {
       uuid: userData.getUuid(),
-      name: userData.render(),
+      name: userData.renderOnList(),
     },
   }));
 };
@@ -199,7 +199,7 @@ export const alterWorkloads = (
         ? {
             ...w,
             companyId: companyData.getUuid(),
-            companyName: companyData.render(),
+            companyName: companyData.renderOnList(),
           }
         : w,
     ),
