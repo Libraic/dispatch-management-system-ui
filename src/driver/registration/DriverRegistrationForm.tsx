@@ -86,6 +86,7 @@ export const DriverRegistrationForm = () => {
                 sectionIndex={index + 1}
                 isLast={index < sections.length - 1}
                 isWithErrors={sectionsWithErrors.get(section) ?? false}
+                isActive={activeSection === section}
                 activateSection={setActiveSection}
               />
             </div>
