@@ -17,7 +17,7 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
     <div className={`${borderColor}`}>
       <p className={`${inputFormLabelStyle} ml-2`}>{label}</p>
       <select
-        className={`${selectFormStyle} ${borderColor} min-w-40`}
+        className={`${selectFormStyle} ${borderColor} min-w-40 min-h-[2.2rem]`}
         value={initialValue}
         onFocus={() => setBorderColor("border-solid-blue")}
         onBlur={() => setBorderColor("border-light-grey")}

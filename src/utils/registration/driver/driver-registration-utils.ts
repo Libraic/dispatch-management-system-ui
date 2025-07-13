@@ -3,6 +3,11 @@ import type {
   DriverRegistrationError,
 } from "../../../types/registration/driver/driver-registration-types.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
+import {
+  getFirstCityOfStateByCountryIsoCode,
+  getFirstStateOfCountryByIsoCode,
+  USA_COUNTRY_ISO_CODE,
+} from "../../location/location-utils.ts";
 
 export const trailerTypes = [
   "Flatbed",
@@ -27,6 +32,8 @@ export const getBlankDriverRegistrationData = (): DriverRegistrationData => {
     trailerLength: trailerLengths[0],
     documentsStatus: documentsStatuses[0],
     position: driverPositions[0],
+    state: getFirstStateOfCountryByIsoCode(USA_COUNTRY_ISO_CODE),
+    city: getFirstCityOfStateByCountryIsoCode(USA_COUNTRY_ISO_CODE),
   };
 };
 
