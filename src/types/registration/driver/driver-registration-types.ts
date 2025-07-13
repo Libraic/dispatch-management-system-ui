@@ -19,6 +19,8 @@ export type DriverRegistrationData = {
   trailerLength: string;
   documentsStatus: string;
   position: string;
+  state: string;
+  city: string;
 };
 
 export type DriverRegistrationError = {
