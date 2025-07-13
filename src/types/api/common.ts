@@ -14,7 +14,7 @@ export type PageInfo = {
 
 export type Error = {
   message: string;
-  field: string | null;
+  field?: string;
 };
 
 export type FieldErrorResponse = {
@@ -33,8 +33,8 @@ export type GroupErrorResponse = {
 };
 
 export type ApiResponse<T, E extends Error | GroupErrorResponse[]> = {
-  data: T | null;
-  error: E | null;
+  data?: T;
+  error?: E;
 };
 
 export type PaginatedData<T> = {

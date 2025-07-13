@@ -8,6 +8,7 @@ import {
   getFirstStateOfCountryByIsoCode,
   USA_COUNTRY_ISO_CODE,
 } from "../../location/location-utils.ts";
+import type { CreateDriverRequest } from "../../../types/api/driver-api.ts";
 
 export const trailerTypes = [
   "Flatbed",
@@ -46,5 +47,27 @@ export const getBlankDriverRegistrationError = (): DriverRegistrationError => {
     truckNumber: BLANK_STRING,
     trailerNumber: BLANK_STRING,
     maxLegalWeightCapacity: BLANK_STRING,
+  };
+};
+
+export const createCreateDriverRequestFromDriverRegistrationData = (
+  driverRegistrationData: DriverRegistrationData,
+  companyUuid: string,
+): CreateDriverRequest => {
+  return {
+    firstName: driverRegistrationData.firstName,
+    lastName: driverRegistrationData.lastName,
+    phoneNumber: driverRegistrationData.phoneNumber,
+    email: driverRegistrationData.email,
+    truckNumber: driverRegistrationData.truckNumber,
+    trailerNumber: driverRegistrationData.trailerNumber,
+    maxLegalWeightCapacity: driverRegistrationData.maxLegalWeightCapacity,
+    trailerType: driverRegistrationData.trailerType,
+    trailerLength: driverRegistrationData.trailerLength,
+    documentsStatus: driverRegistrationData.documentsStatus,
+    position: driverRegistrationData.position,
+    state: driverRegistrationData.state,
+    city: driverRegistrationData.city,
+    companyUuid: companyUuid,
   };
 };

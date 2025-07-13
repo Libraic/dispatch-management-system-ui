@@ -9,6 +9,7 @@ import * as React from "react";
 import { useState } from "react";
 import { TruckDetailsSection } from "./registration-sections/TruckDetailsSection.tsx";
 import {
+  createCreateDriverRequestFromDriverRegistrationData,
   getBlankDriverRegistrationData,
   getBlankDriverRegistrationError,
 } from "../../utils/registration/driver/driver-registration-utils.ts";
@@ -23,6 +24,10 @@ import { EmploymentData } from "./registration-sections/EmploymentData.tsx";
 import type { RegistrationContextData } from "../../types/context/context-types.ts";
 import { DriverRegistrationContext } from "../../context/DriverRegistrationContext.ts";
 import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
+import { saveDriver } from "../../service/driver-service.ts";
+import { useToast } from "../../hooks/useToast.ts";
+import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { Toast } from "../../toast/Toast.tsx";
 
 const sections = Object.values(DriverRegistrationSectionEnum);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -49,12 +54,12 @@ export const DriverRegistrationForm = () => {
     registrationDataError: driverRegistrationErrors,
   };
   const activeSectionComponent = sectionComponents[activeSection];
-
+  const toast = useToast();
   const { companyUuid } = useParams();
   const baseRoute = `/dashboard/${companyUuid}`;
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const registrationErrors = getDriverRegistrationErrors(
       driverRegistrationData,
@@ -67,8 +72,24 @@ export const DriverRegistrationForm = () => {
       );
     }
 
-    setSectionsWithErrors(currentSectionsWithErrors);
-    setDriverRegistrationErrors(registrationErrors);
+    if (Array.from(currentSectionsWithErrors.values()).some((value) => value)) {
+      setSectionsWithErrors(currentSectionsWithErrors);
+      setDriverRegistrationErrors(registrationErrors);
+    } else {
+      const createDriverRequest =
+        createCreateDriverRequestFromDriverRegistrationData(
+          driverRegistrationData,
+          companyUuid!,
+        );
+      const response = await saveDriver(createDriverRequest);
+      const error = response?.error;
+      if (error && !Array.isArray(error)) {
+        const err = error as unknown as Error;
+        toast.withErrorMessage(err.message);
+      } else {
+        navigate(baseRoute);
+      }
+    }
   };
 
   return (
@@ -100,6 +121,13 @@ export const DriverRegistrationForm = () => {
         <SubmitButton actionText="Submit" action={handleSubmit} />
         <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
       </div>
+      {toast.getMessage() !== BLANK_STRING && (
+        <Toast
+          key={toast.getIdentifier()}
+          message={toast.getMessage()}
+          type={toast.getOperationResult()}
+        />
+      )}
     </div>
   );
 };

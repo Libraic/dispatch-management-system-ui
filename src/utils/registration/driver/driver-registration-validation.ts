@@ -47,6 +47,19 @@ export const getDriverRegistrationErrors = (
   return driverRegistrationError;
 };
 
+export const hasErrors = (driverRegistrationError: DriverRegistrationError) => {
+  return (
+    hasSectionErrors(
+      driverRegistrationError,
+      DriverRegistrationSectionEnum.GENERAL_DETAILS,
+    ) ||
+    hasSectionErrors(
+      driverRegistrationError,
+      DriverRegistrationSectionEnum.TRUCK_DETAILS,
+    )
+  );
+};
+
 export const hasSectionErrors = (
   driverRegistrationError: DriverRegistrationError,
   section: string,

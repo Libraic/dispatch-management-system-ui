@@ -8,18 +8,6 @@ export interface CompanyData {
   startDate: string;
 }
 
-export type DriverData = {
-  uuid: string;
-  firstName: string;
-  lastName: string;
-  truckNumber: string;
-  trailerNumber: string;
-  email: string;
-  phoneNumber: string;
-  maxLegalWeightCapacity: number;
-  documentsStatus: number;
-};
-
 export type GetCompaniesResponse = {
   links: Link[];
   content: CompanyData[];
