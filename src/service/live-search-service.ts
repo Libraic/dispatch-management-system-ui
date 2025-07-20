@@ -2,10 +2,10 @@ import axios from "axios";
 import type {
   ApiResponse,
   Error,
-  GroupErrorResponse,
+  GroupsErrorResponse,
 } from "../types/api/common.ts";
 
-export const getData = async <T, E extends Error | GroupErrorResponse[]>(
+export const getData = async <T, E extends Error | GroupsErrorResponse>(
   endpoint: string,
   searchField: string,
   searchText: string,

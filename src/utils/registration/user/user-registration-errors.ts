@@ -1,21 +1,18 @@
 import type {
-  FieldError,
-  ItemError,
   NoteData,
-  UserRegistrationErrors,
   UserRegistrationData,
+  UserRegistrationErrors,
   WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
 import { SectionEnum } from "../../../types/registration/user/section.ts";
-import type { GroupErrorResponse } from "../../../types/api/common.ts";
 import { validateEmail } from "../registration-utils.ts";
 import {
   validateNotes,
   validatePassword,
 } from "./user-registration-validation.ts";
 
-export const getBlankRegistrationDataError = (): UserRegistrationErrors => {
+export const getBlankUserRegistrationErrors = (): UserRegistrationErrors => {
   return {
     firstName: BLANK_STRING,
     lastName: BLANK_STRING,
@@ -32,7 +29,7 @@ export const getBlankRegistrationDataError = (): UserRegistrationErrors => {
 export const getRegistrationDataErrors = (
   registrationData: UserRegistrationData,
 ): UserRegistrationErrors => {
-  const registrationDataError = getBlankRegistrationDataError();
+  const registrationDataError = getBlankUserRegistrationErrors();
   if (registrationData.firstName === BLANK_STRING) {
     registrationDataError.firstName = "The first name is required";
   }
@@ -77,30 +74,8 @@ export const getNoteErrorMessage = (
     return BLANK_STRING;
   }
 
-  const itemsErrors: ItemError[] = registrationDataError.notes.filter(
-    (n) => n.id === note.noteId,
-  );
-
-  if (itemsErrors.length === 0) {
-    return BLANK_STRING;
-  }
-
-  return itemsErrors[0].fieldErrors[0].errorMessage;
-};
-
-export const getSimpleErrorMessageFromRegistrationDataError = (
-  itemErrors: ItemError[],
-) => {
-  if (!itemErrors) {
-    return BLANK_STRING;
-  }
-
-  const fieldErrors: FieldError[] = itemErrors[0].fieldErrors;
-  if (!fieldErrors) {
-    return BLANK_STRING;
-  }
-
-  return fieldErrors[0].errorMessage;
+  return registrationDataError.notes.filter((n) => n.id === note.noteId)[0]
+    .errorMessage;
 };
 
 export const getWorkloadCompanyErrorMessage = (
@@ -111,37 +86,9 @@ export const getWorkloadCompanyErrorMessage = (
     return BLANK_STRING;
   }
 
-  const itemsErrors: ItemError[] = registrationDataError.workloads.filter(
-    (w) => w.id === workload.workloadId,
-  );
-
-  if (itemsErrors.length === 0) {
-    return BLANK_STRING;
-  }
-
-  const field = itemsErrors[0].fieldErrors.filter(
-    (fieldError) => fieldError.field === "company",
-  )[0];
-
-  return field.errorMessage;
-};
-
-export const actualizeRegistrationDataErrorFromApiResponse = (
-  prev: UserRegistrationErrors,
-  groupErrorResponse: GroupErrorResponse,
-  itemsErrors: ItemError[],
-) => {
-  return groupErrorResponse.impactedGroup === "workloads" ||
-    groupErrorResponse.impactedGroup === "notes"
-    ? {
-        ...prev,
-        [groupErrorResponse.impactedGroup as string]: itemsErrors,
-      }
-    : {
-        ...prev,
-        [groupErrorResponse.impactedGroup as string]:
-          getSimpleErrorMessageFromRegistrationDataError(itemsErrors),
-      };
+  return registrationDataError.workloads.filter(
+    (w) => w.id === workload.workloadId && w.field === "company",
+  )[0].errorMessage;
 };
 
 const getGroupedErrors = (

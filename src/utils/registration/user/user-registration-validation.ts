@@ -33,7 +33,8 @@ export const validateNotes = (notes: NoteData[]) => {
     if (note.note.length > NOTE_MAX_LENGTH) {
       errors.push({
         id: note.noteId,
-        fieldErrors: [{ field: null, errorMessage: "The note is too long" }],
+        field: "note",
+        errorMessage: "The note is too long",
       });
     }
   }

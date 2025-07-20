@@ -1,5 +1,5 @@
 import type { Renderable } from "./Renderable.ts";
-import type { DriverData } from "./registration-api.ts";
+import type { DriverData } from "./driver-api.ts";
 
 export class Driver implements Renderable {
   uuid: string;

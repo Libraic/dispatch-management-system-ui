@@ -28,6 +28,7 @@ import { saveDriver } from "../../service/driver-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
 import { Toast } from "../../toast/Toast.tsx";
+import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
 
 const sections = Object.values(DriverRegistrationSectionEnum);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -64,6 +65,7 @@ export const DriverRegistrationForm = () => {
     const registrationErrors = getDriverRegistrationErrors(
       driverRegistrationData,
     );
+    setDriverRegistrationErrors(registrationErrors);
     const currentSectionsWithErrors = new Map<string, boolean>();
     for (const section of sections) {
       currentSectionsWithErrors.set(
@@ -74,7 +76,6 @@ export const DriverRegistrationForm = () => {
 
     if (Array.from(currentSectionsWithErrors.values()).some((value) => value)) {
       setSectionsWithErrors(currentSectionsWithErrors);
-      setDriverRegistrationErrors(registrationErrors);
     } else {
       const createDriverRequest =
         createCreateDriverRequestFromDriverRegistrationData(
@@ -82,12 +83,17 @@ export const DriverRegistrationForm = () => {
           companyUuid!,
         );
       const response = await saveDriver(createDriverRequest);
-      const error = response?.error;
-      if (error && !Array.isArray(error)) {
-        const err = error as unknown as Error;
-        toast.withErrorMessage(err.message);
-      } else {
+      const errors = handleErrors(
+        response,
+        getBlankDriverRegistrationError,
+        (_) => false,
+      );
+      if (errors == null) {
         navigate(baseRoute);
+      } else if ("message" in errors) {
+        toast.withErrorMessage(errors.message);
+      } else {
+        setDriverRegistrationErrors(errors as DriverRegistrationError);
       }
     }
   };

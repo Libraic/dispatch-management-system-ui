@@ -15,6 +15,7 @@ export type PageInfo = {
 export type Error = {
   message: string;
   field?: string;
+  identifier?: string;
 };
 
 export type FieldErrorResponse = {
@@ -32,7 +33,11 @@ export type GroupErrorResponse = {
   errors: ItemErrorResponse[];
 };
 
-export type ApiResponse<T, E extends Error | GroupErrorResponse[]> = {
+export type GroupsErrorResponse = {
+  errors: Error | Error[];
+};
+
+export type ApiResponse<T, E extends Error | GroupsErrorResponse> = {
   data?: T;
   error?: E;
 };

@@ -7,7 +7,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   getBlankUserRegistrationData,
-  handleUserCreation,
+  getCreateUserRequestFromRegistrationData,
 } from "../../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import { Toast } from "../../toast/Toast.tsx";
@@ -21,7 +21,7 @@ import type {
   UserRegistrationErrors,
 } from "../../types/registration/user/user-registration-data.ts";
 import {
-  getBlankRegistrationDataError,
+  getBlankUserRegistrationErrors,
   getRegistrationDataErrors,
   getSectionsWithErrors,
 } from "../../utils/registration/user/user-registration-errors.ts";
@@ -30,6 +30,16 @@ import { HOME } from "../../utils/routes/routes.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import type { RegistrationContextData } from "../../types/context/context-types.ts";
 import { UserRegistrationContext } from "../../context/UserRegistrationContext.ts";
+import type { CreateUserRequest } from "../../types/api/registration-api.ts";
+import { saveUser } from "../../service/user-service.ts";
+import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+
+const sectionComponents: Record<SectionEnum, React.ReactNode> = {
+  BASIC_INFORMATION: <BasicInformation />,
+  EMPLOYMENT_INFORMATION: <EmploymentInformation />,
+  WORKLOAD: <Workload />,
+  NOTES: <Notes />,
+};
 
 export const UserRegistrationInputArea: React.FC<{
   sectionsHandler: SectionData;
@@ -38,54 +48,29 @@ export const UserRegistrationInputArea: React.FC<{
     useState<UserRegistrationData>(getBlankUserRegistrationData());
 
   const [registrationDataError, setRegistrationDataError] =
-    useState<UserRegistrationErrors>(getBlankRegistrationDataError());
+    useState<UserRegistrationErrors>(getBlankUserRegistrationErrors());
 
   const navigate = useNavigate();
 
   const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
   const toastData = useToast();
-
-  const activeSection = sectionsHandler.getActiveSection();
   const registrationContextData: RegistrationContextData<
     UserRegistrationData,
     UserRegistrationErrors
   > = {
-    registrationData: registrationData,
-    setRegistrationData: setRegistrationData,
-    registrationDataError: registrationDataError,
-  };
-  const sectionComponents: Record<SectionEnum, React.ReactNode> = {
-    BASIC_INFORMATION: <BasicInformation />,
-    EMPLOYMENT_INFORMATION: <EmploymentInformation />,
-    WORKLOAD: <Workload />,
-    NOTES: <Notes />,
+    registrationData,
+    setRegistrationData,
+    registrationDataError,
   };
 
   useEffect(() => {
-    if (sectionsHandler.isSectionFocused(SectionEnum.NOTES)) {
-      setSubmitButtonText("Submit");
-    } else {
-      setSubmitButtonText("Continue");
-    }
-  }, [activeSection, setSubmitButtonText, sectionsHandler]);
+    const submitButtonText = sectionsHandler.isSectionFocused(SectionEnum.NOTES)
+      ? "Submit"
+      : "Continue";
+    setSubmitButtonText(submitButtonText);
+  }, [sectionsHandler]);
 
-  useEffect(() => {
-    if (sectionsHandler.areAllSectionsComplete()) {
-      handleUserCreation(
-        registrationData,
-        setRegistrationDataError,
-        toastData,
-        sectionsHandler,
-      ).then((res) => {
-        if (res) {
-          navigate(HOME);
-        }
-      });
-    }
-  }, [navigate, registrationData, sectionsHandler, toastData]);
-
-  const validateRegistrationData = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleErrorsPriorSubmission = () => {
     const errors = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(errors);
     const sectionsErrorsPriorSubmitting = getSectionsWithErrors(errors);
@@ -95,11 +80,40 @@ export const UserRegistrationInputArea: React.FC<{
     }
   };
 
+  const handleErrorsAfterSubmission = async () => {
+    if (sectionsHandler.areAllSectionsComplete()) {
+      const createUserRequest: CreateUserRequest =
+        getCreateUserRequestFromRegistrationData(registrationData);
+      const apiResponse = await saveUser(createUserRequest);
+      const errors = handleErrors(
+        apiResponse,
+        getBlankUserRegistrationErrors,
+        (key) => key === "workloads" || key === "notes",
+      );
+
+      if (errors == null) {
+        navigate(HOME);
+      } else if ("message" in errors) {
+        toastData.withErrorMessage(errors.message);
+      } else {
+        const sectionsErrors = getSectionsWithErrors(errors);
+        sectionsHandler.setErrors(sectionsErrors);
+        setRegistrationDataError(errors);
+      }
+    }
+  };
+
+  const validateRegistrationData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    handleErrorsPriorSubmission();
+    await handleErrorsAfterSubmission();
+  };
+
   return (
     <div className="flex flex-col flex-1 justify-between gap-y-5 bg-white overflow-y-auto">
       <div className="flex-1 gap-y-5 py-4 pb-3 px-7 overflow-auto">
         <UserRegistrationContext value={registrationContextData}>
-          {sectionComponents[activeSection]}
+          {sectionComponents[sectionsHandler.getActiveSection()]}
         </UserRegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">

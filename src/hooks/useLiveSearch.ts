@@ -27,7 +27,7 @@ export const useLiveSearch = <T>(
           if (result.error !== null) {
             setItems({
               items: [],
-              error: result.error.message,
+              error: result.error!.message,
             });
           } else {
             setItems({

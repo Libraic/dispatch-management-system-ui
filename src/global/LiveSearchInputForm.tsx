@@ -41,7 +41,7 @@ export const LiveSearchInputForm = <D,>({
       toast.clear();
       setItems(data.items.map((item) => new constructor(item) as Renderable));
     }
-  }, [data, constructor, toast]);
+  }, [data, constructor]);
 
   return (
     <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">

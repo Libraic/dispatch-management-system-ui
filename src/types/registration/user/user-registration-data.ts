@@ -26,13 +26,14 @@ export type NoteData = {
 };
 
 export type FieldError = {
-  field: string | null;
+  field: string;
   errorMessage: string;
 };
 
 export type ItemError = {
-  id: string | null;
-  fieldErrors: FieldError[];
+  id: string;
+  field: string;
+  errorMessage: string;
 };
 
 export type SupervisorData = {

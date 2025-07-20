@@ -24,9 +24,9 @@ import {
 import { saveCompany } from "../../service/company-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import { Toast } from "../../toast/Toast.tsx";
-import { INTERNAL_SERVER_ERROR } from "../../utils/error-messages.ts";
 import { StartAndServiceDate } from "./StartAndServiceDate.tsx";
 import { CompanyBasicData } from "./CompanyBasicData.tsx";
+import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
 
 export const CompanyRegistrationForm = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
@@ -49,10 +49,18 @@ export const CompanyRegistrationForm = () => {
         companyRegistrationData,
       );
     const companyData = await saveCompany(createCompanyRequest);
-    if (!companyData) {
-      toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
-    } else if (companyData.error === null) {
+    const apiErrors = handleErrors(
+      companyData,
+      getBlankCompanyRegistrationErrors,
+      (_) => false,
+    );
+
+    if (apiErrors == null) {
       navigate(HOME);
+    } else if ("message" in apiErrors) {
+      toastData.withErrorMessage(apiErrors.message);
+    } else {
+      setCompanyRegistrationErrors(apiErrors as CompanyRegistrationError);
     }
   };
 

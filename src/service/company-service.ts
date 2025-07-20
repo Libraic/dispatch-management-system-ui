@@ -1,13 +1,18 @@
 import axios from "axios";
 import type { CompanyData } from "../types/api/registration-api.ts";
-import type { ApiResponse, GroupErrorResponse } from "../types/api/common.ts";
+import type {
+  ApiResponse,
+  Error,
+  GroupsErrorResponse,
+} from "../types/api/common.ts";
 import { FETCH_COMPANIES, SAVE_COMPANY } from "../utils/api/api-paths.ts";
 import type { CreateCompanyRequest } from "../types/registration/company/company-registration-data.ts";
+import { handleApiErrors } from "../utils/registration/common-api-error-utils.ts";
 
-export const fetchCompanies = async (): Promise<CompanyData[] | null> => {
+export const fetchCompanies = async (): Promise<CompanyData[] | undefined> => {
   try {
     const response =
-      await axios.get<ApiResponse<CompanyData[], GroupErrorResponse[]>>(
+      await axios.get<ApiResponse<CompanyData[], GroupsErrorResponse>>(
         FETCH_COMPANIES,
       );
     return response.data.data;
@@ -22,7 +27,7 @@ export const fetchCompanyByUuid = async (
   try {
     const url = `${FETCH_COMPANIES}?uuid=eq:${companyUuid}`;
     const response =
-      await axios.get<ApiResponse<CompanyData[], GroupErrorResponse[]>>(url);
+      await axios.get<ApiResponse<CompanyData[], GroupsErrorResponse>>(url);
     return response.data.data ? response.data.data[0] : undefined;
   } catch (error: any) {
     if (error.status === 500 || error.code === "ERR_NETWORK") {
@@ -35,15 +40,11 @@ export const fetchCompanyByUuid = async (
 
 export const saveCompany = async (
   createCompanyRequest: CreateCompanyRequest,
-): Promise<ApiResponse<CompanyData, GroupErrorResponse[]> | undefined> => {
+): Promise<ApiResponse<CompanyData, Error | GroupsErrorResponse>> => {
   try {
     const response = await axios.post(SAVE_COMPANY, createCompanyRequest);
     return response.data;
   } catch (error: any) {
-    if (error.status === 500 || error.code === "ERR_NETWORK") {
-      return Promise.resolve(undefined);
-    }
-
-    return error.response.data;
+    return handleApiErrors(error);
   }
 };
