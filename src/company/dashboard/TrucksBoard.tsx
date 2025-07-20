@@ -1,5 +1,12 @@
 import { LiveSearchCell } from "../../matrix/LiveSearchCell.tsx";
 import { Driver } from "../../types/api/Driver.ts";
+import { User } from "../../types/api/User.ts";
+import { useState } from "react";
+import type { Renderable } from "../../types/api/Renderable.ts";
+import { ViewableCell } from "../../matrix/ViewableCell.tsx";
+import type { DriverWeeklyMileage } from "../../types/financial/trucks-board.ts";
+import { getBlankDriverWeeklyMileage } from "../../utils/financial/trucks-board-utils.ts";
+import { BLANK_STRING } from "../../utils/constants/global.ts";
 
 export const TrucksBoard = () => {
   const columnsLayout =
@@ -40,6 +47,10 @@ export const TrucksBoard = () => {
   const weekDays = getWeekWithNames(date);
   const columns = [...primaryColumns, ...weekDays];
 
+  // Data that describe a row (will be centralized in a single object)
+  const [driverWeeklyMileage, setDriverWeeklyMileage] =
+    useState<DriverWeeklyMileage>(getBlankDriverWeeklyMileage());
+
   return (
     <div className="w-screen h-screen flex flex-col items-center mt-10">
       <div className="w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
@@ -56,15 +67,29 @@ export const TrucksBoard = () => {
         <div
           className={`min-w-[1000px] min-h-[6rem] ${columnsLayout} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
         >
-          <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">
-            Sergio xt 103 (786-802-1867)
-          </div>
-          <LiveSearchCell searchKey="DRIVER" constructor={Driver} />
-          <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">
-            53' FB <br />
-            Cong <br />
-            96'' tall
-          </div>
+          <LiveSearchCell searchKey="USER" constructor={User} />
+          <LiveSearchCell
+            searchKey="DRIVER"
+            constructor={Driver}
+            saveObject={(driver: Renderable) =>
+              setDriverWeeklyMileage((prev) => ({
+                ...prev,
+                driver: driver instanceof Driver ? driver : null,
+              }))
+            }
+          />
+          <ViewableCell
+            data={
+              driverWeeklyMileage.driver != null
+                ? driverWeeklyMileage.driver.getTruckData()
+                : BLANK_STRING
+            }
+          ></ViewableCell>
+          {/*<div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]">*/}
+          {/*  53' FB <br />*/}
+          {/*  Cong <br />*/}
+          {/*  96'' tall*/}
+          {/*</div>*/}
           <div className="grid grid-rows-2">
             <div className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-b-1 border-[#e6ebfa] font-bold">
               $6,700

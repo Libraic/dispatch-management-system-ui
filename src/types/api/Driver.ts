@@ -2,42 +2,34 @@ import type { Renderable } from "./Renderable.ts";
 import type { DriverData } from "./driver-api.ts";
 
 export class Driver implements Renderable {
-  uuid: string;
-  firstName: string;
-  lastName: string;
-  truckNumber: string;
-  trailerNumber: string;
-  email: string;
-  phoneNumber: string;
-  maxLegalWeightCapacity: number;
-  documentsStatus: number;
+  driverData: DriverData;
 
   constructor(driver: DriverData) {
-    this.uuid = driver.uuid;
-    this.firstName = driver.firstName;
-    this.lastName = driver.lastName;
-    this.truckNumber = driver.truckNumber;
-    this.trailerNumber = driver.trailerNumber;
-    this.email = driver.email;
-    this.phoneNumber = driver.phoneNumber;
-    this.maxLegalWeightCapacity = driver.maxLegalWeightCapacity;
-    this.documentsStatus = driver.documentsStatus;
+    this.driverData = driver;
   }
 
   renderOnList(): string {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.driverData.firstName} ${this.driverData.lastName}`;
   }
 
   renderOnForm(): string {
+    const stateCode = this.driverData.state.split(",")[1];
     return `
-      ${this.firstName} ${this.lastName} | ${this.phoneNumber}<br>
-      Trk# ${this.truckNumber} Trl# ${this.trailerNumber} | ${this.maxLegalWeightCapacity} lbs<br>
-      ${this.documentsStatus}<br>
-      ${this.email}
+      ${this.driverData.firstName} ${this.driverData.lastName} | ${this.driverData.phoneNumber}<br>
+      Trk# ${this.driverData.truckNumber} Trl# ${this.driverData.trailerNumber} | ${this.driverData.maxLegalWeightCapacity} lbs<br>
+      ${this.driverData.city}, ${stateCode} | ${this.driverData.documentsStatus}<br>
+      ${this.driverData.email}
     `;
   }
 
   getUuid(): string {
-    return this.uuid;
+    return this.driverData.uuid;
+  }
+
+  getTruckData(): string {
+    return `
+      ${this.driverData.trailerLength}' ${this.driverData.trailerType}
+      ${this.driverData.trailerHeight}'' tall
+    `;
   }
 }

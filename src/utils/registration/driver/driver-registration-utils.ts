@@ -28,6 +28,7 @@ export const getBlankDriverRegistrationData = (): DriverRegistrationData => {
     email: BLANK_STRING,
     truckNumber: BLANK_STRING,
     trailerNumber: BLANK_STRING,
+    height: BLANK_STRING,
     maxLegalWeightCapacity: BLANK_STRING,
     trailerType: trailerTypes[0],
     trailerLength: trailerLengths[0],
@@ -46,6 +47,7 @@ export const getBlankDriverRegistrationError = (): DriverRegistrationError => {
     email: BLANK_STRING,
     truckNumber: BLANK_STRING,
     trailerNumber: BLANK_STRING,
+    height: BLANK_STRING,
     maxLegalWeightCapacity: BLANK_STRING,
   };
 };
@@ -61,6 +63,7 @@ export const createCreateDriverRequestFromDriverRegistrationData = (
     email: driverRegistrationData.email,
     truckNumber: driverRegistrationData.truckNumber,
     trailerNumber: driverRegistrationData.trailerNumber,
+    trailerHeight: driverRegistrationData.height,
     maxLegalWeightCapacity: driverRegistrationData.maxLegalWeightCapacity,
     trailerType: driverRegistrationData.trailerType,
     trailerLength: driverRegistrationData.trailerLength,

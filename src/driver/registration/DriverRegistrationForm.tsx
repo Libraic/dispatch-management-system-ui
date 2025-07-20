@@ -43,7 +43,7 @@ export const DriverRegistrationForm = () => {
   >(new Map<string, boolean>());
   const [activeSection, setActiveSection] = React.useState<string>(sections[0]);
   const [driverRegistrationData, setDriverRegistrationData] =
-    useState<DriverRegistrationData>(getBlankDriverRegistrationData);
+    useState<DriverRegistrationData>(getBlankDriverRegistrationData());
   const [driverRegistrationErrors, setDriverRegistrationErrors] =
     useState<DriverRegistrationError>(getBlankDriverRegistrationError());
   const registrationContextData: RegistrationContextData<

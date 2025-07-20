@@ -39,25 +39,17 @@ export const getDriverRegistrationErrors = (
     "trailer number",
   );
 
-  driverRegistrationError.maxLegalWeightCapacity =
-    validateMaxLegalWeightCapacity(
-      driverRegistrationData.maxLegalWeightCapacity,
-    );
+  driverRegistrationError.maxLegalWeightCapacity = validateNumericField(
+    driverRegistrationData.maxLegalWeightCapacity,
+    "max legal weight capacity",
+  );
+
+  driverRegistrationError.height = validateNumericField(
+    driverRegistrationData.height,
+    "height",
+  );
 
   return driverRegistrationError;
-};
-
-export const hasErrors = (driverRegistrationError: DriverRegistrationError) => {
-  return (
-    hasSectionErrors(
-      driverRegistrationError,
-      DriverRegistrationSectionEnum.GENERAL_DETAILS,
-    ) ||
-    hasSectionErrors(
-      driverRegistrationError,
-      DriverRegistrationSectionEnum.TRUCK_DETAILS,
-    )
-  );
 };
 
 export const hasSectionErrors = (
@@ -77,6 +69,7 @@ export const hasSectionErrors = (
     return (
       driverRegistrationError.truckNumber !== BLANK_STRING ||
       driverRegistrationError.trailerNumber !== BLANK_STRING ||
+      driverRegistrationError.height !== BLANK_STRING ||
       driverRegistrationError.maxLegalWeightCapacity !== BLANK_STRING
     );
   }
@@ -84,11 +77,8 @@ export const hasSectionErrors = (
   return false;
 };
 
-const validateMaxLegalWeightCapacity = (value: string) => {
-  const validateDataPresence = validateMandatoryField(
-    value,
-    "max legal weight capacity",
-  );
+const validateNumericField = (value: string, field: string) => {
+  const validateDataPresence = validateMandatoryField(value, field);
   if (validateDataPresence !== BLANK_STRING) {
     return validateDataPresence;
   }

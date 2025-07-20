@@ -14,6 +14,7 @@ export type DriverRegistrationData = {
   email: string;
   truckNumber: string;
   trailerNumber: string;
+  height: string;
   maxLegalWeightCapacity: string;
   trailerType: string;
   trailerLength: string;
@@ -30,5 +31,6 @@ export type DriverRegistrationError = {
   email: string;
   truckNumber: string;
   trailerNumber: string;
+  height: string;
   maxLegalWeightCapacity: string;
 };

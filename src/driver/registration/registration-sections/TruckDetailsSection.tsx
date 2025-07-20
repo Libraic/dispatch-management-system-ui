@@ -44,7 +44,7 @@ export const TruckDetailsSection = () => {
           label="Max Legal Weight Capacity (in lbs)"
           placeholder="47000"
           type="number"
-          name="name"
+          name="weight-capacity"
           inputFieldValue={driverRegistrationData.maxLegalWeightCapacity}
           isMandatory={true}
           errorMessage={driverRegistrationError.maxLegalWeightCapacity}
@@ -57,10 +57,24 @@ export const TruckDetailsSection = () => {
           }
         />
         <InputForm
+          label="Height (ft)"
+          placeholder="97"
+          type="number"
+          name="height"
+          inputFieldValue={driverRegistrationData.height}
+          isMandatory={true}
+          errorMessage={driverRegistrationError.height}
+          saveInputData={(height: string) =>
+            setObjectStringField(setDriverRegistrationData, "height", height)
+          }
+        />
+      </div>
+      <div className="flex flex-row gap-x-20 mt-20">
+        <InputForm
           label="Truck Number"
           placeholder="105"
           type="text"
-          name="name"
+          name="truck-number"
           inputFieldValue={driverRegistrationData.truckNumber}
           isMandatory={true}
           errorMessage={driverRegistrationError.truckNumber}
@@ -76,7 +90,7 @@ export const TruckDetailsSection = () => {
           label="Trailer Number"
           placeholder="888"
           type="text"
-          name="name"
+          name="trailer-number"
           inputFieldValue={driverRegistrationData.trailerNumber}
           isMandatory={true}
           errorMessage={driverRegistrationError.trailerNumber}

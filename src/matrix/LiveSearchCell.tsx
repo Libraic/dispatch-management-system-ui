@@ -12,10 +12,11 @@ import { useToast } from "../hooks/useToast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { LiveSearchResultList } from "../global/LiveSearchResultList.tsx";
 
-export const LiveSearchCell = <D,>({
+export const LiveSearchCell = <D, R>({
   searchKey,
   constructor,
-}: LiveSearchCellData<D>) => {
+  saveObject,
+}: LiveSearchCellData<D, R>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
   const [isRendered, setIsRendered] = useState(false);
@@ -24,7 +25,6 @@ export const LiveSearchCell = <D,>({
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
   const data: LiveSearchResult<D> = useLiveSearch(endpoint, searchField, query);
-  console.log(isRendered);
   useEffect(() => {
     if (data.error !== null) {
       toast.withErrorMessage(data.error);
@@ -37,7 +37,7 @@ export const LiveSearchCell = <D,>({
   return (
     <div className="relative">
       <div
-        className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa] w-full h-full caret-transparent"
+        className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa] w-full h-full caret-transparent "
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {
@@ -65,6 +65,9 @@ export const LiveSearchCell = <D,>({
             setText(item.renderOnForm());
             setItems([]);
             setIsRendered(true);
+            if (saveObject) {
+              saveObject(item);
+            }
           }}
         />
       )}

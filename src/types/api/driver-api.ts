@@ -6,6 +6,7 @@ export type CreateDriverRequest = {
   truckNumber: string;
   trailerNumber: string;
   maxLegalWeightCapacity: string;
+  trailerHeight: string;
   trailerType: string;
   trailerLength: string;
   documentsStatus: string;
@@ -23,6 +24,11 @@ export type DriverData = {
   trailerNumber: string;
   email: string;
   phoneNumber: string;
+  trailerHeight: number;
   maxLegalWeightCapacity: number;
   documentsStatus: number;
+  state: string;
+  city: string;
+  trailerType: string;
+  trailerLength: number;
 };
