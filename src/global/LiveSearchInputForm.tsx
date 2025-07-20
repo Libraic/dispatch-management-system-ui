@@ -9,10 +9,8 @@ import { LiveSearchResultList } from "./LiveSearchResultList.tsx";
 import type { Renderable } from "../types/api/Renderable.ts";
 import { LiveSearchEndpoints } from "../types/forms.ts";
 import { InputFormLabel } from "./InputFormLabel.tsx";
-import {
-  type LiveSearchResult,
-  useLiveSearch,
-} from "../hooks/useLiveSearch.ts";
+import { useLiveSearch } from "../hooks/useLiveSearch.ts";
+import type { LiveSearchResult } from "../types/api/common.ts";
 
 export const LiveSearchInputForm = <D,>({
   label,

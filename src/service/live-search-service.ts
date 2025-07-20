@@ -7,12 +7,11 @@ import type {
 
 export const getData = async <T, E extends Error | GroupsErrorResponse>(
   endpoint: string,
-  searchField: string,
-  searchText: string,
+  params: any,
 ): Promise<ApiResponse<T, E>> => {
   try {
     const response = await axios.get<ApiResponse<T, E>>(endpoint, {
-      params: { [searchField]: `like:${searchText}` },
+      params: params,
     });
     return response.data;
   } catch (error: any) {

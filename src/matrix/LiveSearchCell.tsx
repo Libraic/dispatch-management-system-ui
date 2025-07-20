@@ -3,28 +3,32 @@ import { useEffect, useState } from "react";
 import type { LiveSearchCellData } from "../types/matrix/LiveSearchCellData.ts";
 import { LiveSearchEndpoints } from "../types/forms.ts";
 import { BLANK_STRING } from "../utils/constants/global.ts";
-import {
-  type LiveSearchResult,
-  useLiveSearch,
-} from "../hooks/useLiveSearch.ts";
+import { useLiveSearch } from "../hooks/useLiveSearch.ts";
 import type { Renderable } from "../types/api/Renderable.ts";
 import { useToast } from "../hooks/useToast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { LiveSearchResultList } from "../global/LiveSearchResultList.tsx";
+import type { LiveSearchResult } from "../types/api/common.ts";
 
 export const LiveSearchCell = <D, R>({
-  searchKey,
+  defaultSearchKey,
   constructor,
   saveObject,
+  customSearchCriteria,
 }: LiveSearchCellData<D, R>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
   const [isRendered, setIsRendered] = useState(false);
-  const endpoint = LiveSearchEndpoints[searchKey].endpoint;
-  const searchField = LiveSearchEndpoints[searchKey].searchField;
+  const endpoint = LiveSearchEndpoints[defaultSearchKey].endpoint;
+  const searchField = LiveSearchEndpoints[defaultSearchKey].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
-  const data: LiveSearchResult<D> = useLiveSearch(endpoint, searchField, query);
+  const data: LiveSearchResult<D> = useLiveSearch(
+    endpoint,
+    searchField,
+    query,
+    customSearchCriteria,
+  );
   useEffect(() => {
     if (data.error !== null) {
       toast.withErrorMessage(data.error);

@@ -7,6 +7,7 @@ import { ViewableCell } from "../../matrix/ViewableCell.tsx";
 import type { DriverWeeklyMileage } from "../../types/financial/trucks-board.ts";
 import { getBlankDriverWeeklyMileage } from "../../utils/financial/trucks-board-utils.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { useParams } from "react-router-dom";
 
 export const TrucksBoard = () => {
   const columnsLayout =
@@ -46,7 +47,7 @@ export const TrucksBoard = () => {
   const primaryColumns = ["Dispatcher", "Driver", "Truck", "Revenue"];
   const weekDays = getWeekWithNames(date);
   const columns = [...primaryColumns, ...weekDays];
-
+  const { companyUuid } = useParams();
   // Data that describe a row (will be centralized in a single object)
   const [driverWeeklyMileage, setDriverWeeklyMileage] =
     useState<DriverWeeklyMileage>(getBlankDriverWeeklyMileage());
@@ -67,9 +68,9 @@ export const TrucksBoard = () => {
         <div
           className={`min-w-[1000px] min-h-[6rem] ${columnsLayout} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
         >
-          <LiveSearchCell searchKey="USER" constructor={User} />
+          <LiveSearchCell defaultSearchKey="USER" constructor={User} />
           <LiveSearchCell
-            searchKey="DRIVER"
+            defaultSearchKey="DRIVER"
             constructor={Driver}
             saveObject={(driver: Renderable) =>
               setDriverWeeklyMileage((prev) => ({
@@ -77,6 +78,12 @@ export const TrucksBoard = () => {
                 driver: driver instanceof Driver ? driver : null,
               }))
             }
+            customSearchCriteria={[
+              {
+                field: "companyId",
+                operation: `join:${companyUuid}`,
+              },
+            ]}
           />
           <ViewableCell
             data={

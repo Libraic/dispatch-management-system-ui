@@ -23,16 +23,6 @@ export type FieldErrorResponse = {
   errorMessage: string;
 };
 
-export type ItemErrorResponse = {
-  itemIdentifier: string | null;
-  groupItemFieldsErrors: FieldErrorResponse[];
-};
-
-export type GroupErrorResponse = {
-  impactedGroup: string;
-  errors: ItemErrorResponse[];
-};
-
 export type GroupsErrorResponse = {
   errors: Error | Error[];
 };
@@ -46,4 +36,14 @@ export type PaginatedData<T> = {
   data: T[];
   pagination: Pagination;
   error: Error | undefined;
+};
+
+export type SearchCriteria = {
+  field: string;
+  operation: string;
+};
+
+export type LiveSearchResult<T> = {
+  items: T[];
+  error: string | null;
 };
