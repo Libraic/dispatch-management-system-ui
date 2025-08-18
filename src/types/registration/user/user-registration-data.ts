@@ -1,5 +1,12 @@
 import type { YearData } from "../../global.ts";
 
+export const USER_REGISTRATION_SECTIONS = {
+  BASIC_INFORMATION: "BASIC_INFORMATION",
+  EMPLOYMENT_INFORMATION: "EMPLOYMENT_INFORMATION",
+  WORKLOAD: "WORKLOAD",
+  NOTES: "NOTES",
+} as const;
+
 export const RoleEnum = {
   EMPLOYEE: "Employee",
 };

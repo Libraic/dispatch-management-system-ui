@@ -1,46 +1,53 @@
-import incompleteSectionIcon from "../../assets/registration/sections/section-in-progress.svg";
-import incompleteSectionErrorIcon from "../../assets/registration/sections/section-in-progress-error.svg";
-import completedSectionIcon from "../../assets/registration/sections/completed-section.svg";
 import * as React from "react";
+import { useState } from "react";
+
+import errorIcon from "../../assets/registration/sections/section-in-progress-error.svg";
+
+const getBackgroundColor = (
+  isSectionActive: boolean,
+  isSectionWithErrors: boolean,
+  isSectionHovered: boolean,
+) => {
+  if (!isSectionActive && !isSectionHovered && !isSectionWithErrors) {
+    return "bg-solid-black";
+  }
+
+  if (isSectionWithErrors) {
+    if (isSectionHovered || isSectionActive) {
+      return "bg-error-red";
+    }
+
+    return "bg-solid-black";
+  }
+
+  return "bg-solid-blue";
+};
 
 export const UserRegistrationSection: React.FC<{
   sectionTitle: string;
-  setFocusedSection: () => void;
-  isSectionComplete: boolean;
   isSectionActive: boolean;
   isSectionError: boolean;
-  isSectionFocused: boolean;
-}> = ({
-  sectionTitle,
-  setFocusedSection,
-  isSectionComplete,
-  isSectionActive,
-  isSectionError,
-  isSectionFocused,
-}) => {
-  const icon = isSectionComplete
-    ? completedSectionIcon
-    : isSectionError
-      ? incompleteSectionErrorIcon
-      : incompleteSectionIcon;
-  const iconStylesClass = isSectionComplete
-    ? "w-[1rem] h-[1rem]"
-    : "w-[0.85rem] h-[0.85rem]";
-  const cursor = isSectionActive
-    ? "hover:cursor-pointer"
-    : "hover:cursor-not-allowed";
-  const textColor = isSectionActive ? "text-white" : "text-[#999999]";
-  const backgroundColor = isSectionFocused ? "bg-solid-blue" : "bg-[#212327]";
+  activateSection: () => void;
+}> = ({ sectionTitle, isSectionActive, isSectionError, activateSection }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const backgroundColor = getBackgroundColor(
+    isSectionActive,
+    isSectionError,
+    isHovered,
+  );
+  const hoverBackgroundColor = `hover:${backgroundColor}`;
   return (
     <div
-      className={`${backgroundColor} flex justify-between items-center hover:bg-solid-blue ${cursor} rounded-xl min-h-6 w-40 transition-colors ease-in duration-200 pl-2 pr-2`}
-      onClick={setFocusedSection}
+      className={`flex justify-between items-center ${backgroundColor} ${hoverBackgroundColor} cursor-pointer rounded-xl min-h-6 w-40 transition-colors ease-in duration-100 pl-2 pr-2`}
+      onClick={activateSection}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <p className={`font-lato font-bold text-[0.9rem] ${textColor}`}>
+      <p className={`font-lato font-bold text-[0.9rem] text-white`}>
         {sectionTitle}
       </p>
-      {isSectionActive && (
-        <img className={iconStylesClass} src={icon} alt="Section icon" />
+      {isSectionError && !isHovered && !isSectionActive && (
+        <img className="w-5 h-5" src={errorIcon} alt="error-icon" />
       )}
     </div>
   );

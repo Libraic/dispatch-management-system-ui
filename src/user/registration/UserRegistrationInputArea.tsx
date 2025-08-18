@@ -4,21 +4,20 @@ import { Workload } from "./sections/workload/Workload.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   getBlankUserRegistrationData,
   getCreateUserRequestFromRegistrationData,
 } from "../../utils/registration/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import { Toast } from "../../toast/Toast.tsx";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
 import {
-  type SectionData,
-  SectionEnum,
-} from "../../types/registration/user/section.ts";
-import type {
-  UserRegistrationData,
-  UserRegistrationErrors,
+  BLANK_STRING,
+  SUBMIT_BUTTON_TEXT,
+} from "../../utils/constants/global.ts";
+import {
+  type UserRegistrationData,
+  type UserRegistrationErrors,
 } from "../../types/registration/user/user-registration-data.ts";
 import {
   getBlankUserRegistrationErrors,
@@ -33,8 +32,9 @@ import { UserRegistrationContext } from "../../context/UserRegistrationContext.t
 import type { CreateUserRequest } from "../../types/api/registration-api.ts";
 import { saveUser } from "../../service/user-service.ts";
 import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+import type { SectionsHandler } from "../../hooks/useSections.ts";
 
-const sectionComponents: Record<SectionEnum, React.ReactNode> = {
+const sectionComponents: Record<string, React.ReactNode> = {
   BASIC_INFORMATION: <BasicInformation />,
   EMPLOYMENT_INFORMATION: <EmploymentInformation />,
   WORKLOAD: <Workload />,
@@ -42,7 +42,7 @@ const sectionComponents: Record<SectionEnum, React.ReactNode> = {
 };
 
 export const UserRegistrationInputArea: React.FC<{
-  sectionsHandler: SectionData;
+  sectionsHandler: SectionsHandler;
 }> = ({ sectionsHandler }) => {
   const [registrationData, setRegistrationData] =
     useState<UserRegistrationData>(getBlankUserRegistrationData());
@@ -52,7 +52,6 @@ export const UserRegistrationInputArea: React.FC<{
 
   const navigate = useNavigate();
 
-  const [submitButtonText, setSubmitButtonText] = useState<string>("Continue");
   const toastData = useToast();
   const registrationContextData: RegistrationContextData<
     UserRegistrationData,
@@ -63,50 +62,41 @@ export const UserRegistrationInputArea: React.FC<{
     registrationDataError,
   };
 
-  useEffect(() => {
-    const submitButtonText = sectionsHandler.isSectionFocused(SectionEnum.NOTES)
-      ? "Submit"
-      : "Continue";
-    setSubmitButtonText(submitButtonText);
-  }, [sectionsHandler]);
-
   const handleErrorsPriorSubmission = () => {
     const errors = getRegistrationDataErrors(registrationData);
     setRegistrationDataError(errors);
     const sectionsErrorsPriorSubmitting = getSectionsWithErrors(errors);
     sectionsHandler.setErrors(sectionsErrorsPriorSubmitting);
-    if (sectionsErrorsPriorSubmitting.length === 0) {
-      sectionsHandler.next();
-    }
+    return sectionsErrorsPriorSubmitting;
   };
 
   const handleErrorsAfterSubmission = async () => {
-    if (sectionsHandler.areAllSectionsComplete()) {
-      const createUserRequest: CreateUserRequest =
-        getCreateUserRequestFromRegistrationData(registrationData);
-      const apiResponse = await saveUser(createUserRequest);
-      const errors = handleErrors(
-        apiResponse,
-        getBlankUserRegistrationErrors,
-        (key) => key === "workloads" || key === "notes",
-      );
+    const createUserRequest: CreateUserRequest =
+      getCreateUserRequestFromRegistrationData(registrationData);
+    const apiResponse = await saveUser(createUserRequest);
+    const apiErrors = handleErrors(
+      apiResponse,
+      getBlankUserRegistrationErrors,
+      (key) => key === "workloads" || key === "notes",
+    );
 
-      if (errors == null) {
-        navigate(HOME);
-      } else if ("message" in errors) {
-        toastData.withErrorMessage(errors.message);
-      } else {
-        const sectionsErrors = getSectionsWithErrors(errors);
-        sectionsHandler.setErrors(sectionsErrors);
-        setRegistrationDataError(errors);
-      }
+    if (apiErrors == null) {
+      navigate(HOME);
+    } else if ("message" in apiErrors) {
+      toastData.withErrorMessage(apiErrors.message);
+    } else {
+      setRegistrationDataError(apiErrors as UserRegistrationErrors);
+      const erroneousSections = getSectionsWithErrors(apiErrors);
+      sectionsHandler.setErrors(erroneousSections);
     }
   };
 
   const validateRegistrationData = async (e: React.FormEvent) => {
     e.preventDefault();
-    handleErrorsPriorSubmission();
-    await handleErrorsAfterSubmission();
+    const errors = handleErrorsPriorSubmission();
+    if (!Array.from(errors.values()).some((v) => v)) {
+      await handleErrorsAfterSubmission();
+    }
   };
 
   return (
@@ -119,7 +109,7 @@ export const UserRegistrationInputArea: React.FC<{
       <div className="flex gap-x-3 mx-5 my-5">
         <CancelButton actionText="Cancel" action={() => navigate(HOME)} />
         <SubmitButton
-          actionText={submitButtonText}
+          actionText={SUBMIT_BUTTON_TEXT}
           action={validateRegistrationData}
         />
       </div>

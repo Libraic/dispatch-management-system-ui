@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { inputFormStyle } from "../utils/tailwind.ts";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { BLANK_STRING, EMPTY_ARRAY } from "../utils/constants/global.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { InputFormError } from "./InputFormError.tsx";
 import { useToast } from "../hooks/useToast.ts";
@@ -57,13 +57,13 @@ export const LiveSearchInputForm = <D,>({
             setQuery(value);
             setBorderColor("border-solid-blue");
           }}
-          onBlur={() => {
-            if (placeholderText === BLANK_STRING) {
-              setPlaceholderText(placeholder);
-            }
-            setItems([]);
-            setBorderColor("border-light-grey");
-          }}
+          // onBlur={() => {
+          //   if (placeholderText === BLANK_STRING) {
+          //     setPlaceholderText(placeholder);
+          //   }
+          //   setItems(EMPTY_ARRAY);
+          //   setBorderColor("border-light-grey");
+          // }}
           onChange={(e) => {
             setQuery(e.target.value);
             if (value !== BLANK_STRING) {
@@ -77,7 +77,7 @@ export const LiveSearchInputForm = <D,>({
             onClick={(item: Renderable) => {
               setQuery(BLANK_STRING);
               saveData(item);
-              setItems([]);
+              setItems(EMPTY_ARRAY);
             }}
           />
         )}

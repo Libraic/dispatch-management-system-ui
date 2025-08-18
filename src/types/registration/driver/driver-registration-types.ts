@@ -1,11 +1,8 @@
-export const DriverRegistrationSectionEnum = {
+export const DRIVER_REGISTRATION_SECTIONS = {
   GENERAL_DETAILS: "General Details",
   TRUCK_DETAILS: "Truck Details",
   EMPLOYMENT_DATA: "Employment Data",
 } as const;
-
-export type DriverRegistrationSectionEnum =
-  keyof typeof DriverRegistrationSectionEnum;
 
 export type DriverRegistrationData = {
   firstName: string;

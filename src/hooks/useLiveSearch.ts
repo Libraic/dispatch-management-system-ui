@@ -6,7 +6,8 @@ import type {
   LiveSearchResult,
   SearchCriteria,
 } from "../types/api/common.ts";
-import { DEBOUNCING_TIME } from "../utils/constants/global.ts";
+import { COLON, DEBOUNCING_TIME } from "../utils/constants/global.ts";
+import { LIKE_CLAUSE } from "../utils/constants/api-query.ts";
 
 const EMPTY_OBJECT = {
   items: [],
@@ -18,7 +19,7 @@ const constructSearchCriteria = (
   defaultValue: string,
   customSearchCriteria?: SearchCriteria[],
 ): any => {
-  const params = { [defaultKey]: `like:${defaultValue}` };
+  const params = { [defaultKey]: `${LIKE_CLAUSE}${COLON}${defaultValue}` };
   if (customSearchCriteria) {
     for (const searchCriteria of customSearchCriteria) {
       params[searchCriteria.field] = searchCriteria.operation;
@@ -41,17 +42,11 @@ export const useLiveSearch = <T>(
           endpoint,
           constructSearchCriteria(searchField, value, defaultSearchCriteria),
         ).then((result) => {
-          if (result.error !== null) {
-            setItems({
-              items: [],
-              error: result.error!.message,
-            });
-          } else {
-            setItems({
-              items: result.data ?? [],
-              error: null,
-            });
-          }
+          setItems(
+            result.error !== null
+              ? { items: [], error: result.error!.message }
+              : { items: result.data ?? [], error: null },
+          );
         });
       } else {
         setItems(EMPTY_OBJECT);

@@ -1,7 +1,7 @@
 import {
+  DRIVER_REGISTRATION_SECTIONS,
   type DriverRegistrationData,
   type DriverRegistrationError,
-  DriverRegistrationSectionEnum,
 } from "../../types/registration/driver/driver-registration-types.ts";
 import { Section } from "./registration-sections/Section.tsx";
 import { GeneralDetailsSection } from "./registration-sections/GeneralDetailsSection.tsx";
@@ -15,7 +15,7 @@ import {
 } from "../../utils/registration/driver/driver-registration-utils.ts";
 import {
   getDriverRegistrationErrors,
-  hasSectionErrors,
+  getErroneousSection,
 } from "../../utils/registration/driver/driver-registration-validation.ts";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
@@ -29,8 +29,15 @@ import { useToast } from "../../hooks/useToast.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
 import { Toast } from "../../toast/Toast.tsx";
 import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+import { useSections } from "../../hooks/useSections.ts";
+import type {
+  ApiResponse,
+  Error,
+  GroupsErrorResponse,
+} from "../../types/api/common.ts";
+import type { DriverData } from "../../types/api/driver-api.ts";
 
-const sections = Object.values(DriverRegistrationSectionEnum);
+const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
   [sections[0]]: <GeneralDetailsSection />,
   [sections[1]]: <TruckDetailsSection />,
@@ -38,10 +45,7 @@ const sectionComponents: Record<string, React.ReactNode> = {
 };
 
 export const DriverRegistrationForm = () => {
-  const [sectionsWithErrors, setSectionsWithErrors] = useState<
-    Map<string, boolean>
-  >(new Map<string, boolean>());
-  const [activeSection, setActiveSection] = React.useState<string>(sections[0]);
+  const sectionsHandler = useSections(sections);
   const [driverRegistrationData, setDriverRegistrationData] =
     useState<DriverRegistrationData>(getBlankDriverRegistrationData());
   const [driverRegistrationErrors, setDriverRegistrationErrors] =
@@ -54,11 +58,33 @@ export const DriverRegistrationForm = () => {
     setRegistrationData: setDriverRegistrationData,
     registrationDataError: driverRegistrationErrors,
   };
-  const activeSectionComponent = sectionComponents[activeSection];
+  const activeSectionComponent =
+    sectionComponents[sectionsHandler.getActiveSection()];
   const toast = useToast();
   const { companyUuid } = useParams();
   const baseRoute = `/dashboard/${companyUuid}`;
   const navigate = useNavigate();
+
+  const processErrors = (
+    response: ApiResponse<DriverData, Error | GroupsErrorResponse>,
+    registrationErrors: DriverRegistrationError,
+  ) => {
+    const errors = handleErrors(
+      response,
+      getBlankDriverRegistrationError,
+      (_) => false,
+    );
+    if (errors == null) {
+      navigate(baseRoute);
+    } else if (!Array.isArray(errors)) {
+      const e = errors as Error;
+      toast.withErrorMessage(e.message);
+    } else {
+      setDriverRegistrationErrors(errors as DriverRegistrationError);
+      const err = getErroneousSection(sections, registrationErrors);
+      sectionsHandler.setErrors(err.getErroneousSections());
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,35 +92,19 @@ export const DriverRegistrationForm = () => {
       driverRegistrationData,
     );
     setDriverRegistrationErrors(registrationErrors);
-    const currentSectionsWithErrors = new Map<string, boolean>();
-    for (const section of sections) {
-      currentSectionsWithErrors.set(
-        section,
-        hasSectionErrors(registrationErrors, section),
-      );
-    }
+    const erroneousSections = getErroneousSection(sections, registrationErrors);
 
-    if (Array.from(currentSectionsWithErrors.values()).some((value) => value)) {
-      setSectionsWithErrors(currentSectionsWithErrors);
+    if (erroneousSections.hasErroneousSection()) {
+      sectionsHandler.setErrors(erroneousSections.getErroneousSections());
     } else {
+      sectionsHandler.clearErrors();
       const createDriverRequest =
         createCreateDriverRequestFromDriverRegistrationData(
           driverRegistrationData,
           companyUuid!,
         );
       const response = await saveDriver(createDriverRequest);
-      const errors = handleErrors(
-        response,
-        getBlankDriverRegistrationError,
-        (_) => false,
-      );
-      if (errors == null) {
-        navigate(baseRoute);
-      } else if ("message" in errors) {
-        toast.withErrorMessage(errors.message);
-      } else {
-        setDriverRegistrationErrors(errors as DriverRegistrationError);
-      }
+      processErrors(response, registrationErrors);
     }
   };
 
@@ -107,14 +117,14 @@ export const DriverRegistrationForm = () => {
         />
         <div className="flex flex-row gap-x-6 w-[100%] h-[3.5rem] justify-center my-20">
           {sections.map((section, index) => (
-            <div className="flex flex-row items-center gap-x-4">
+            <div className="flex flex-row items-center gap-x-4" key={index}>
               <Section
                 sectionTitle={section}
                 sectionIndex={index + 1}
                 isLast={index < sections.length - 1}
-                isWithErrors={sectionsWithErrors.get(section) ?? false}
-                isActive={activeSection === section}
-                activateSection={setActiveSection}
+                isWithErrors={sectionsHandler.isSectionWithErrors(section)}
+                isActive={sectionsHandler.isSectionActive(section)}
+                activateSection={sectionsHandler.activateSection}
               />
             </div>
           ))}

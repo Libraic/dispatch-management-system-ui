@@ -1,11 +1,11 @@
-import type {
-  NoteData,
-  UserRegistrationData,
-  UserRegistrationErrors,
-  WorkloadData,
+import {
+  type NoteData,
+  USER_REGISTRATION_SECTIONS,
+  type UserRegistrationData,
+  type UserRegistrationErrors,
+  type WorkloadData,
 } from "../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
-import { SectionEnum } from "../../../types/registration/user/section.ts";
 import { validateEmail } from "../registration-utils.ts";
 import {
   validateNotes,
@@ -55,15 +55,15 @@ export const getRegistrationDataErrors = (
   return registrationDataError;
 };
 
-export const getSectionsWithErrors = (errors: UserRegistrationErrors) => {
+export const getSectionsWithErrors = (
+  errors: UserRegistrationErrors,
+): Map<string, boolean> => {
   const groupedErrors = getGroupedErrors(errors);
-  const sectionsErrors: SectionEnum[] = [];
+  const erroneousSections = new Map<string, boolean>();
   for (const [section, hasErrors] of groupedErrors) {
-    if (hasErrors) {
-      sectionsErrors.push(section);
-    }
+    erroneousSections.set(section, hasErrors);
   }
-  return sectionsErrors;
+  return erroneousSections;
 };
 
 export const getNoteErrorMessage = (
@@ -93,21 +93,24 @@ export const getWorkloadCompanyErrorMessage = (
 
 const getGroupedErrors = (
   registrationDataError: UserRegistrationErrors,
-): Map<SectionEnum, boolean> => {
-  const groupedErrors = new Map<SectionEnum, boolean>();
+): Map<string, boolean> => {
+  const groupedErrors = new Map<string, boolean>();
   groupedErrors.set(
-    SectionEnum.BASIC_INFORMATION,
+    USER_REGISTRATION_SECTIONS.BASIC_INFORMATION,
     areAccountErrors(registrationDataError),
   );
   groupedErrors.set(
-    SectionEnum.EMPLOYMENT_INFORMATION,
+    USER_REGISTRATION_SECTIONS.EMPLOYMENT_INFORMATION,
     areEmploymentInformationErrors(registrationDataError),
   );
   groupedErrors.set(
-    SectionEnum.WORKLOAD,
+    USER_REGISTRATION_SECTIONS.WORKLOAD,
     areWorkloadErrors(registrationDataError),
   );
-  groupedErrors.set(SectionEnum.NOTES, areNotesErrors(registrationDataError));
+  groupedErrors.set(
+    USER_REGISTRATION_SECTIONS.NOTES,
+    areNotesErrors(registrationDataError),
+  );
   return groupedErrors;
 };
 

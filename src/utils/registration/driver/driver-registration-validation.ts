@@ -1,7 +1,7 @@
 import {
+  DRIVER_REGISTRATION_SECTIONS,
   type DriverRegistrationData,
   type DriverRegistrationError,
-  DriverRegistrationSectionEnum,
 } from "../../../types/registration/driver/driver-registration-types.ts";
 import { getBlankDriverRegistrationError } from "./driver-registration-utils.ts";
 import { BLANK_STRING } from "../../constants/global.ts";
@@ -9,6 +9,7 @@ import {
   validateEmail,
   validateMandatoryField,
 } from "../registration-utils.ts";
+import { ErroneousSections } from "../../../types/classes/ErroneousSections.ts";
 
 export const getDriverRegistrationErrors = (
   driverRegistrationData: DriverRegistrationData,
@@ -52,11 +53,25 @@ export const getDriverRegistrationErrors = (
   return driverRegistrationError;
 };
 
+export const getErroneousSection = (
+  sections: string[],
+  registrationErrors: DriverRegistrationError,
+): ErroneousSections => {
+  const erroneousSections = new ErroneousSections();
+  for (const section of sections) {
+    const isSectionWithErrors = hasSectionErrors(registrationErrors, section);
+    if (isSectionWithErrors) {
+      erroneousSections.setErroneousSection(section);
+    }
+  }
+  return erroneousSections;
+};
+
 export const hasSectionErrors = (
   driverRegistrationError: DriverRegistrationError,
   section: string,
 ) => {
-  if (section === DriverRegistrationSectionEnum.GENERAL_DETAILS) {
+  if (section === DRIVER_REGISTRATION_SECTIONS.GENERAL_DETAILS) {
     return (
       driverRegistrationError.firstName !== BLANK_STRING ||
       driverRegistrationError.lastName !== BLANK_STRING ||
@@ -65,7 +80,7 @@ export const hasSectionErrors = (
     );
   }
 
-  if (section === DriverRegistrationSectionEnum.TRUCK_DETAILS) {
+  if (section === DRIVER_REGISTRATION_SECTIONS.TRUCK_DETAILS) {
     return (
       driverRegistrationError.truckNumber !== BLANK_STRING ||
       driverRegistrationError.trailerNumber !== BLANK_STRING ||

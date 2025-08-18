@@ -27,6 +27,7 @@ import { Toast } from "../../toast/Toast.tsx";
 import { StartAndServiceDate } from "./StartAndServiceDate.tsx";
 import { CompanyBasicData } from "./CompanyBasicData.tsx";
 import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+import type { Error } from "../../types/api/common.ts";
 
 export const CompanyRegistrationForm = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
@@ -57,8 +58,9 @@ export const CompanyRegistrationForm = () => {
 
     if (apiErrors == null) {
       navigate(HOME);
-    } else if ("message" in apiErrors) {
-      toastData.withErrorMessage(apiErrors.message);
+    } else if (!Array.isArray(apiErrors)) {
+      const e = apiErrors as Error;
+      toastData.withErrorMessage(e.message);
     } else {
       setCompanyRegistrationErrors(apiErrors as CompanyRegistrationError);
     }
