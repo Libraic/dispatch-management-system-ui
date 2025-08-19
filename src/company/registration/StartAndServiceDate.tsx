@@ -1,4 +1,4 @@
-import { DatePick } from "../../global/DatePick.tsx";
+import { DateSelector } from "../../global/DateSelector.tsx";
 import * as React from "react";
 import { useDateObject } from "../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../hooks/usePrepopulateDate.ts";
@@ -29,8 +29,8 @@ export const StartAndServiceDate: React.FC<{
 
   return (
     <div className="flex flex-row gap-x-10 items-center">
-      <DatePick label="Service Date" date={currentDateObject} />
-      <DatePick label="Start Date" date={currentDateObject} />
+      <DateSelector label="Service Date" date={currentDateObject} />
+      <DateSelector label="Start Date" date={currentDateObject} />
     </div>
   );
 };

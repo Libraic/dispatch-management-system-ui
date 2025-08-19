@@ -5,7 +5,7 @@ import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import type { DateObject } from "../types/global.ts";
 
-export const DatePick: React.FC<{ label: string; date: DateObject }> = ({
+export const DateSelector: React.FC<{ label: string; date: DateObject }> = ({
   label,
   date,
 }) => {
