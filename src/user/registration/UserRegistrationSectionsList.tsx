@@ -9,7 +9,7 @@ export const UserRegistrationSectionsList: React.FC<{
   return (
     <div className="flex flex-col items-center gap-7 w-1/10 bg-[#212327] text-white p-6">
       <UserRegistrationSection
-        sectionTitle="Basic Information"
+        sectionTitle="Personal"
         isSectionActive={sectionsHandler.isSectionActive(
           USER_REGISTRATION_SECTIONS.BASIC_INFORMATION,
         )}
@@ -23,7 +23,21 @@ export const UserRegistrationSectionsList: React.FC<{
         }
       />
       <UserRegistrationSection
-        sectionTitle="Employment Information"
+        sectionTitle="Contact"
+        isSectionActive={sectionsHandler.isSectionActive(
+          USER_REGISTRATION_SECTIONS.CONTACT_INFORMATION,
+        )}
+        isSectionError={sectionsHandler.isSectionWithErrors(
+          USER_REGISTRATION_SECTIONS.CONTACT_INFORMATION,
+        )}
+        activateSection={() =>
+          sectionsHandler.activateSection(
+            USER_REGISTRATION_SECTIONS.CONTACT_INFORMATION,
+          )
+        }
+      />
+      <UserRegistrationSection
+        sectionTitle="Employment"
         isSectionActive={sectionsHandler.isSectionActive(
           USER_REGISTRATION_SECTIONS.EMPLOYMENT_INFORMATION,
         )}

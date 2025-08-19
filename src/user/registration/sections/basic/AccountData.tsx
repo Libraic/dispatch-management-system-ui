@@ -100,21 +100,6 @@ export const AccountData: React.FC<{
                 )
               }
             />
-            <InputForm
-              label="Personal E-mail"
-              placeholder={EMAIL_PLACEHOLDER}
-              type="email"
-              name="email"
-              inputFieldValue={registrationData.personalEmail}
-              errorMessage={registrationDataError.personalEmail}
-              saveInputData={(value: string) =>
-                setRegistrationDataStringField(
-                  setRegistrationData,
-                  "personalEmail",
-                  value,
-                )
-              }
-            />
           </div>
           <div className="flex gap-x-5.5 mb-10">
             <InputForm

@@ -100,6 +100,10 @@ const getGroupedErrors = (
     areAccountErrors(registrationDataError),
   );
   groupedErrors.set(
+    USER_REGISTRATION_SECTIONS.CONTACT_INFORMATION,
+    areContactInformationErrors(registrationDataError),
+  );
+  groupedErrors.set(
     USER_REGISTRATION_SECTIONS.EMPLOYMENT_INFORMATION,
     areEmploymentInformationErrors(registrationDataError),
   );
@@ -124,6 +128,12 @@ const areAccountErrors = (
     registrationDataError.password !== BLANK_STRING ||
     registrationDataError.personalEmail !== BLANK_STRING
   );
+};
+
+const areContactInformationErrors = (
+  registrationDataError: UserRegistrationErrors,
+): boolean => {
+  return registrationDataError.personalEmail !== BLANK_STRING;
 };
 
 const areWorkloadErrors = (

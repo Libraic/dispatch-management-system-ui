@@ -2,6 +2,7 @@ import type { YearData } from "../../global.ts";
 
 export const USER_REGISTRATION_SECTIONS = {
   BASIC_INFORMATION: "BASIC_INFORMATION",
+  CONTACT_INFORMATION: "CONTACT_INFORMATION",
   EMPLOYMENT_INFORMATION: "EMPLOYMENT_INFORMATION",
   WORKLOAD: "WORKLOAD",
   NOTES: "NOTES",
@@ -30,11 +31,6 @@ export type WorkloadData = {
 export type NoteData = {
   noteId: string;
   note: string;
-};
-
-export type FieldError = {
-  field: string;
-  errorMessage: string;
 };
 
 export type ItemError = {

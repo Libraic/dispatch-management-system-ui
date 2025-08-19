@@ -33,9 +33,11 @@ import type { CreateUserRequest } from "../../types/api/registration-api.ts";
 import { saveUser } from "../../service/user-service.ts";
 import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
 import type { SectionsHandler } from "../../hooks/useSections.ts";
+import { ContactInformation } from "./sections/contact/ContactInformation.tsx";
 
 const sectionComponents: Record<string, React.ReactNode> = {
   BASIC_INFORMATION: <BasicInformation />,
+  CONTACT_INFORMATION: <ContactInformation />,
   EMPLOYMENT_INFORMATION: <EmploymentInformation />,
   WORKLOAD: <Workload />,
   NOTES: <Notes />,

@@ -38,7 +38,7 @@ export const UserRegistrationSection: React.FC<{
   const hoverBackgroundColor = `hover:${backgroundColor}`;
   return (
     <div
-      className={`flex justify-between items-center ${backgroundColor} ${hoverBackgroundColor} cursor-pointer rounded-xl min-h-6 w-40 transition-colors ease-in duration-100 pl-2 pr-2`}
+      className={`flex justify-between items-center ${backgroundColor} ${hoverBackgroundColor} cursor-pointer rounded-xl min-h-6 w-40 transition-colors ease-in duration-100 px-2`}
       onClick={activateSection}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -47,7 +47,7 @@ export const UserRegistrationSection: React.FC<{
         {sectionTitle}
       </p>
       {isSectionError && !isHovered && !isSectionActive && (
-        <img className="w-5 h-5" src={errorIcon} alt="error-icon" />
+        <img className="w-4 h-4" src={errorIcon} alt="error-icon" />
       )}
     </div>
   );
