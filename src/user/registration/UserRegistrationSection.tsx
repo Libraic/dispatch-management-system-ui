@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import errorIcon from "../../assets/registration/sections/section-in-progress-error.svg";
+import errorIcon from "../../assets/registration/section-in-progress-error.svg";
 
 const getBackgroundColor = (
   isSectionActive: boolean,

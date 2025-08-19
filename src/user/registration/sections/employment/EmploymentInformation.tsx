@@ -9,8 +9,10 @@ export const EmploymentInformation = () => {
         header="Employment Information"
         subheader="Data related to the employment"
       />
-      <EmploymentDate />
-      <EmployeeStatus />
+      <div className="flex flex-col gap-y-15">
+        <EmploymentDate />
+        <EmployeeStatus />
+      </div>
     </div>
   );
 };

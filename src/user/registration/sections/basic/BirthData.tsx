@@ -1,15 +1,12 @@
-import { SectionDivision } from "../SectionDivision.tsx";
-import { DateForm } from "../../../../global/DateForm.tsx";
 import * as React from "react";
 import { useDateObject } from "../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
-import { LAST_ADMITTABLE_BIRTH_YEAR } from "../../../../utils/date.ts";
+import { DatePick } from "../../../../global/DatePick.tsx";
 
 export const BirthData = () => {
   const context = React.useContext(UserRegistrationContext)!;
   const { registrationData, setRegistrationData } = context;
-  const [isBirthDataExpanded, setIsBirthDataExpanded] = React.useState(true);
   const dateObject = useDateObject(
     registrationData.birthDate.day,
     registrationData.birthDate.month,
@@ -17,21 +14,5 @@ export const BirthData = () => {
   );
   usePrepopulateDate(setRegistrationData, dateObject, "birthDate");
 
-  return (
-    <>
-      <SectionDivision
-        division="Birth Data"
-        isExpanded={isBirthDataExpanded}
-        setIsExpanded={setIsBirthDataExpanded}
-      />
-      {isBirthDataExpanded && (
-        <div className="flex gap-x-11 mb-5">
-          <DateForm
-            dateObject={dateObject}
-            endingYear={LAST_ADMITTABLE_BIRTH_YEAR}
-          />
-        </div>
-      )}
-    </>
-  );
+  return <DatePick label="Birth Date" date={dateObject} />;
 };

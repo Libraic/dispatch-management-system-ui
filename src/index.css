@@ -21,14 +21,6 @@
     --color-solid-black: #212327;
 
     --text-standard-size: 0.9rem;
-
-    --animate-rotate: rotate 1s ease-in-out infinite;
-    @keyframes rotate {
-        0%,
-        100% {
-            transform: rotate(90deg);
-        }
-    }
 }
 
 /* Disable the default styling applied when auto filling values in input form*/
