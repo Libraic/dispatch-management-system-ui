@@ -22,7 +22,7 @@ export const LiveSearchResultList = ({
   return (
     isListVisible && (
       <div
-        className="border-1 border-light-grey rounded-[0.3rem] bg-white p-2 min-w-[8rem] absolute top-16 z-10"
+        className="border-1 border-light-grey rounded-[0.3rem] bg-white p-2 min-w-[8rem] absolute top-14 z-10 max-h-[12rem] overflow-y-auto"
         ref={listRef}
       >
         {items.map((item) => (
