@@ -1,4 +1,4 @@
-import { InputForm } from "../../global/InputForm.tsx";
+import { InputForm } from "../../global/input-forms/InputForm.tsx";
 import { alterCompanySimpleField } from "../../utils/registration/company/company-registration-utils.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
 import * as React from "react";

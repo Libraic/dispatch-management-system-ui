@@ -1,4 +1,4 @@
-import type { LiveSearchResultData } from "../types/live-search.ts";
+import type { LiveSearchResultData } from "../../types/live-search.ts";
 import { useEffect, useRef, useState } from "react";
 
 export const LiveSearchResultList = ({

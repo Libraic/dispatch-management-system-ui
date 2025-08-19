@@ -1,4 +1,4 @@
-import { InputForm } from "../../../global/InputForm.tsx";
+import { InputForm } from "../../../global/input-forms/InputForm.tsx";
 import { useContext } from "react";
 import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";

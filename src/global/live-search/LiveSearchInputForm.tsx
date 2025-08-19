@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { inputFormStyle } from "../utils/tailwind.ts";
-import { BLANK_STRING, EMPTY_ARRAY } from "../utils/constants/global.ts";
-import { Toast } from "../toast/Toast.tsx";
-import { InputFormError } from "./InputFormError.tsx";
-import { useToast } from "../hooks/useToast.ts";
-import type { LiveSearchInputFormProps } from "../types/live-search.ts";
+import { inputFormStyle } from "../../utils/tailwind.ts";
+import { BLANK_STRING, EMPTY_ARRAY } from "../../utils/constants/global.ts";
+import { Toast } from "../../toast/Toast.tsx";
+import { InputFormError } from "../input-forms/InputFormError.tsx";
+import { useToast } from "../../hooks/useToast.ts";
+import type { LiveSearchInputFormProps } from "../../types/live-search.ts";
 import { LiveSearchResultList } from "./LiveSearchResultList.tsx";
-import type { Renderable } from "../types/api/Renderable.ts";
-import { LiveSearchEndpoints } from "../types/forms.ts";
-import { InputFormLabel } from "./InputFormLabel.tsx";
-import { useLiveSearch } from "../hooks/useLiveSearch.ts";
-import type { LiveSearchResult } from "../types/api/common.ts";
+import type { Renderable } from "../../types/api/Renderable.ts";
+import { LiveSearchEndpoints } from "../../types/forms.ts";
+import { InputFormLabel } from "../input-forms/InputFormLabel.tsx";
+import { useLiveSearch } from "../../hooks/useLiveSearch.ts";
+import type { LiveSearchResult } from "../../types/api/common.ts";
 
 export const LiveSearchInputForm = <D,>({
   label,

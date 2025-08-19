@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
-import type { DateObject } from "../types/global.ts";
+import type { DateObject } from "../../types/global.ts";
 
 export const DateSelector: React.FC<{ label: string; date: DateObject }> = ({
   label,

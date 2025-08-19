@@ -7,7 +7,7 @@ import { useLiveSearch } from "../hooks/useLiveSearch.ts";
 import type { Renderable } from "../types/api/Renderable.ts";
 import { useToast } from "../hooks/useToast.ts";
 import { Toast } from "../toast/Toast.tsx";
-import { LiveSearchResultList } from "../global/LiveSearchResultList.tsx";
+import { LiveSearchResultList } from "../global/live-search/LiveSearchResultList.tsx";
 import type { LiveSearchResult } from "../types/api/common.ts";
 
 export const LiveSearchCell = <D, R>({

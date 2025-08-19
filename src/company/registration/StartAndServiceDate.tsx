@@ -1,4 +1,4 @@
-import { DateSelector } from "../../global/DateSelector.tsx";
+import { DateSelector } from "../../global/input-forms/DateSelector.tsx";
 import * as React from "react";
 import { useDateObject } from "../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../hooks/usePrepopulateDate.ts";

@@ -1,6 +1,6 @@
-import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
-import { inputFormLabelStyle } from "../utils/tailwind.ts";
-import { FieldInformation } from "./FieldInformation.tsx";
+import mandatoryFieldIcon from "../../assets/global/mandatory-field.svg";
+import { inputFormLabelStyle } from "../../utils/tailwind.ts";
+import { FieldInformation } from "../FieldInformation.tsx";
 import * as React from "react";
 
 export const InputFormLabel: React.FC<{

@@ -1,4 +1,4 @@
-import { InputForm } from "../../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
 import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 import { setRegistrationDataStringField } from "../../../../utils/registration/user/user-registration.ts";

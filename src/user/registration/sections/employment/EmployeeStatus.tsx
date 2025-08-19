@@ -1,4 +1,4 @@
-import { SelectForm } from "../../../../global/SelectForm.tsx";
+import { SelectForm } from "../../../../global/input-forms/SelectForm.tsx";
 import * as React from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 import {
@@ -6,7 +6,7 @@ import {
   RoleEnum,
 } from "../../../../types/registration/user/user-registration-data.ts";
 import { BLANK_STRING } from "../../../../utils/constants/global.ts";
-import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
+import { LiveSearchInputForm } from "../../../../global/live-search/LiveSearchInputForm.tsx";
 import {
   alterSupervisor,
   cleanSupervisor,

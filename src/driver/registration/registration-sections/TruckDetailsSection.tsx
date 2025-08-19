@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
-import { InputForm } from "../../../global/InputForm.tsx";
-import { SelectForm } from "../../../global/SelectForm.tsx";
+import { InputForm } from "../../../global/input-forms/InputForm.tsx";
+import { SelectForm } from "../../../global/input-forms/SelectForm.tsx";
 import {
   trailerLengths,
   trailerTypes,

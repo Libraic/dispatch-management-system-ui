@@ -1,4 +1,4 @@
-import { InputForm } from "../../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
 import * as React from "react";
 import { useContext } from "react";
 import { Delete } from "../../../../button/Delete.tsx";
@@ -10,7 +10,7 @@ import {
   cleanWorkload,
   deleteWorkload,
 } from "../../../../utils/registration/user/user-registration.ts";
-import { LiveSearchInputForm } from "../../../../global/LiveSearchInputForm.tsx";
+import { LiveSearchInputForm } from "../../../../global/live-search/LiveSearchInputForm.tsx";
 import { Company } from "../../../../types/api/Company.ts";
 import type { Renderable } from "../../../../types/api/Renderable.ts";
 

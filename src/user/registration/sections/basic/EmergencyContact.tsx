@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
-import { InputForm } from "../../../../global/InputForm.tsx";
+import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
 import {
   EMERGENCY_CONTACT_NAME_PLACEHOLDER,
   EMERGENCY_CONTACT_PHONE_PLACEHOLDER,

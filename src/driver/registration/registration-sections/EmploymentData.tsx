@@ -1,11 +1,11 @@
-import { SelectForm } from "../../../global/SelectForm.tsx";
+import { SelectForm } from "../../../global/input-forms/SelectForm.tsx";
 import { useContext } from "react";
 import {
   documentsStatuses,
   driverPositions,
 } from "../../../utils/registration/driver/driver-registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
-import { LocationSelector } from "../../../global/LocationSelector.tsx";
+import { LocationSelector } from "../../../global/input-forms/LocationSelector.tsx";
 
 export const EmploymentData = () => {
   const context = useContext(DriverRegistrationContext)!;

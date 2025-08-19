@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Delete } from "../../../../button/Delete.tsx";
 import { textAreaStyle } from "../../../../utils/tailwind.ts";
-import { InputFormError } from "../../../../global/InputFormError.tsx";
+import { InputFormError } from "../../../../global/input-forms/InputFormError.tsx";
 import type {
   NoteData,
   UserRegistrationData,
