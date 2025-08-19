@@ -57,13 +57,6 @@ export const LiveSearchInputForm = <D,>({
             setQuery(value);
             setBorderColor("border-solid-blue");
           }}
-          // onBlur={() => {
-          //   if (placeholderText === BLANK_STRING) {
-          //     setPlaceholderText(placeholder);
-          //   }
-          //   setItems(EMPTY_ARRAY);
-          //   setBorderColor("border-light-grey");
-          // }}
           onChange={(e) => {
             setQuery(e.target.value);
             if (value !== BLANK_STRING) {
