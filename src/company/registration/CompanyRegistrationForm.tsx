@@ -10,7 +10,7 @@ import type {
   CreateCompanyRequest,
 } from "../../types/registration/company/company-registration-data.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
-import { Information } from "../../global/Information.tsx";
+import { MandatoryFieldDisclaimer } from "../../global/MandatoryFieldDisclaimer.tsx";
 import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
@@ -84,7 +84,7 @@ export const CompanyRegistrationForm = () => {
           <StartAndServiceDate
             setCompanyRegistrationData={setCompanyRegistrationData}
           />
-          <Information />
+          <MandatoryFieldDisclaimer />
         </div>
         <div className="flex justify-center items-center gap-x-3 mx-5 my-5">
           <CancelButton actionText="Cancel" action={() => navigate(HOME)} />

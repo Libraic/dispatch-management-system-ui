@@ -1,7 +1,7 @@
 import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
 import { AccountData } from "./AccountData.tsx";
 import { BirthData } from "./BirthData.tsx";
-import { Information } from "../../../../global/Information.tsx";
+import { MandatoryFieldDisclaimer } from "../../../../global/MandatoryFieldDisclaimer.tsx";
 
 export const BasicInformation = () => {
   return (
@@ -12,7 +12,7 @@ export const BasicInformation = () => {
       />
       <AccountData />
       <BirthData />
-      <Information />
+      <MandatoryFieldDisclaimer />
     </>
   );
 };

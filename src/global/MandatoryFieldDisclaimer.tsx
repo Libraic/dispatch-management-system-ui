@@ -1,6 +1,6 @@
 import mandatoryFieldIcon from "../assets/global/mandatory-field.svg";
 
-export const Information = () => {
+export const MandatoryFieldDisclaimer = () => {
   return (
     <div className="flex flex-row gap-x-1 mt-10">
       <img className="w-3" src={mandatoryFieldIcon} alt="Mandatory" />
