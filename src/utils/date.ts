@@ -6,28 +6,34 @@ export const DEFAULT_BIRTH_DATE: YearData = {
   month: 1,
   year: LAST_ADMITTABLE_BIRTH_YEAR,
 };
-export const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+
+const WEEKDAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
 ];
 
-export const getAvailableYears = (lastYear: number): number[] => {
-  const availableYears = [];
-  for (let i = 0; i < 50; ++i) {
-    availableYears.push(lastYear - i);
+export const getWeekWithNames = (date: Date): string[] => {
+  // Ensure week starts on Monday.
+  // Monday = 0, Sunday = 6.
+  const dayOfWeek = (date.getDay() % 7) - 1;
+  const monday = new Date(date);
+  monday.setDate(date.getDate() - dayOfWeek);
+  const result: string[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const currentDay = new Date(monday);
+    currentDay.setDate(monday.getDate() + i);
+    const month = String(currentDay.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDay.getDate()).padStart(2, "0");
+    result.push(`${WEEKDAYS[i]} ${month}.${day}`);
   }
 
-  return availableYears;
+  return result;
 };
 
 export const convertDateToLittleEndian = (date: YearData) => {

@@ -13,6 +13,7 @@ import {
 import { LiveSearchInputForm } from "../../../../global/live-search/LiveSearchInputForm.tsx";
 import { Company } from "../../../../types/api/Company.ts";
 import type { Renderable } from "../../../../types/api/Renderable.ts";
+import { LiveSearchKey } from "../../../../types/forms.ts";
 
 export const WorkloadItem: React.FC<{
   workloadData: WorkloadData;
@@ -29,7 +30,7 @@ export const WorkloadItem: React.FC<{
         label="Company"
         placeholder="Microsoft"
         value={workloadData.companyName}
-        searchKey="COMPANY"
+        searchKey={LiveSearchKey.COMPANY}
         errorText={errorMessage}
         saveData={(companyData: Renderable) =>
           alterWorkloads(setRegistrationData, companyData, workloadData)

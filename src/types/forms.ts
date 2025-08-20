@@ -3,6 +3,12 @@ export type LiveSearchEndpointConfig = {
   searchField: string;
 };
 
+export enum LiveSearchKey {
+  USER = "USER",
+  COMPANY = "COMPANY",
+  DRIVER = "DRIVER",
+}
+
 export const LiveSearchEndpoints: Record<string, LiveSearchEndpointConfig> = {
   USER: {
     endpoint: "http://localhost:8090/api/users",
