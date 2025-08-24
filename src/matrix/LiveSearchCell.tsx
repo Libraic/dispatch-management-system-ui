@@ -41,7 +41,7 @@ export const LiveSearchCell = <D, R>({
   return (
     <div className="relative">
       <div
-        className="px-4 flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa] w-full h-full caret-transparent "
+        className="px-4 flex items-center bg-[#f5f7fc] border-r-3 border-b-3 border-[#e6ebfa] w-full h-full caret-transparent "
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {

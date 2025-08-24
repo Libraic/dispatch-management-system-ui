@@ -4,4 +4,7 @@ export const LOAD_MORE_ELEMENTS = "...";
 export const DEBOUNCING_TIME = 300;
 export const SUBMIT_BUTTON_TEXT = "Submit";
 export const COLON = ":";
+export const DOT = ".";
 export const EMPTY_ARRAY = [];
+export const DOLAR_SIGN = "$";
+export const BLANK_SPACE = " ";
