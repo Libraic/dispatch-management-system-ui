@@ -5,6 +5,8 @@ import { getWeekWithNames } from "../../../utils/date.ts";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import addRecordUnfocused from "../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../assets/trucks-board/add-focused.svg";
+import deleteRecordUnfocused from "../../../assets/trucks-board/delete-unfocused.svg";
+import deleteRecordFocused from "../../../assets/trucks-board/delete-focused.svg";
 import { Button } from "./Button.tsx";
 import { addDriverWeeklyMileage } from "../../../utils/financial/trucks-board-utils.ts";
 import { WeeklyMileage } from "./WeeklyMileage.tsx";
@@ -21,7 +23,6 @@ export const TrucksBoard = () => {
   const [driversWeeklyMileages, setDriversWeeklyMileages] = useState<
     DriverWeeklyMileage[]
   >([]);
-
   return (
     <div className="w-screen h-screen flex flex-col items-center mt-10 text-[0.8rem]">
       <div className="flex flex-col w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
@@ -33,6 +34,12 @@ export const TrucksBoard = () => {
               addDriverWeeklyMileage(setDriversWeeklyMileages, weekDays)
             }
             information="Add a new record"
+          />
+          <Button
+            unfocusedResource={deleteRecordUnfocused}
+            focusedResource={deleteRecordFocused}
+            action={() => {}}
+            information="Delete a record"
           />
         </div>
 

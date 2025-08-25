@@ -30,15 +30,24 @@ export const WeeklyMileage: React.FC<{
   companyUuid: string;
 }> = ({
   driverWeeklyMileage,
-  index,
   setDriversWeeklyMileages,
+  index,
   companyUuid,
 }) => {
+  const [isActive, setIsActive] = React.useState(false);
   return (
     <div
       key={index}
       className={`min-w-[1000px] min-h-[6rem] ${TRUCKS_BOARD_COLUMNS_LAYOUT} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
     >
+      <div className="flex items-center justify-center bg-[#f5f7fc] border-x-3 border-b-3 border-[#e6ebfa] w-full h-full">
+        <input
+          type="checkbox"
+          className="w-4 h-4 hover:cursor-pointer border-[#e6ebfa]"
+          checked={isActive}
+          onChange={() => setIsActive((prev) => !prev)}
+        />
+      </div>
       <LiveSearchCell
         defaultSearchKey={LiveSearchKey.USER}
         constructor={User}

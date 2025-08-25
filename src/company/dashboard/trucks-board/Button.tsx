@@ -26,7 +26,7 @@ export const Button: React.FC<{
     setShowInformation(false);
   };
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block mx-3">
       <img
         className="w-[2rem] cursor-pointer"
         onMouseEnter={handleMouseEnter}

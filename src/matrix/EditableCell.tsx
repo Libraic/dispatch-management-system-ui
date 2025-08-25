@@ -10,7 +10,7 @@ export const EditableCell: React.FC<{
 }> = ({ content, setContent, cellType }) => {
   return (
     <div
-      className="flex justify-center items-center w-full h-full border-[#e6ebfa] border-x-2 border-b-3 p-2 text-center align-middle overflow-hidden break-words whitespace-pre-wrap"
+      className="flex justify-center items-center w-full h-full border-[#e6ebfa] border-r-2 border-b-3 p-2 text-center align-middle overflow-hidden break-words whitespace-pre-wrap"
       contentEditable
       suppressContentEditableWarning={true}
       onInput={(e: React.FormEvent<HTMLDivElement>) => {

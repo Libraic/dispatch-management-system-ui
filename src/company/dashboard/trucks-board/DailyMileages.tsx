@@ -17,7 +17,7 @@ export const DailyMileages: React.FC<{
     <>
       {driverWeeklyMileage.mileages.map((mileage, index) => (
         <div
-          className="flex items-center bg-[#f5f7fc] border-r-1 border-[#e6ebfa]"
+          className="flex items-center bg-[#f5f7fc] border-[#e6ebfa]"
           key={index}
         >
           <DailyMileage
