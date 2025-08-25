@@ -1,17 +1,16 @@
 import { EditableCell } from "../../../matrix/EditableCell.tsx";
 import { CellType } from "../../../types/matrix/matrix-types.ts";
-import type {
-  DriverWeeklyMileage,
-  Mileage,
-} from "../../../types/financial/trucks-board.ts";
-import type { Dispatch, SetStateAction } from "react";
+import type { Mileage } from "../../../types/financial/trucks-board.ts";
 import * as React from "react";
 import { BLANK_STRING } from "../../../utils/constants/global.ts";
-import { alterDriverWeeklyMileageMileages } from "../../../utils/financial/trucks-board-utils.ts";
 
 export const DailyMileage: React.FC<{
   mileage: Mileage;
-  setDriverWeeklyMileage: Dispatch<SetStateAction<DriverWeeklyMileage>>;
+  setDriverWeeklyMileage: (
+    mileageIndex: number,
+    field: keyof Mileage,
+    value: string,
+  ) => void;
   index: number;
 }> = ({ mileage, setDriverWeeklyMileage, index }) => {
   return (
@@ -19,12 +18,7 @@ export const DailyMileage: React.FC<{
       <EditableCell
         content={mileage.destinationNote}
         setContent={(content: string) =>
-          alterDriverWeeklyMileageMileages(
-            setDriverWeeklyMileage,
-            "destinationNote",
-            content,
-            index,
-          )
+          setDriverWeeklyMileage(index, "destinationNote", content)
         }
       />
       <div className="grid grid-rows-2 w-full">
@@ -32,36 +26,21 @@ export const DailyMileage: React.FC<{
           content={mileage.revenue}
           cellType={CellType.CURRENCY}
           setContent={(content: string) =>
-            alterDriverWeeklyMileageMileages(
-              setDriverWeeklyMileage,
-              "revenue",
-              content,
-              index,
-            )
+            setDriverWeeklyMileage(index, "revenue", content)
           }
         />
         <EditableCell
           content={mileage.miles}
           cellType={CellType.NUMERIC}
           setContent={(content: string) =>
-            alterDriverWeeklyMileageMileages(
-              setDriverWeeklyMileage,
-              "miles",
-              content,
-              index,
-            )
+            setDriverWeeklyMileage(index, "miles", content)
           }
         />
       </div>
       <EditableCell
         content={mileage.note ?? BLANK_STRING}
         setContent={(content: string) =>
-          alterDriverWeeklyMileageMileages(
-            setDriverWeeklyMileage,
-            "note",
-            content,
-            index,
-          )
+          setDriverWeeklyMileage(index, "note", content)
         }
       />
     </div>

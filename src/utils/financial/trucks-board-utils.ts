@@ -3,44 +3,21 @@ import type {
   Mileage,
 } from "../../types/financial/trucks-board.ts";
 import { BLANK_STRING } from "../constants/global.ts";
-import type { Dispatch, SetStateAction } from "react";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
+import * as React from "react";
+import type { User } from "../../types/api/User.ts";
 
-export const getBlankDriverWeeklyMileage = (
+export const addDriverWeeklyMileage = (
+  setDriversWeeklyMileages: React.Dispatch<
+    React.SetStateAction<DriverWeeklyMileage[]>
+  >,
   weekDays: string[],
-): DriverWeeklyMileage => {
-  return {
-    driver: null,
-    dispatcher: null,
-    mileages: getWeekMileages(weekDays),
-  };
-};
-
-export const alterDriverWeeklyMileageMileages = (
-  setDriverWeeklyMileage: Dispatch<SetStateAction<DriverWeeklyMileage>>,
-  field: keyof Mileage,
-  content: string,
-  index: number,
 ) => {
-  setDriverWeeklyMileage((driverWeeklyMileage) =>
-    getDriverWeeklyMileageWithAlteredMileageFieldByIndex(
-      driverWeeklyMileage,
-      field,
-      content,
-      index,
-    ),
-  );
-};
-
-export const alterDriverWeeklyMileageDriver = (
-  driver: Renderable,
-  setDriverWeeklyMileage: Dispatch<SetStateAction<DriverWeeklyMileage>>,
-) => {
-  setDriverWeeklyMileage((prev) => ({
+  setDriversWeeklyMileages((prev) => [
     ...prev,
-    driver: driver instanceof Driver ? driver : null,
-  }));
+    getBlankDriverWeeklyMileage(weekDays),
+  ]);
 };
 
 export const getTotalRevenueAndMiles = (mileages: Mileage[]): number[] => {
@@ -60,22 +37,99 @@ export const getTotalRevenueAndMiles = (mileages: Mileage[]): number[] => {
   return [totalRevenue, totalMiles];
 };
 
-const getDriverWeeklyMileageWithAlteredMileageFieldByIndex = (
-  driverWeeklyMileage: DriverWeeklyMileage,
-  field: keyof Mileage,
-  content: string,
+export const setDispatcher = (
+  setDriversWeeklyMileages: React.Dispatch<
+    React.SetStateAction<DriverWeeklyMileage[]>
+  >,
+  dispatcher: Renderable,
   index: number,
 ) => {
+  console.log(dispatcher);
+  console.log(index);
+  setDriversWeeklyMileages((driversWeeklyMileages) =>
+    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
+      if (i === index) {
+        return {
+          ...driverWeeklyMileage,
+          dispatcher: dispatcher as User,
+        };
+      }
+      return driverWeeklyMileage;
+    }),
+  );
+};
+
+export const setDriver = (
+  setDriversWeeklyMileages: React.Dispatch<
+    React.SetStateAction<DriverWeeklyMileage[]>
+  >,
+  driver: Renderable,
+  index: number,
+) => {
+  setDriversWeeklyMileages((driversWeeklyMileages) =>
+    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
+      if (i === index) {
+        return {
+          ...driverWeeklyMileage,
+          driver: driver as Driver,
+        };
+      }
+      return driverWeeklyMileage;
+    }),
+  );
+};
+
+export const setDriverWeeklyMileage = (
+  setDriversWeeklyMileages: React.Dispatch<
+    React.SetStateAction<DriverWeeklyMileage[]>
+  >,
+  driverWeeklyMileageIndex: number,
+  mileageIndex: number,
+  field: keyof Mileage,
+  value: string,
+) => {
+  setDriversWeeklyMileages((driversWeeklyMileages) =>
+    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
+      if (i === driverWeeklyMileageIndex) {
+        return {
+          ...driverWeeklyMileage,
+          mileages: mileagesMapperFunction(
+            driverWeeklyMileage.mileages,
+            mileageIndex,
+            field,
+            value,
+          ),
+        };
+      }
+      return driverWeeklyMileage;
+    }),
+  );
+};
+
+const mileagesMapperFunction = (
+  mileages: Mileage[],
+  index: number,
+  field: keyof Mileage,
+  value: string,
+) => {
+  return mileages.map((mileage, j) => {
+    if (j === index) {
+      return {
+        ...mileage,
+        [field]: value,
+      };
+    }
+    return mileage;
+  });
+};
+
+const getBlankDriverWeeklyMileage = (
+  weekDays: string[],
+): DriverWeeklyMileage => {
   return {
-    ...driverWeeklyMileage,
-    mileages: driverWeeklyMileage.mileages.map((mileage, i) =>
-      i !== index
-        ? mileage
-        : {
-            ...mileage,
-            [field]: content,
-          },
-    ),
+    driver: null,
+    dispatcher: null,
+    mileages: getWeekMileages(weekDays),
   };
 };
 
