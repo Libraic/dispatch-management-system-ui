@@ -4,6 +4,10 @@ import type {
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
 import type { ItemError } from "../../types/registration/user/user-registration-data.ts";
+import { NETWORK_ERROR } from "../error-messages.ts";
+
+export const ERRORS_KEY = "errors";
+export const NETWORK_ERROR_KEY = "ERR_NETWORK";
 
 export const handleErrors = <
   T,
@@ -15,7 +19,7 @@ export const handleErrors = <
   isArrayValueKey: (key: keyof ErrorsType) => boolean,
 ): ErrorsType | Error | null => {
   if (apiResponse.error) {
-    if ("errors" in apiResponse.error) {
+    if (ERRORS_KEY in apiResponse.error) {
       const registrationDataErrors = getBlankErrors();
       const groupsErrors = apiResponse.error as GroupsErrorResponse;
 
@@ -51,10 +55,10 @@ export const handleErrors = <
 };
 
 export const handleApiErrors = <T>(error: any): ApiResponse<T, Error> => {
-  if (error.code === "ERR_NETWORK") {
+  if (error.code === NETWORK_ERROR_KEY) {
     return {
       error: {
-        message: "The server is not responding. Please try again later.",
+        message: NETWORK_ERROR,
       },
     };
   }

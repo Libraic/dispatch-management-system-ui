@@ -1,4 +1,4 @@
-import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
+import { PageHeader } from "../../../../global/PageHeader.tsx";
 import { EmergencyContact } from "../basic/EmergencyContact.tsx";
 import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
 import { EMAIL_PLACEHOLDER } from "../../../../utils/constants/placeholders.ts";
@@ -12,7 +12,7 @@ export const ContactInformation = () => {
     context;
   return (
     <>
-      <RegistrationSectionHeader
+      <PageHeader
         header="Contact Information"
         subheader="The contact data of the employee"
       />

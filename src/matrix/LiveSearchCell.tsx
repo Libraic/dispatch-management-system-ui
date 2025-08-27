@@ -9,12 +9,19 @@ import { useToast } from "../hooks/useToast.ts";
 import { Toast } from "../toast/Toast.tsx";
 import { LiveSearchResultList } from "../global/live-search/LiveSearchResultList.tsx";
 import type { LiveSearchResult } from "../types/api/common.ts";
+import errorIcon from "../assets/global/error.svg";
+import { useHoverPanel } from "../hooks/useHoverPanel.ts";
+import { HoverableInformation } from "../global/HoverableInformation.tsx";
+
+const noErrorBackgroundStyle = "border-b-3 border-r-3 border-[#e6ebfa]";
+const erroneousBackgroundStyle = "border-error-red/75 border-3";
 
 export const LiveSearchCell = <D, R>({
   defaultSearchKey,
   constructor,
   saveObject,
   customSearchCriteria,
+  errorMessage,
 }: LiveSearchCellData<D, R>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
@@ -23,25 +30,35 @@ export const LiveSearchCell = <D, R>({
   const searchField = LiveSearchEndpoints[defaultSearchKey].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
+  const [bgColor, setBgColor] = useState(noErrorBackgroundStyle);
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
     query,
     customSearchCriteria,
   );
+  const hoverData = useHoverPanel(!!errorMessage);
+
   useEffect(() => {
+    setBgColor(
+      errorMessage ? erroneousBackgroundStyle : noErrorBackgroundStyle,
+    );
     if (data.error !== null) {
       toast.withErrorMessage(data.error);
     } else {
       toast.clear();
       setItems(data.items.map((item) => new constructor(item) as Renderable));
     }
-  }, [data]);
+  }, [data, errorMessage]);
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseEnter={hoverData.handleMouseEnter}
+      onMouseLeave={hoverData.handleMouseLeave}
+    >
       <div
-        className="px-4 flex items-center bg-[#f5f7fc] border-r-3 border-b-3 border-[#e6ebfa] w-full h-full caret-transparent "
+        className={`px-4 flex items-center ${bgColor} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {
@@ -81,6 +98,15 @@ export const LiveSearchCell = <D, R>({
           key={toast.getIdentifier()}
           message={toast.getMessage()}
           type={toast.getOperationResult()}
+        />
+      )}
+
+      {hoverData.shouldDisplayMessage() && (
+        <HoverableInformation
+          message={errorMessage!!}
+          icon={errorIcon}
+          topPosition="top-[2rem]"
+          leftPosition="left-[4.2rem]"
         />
       )}
     </div>

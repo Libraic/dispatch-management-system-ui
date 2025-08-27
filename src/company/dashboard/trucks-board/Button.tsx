@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useHoverPanel } from "../../../hooks/useHoverPanel.ts";
+import { HoverableInformation } from "../../../global/HoverableInformation.tsx";
 
 export const Button: React.FC<{
   unfocusedResource: string;
@@ -7,38 +9,29 @@ export const Button: React.FC<{
   information?: string;
 }> = ({ unfocusedResource, focusedResource, information, action }) => {
   const [resource, setResource] = React.useState(unfocusedResource);
-  const [showInformation, setShowInformation] = React.useState(false);
-  const hoverTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleMouseEnter = () => {
-    setResource(focusedResource);
-    hoverTimeout.current = setTimeout(() => {
-      setShowInformation(true);
-    }, 1000);
-  };
-
-  const handleMouseLeave = () => {
-    setResource(unfocusedResource);
-    if (hoverTimeout.current) {
-      clearTimeout(hoverTimeout.current);
-      hoverTimeout.current = null;
-    }
-    setShowInformation(false);
-  };
+  const hoverPanelData = useHoverPanel(!!information);
   return (
     <div className="relative inline-block mx-3">
       <img
         className="w-[2rem] cursor-pointer"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => {
+          setResource(focusedResource);
+          hoverPanelData.handleMouseEnter();
+        }}
+        onMouseLeave={() => {
+          setResource(unfocusedResource);
+          hoverPanelData.handleMouseLeave();
+        }}
         src={resource}
         alt="add-record-unfocused"
         onClick={action}
       />
-      {showInformation && (
-        <div className="absolute top-full left-[4.2rem] -translate-x-1/2 mt-2 min-w-[8rem] rounded-xl text-center text-[0.8rem] p-1 z-10 shadow-lg backdrop-blur-sm bg-white/30">
-          <p className="font-lato font-light">{information}</p>
-        </div>
+      {hoverPanelData.shouldDisplayMessage() && (
+        <HoverableInformation
+          message={information!!}
+          leftPosition="left-[4.2rem]"
+          minWidth="min-w-[8rem]"
+        />
       )}
     </div>
   );

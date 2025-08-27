@@ -81,7 +81,6 @@ export const UserRegistrationInputArea: React.FC<{
       getBlankUserRegistrationErrors,
       (key) => key === "workloads" || key === "notes",
     );
-
     if (apiErrors == null) {
       navigate(HOME);
     } else if ("message" in apiErrors) {

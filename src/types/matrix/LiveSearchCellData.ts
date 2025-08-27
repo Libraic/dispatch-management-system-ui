@@ -6,4 +6,5 @@ export type LiveSearchCellData<D, R> = {
   constructor: new (dto: D) => Renderable;
   saveObject?: (renderable: Renderable) => R;
   customSearchCriteria?: SearchCriteria[];
+  errorMessage?: string;
 };

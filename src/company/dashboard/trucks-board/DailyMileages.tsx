@@ -1,7 +1,9 @@
 import { DailyMileage } from "./DailyMileage.tsx";
 import type {
+  DriverMileageError,
   DriverWeeklyMileage,
   Mileage,
+  MileageError,
 } from "../../../types/financial/trucks-board.ts";
 import * as React from "react";
 
@@ -12,10 +14,11 @@ export const DailyMileages: React.FC<{
     field: keyof Mileage,
     value: string,
   ) => void;
-}> = ({ driverWeeklyMileage, setDriverWeeklyMileage }) => {
+  error?: DriverMileageError;
+}> = ({ driverWeeklyMileage, setDriverWeeklyMileage, error }) => {
   return (
     <>
-      {driverWeeklyMileage.mileages.map((mileage, index) => (
+      {driverWeeklyMileage.mileageData.map((mileage, index) => (
         <div
           className="flex items-center bg-[#f5f7fc] border-[#e6ebfa]"
           key={index}
@@ -24,6 +27,7 @@ export const DailyMileages: React.FC<{
             mileage={mileage}
             setDriverWeeklyMileage={setDriverWeeklyMileage}
             index={index}
+            error={error && (error[mileage.date] as MileageError)}
           />
         </div>
       ))}

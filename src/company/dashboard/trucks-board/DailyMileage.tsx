@@ -1,8 +1,10 @@
 import { EditableCell } from "../../../matrix/EditableCell.tsx";
 import { CellType } from "../../../types/matrix/matrix-types.ts";
-import type { Mileage } from "../../../types/financial/trucks-board.ts";
+import type {
+  Mileage,
+  MileageError,
+} from "../../../types/financial/trucks-board.ts";
 import * as React from "react";
-import { BLANK_STRING } from "../../../utils/constants/global.ts";
 
 export const DailyMileage: React.FC<{
   mileage: Mileage;
@@ -12,7 +14,8 @@ export const DailyMileage: React.FC<{
     value: string,
   ) => void;
   index: number;
-}> = ({ mileage, setDriverWeeklyMileage, index }) => {
+  error?: MileageError;
+}> = ({ mileage, setDriverWeeklyMileage, index, error }) => {
   return (
     <div className="flex w-full h-full">
       <EditableCell
@@ -28,6 +31,7 @@ export const DailyMileage: React.FC<{
           setContent={(content: string) =>
             setDriverWeeklyMileage(index, "revenue", content)
           }
+          errorMessage={error?.revenue}
         />
         <EditableCell
           content={mileage.miles}
@@ -35,10 +39,11 @@ export const DailyMileage: React.FC<{
           setContent={(content: string) =>
             setDriverWeeklyMileage(index, "miles", content)
           }
+          errorMessage={error?.miles}
         />
       </div>
       <EditableCell
-        content={mileage.note ?? BLANK_STRING}
+        content={mileage.note}
         setContent={(content: string) =>
           setDriverWeeklyMileage(index, "note", content)
         }

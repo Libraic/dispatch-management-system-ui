@@ -2,7 +2,7 @@ import { CellType } from "../../types/matrix/matrix-types.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
-  DOLAR_SIGN,
+  DOLLAR_SIGN,
   DOT,
 } from "../constants/global.ts";
 
@@ -12,7 +12,11 @@ export const formatNumericValue = (input: string) => {
   return Number(parts[0]).toLocaleString("en-US") + decimalPart;
 };
 
-export const sanitizeInput = (input: string, cellType?: CellType) => {
+export const sanitizeInput = (input: string | null, cellType?: CellType) => {
+  if (!input) {
+    return BLANK_STRING;
+  }
+
   if (!cellType || cellType === CellType.ALPHANUMERIC) {
     return input;
   }
@@ -31,6 +35,6 @@ export const sanitizeInput = (input: string, cellType?: CellType) => {
   const sanitizedInput = removedDots.replace(/[^0-9.]/g, BLANK_STRING);
   const formattedInput = formatNumericValue(sanitizedInput);
   return cellType === CellType.CURRENCY
-    ? DOLAR_SIGN + BLANK_SPACE + formattedInput
+    ? DOLLAR_SIGN + BLANK_SPACE + formattedInput
     : formattedInput;
 };

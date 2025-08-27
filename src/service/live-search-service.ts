@@ -15,7 +15,6 @@ export const getData = async <T, E extends Error | GroupsErrorResponse>(
     });
     return response.data;
   } catch (error: any) {
-    console.log(error);
     return error.response.data;
   }
 };

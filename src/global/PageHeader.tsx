@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const RegistrationSectionHeader: React.FC<{
+export const PageHeader: React.FC<{
   header: string;
   subheader: string;
 }> = ({ header, subheader }) => {

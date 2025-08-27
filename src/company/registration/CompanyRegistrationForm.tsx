@@ -11,7 +11,7 @@ import type {
 } from "../../types/registration/company/company-registration-data.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
 import { MandatoryFieldDisclaimer } from "../../global/MandatoryFieldDisclaimer.tsx";
-import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
+import { PageHeader } from "../../global/PageHeader.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +69,7 @@ export const CompanyRegistrationForm = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="h-1/4">
-        <RegistrationSectionHeader
+        <PageHeader
           header="Company"
           subheader="Add a new Company to the system"
         />

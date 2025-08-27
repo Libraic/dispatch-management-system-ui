@@ -18,11 +18,6 @@ export type Error = {
   identifier?: string;
 };
 
-export type FieldErrorResponse = {
-  field: string | null;
-  errorMessage: string;
-};
-
 export type GroupsErrorResponse = {
   errors: Error | Error[];
 };

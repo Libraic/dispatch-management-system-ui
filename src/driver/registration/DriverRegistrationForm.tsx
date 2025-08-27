@@ -23,7 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { EmploymentData } from "./registration-sections/EmploymentData.tsx";
 import type { RegistrationContextData } from "../../types/context/context-types.ts";
 import { DriverRegistrationContext } from "../../context/DriverRegistrationContext.ts";
-import { RegistrationSectionHeader } from "../../global/RegistrationSectionHeader.tsx";
+import { PageHeader } from "../../global/PageHeader.tsx";
 import { saveDriver } from "../../service/driver-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import { BLANK_STRING } from "../../utils/constants/global.ts";
@@ -111,7 +111,7 @@ export const DriverRegistrationForm = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between">
       <div className="flex flex-col items-center">
-        <RegistrationSectionHeader
+        <PageHeader
           header="Add Driver"
           subheader="Complete the required information from the sections"
         />

@@ -1,10 +1,10 @@
-import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
+import { PageHeader } from "../../../../global/PageHeader.tsx";
 import { AddNote } from "./AddNote.tsx";
 
 export const Notes = () => {
   return (
     <div>
-      <RegistrationSectionHeader
+      <PageHeader
         header="Notes"
         subheader="Additional information about the employee"
       />

@@ -4,7 +4,7 @@ import type { Mileage } from "../../../types/financial/trucks-board.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
-  DOLAR_SIGN,
+  DOLLAR_SIGN,
 } from "../../../utils/constants/global.ts";
 import { formatNumericValue } from "../../../utils/matrix/cell-utils.ts";
 import { getTotalRevenueAndMiles } from "../../../utils/financial/trucks-board-utils.ts";
@@ -16,7 +16,7 @@ export const TotalRevenueAndMiles: React.FC<{ mileages: Mileage[] }> = ({
   return (
     <div className="grid grid-rows-2">
       <ViewableCell
-        data={`${totalRevenue !== 0 ? DOLAR_SIGN + BLANK_SPACE + formatNumericValue(totalRevenue.toString()) : BLANK_STRING}`}
+        data={`${totalRevenue !== 0 ? DOLLAR_SIGN + BLANK_SPACE + formatNumericValue(totalRevenue.toString()) : BLANK_STRING}`}
         font="bold"
       ></ViewableCell>
       <ViewableCell

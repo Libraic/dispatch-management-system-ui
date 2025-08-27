@@ -13,9 +13,12 @@ import { ViewableCell } from "../../../matrix/ViewableCell.tsx";
 import { BLANK_STRING } from "../../../utils/constants/global.ts";
 import { TotalRevenueAndMiles } from "./TotalRevenueAndMiles.tsx";
 import { DailyMileages } from "./DailyMileages.tsx";
-import type {
-  DriverWeeklyMileage,
-  Mileage,
+import {
+  DISPATCHER_KEY,
+  DRIVER_KEY,
+  type DriverMileageError,
+  type DriverWeeklyMileage,
+  type Mileage,
 } from "../../../types/financial/trucks-board.ts";
 import type { Dispatch } from "react";
 import * as React from "react";
@@ -28,11 +31,13 @@ export const WeeklyMileage: React.FC<{
   >;
   index: number;
   companyUuid: string;
+  driverMileageError?: DriverMileageError;
 }> = ({
   driverWeeklyMileage,
   setDriversWeeklyMileages,
   index,
   companyUuid,
+  driverMileageError,
 }) => {
   const [isActive, setIsActive] = React.useState(false);
   return (
@@ -54,6 +59,9 @@ export const WeeklyMileage: React.FC<{
         saveObject={(dispatcher: Renderable) =>
           setDispatcher(setDriversWeeklyMileages, dispatcher, index)
         }
+        errorMessage={
+          driverMileageError && (driverMileageError[DISPATCHER_KEY] as string)
+        }
       />
       <LiveSearchCell
         defaultSearchKey={LiveSearchKey.DRIVER}
@@ -62,11 +70,14 @@ export const WeeklyMileage: React.FC<{
           setDriver(setDriversWeeklyMileages, driver, index)
         }
         customSearchCriteria={[queryDriversByCompanyId(companyUuid)]}
+        errorMessage={
+          driverMileageError && (driverMileageError[DRIVER_KEY] as string)
+        }
       />
       <ViewableCell
         data={driverWeeklyMileage.driver?.getTruckData() ?? BLANK_STRING}
       ></ViewableCell>
-      <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileages} />
+      <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileageData} />
       <DailyMileages
         driverWeeklyMileage={driverWeeklyMileage}
         setDriverWeeklyMileage={(
@@ -82,6 +93,7 @@ export const WeeklyMileage: React.FC<{
             value,
           )
         }
+        error={driverMileageError}
       />
     </div>
   );

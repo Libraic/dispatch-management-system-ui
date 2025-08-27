@@ -1,10 +1,10 @@
-import { RegistrationSectionHeader } from "../../../../global/RegistrationSectionHeader.tsx";
+import { PageHeader } from "../../../../global/PageHeader.tsx";
 import { AddWorkload } from "./AddWorkload.tsx";
 
 export const Workload = () => {
   return (
     <div>
-      <RegistrationSectionHeader
+      <PageHeader
         header="Workload"
         subheader="The working area of the employee"
       />
