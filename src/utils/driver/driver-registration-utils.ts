@@ -1,14 +1,14 @@
 import type {
   DriverRegistrationData,
   DriverRegistrationError,
-} from "../../../types/registration/driver/driver-registration-types.ts";
-import { BLANK_STRING } from "../../constants/global.ts";
+} from "../../types/registration/driver/driver-registration-types.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import {
   getFirstCityOfStateByCountryIsoCode,
   getFirstStateOfCountryByIsoCode,
   USA_COUNTRY_ISO_CODE,
-} from "../../location/location-utils.ts";
-import type { CreateDriverRequest } from "../../../types/api/driver-api.ts";
+} from "../location/location-utils.ts";
+import type { CreateDriverRequest } from "../../types/api/driver-api.ts";
 
 export const trailerTypes = [
   "Flatbed",

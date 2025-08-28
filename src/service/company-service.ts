@@ -7,7 +7,7 @@ import type {
 } from "../types/api/common.ts";
 import { FETCH_COMPANIES, SAVE_COMPANY } from "../utils/api/api-paths.ts";
 import type { CreateCompanyRequest } from "../types/registration/company/company-registration-data.ts";
-import { handleApiErrors } from "../utils/registration/common-api-error-utils.ts";
+import { handleApiErrors } from "../utils/api/common-api-error-utils.ts";
 
 export const fetchCompanies = async (): Promise<CompanyData[] | undefined> => {
   try {

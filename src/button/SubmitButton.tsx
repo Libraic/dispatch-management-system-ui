@@ -1,5 +1,5 @@
 import * as React from "react";
-import { colorTransitionStyle } from "../utils/tailwind.ts";
+import { colorTransitionStyle } from "../utils/tailwind/tailwind.ts";
 
 export const SubmitButton: React.FC<{
   actionText: string;

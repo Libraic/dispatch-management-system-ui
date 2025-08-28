@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Delete } from "../../../../button/Delete.tsx";
-import { textAreaStyle } from "../../../../utils/tailwind.ts";
+import { textAreaStyle } from "../../../../utils/tailwind/tailwind.ts";
 import { InputFormError } from "../../../../global/input-forms/InputFormError.tsx";
 import type {
   NoteData,
@@ -9,8 +9,8 @@ import type {
 import {
   alterNote,
   deleteNote,
-} from "../../../../utils/registration/user/user-registration.ts";
-import { NOTE_PLACEHOLDER } from "../../../../utils/constants/placeholders.ts";
+} from "../../../../utils/user/user-registration.ts";
+import { NOTE_PLACEHOLDER } from "../../../../utils/constants/placeholder-constants.ts";
 
 export const NoteItem: React.FC<{
   setRegistrationData: React.Dispatch<

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import {
   documentsStatuses,
   driverPositions,
-} from "../../../utils/registration/driver/driver-registration-utils.ts";
+} from "../../../utils/driver/driver-registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
 import { LocationSelector } from "../../../global/input-forms/LocationSelector.tsx";
 

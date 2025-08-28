@@ -4,9 +4,9 @@ import {
   type UserRegistrationData,
   type UserRegistrationErrors,
   type WorkloadData,
-} from "../../../types/registration/user/user-registration-data.ts";
-import { BLANK_STRING } from "../../constants/global.ts";
-import { validateEmail } from "../registration-utils.ts";
+} from "../../types/registration/user/user-registration-data.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
+import { validateEmail } from "../registration/registration-utils.ts";
 import {
   validateNotes,
   validatePassword,

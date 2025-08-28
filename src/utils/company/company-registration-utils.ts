@@ -1,10 +1,13 @@
 import type {
   CompanyRegistrationData,
   CreateCompanyRequest,
-} from "../../../types/registration/company/company-registration-data.ts";
-import { BLANK_STRING } from "../../constants/global.ts";
+} from "../../types/registration/company/company-registration-data.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import * as React from "react";
-import { convertDateToLittleEndian, getCurrentYearData } from "../../date.ts";
+import {
+  convertDateToLittleEndian,
+  getCurrentYearData,
+} from "../global/date.ts";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationData => {
   return {

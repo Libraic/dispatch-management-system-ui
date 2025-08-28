@@ -1,7 +1,7 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
-import { inputFormStyle } from "../../utils/tailwind.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
+import { inputFormStyle } from "../../utils/tailwind/tailwind.ts";
 import { InputFormError } from "./InputFormError.tsx";
 import { InputFormLabel } from "./InputFormLabel.tsx";
 

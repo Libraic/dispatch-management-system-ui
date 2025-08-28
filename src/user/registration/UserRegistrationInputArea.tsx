@@ -8,13 +8,13 @@ import { useState } from "react";
 import {
   getBlankUserRegistrationData,
   getCreateUserRequestFromRegistrationData,
-} from "../../utils/registration/user/user-registration.ts";
+} from "../../utils/user/user-registration.ts";
 import { Notes } from "./sections/notes/Notes.tsx";
 import { Toast } from "../../toast/Toast.tsx";
 import {
   BLANK_STRING,
   SUBMIT_BUTTON_TEXT,
-} from "../../utils/constants/global.ts";
+} from "../../utils/constants/global-constants.ts";
 import {
   type UserRegistrationData,
   type UserRegistrationErrors,
@@ -23,15 +23,15 @@ import {
   getBlankUserRegistrationErrors,
   getRegistrationDataErrors,
   getSectionsWithErrors,
-} from "../../utils/registration/user/user-registration-errors.ts";
+} from "../../utils/user/user-registration-errors.ts";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../utils/routes/routes.ts";
+import { HOME } from "../../utils/constants/internal-routes.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import type { RegistrationContextData } from "../../types/context/context-types.ts";
 import { UserRegistrationContext } from "../../context/UserRegistrationContext.ts";
 import type { CreateUserRequest } from "../../types/api/registration-api.ts";
 import { saveUser } from "../../service/user-service.ts";
-import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+import { handleErrors } from "../../utils/api/common-api-error-utils.ts";
 import type { SectionsHandler } from "../../hooks/useSections.ts";
 import { ContactInformation } from "./sections/contact/ContactInformation.tsx";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 
 export type ToastData = {

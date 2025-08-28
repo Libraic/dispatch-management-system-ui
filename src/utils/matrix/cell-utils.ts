@@ -4,7 +4,7 @@ import {
   BLANK_STRING,
   DOLLAR_SIGN,
   DOT,
-} from "../constants/global.ts";
+} from "../constants/global-constants.ts";
 
 export const formatNumericValue = (input: string) => {
   const parts = input.split(DOT);

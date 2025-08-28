@@ -2,7 +2,7 @@ import { DateSelector } from "../../global/input-forms/DateSelector.tsx";
 import * as React from "react";
 import { useDateObject } from "../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../hooks/usePrepopulateDate.ts";
-import { getCurrentYearData } from "../../utils/date.ts";
+import { getCurrentYearData } from "../../utils/global/date.ts";
 import type { CompanyRegistrationData } from "../../types/registration/company/company-registration-data.ts";
 
 export const StartAndServiceDate: React.FC<{

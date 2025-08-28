@@ -5,14 +5,14 @@ import {
   PositionEnum,
   RoleEnum,
 } from "../../../../types/registration/user/user-registration-data.ts";
-import { BLANK_STRING } from "../../../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../../../utils/constants/global-constants.ts";
 import { LiveSearchInputForm } from "../../../../global/live-search/LiveSearchInputForm.tsx";
 import {
   alterSupervisor,
   cleanSupervisor,
   prepopulatePosition,
   prepopulateRole,
-} from "../../../../utils/registration/user/user-registration.ts";
+} from "../../../../utils/user/user-registration.ts";
 import type { Renderable } from "../../../../types/api/Renderable.ts";
 import { User } from "../../../../types/api/User.ts";
 

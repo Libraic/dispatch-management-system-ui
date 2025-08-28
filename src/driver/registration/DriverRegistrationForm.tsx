@@ -12,11 +12,11 @@ import {
   createCreateDriverRequestFromDriverRegistrationData,
   getBlankDriverRegistrationData,
   getBlankDriverRegistrationError,
-} from "../../utils/registration/driver/driver-registration-utils.ts";
+} from "../../utils/driver/driver-registration-utils.ts";
 import {
   getDriverRegistrationErrors,
   getErroneousSection,
-} from "../../utils/registration/driver/driver-registration-validation.ts";
+} from "../../utils/driver/driver-registration-validation.ts";
 import { SubmitButton } from "../../button/SubmitButton.tsx";
 import { CancelButton } from "../../button/CancelButton.tsx";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,9 +26,9 @@ import { DriverRegistrationContext } from "../../context/DriverRegistrationConte
 import { PageHeader } from "../../global/PageHeader.tsx";
 import { saveDriver } from "../../service/driver-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import { Toast } from "../../toast/Toast.tsx";
-import { handleErrors } from "../../utils/registration/common-api-error-utils.ts";
+import { handleErrors } from "../../utils/api/common-api-error-utils.ts";
 import { useSections } from "../../hooks/useSections.ts";
 import type {
   ApiResponse,

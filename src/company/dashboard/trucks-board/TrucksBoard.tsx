@@ -4,7 +4,7 @@ import type {
   DriverWeeklyMileage,
 } from "../../../types/financial/trucks-board.ts";
 import { useParams } from "react-router-dom";
-import { getWeekWithNames } from "../../../utils/date.ts";
+import { getWeekWithNames } from "../../../utils/global/date.ts";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import addRecordUnfocused from "../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../assets/trucks-board/add-focused.svg";
@@ -16,12 +16,12 @@ import { Button } from "./Button.tsx";
 import {
   addDriverWeeklyMileage,
   saveDriversWeeklyMileage,
-} from "../../../utils/financial/trucks-board-utils.ts";
+} from "../../../utils/trucks-board/trucks-board-utils.ts";
 import { WeeklyMileage } from "./WeeklyMileage.tsx";
 import {
   TRUCKS_BOARD_COLUMNS_LAYOUT,
   TRUCKS_BOARD_PRIMARY_COLUMNS,
-} from "../../../utils/financial/trucks-board-constants.ts";
+} from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { PageHeader } from "../../../global/PageHeader.tsx";
 
 const date = new Date();

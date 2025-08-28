@@ -6,8 +6,8 @@ import type {
   LiveSearchResult,
   SearchCriteria,
 } from "../types/api/common.ts";
-import { COLON, DEBOUNCING_TIME } from "../utils/constants/global.ts";
-import { LIKE_CLAUSE } from "../utils/constants/api-query.ts";
+import { COLON, DEBOUNCING_TIME } from "../utils/constants/global-constants.ts";
+import { LIKE_CLAUSE } from "../utils/api/api-query-constants.ts";
 
 const EMPTY_OBJECT = {
   items: [],

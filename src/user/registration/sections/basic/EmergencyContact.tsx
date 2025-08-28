@@ -5,8 +5,8 @@ import {
   EMERGENCY_CONTACT_NAME_PLACEHOLDER,
   EMERGENCY_CONTACT_PHONE_PLACEHOLDER,
   EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER,
-} from "../../../../utils/constants/placeholders.ts";
-import { setEmergencyContactField } from "../../../../utils/registration/user/user-registration.ts";
+} from "../../../../utils/constants/placeholder-constants.ts";
+import { setEmergencyContactField } from "../../../../utils/user/user-registration.ts";
 
 export const EmergencyContact = () => {
   const context = useContext(UserRegistrationContext)!;

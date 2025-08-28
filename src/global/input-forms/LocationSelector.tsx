@@ -7,7 +7,7 @@ import {
   renderStateByNameAndIsoCode,
   USA_COUNTRY_ISO_CODE,
 } from "../../utils/location/location-utils.ts";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 
 export const LocationSelector: React.FC<{
   currentState: string;

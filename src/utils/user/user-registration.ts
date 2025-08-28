@@ -1,14 +1,14 @@
-import { BLANK_STRING } from "../../constants/global.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import type {
   CreateUserRequest,
   CreateWorkloadRequest,
   EmergencyContact,
-} from "../../../types/api/registration-api.ts";
+} from "../../types/api/registration-api.ts";
 import {
   convertDateToLittleEndian,
   DEFAULT_BIRTH_DATE,
   getCurrentYearData,
-} from "../../date.ts";
+} from "../global/date.ts";
 import {
   type EmergencyContactData,
   type NoteData,
@@ -16,10 +16,10 @@ import {
   RoleEnum,
   type UserRegistrationData,
   type WorkloadData,
-} from "../../../types/registration/user/user-registration-data.ts";
+} from "../../types/registration/user/user-registration-data.ts";
 import type { ChangeEvent } from "react";
 import * as React from "react";
-import type { Renderable } from "../../../types/api/Renderable.ts";
+import type { Renderable } from "../../types/api/Renderable.ts";
 
 export const getBlankUserRegistrationData = (): UserRegistrationData => {
   return {

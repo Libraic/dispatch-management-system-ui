@@ -9,7 +9,7 @@ import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common.ts";
-import { handleApiErrors } from "../utils/registration/common-api-error-utils.ts";
+import { handleApiErrors } from "../utils/api/common-api-error-utils.ts";
 
 export const saveUser = async (
   createUserRequest: CreateUserRequest,

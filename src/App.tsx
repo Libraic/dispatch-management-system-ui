@@ -10,7 +10,7 @@ import {
   HOME,
   TRUCKS_BOARD,
   USER_REGISTRATION,
-} from "./utils/routes/routes.ts";
+} from "./utils/constants/internal-routes.ts";
 import { CompaniesList } from "./company/CompaniesList.tsx";
 import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
 import { TrucksBoard } from "./company/dashboard/trucks-board/TrucksBoard.tsx";

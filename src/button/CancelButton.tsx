@@ -1,4 +1,4 @@
-import { colorTransitionStyle } from "../utils/tailwind.ts";
+import { colorTransitionStyle } from "../utils/tailwind/tailwind.ts";
 import * as React from "react";
 
 export const CancelButton: React.FC<{

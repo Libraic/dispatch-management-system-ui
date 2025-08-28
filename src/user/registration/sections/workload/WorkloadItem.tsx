@@ -9,7 +9,7 @@ import {
   alterWorkloads,
   cleanWorkload,
   deleteWorkload,
-} from "../../../../utils/registration/user/user-registration.ts";
+} from "../../../../utils/user/user-registration.ts";
 import { LiveSearchInputForm } from "../../../../global/live-search/LiveSearchInputForm.tsx";
 import { Company } from "../../../../types/api/Company.ts";
 import type { Renderable } from "../../../../types/api/Renderable.ts";

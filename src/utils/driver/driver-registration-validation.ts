@@ -2,14 +2,14 @@ import {
   DRIVER_REGISTRATION_SECTIONS,
   type DriverRegistrationData,
   type DriverRegistrationError,
-} from "../../../types/registration/driver/driver-registration-types.ts";
+} from "../../types/registration/driver/driver-registration-types.ts";
 import { getBlankDriverRegistrationError } from "./driver-registration-utils.ts";
-import { BLANK_STRING } from "../../constants/global.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import {
   validateEmail,
   validateMandatoryField,
-} from "../registration-utils.ts";
-import { ErroneousSections } from "../../../types/classes/ErroneousSections.ts";
+} from "../registration/registration-utils.ts";
+import { ErroneousSections } from "../../types/classes/ErroneousSections.ts";
 
 export const getDriverRegistrationErrors = (
   driverRegistrationData: DriverRegistrationData,

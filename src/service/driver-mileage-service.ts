@@ -5,7 +5,7 @@ import type {
 } from "../types/api/common.ts";
 import axios from "axios";
 import { SAVE_DRIVER_MILEAGE } from "../utils/api/api-paths.ts";
-import { handleApiErrors } from "../utils/registration/common-api-error-utils.ts";
+import { handleApiErrors } from "../utils/api/common-api-error-utils.ts";
 import type { UpsertDriversMileageRequest } from "../types/api/driver-mileage-api.ts";
 import type { DriverWeeklyMileage } from "../types/financial/trucks-board.ts";
 

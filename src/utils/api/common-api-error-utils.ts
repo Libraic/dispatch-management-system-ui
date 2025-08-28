@@ -4,7 +4,7 @@ import type {
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
 import type { ItemError } from "../../types/registration/user/user-registration-data.ts";
-import { NETWORK_ERROR } from "../error-messages.ts";
+import { NETWORK_ERROR } from "../global/error-messages.ts";
 
 export const ERRORS_KEY = "errors";
 export const NETWORK_ERROR_KEY = "ERR_NETWORK";

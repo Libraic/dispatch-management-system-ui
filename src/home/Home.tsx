@@ -3,7 +3,7 @@ import {
   COMPANIES_LIST,
   COMPANY_REGISTRATION,
   USER_REGISTRATION,
-} from "../utils/routes/routes.ts";
+} from "../utils/constants/internal-routes.ts";
 
 import createUserUnhoveredIcon from "../assets/admin-menu/create-user-unhovered.svg";
 import createUserHoveredIcon from "../assets/admin-menu/create-user-hovered.svg";

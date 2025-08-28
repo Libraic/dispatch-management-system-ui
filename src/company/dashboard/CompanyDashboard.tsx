@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import { fetchCompanyByUuid } from "../../service/company-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
 import { Toast } from "../../toast/Toast.tsx";
-import { INTERNAL_SERVER_ERROR } from "../../utils/error-messages.ts";
+import { INTERNAL_SERVER_ERROR } from "../../utils/global/error-messages.ts";
 import type { CompanyData } from "../../types/api/registration-api.ts";
 import trucksBoardUnhoveredIcon from "../../assets/company-menu/trucks-board-unhovered.svg";
 import companyProfileIcon from "../../assets/company-menu/company-profile.svg";
 import addDriverIcon from "../../assets/company-menu/add-driver.svg";
 import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import {
   DRIVER_REGISTRATION,
   TRUCKS_BOARD,
-} from "../../utils/routes/routes.ts";
+} from "../../utils/constants/internal-routes.ts";
 
 export const CompanyDashboard = () => {
   const { companyUuid } = useParams();

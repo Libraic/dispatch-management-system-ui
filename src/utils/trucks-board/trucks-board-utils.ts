@@ -7,16 +7,19 @@ import {
   type Mileage,
   type MileageError,
 } from "../../types/financial/trucks-board.ts";
-import { BLANK_STRING } from "../constants/global.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
 import type { SetStateAction } from "react";
 import * as React from "react";
 import type { User } from "../../types/api/User.ts";
-import { convertMileageDayToLittleEndianDate } from "../date.ts";
+import { convertMileageDayToLittleEndianDate } from "../global/date.ts";
 import type { UpsertDriversMileageRequest } from "../../types/api/driver-mileage-api.ts";
 import { saveDriversMileage } from "../../service/driver-mileage-service.ts";
-import { MISSING_DISPATCHER, MISSING_DRIVER } from "../error-messages.ts";
+import {
+  MISSING_DISPATCHER,
+  MISSING_DRIVER,
+} from "../global/error-messages.ts";
 import type {
   ApiResponse,
   Error,

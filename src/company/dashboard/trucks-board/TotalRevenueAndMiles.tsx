@@ -5,9 +5,9 @@ import {
   BLANK_SPACE,
   BLANK_STRING,
   DOLLAR_SIGN,
-} from "../../../utils/constants/global.ts";
+} from "../../../utils/constants/global-constants.ts";
 import { formatNumericValue } from "../../../utils/matrix/cell-utils.ts";
-import { getTotalRevenueAndMiles } from "../../../utils/financial/trucks-board-utils.ts";
+import { getTotalRevenueAndMiles } from "../../../utils/trucks-board/trucks-board-utils.ts";
 
 export const TotalRevenueAndMiles: React.FC<{ mileages: Mileage[] }> = ({
   mileages,

@@ -1,4 +1,4 @@
-import { BLANK_STRING } from "../constants/global.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 
 export const getNameInitials = (name: string) => {
   if (name === BLANK_STRING) {

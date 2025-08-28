@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { inputFormStyle } from "../../utils/tailwind.ts";
-import { BLANK_STRING, EMPTY_ARRAY } from "../../utils/constants/global.ts";
+import { inputFormStyle } from "../../utils/tailwind/tailwind.ts";
+import {
+  BLANK_STRING,
+  EMPTY_ARRAY,
+} from "../../utils/constants/global-constants.ts";
 import { Toast } from "../../toast/Toast.tsx";
 import { InputFormError } from "../input-forms/InputFormError.tsx";
 import { useToast } from "../../hooks/useToast.ts";

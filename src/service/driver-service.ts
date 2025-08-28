@@ -9,7 +9,7 @@ import type {
   CreateDriverRequest,
   DriverData,
 } from "../types/api/driver-api.ts";
-import { handleApiErrors } from "../utils/registration/common-api-error-utils.ts";
+import { handleApiErrors } from "../utils/api/common-api-error-utils.ts";
 
 export const saveDriver = async (
   createDriverRequest: CreateDriverRequest,

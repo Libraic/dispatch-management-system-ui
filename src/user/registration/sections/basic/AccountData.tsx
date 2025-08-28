@@ -1,14 +1,14 @@
 import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
 import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
-import { setRegistrationDataStringField } from "../../../../utils/registration/user/user-registration.ts";
+import { setRegistrationDataStringField } from "../../../../utils/user/user-registration.ts";
 import {
   EMAIL_PLACEHOLDER,
   FIRST_NAME_PLACEHOLDER,
   LAST_NAME_PLACEHOLDER,
   NICKNAME_PLACEHOLDER,
   PASSWORD_PLACEHOLDER,
-} from "../../../../utils/constants/placeholders.ts";
+} from "../../../../utils/constants/placeholder-constants.ts";
 
 export const AccountData = () => {
   const context = useContext(UserRegistrationContext)!;

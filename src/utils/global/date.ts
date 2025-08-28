@@ -1,5 +1,5 @@
-import type { YearData } from "../types/global.ts";
-import { BLANK_SPACE, DOT } from "./constants/global.ts";
+import type { YearData } from "../../types/global.ts";
+import { BLANK_SPACE, DOT } from "../constants/global-constants.ts";
 
 export const LAST_ADMITTABLE_BIRTH_YEAR = 2007;
 export const DEFAULT_BIRTH_DATE: YearData = {

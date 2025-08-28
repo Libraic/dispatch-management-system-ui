@@ -1,5 +1,5 @@
 import mandatoryFieldIcon from "../../assets/global/mandatory-field.svg";
-import { inputFormLabelStyle } from "../../utils/tailwind.ts";
+import { inputFormLabelStyle } from "../../utils/tailwind/tailwind.ts";
 import { FieldInformation } from "../FieldInformation.tsx";
 import * as React from "react";
 

@@ -7,10 +7,9 @@ import {
   setDispatcher,
   setDriver,
   setDriverWeeklyMileage,
-} from "../../../utils/financial/trucks-board-utils.ts";
-import { queryDriversByCompanyId } from "../../../utils/constants/api-query.ts";
+} from "../../../utils/trucks-board/trucks-board-utils.ts";
 import { ViewableCell } from "../../../matrix/ViewableCell.tsx";
-import { BLANK_STRING } from "../../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 import { TotalRevenueAndMiles } from "./TotalRevenueAndMiles.tsx";
 import { DailyMileages } from "./DailyMileages.tsx";
 import {
@@ -22,7 +21,8 @@ import {
 } from "../../../types/financial/trucks-board.ts";
 import type { Dispatch } from "react";
 import * as React from "react";
-import { TRUCKS_BOARD_COLUMNS_LAYOUT } from "../../../utils/financial/trucks-board-constants.ts";
+import { TRUCKS_BOARD_COLUMNS_LAYOUT } from "../../../utils/trucks-board/trucks-board-constants.ts";
+import { queryDriversByCompanyId } from "../../../utils/api/query-utils.ts";
 
 export const WeeklyMileage: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;

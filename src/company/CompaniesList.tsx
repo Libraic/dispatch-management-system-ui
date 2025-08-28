@@ -4,7 +4,7 @@ import type { CompanyData } from "../types/api/registration-api.ts";
 import backUnhoveredIcon from "../assets/global/back-icon-unhovered.svg";
 import backHoveredIcon from "../assets/global/back-icon-hovered.svg";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../utils/routes/routes.ts";
+import { HOME } from "../utils/constants/internal-routes.ts";
 import {
   getNameInitials,
   getPropertySafe,

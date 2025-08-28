@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { CellType } from "../types/matrix/matrix-types.ts";
 import { sanitizeInput } from "../utils/matrix/cell-utils.ts";
 

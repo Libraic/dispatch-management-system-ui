@@ -1,8 +1,8 @@
 import { PageHeader } from "../../../../global/PageHeader.tsx";
 import { EmergencyContact } from "../basic/EmergencyContact.tsx";
 import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
-import { EMAIL_PLACEHOLDER } from "../../../../utils/constants/placeholders.ts";
-import { setRegistrationDataStringField } from "../../../../utils/registration/user/user-registration.ts";
+import { EMAIL_PLACEHOLDER } from "../../../../utils/constants/placeholder-constants.ts";
+import { setRegistrationDataStringField } from "../../../../utils/user/user-registration.ts";
 import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
 

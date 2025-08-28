@@ -1,6 +1,6 @@
 import type { Renderable } from "./Renderable.ts";
 import type { DriverData } from "./driver-api.ts";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 
 export class Driver implements Renderable {
   driverData: DriverData;

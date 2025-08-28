@@ -5,7 +5,7 @@ import { SelectForm } from "../../../global/input-forms/SelectForm.tsx";
 import {
   trailerLengths,
   trailerTypes,
-} from "../../../utils/registration/driver/driver-registration-utils.ts";
+} from "../../../utils/driver/driver-registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
 
 export const TruckDetailsSection = () => {

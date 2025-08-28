@@ -1,6 +1,6 @@
 import { InputForm } from "../../global/input-forms/InputForm.tsx";
-import { alterCompanySimpleField } from "../../utils/registration/company/company-registration-utils.ts";
-import { BLANK_STRING } from "../../utils/constants/global.ts";
+import { alterCompanySimpleField } from "../../utils/company/company-registration-utils.ts";
+import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import * as React from "react";
 import type {
   CompanyRegistrationData,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import type { LiveSearchCellData } from "../types/matrix/LiveSearchCellData.ts";
 import { LiveSearchEndpoints } from "../types/forms.ts";
-import { BLANK_STRING } from "../utils/constants/global.ts";
+import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { useLiveSearch } from "../hooks/useLiveSearch.ts";
 import type { Renderable } from "../types/api/Renderable.ts";
 import { useToast } from "../hooks/useToast.ts";

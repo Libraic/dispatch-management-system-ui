@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { colorTransitionStyle } from "../utils/tailwind.ts";
+import { colorTransitionStyle } from "../utils/tailwind/tailwind.ts";
 
 export const Option: React.FC<{
   unhoveredIcon: string;
