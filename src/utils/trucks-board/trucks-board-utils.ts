@@ -10,7 +10,6 @@ import {
 import { BLANK_STRING } from "../constants/global-constants.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
-import type { SetStateAction } from "react";
 import * as React from "react";
 import type { User } from "../../types/api/User.ts";
 import { convertMileageDayToLittleEndianDate } from "../global/date.ts";
@@ -25,6 +24,7 @@ import type {
   Error,
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
+import type { DriverWeeklyMileageData } from "../../hooks/useDriverWeeklyMileage.ts";
 
 export const addDriverWeeklyMileage = (
   setDriversWeeklyMileages: React.Dispatch<
@@ -123,22 +123,14 @@ export const setDriverWeeklyMileage = (
 };
 
 export const saveDriversWeeklyMileage = async (
-  previousDriversWeeklyMileage: DriverWeeklyMileage[],
-  setPreviousDriversWeeklyMileage: React.Dispatch<
-    SetStateAction<DriverWeeklyMileage[]>
-  >,
-  currentDriversWeeklyMileage: DriverWeeklyMileage[],
-  setCurrentDriversWeeklyMileage: React.Dispatch<
-    SetStateAction<DriverWeeklyMileage[]>
-  >,
-  companyUuid: string | null,
+  driverWeeklyMileageData: DriverWeeklyMileageData,
 ): Promise<DriversMileageErrors> => {
   // Compare the current data from the table with the previous data (before starting
   // to modify the existent data after the previous update / insert operation)
   // and get only the data that was modified.
   const driversWeeklyMileageToUpsert = getDriversWeeklyMileageToUpsert(
-    previousDriversWeeklyMileage,
-    currentDriversWeeklyMileage,
+    driverWeeklyMileageData.previousDriversWeeklyMileage,
+    driverWeeklyMileageData.currentDriversWeeklyMileage,
   );
 
   // Check if there are any errors before sending the data to BE.
@@ -151,7 +143,7 @@ export const saveDriversWeeklyMileage = async (
   const upsertDriversMileageRequest =
     getUpsertDriversMileageRequestFromDriversWeeklyMileage(
       driversWeeklyMileageToUpsert,
-      companyUuid!!,
+      driverWeeklyMileageData.getCompanyUuid(),
     );
 
   // Make the API call to the Upsert endpoint.
@@ -162,7 +154,7 @@ export const saveDriversWeeklyMileage = async (
   }
 
   // Set data in both current and previous data variables.
-  setCurrentDriversWeeklyMileage((prev) => {
+  driverWeeklyMileageData.setCurrentDriversWeeklyMileage((prev) => {
     if (!response.data) {
       return prev;
     }
@@ -198,7 +190,7 @@ export const saveDriversWeeklyMileage = async (
     // the data that was effectively modified. This will help to avoid sending
     // a huge payload over the network and maintains unnecessary transactions
     // in the database. In-memory management is faster.
-    setPreviousDriversWeeklyMileage(updated);
+    driverWeeklyMileageData.setPreviousDriversWeeklyMileage(updated);
     return updated;
   });
 

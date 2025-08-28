@@ -11,7 +11,7 @@ import {
 import { ViewableCell } from "../../../matrix/ViewableCell.tsx";
 import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 import { TotalRevenueAndMiles } from "./TotalRevenueAndMiles.tsx";
-import { DailyMileages } from "./DailyMileages.tsx";
+import { DailyMileageView } from "./DailyMileageView.tsx";
 import {
   DISPATCHER_KEY,
   DRIVER_KEY,
@@ -78,7 +78,7 @@ export const WeeklyMileage: React.FC<{
         data={driverWeeklyMileage.driver?.getTruckData() ?? BLANK_STRING}
       ></ViewableCell>
       <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileageData} />
-      <DailyMileages
+      <DailyMileageView
         driverWeeklyMileage={driverWeeklyMileage}
         setDriverWeeklyMileage={(
           mileageIndex: number,

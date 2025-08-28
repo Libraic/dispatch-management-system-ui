@@ -7,7 +7,7 @@ import type {
 } from "../../../types/financial/trucks-board.ts";
 import * as React from "react";
 
-export const DailyMileages: React.FC<{
+export const DailyMileageView: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;
   setDriverWeeklyMileage: (
     mileageIndex: number,
