@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { getWeekWithNames } from "../../../utils/global/date.ts";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import { WeeklyMileage } from "./WeeklyMileage.tsx";
 import {
+  COLUMNS,
   TRUCKS_BOARD_COLUMNS_LAYOUT,
-  TRUCKS_BOARD_PRIMARY_COLUMNS,
+  WEEK_DAYS,
 } from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { PageHeader } from "../../../global/PageHeader.tsx";
 import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
@@ -14,16 +14,13 @@ import { fetchDriversMileageByCompanyUuid } from "../../../service/driver-mileag
 import { mapDriverWeeklyMileageResponseToDriverWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
 import { useToast } from "../../../hooks/useToast.ts";
 import { INTERNAL_SERVER_ERROR } from "../../../utils/global/error-messages.ts";
-import { Toast } from "../../../toast/Toast.tsx";
-
-const weekDays = getWeekWithNames(new Date());
-const columns = [...TRUCKS_BOARD_PRIMARY_COLUMNS, ...weekDays];
+import { ToastRenderer } from "../../../toast/ToastRenderer.tsx";
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
   const driverWeeklyMileageData = useDriverWeeklyMileage(
     companyUuid!!,
-    weekDays,
+    WEEK_DAYS,
   );
   const toastData = useToast();
 
@@ -59,7 +56,7 @@ export const TrucksBoard = () => {
       <div className="flex flex-col w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
         <OptionBar driverWeeklyMileageData={driverWeeklyMileageData} />
         <MatrixHeader
-          columns={columns}
+          columns={COLUMNS}
           columnsLayout={TRUCKS_BOARD_COLUMNS_LAYOUT}
         />
         {driverWeeklyMileageData.currentDriversWeeklyMileage.map(
@@ -80,13 +77,7 @@ export const TrucksBoard = () => {
           ),
         )}
       </div>
-      {toastData.getMessage().length > 0 && (
-        <Toast
-          key={toastData.getIdentifier()}
-          message={toastData.getMessage()}
-          type={toastData.getOperationResult()}
-        />
-      )}
+      <ToastRenderer toast={toastData} />
     </div>
   );
 };

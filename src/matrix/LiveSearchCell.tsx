@@ -6,7 +6,6 @@ import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { useLiveSearch } from "../hooks/useLiveSearch.ts";
 import type { Renderable } from "../types/api/Renderable.ts";
 import { useToast } from "../hooks/useToast.ts";
-import { Toast } from "../toast/Toast.tsx";
 import { LiveSearchResultList } from "../global/live-search/LiveSearchResultList.tsx";
 import type { LiveSearchResult } from "../types/api/common.ts";
 import errorIcon from "../assets/global/error.svg";
@@ -16,6 +15,7 @@ import {
   ERRONEOUS_BACKGROUND_STYLE,
   NO_ERROR_BACKGROUND_STYLE,
 } from "../utils/matrix/cell-constants.ts";
+import { ToastRenderer } from "../toast/ToastRenderer.tsx";
 
 export const LiveSearchCell = <D, R>({
   defaultSearchKey,
@@ -98,13 +98,7 @@ export const LiveSearchCell = <D, R>({
         />
       )}
 
-      {toast.getMessage().length > 0 && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
+      <ToastRenderer toast={toast} />
 
       {hoverData.shouldDisplayMessage() && (
         <HoverableInformation

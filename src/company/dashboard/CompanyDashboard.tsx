@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchCompanyByUuid } from "../../service/company-service.ts";
 import { useToast } from "../../hooks/useToast.ts";
-import { Toast } from "../../toast/Toast.tsx";
 import { INTERNAL_SERVER_ERROR } from "../../utils/global/error-messages.ts";
 import type { CompanyData } from "../../types/api/registration-api.ts";
 import trucksBoardUnhoveredIcon from "../../assets/company-menu/trucks-board-unhovered.svg";
@@ -15,6 +14,7 @@ import {
   DRIVER_REGISTRATION,
   TRUCKS_BOARD,
 } from "../../utils/constants/internal-routes.ts";
+import { ToastRenderer } from "../../toast/ToastRenderer.tsx";
 
 export const CompanyDashboard = () => {
   const { companyUuid } = useParams();
@@ -63,13 +63,7 @@ export const CompanyDashboard = () => {
           {company?.name}
         </p>
       </div>
-      {toast.getMessage().length > 0 && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
+      <ToastRenderer toast={toast} />
     </div>
   );
 };

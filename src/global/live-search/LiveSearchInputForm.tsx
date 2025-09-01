@@ -4,7 +4,6 @@ import {
   BLANK_STRING,
   EMPTY_ARRAY,
 } from "../../utils/constants/global-constants.ts";
-import { Toast } from "../../toast/Toast.tsx";
 import { InputFormError } from "../input-forms/InputFormError.tsx";
 import { useToast } from "../../hooks/useToast.ts";
 import type { LiveSearchInputFormProps } from "../../types/live-search.ts";
@@ -14,6 +13,7 @@ import { LiveSearchEndpoints } from "../../types/forms.ts";
 import { InputFormLabel } from "../input-forms/InputFormLabel.tsx";
 import { useLiveSearch } from "../../hooks/useLiveSearch.ts";
 import type { LiveSearchResult } from "../../types/api/common.ts";
+import { ToastRenderer } from "../../toast/ToastRenderer.tsx";
 
 export const LiveSearchInputForm = <D,>({
   label,
@@ -79,13 +79,7 @@ export const LiveSearchInputForm = <D,>({
         )}
       </div>
       {!!errorText?.length && <InputFormError errorMessage={errorText} />}
-      {toast.getMessage().length > 0 && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
+      <ToastRenderer toast={toast} />
     </div>
   );
 };
