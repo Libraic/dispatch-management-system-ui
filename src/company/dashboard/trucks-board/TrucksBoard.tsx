@@ -9,6 +9,12 @@ import {
 import { PageHeader } from "../../../global/PageHeader.tsx";
 import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
 import { OptionBar } from "./OptionBar.tsx";
+import { useEffect } from "react";
+import { fetchDriversMileageByCompanyUuid } from "../../../service/driver-mileage-service.ts";
+import { mapDriverWeeklyMileageResponseToDriverWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import { useToast } from "../../../hooks/useToast.ts";
+import { INTERNAL_SERVER_ERROR } from "../../../utils/global/error-messages.ts";
+import { Toast } from "../../../toast/Toast.tsx";
 
 const weekDays = getWeekWithNames(new Date());
 const columns = [...TRUCKS_BOARD_PRIMARY_COLUMNS, ...weekDays];
@@ -19,6 +25,29 @@ export const TrucksBoard = () => {
     companyUuid!!,
     weekDays,
   );
+  const toastData = useToast();
+
+  useEffect(() => {
+    fetchDriversMileageByCompanyUuid(companyUuid!!)
+      .then((data) => {
+        if (data) {
+          const driversWeeklyMileage = data.map((item) =>
+            mapDriverWeeklyMileageResponseToDriverWeeklyMileage(item),
+          );
+          driverWeeklyMileageData.setCurrentDriversWeeklyMileage(
+            driversWeeklyMileage,
+          );
+          driverWeeklyMileageData.setPreviousDriversWeeklyMileage(
+            driversWeeklyMileage,
+          );
+        } else {
+          toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
+        }
+      })
+      .catch((err) =>
+        toastData.withErrorMessage(err.message || INTERNAL_SERVER_ERROR),
+      );
+  }, []);
 
   return (
     <div className="w-screen h-screen flex flex-col items-center mt-10 text-[0.8rem]">
@@ -50,6 +79,13 @@ export const TrucksBoard = () => {
           ),
         )}
       </div>
+      {toastData.getMessage().length > 0 && (
+        <Toast
+          key={toastData.getIdentifier()}
+          message={toastData.getMessage()}
+          type={toastData.getOperationResult()}
+        />
+      )}
     </div>
   );
 };

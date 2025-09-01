@@ -8,3 +8,5 @@ export const DOT = ".";
 export const EMPTY_ARRAY = [];
 export const DOLLAR_SIGN = "$";
 export const BLANK_SPACE = " ";
+export const QUESTION_MARK = "?";
+export const EQUAL_SIGN = "=";

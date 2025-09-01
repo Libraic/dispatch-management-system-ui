@@ -8,4 +8,5 @@ export const SAVE_USER = BASE_URL + "/users";
 export const SAVE_COMPANY = BASE_URL + "/companies";
 export const SAVE_DRIVER = BASE_URL + "/drivers";
 export const FETCH_COMPANIES = BASE_URL + "/companies";
-export const SAVE_DRIVER_MILEAGE = BASE_URL + "/drivers-mileage";
+
+export const DRIVERS_MILEAGE_BASE_URL = BASE_URL + "/drivers-mileage";

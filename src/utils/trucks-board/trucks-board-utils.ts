@@ -4,10 +4,11 @@ import {
   type DriverMileageError,
   type DriversMileageErrors,
   type DriverWeeklyMileage,
+  type DriverWeeklyMileageResponse,
   type Mileage,
   type MileageError,
 } from "../../types/financial/trucks-board.ts";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+import { BLANK_SPACE, BLANK_STRING } from "../constants/global-constants.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
 import * as React from "react";
@@ -161,12 +162,12 @@ export const saveDriversWeeklyMileage = async (
 
     const responseDriversWeeklyMileageMap = new Map<
       string,
-      DriverWeeklyMileage
+      DriverWeeklyMileageResponse
     >();
-    for (const driverWeeklyMileage of response.data) {
+    for (const driverWeeklyMileageResponse of response.data) {
       responseDriversWeeklyMileageMap.set(
-        driverWeeklyMileage.itemIdentifier,
-        driverWeeklyMileage,
+        driverWeeklyMileageResponse.itemIdentifier!!,
+        driverWeeklyMileageResponse,
       );
     }
 
@@ -288,14 +289,12 @@ const getUpsertDriversMileageRequestFromDriversWeeklyMileage = (
         date: mileage.date,
         destinationNote: mileage.destinationNote,
         revenue: mileage.revenue
-          ? // ? parseFloat(
-            //     mileage.revenue.split(BLANK_SPACE)[1].replace(/,/g, BLANK_STRING),
-            //   )
-            -3
+          ? parseFloat(
+              mileage.revenue.split(BLANK_SPACE)[1].replace(/,/g, BLANK_STRING),
+            )
           : null,
         miles: mileage.miles
-          ? // ? parseFloat(mileage.miles.replace(/,/g, BLANK_STRING))
-            -3
+          ? parseFloat(mileage.miles.replace(/,/g, BLANK_STRING))
           : null,
         note: mileage.note,
       })),
@@ -371,7 +370,10 @@ const getErrorsPriorUpsertion = (
 };
 
 const handleApiErrors = (
-  response: ApiResponse<DriverWeeklyMileage[], Error | GroupsErrorResponse>,
+  response: ApiResponse<
+    DriverWeeklyMileageResponse[],
+    Error | GroupsErrorResponse
+  >,
 ): DriversMileageErrors => {
   const errors = {} as DriversMileageErrors;
   if (response.error) {

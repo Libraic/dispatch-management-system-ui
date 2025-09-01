@@ -56,6 +56,7 @@ export const WeeklyMileage: React.FC<{
       <LiveSearchCell
         defaultSearchKey={LiveSearchKey.USER}
         constructor={User}
+        object={driverWeeklyMileage.dispatcher}
         saveObject={(dispatcher: Renderable) =>
           setDispatcher(setDriversWeeklyMileages, dispatcher, index)
         }
@@ -66,6 +67,7 @@ export const WeeklyMileage: React.FC<{
       <LiveSearchCell
         defaultSearchKey={LiveSearchKey.DRIVER}
         constructor={Driver}
+        object={driverWeeklyMileage.driver}
         saveObject={(driver: Renderable) =>
           setDriver(setDriversWeeklyMileages, driver, index)
         }

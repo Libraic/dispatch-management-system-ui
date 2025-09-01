@@ -13,7 +13,6 @@ export default tseslint.config({ignores: ["dist"]}, {
         }, rules: {
             ...reactHooks.configs.recommended.rules,
             "react-refresh/only-export-components": ["warn", {allowConstantExport: true},],
-            "react-hooks/exhaustive-deps": "off",
             "prettier/prettier": "error", // ⬅ Enforce Prettier rules via ESLint
         },
     }, prettierConfig, // ⬅ Turn off ESLint rules that conflict with Prettier

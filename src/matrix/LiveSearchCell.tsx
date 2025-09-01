@@ -19,6 +19,7 @@ const erroneousBackgroundStyle = "border-error-red/75 border-3";
 export const LiveSearchCell = <D, R>({
   defaultSearchKey,
   constructor,
+  object,
   saveObject,
   customSearchCriteria,
   errorMessage,
@@ -38,6 +39,13 @@ export const LiveSearchCell = <D, R>({
     customSearchCriteria,
   );
   const hoverData = useHoverPanel(!!errorMessage);
+
+  useEffect(() => {
+    if (object) {
+      setText(object.renderOnForm());
+      setIsRendered(true);
+    }
+  }, []);
 
   useEffect(() => {
     setBgColor(
