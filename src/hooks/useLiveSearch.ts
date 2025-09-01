@@ -37,26 +37,29 @@ export const useLiveSearch = <T>(
   const [items, setItems] = useState<LiveSearchResult<T>>(EMPTY_OBJECT);
   useEffect(() => {
     const debounced = debounce((value: string) => {
+      if (value.trim().length === 0) {
+        setItems(EMPTY_OBJECT);
+        return;
+      }
+
       if (value.trim().length > 0) {
         getData<T[], Error>(
           endpoint,
           constructSearchCriteria(searchField, value, defaultSearchCriteria),
         ).then((result) => {
-          setItems(
+          const localItems =
             result.error !== null
               ? { items: [], error: result.error!.message }
-              : { items: result.data ?? [], error: null },
-          );
+              : { items: result.data ?? [], error: null };
+          setItems(localItems);
         });
-      } else {
-        setItems(EMPTY_OBJECT);
       }
     }, DEBOUNCING_TIME);
 
     debounced(query);
 
     return () => debounced.cancel();
-  }, [query, endpoint, searchField]);
+  }, [query, endpoint, searchField, defaultSearchCriteria]);
 
   return items;
 };

@@ -18,7 +18,7 @@ import {
 
 export const CompanyDashboard = () => {
   const { companyUuid } = useParams();
-  const toastData = useToast();
+  const toast = useToast();
   const [company, setCompany] = useState<CompanyData | null>(null);
   const baseRoute = `/dashboard/${companyUuid}`;
 
@@ -27,14 +27,14 @@ export const CompanyDashboard = () => {
       fetchCompanyByUuid(companyUuid)
         .then((company: CompanyData | undefined) => {
           if (!company) {
-            toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
+            toast.withErrorMessage(INTERNAL_SERVER_ERROR);
           } else {
             setCompany(company);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => toast.withErrorMessage(err.message));
     }
-  }, [companyUuid]);
+  }, [companyUuid, toast]);
 
   return (
     <div className="flex flex-row h-screen">
@@ -63,11 +63,11 @@ export const CompanyDashboard = () => {
           {company?.name}
         </p>
       </div>
-      {toastData.getMessage().length > 0 && (
+      {toast.getMessage().length > 0 && (
         <Toast
-          key={toastData.getIdentifier()}
-          message={toastData.getMessage()}
-          type={toastData.getOperationResult()}
+          key={toast.getIdentifier()}
+          message={toast.getMessage()}
+          type={toast.getOperationResult()}
         />
       )}
     </div>

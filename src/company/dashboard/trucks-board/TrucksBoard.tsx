@@ -47,6 +47,7 @@ export const TrucksBoard = () => {
       .catch((err) =>
         toastData.withErrorMessage(err.message || INTERNAL_SERVER_ERROR),
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

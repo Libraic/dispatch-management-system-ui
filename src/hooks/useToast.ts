@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { ToastTypeEnum } from "../types/toast.ts";
 
@@ -6,7 +6,7 @@ export type ToastData = {
   getMessage: () => string;
   getIdentifier: () => string | null;
   withErrorMessage: (message: string) => void;
-  clear: () => void;
+  reset: () => void;
   getOperationResult: () => ToastTypeEnum;
 };
 
@@ -17,15 +17,18 @@ export const useToast = (): ToastData => {
     ToastTypeEnum.ERROR,
   );
 
-  return {
-    getMessage: () => message,
-    getIdentifier: () => toastId,
-    withErrorMessage: (message: string) => {
-      setMessage(message);
-      setToastType(ToastTypeEnum.ERROR);
-      setToastId(Date.now().toString());
-    },
-    clear: () => setMessage(BLANK_STRING),
-    getOperationResult: () => toastType,
-  };
+  return useMemo(
+    () => ({
+      getMessage: () => message,
+      getIdentifier: () => toastId,
+      withErrorMessage: (msg: string) => {
+        setMessage(msg);
+        setToastType(ToastTypeEnum.ERROR);
+        setToastId(Date.now().toString());
+      },
+      reset: () => setMessage(BLANK_STRING),
+      getOperationResult: () => toastType,
+    }),
+    [message, toastId, toastType],
+  );
 };

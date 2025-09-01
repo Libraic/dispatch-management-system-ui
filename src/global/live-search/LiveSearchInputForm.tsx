@@ -39,10 +39,10 @@ export const LiveSearchInputForm = <D,>({
     if (data.error !== null) {
       toast.withErrorMessage(data.error);
     } else {
-      toast.clear();
+      toast.reset();
       setItems(data.items.map((item) => new constructor(item) as Renderable));
     }
-  }, [data, constructor]);
+  }, [data, constructor, toast]);
 
   return (
     <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">

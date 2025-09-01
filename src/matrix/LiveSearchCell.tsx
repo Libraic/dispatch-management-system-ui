@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LiveSearchCellData } from "../types/matrix/LiveSearchCellData.ts";
 import { LiveSearchEndpoints } from "../types/forms.ts";
 import { BLANK_STRING } from "../utils/constants/global-constants.ts";
@@ -31,7 +31,6 @@ export const LiveSearchCell = <D, R>({
   const searchField = LiveSearchEndpoints[defaultSearchKey].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
-  const [bgColor, setBgColor] = useState(noErrorBackgroundStyle);
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
@@ -39,25 +38,24 @@ export const LiveSearchCell = <D, R>({
     customSearchCriteria,
   );
   const hoverData = useHoverPanel(!!errorMessage);
+  const isMounted = useRef(false);
 
-  useEffect(() => {
+  if (!isMounted.current) {
     if (object) {
       setText(object.renderOnForm());
       setIsRendered(true);
     }
-  }, []);
+    isMounted.current = true;
+  }
 
   useEffect(() => {
-    setBgColor(
-      errorMessage ? erroneousBackgroundStyle : noErrorBackgroundStyle,
-    );
     if (data.error !== null) {
       toast.withErrorMessage(data.error);
     } else {
-      toast.clear();
+      toast.reset();
       setItems(data.items.map((item) => new constructor(item) as Renderable));
     }
-  }, [data, errorMessage]);
+  }, [data, errorMessage, constructor, toast]);
 
   return (
     <div
@@ -66,7 +64,7 @@ export const LiveSearchCell = <D, R>({
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`px-4 flex items-center ${bgColor} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        className={`px-4 flex items-center ${errorMessage ? erroneousBackgroundStyle : noErrorBackgroundStyle} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {

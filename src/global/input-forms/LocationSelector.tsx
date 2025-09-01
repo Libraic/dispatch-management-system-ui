@@ -23,6 +23,7 @@ export const LocationSelector: React.FC<{
     setStates(statesData);
     const stateCode = getStateIsoCode(currentState);
     setCities(City.getCitiesOfState(USA_COUNTRY_ISO_CODE, stateCode));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

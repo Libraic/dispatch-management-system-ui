@@ -46,7 +46,6 @@ export const fetchDriversMileageByCompanyUuid = async (
       JOIN_CLAUSE +
       COLON +
       companyUuid;
-    console.log(url);
     const response =
       await axios.get<ApiResponse<DriverWeeklyMileageResponse[], Error>>(url);
     return response.data.data;
