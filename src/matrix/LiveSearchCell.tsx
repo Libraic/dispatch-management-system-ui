@@ -12,9 +12,10 @@ import type { LiveSearchResult } from "../types/api/common.ts";
 import errorIcon from "../assets/global/error.svg";
 import { useHoverPanel } from "../hooks/useHoverPanel.ts";
 import { HoverableInformation } from "../global/HoverableInformation.tsx";
-
-const noErrorBackgroundStyle = "border-b-3 border-r-3 border-[#e6ebfa]";
-const erroneousBackgroundStyle = "border-error-red/75 border-3";
+import {
+  ERRONEOUS_BACKGROUND_STYLE,
+  NO_ERROR_BACKGROUND_STYLE,
+} from "../utils/matrix/cell-constants.ts";
 
 export const LiveSearchCell = <D, R>({
   defaultSearchKey,
@@ -64,7 +65,7 @@ export const LiveSearchCell = <D, R>({
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`px-4 flex items-center ${errorMessage ? erroneousBackgroundStyle : noErrorBackgroundStyle} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        className={`px-4 flex items-center ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {
@@ -72,9 +73,7 @@ export const LiveSearchCell = <D, R>({
             !e.currentTarget.textContent || isRendered
               ? BLANK_STRING
               : e.currentTarget.textContent;
-          if (isRendered) {
-            setIsRendered(false);
-          }
+          setIsRendered(isRendered && false);
           setQuery(input);
           setText(input);
         }}

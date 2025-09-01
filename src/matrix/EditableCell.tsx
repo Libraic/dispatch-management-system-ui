@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { BLANK_STRING } from "../utils/constants/global-constants.ts";
 import { CellType } from "../types/matrix/matrix-types.ts";
 import { sanitizeInput } from "../utils/matrix/cell-utils.ts";
-
-const noErrorBackgroundStyle = "border-b-3 border-r-2 border-[#e6ebfa]";
-const erroneousBackgroundStyle = "border-error-red/75 border-3";
+import {
+  ERRONEOUS_BACKGROUND_STYLE,
+  NO_ERROR_BACKGROUND_STYLE,
+} from "../utils/matrix/cell-constants.ts";
 
 export const EditableCell: React.FC<{
   content: string | null;
@@ -13,17 +13,9 @@ export const EditableCell: React.FC<{
   cellType?: CellType;
   errorMessage?: string;
 }> = ({ content, setContent, cellType, errorMessage }) => {
-  const [bgColor, setBgColor] = useState(noErrorBackgroundStyle);
-
-  useEffect(() => {
-    setBgColor(
-      errorMessage ? erroneousBackgroundStyle : noErrorBackgroundStyle,
-    );
-  }, [errorMessage]);
-
   return (
     <div
-      className={`flex justify-center items-center w-full h-full ${bgColor} p-2 text-center align-middle overflow-hidden break-words whitespace-pre-wrap`}
+      className={`flex justify-center items-center w-full h-full ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} p-2 text-center align-middle overflow-hidden break-words whitespace-pre-wrap`}
       contentEditable
       suppressContentEditableWarning={true}
       onInput={(e: React.FormEvent<HTMLDivElement>) => {
