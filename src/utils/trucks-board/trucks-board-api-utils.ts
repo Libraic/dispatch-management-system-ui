@@ -135,7 +135,6 @@ export const deleteDriversMileage = async (
 ): Promise<Error | null> => {
   const itemIdentifiers =
     driversWeeklyMileageData.getIdentifiersMarkedForDeletion();
-  console.log(itemIdentifiers);
   const ids = driversWeeklyMileageData.currentDriversWeeklyMileage
     .filter(
       (item) =>

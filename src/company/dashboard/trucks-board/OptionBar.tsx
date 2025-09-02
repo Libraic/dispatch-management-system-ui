@@ -35,11 +35,20 @@ export const OptionBar: React.FC<{
         unfocusedResource={deleteRecordUnfocused}
         focusedResource={deleteRecordFocused}
         action={async () => {
-          const response = await deleteDriversMileage(driverWeeklyMileageData);
-          if (!response) {
-            toast.withSuccessMessage("The records were successfully deleted.");
-          } else {
-            toast.withErrorMessage(response.message);
+          if (
+            driverWeeklyMileageData.getIdentifiersMarkedForDeletion().length !==
+            0
+          ) {
+            const response = await deleteDriversMileage(
+              driverWeeklyMileageData,
+            );
+            if (!response) {
+              toast.withSuccessMessage(
+                "The records were successfully deleted.",
+              );
+            } else {
+              toast.withErrorMessage(response.message);
+            }
           }
         }}
         information="Delete a record"
@@ -52,6 +61,9 @@ export const OptionBar: React.FC<{
             driverWeeklyMileageData,
           );
           driverWeeklyMileageData.setErrors(response);
+          if (Object.keys(response).length === 0) {
+            toast.withSuccessMessage("The records were successfully saved.");
+          }
         }}
         information="Save records"
       />
