@@ -8,6 +8,7 @@ import { Driver } from "../../types/api/Driver.ts";
 import * as React from "react";
 import type { User } from "../../types/api/User.ts";
 import { convertMileageDayToLittleEndianDate } from "../global/date.ts";
+import { v4 as uuidv4 } from "uuid";
 
 export const addDriverWeeklyMileage = (
   setDriversWeeklyMileages: React.Dispatch<
@@ -43,11 +44,11 @@ export const setDispatcher = (
     React.SetStateAction<DriverWeeklyMileage[]>
   >,
   dispatcher: Renderable,
-  index: number,
+  itemIdentifier: string,
 ) => {
   setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
-      if (i === index) {
+    driversWeeklyMileages.map((driverWeeklyMileage) => {
+      if (driverWeeklyMileage.itemIdentifier === itemIdentifier) {
         return {
           ...driverWeeklyMileage,
           dispatcher: dispatcher as User,
@@ -63,11 +64,11 @@ export const setDriver = (
     React.SetStateAction<DriverWeeklyMileage[]>
   >,
   driver: Renderable,
-  index: number,
+  itemIdentifier: string,
 ) => {
   setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
-      if (i === index) {
+    driversWeeklyMileages.map((driverWeeklyMileage) => {
+      if (driverWeeklyMileage.itemIdentifier === itemIdentifier) {
         return {
           ...driverWeeklyMileage,
           driver: driver as Driver,
@@ -82,14 +83,14 @@ export const setDriverWeeklyMileage = (
   setDriversWeeklyMileages: React.Dispatch<
     React.SetStateAction<DriverWeeklyMileage[]>
   >,
-  driverWeeklyMileageIndex: number,
+  driversMileageIdentifier: string,
   mileageIndex: number,
   field: keyof Mileage,
   value: string,
 ) => {
   setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage, i) => {
-      if (i === driverWeeklyMileageIndex) {
+    driversWeeklyMileages.map((driverWeeklyMileage) => {
+      if (driverWeeklyMileage.itemIdentifier === driversMileageIdentifier) {
         return {
           ...driverWeeklyMileage,
           mileageData: mileagesMapperFunction(
@@ -129,7 +130,7 @@ const getBlankDriverWeeklyMileage = (
     uuid: null,
     driver: null,
     dispatcher: null,
-    itemIdentifier: new Date().toISOString(),
+    itemIdentifier: uuidv4(),
     mileageData: getWeekMileages(weekDays),
   };
 };

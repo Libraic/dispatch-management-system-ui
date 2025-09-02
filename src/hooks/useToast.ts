@@ -6,6 +6,7 @@ export type ToastData = {
   getMessage: () => string;
   getIdentifier: () => string | null;
   withErrorMessage: (message: string) => void;
+  withSuccessMessage: (message: string) => void;
   reset: () => void;
   getOperationResult: () => ToastTypeEnum;
 };
@@ -24,6 +25,11 @@ export const useToast = (): ToastData => {
       withErrorMessage: (msg: string) => {
         setMessage(msg);
         setToastType(ToastTypeEnum.ERROR);
+        setToastId(Date.now().toString());
+      },
+      withSuccessMessage: (msg: string) => {
+        setMessage(msg);
+        setToastType(ToastTypeEnum.SUCCESS);
         setToastId(Date.now().toString());
       },
       reset: () => setMessage(BLANK_STRING),

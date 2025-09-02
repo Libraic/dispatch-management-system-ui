@@ -8,11 +8,16 @@ import saveRecordsUnfocused from "../../../assets/trucks-board/save-records-unfo
 import saveRecordsFocused from "../../../assets/trucks-board/save-records-focused.svg";
 import * as React from "react";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import { saveDriversWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import {
+  deleteDriversMileage,
+  saveDriversWeeklyMileage,
+} from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import type { ToastData } from "../../../hooks/useToast.ts";
 
 export const OptionBar: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
-}> = ({ driverWeeklyMileageData }) => {
+  toast: ToastData;
+}> = ({ driverWeeklyMileageData, toast }) => {
   return (
     <div className="mb-3 sticky left-0 z-10 ">
       <Button
@@ -29,7 +34,14 @@ export const OptionBar: React.FC<{
       <Button
         unfocusedResource={deleteRecordUnfocused}
         focusedResource={deleteRecordFocused}
-        action={() => {}}
+        action={async () => {
+          const response = await deleteDriversMileage(driverWeeklyMileageData);
+          if (!response) {
+            toast.withSuccessMessage("The records were successfully deleted.");
+          } else {
+            toast.withErrorMessage(response.message);
+          }
+        }}
         information="Delete a record"
       />
       <Button

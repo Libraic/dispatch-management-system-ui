@@ -19,38 +19,35 @@ import {
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../../types/financial/trucks-board.ts";
-import type { Dispatch } from "react";
 import * as React from "react";
 import { TRUCKS_BOARD_COLUMNS_LAYOUT } from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { queryDriversByCompanyId } from "../../../utils/api/query-utils.ts";
+import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
 
 export const WeeklyMileage: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;
-  setDriversWeeklyMileages: Dispatch<
-    React.SetStateAction<DriverWeeklyMileage[]>
-  >;
-  index: number;
-  companyUuid: string;
+  driverWeeklyMileageData: DriverWeeklyMileageData;
   driverMileageError?: DriverMileageError;
-}> = ({
-  driverWeeklyMileage,
-  setDriversWeeklyMileages,
-  index,
-  companyUuid,
-  driverMileageError,
-}) => {
-  const [isActive, setIsActive] = React.useState(false);
+}> = ({ driverWeeklyMileage, driverWeeklyMileageData, driverMileageError }) => {
+  const itemIdentifier = driverWeeklyMileage.itemIdentifier;
   return (
     <div
-      key={index}
       className={`min-w-[1000px] min-h-[6rem] ${TRUCKS_BOARD_COLUMNS_LAYOUT} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
     >
       <div className="flex items-center justify-center bg-[#f5f7fc] border-x-3 border-b-3 border-[#e6ebfa] w-full h-full">
         <input
           type="checkbox"
           className="w-4 h-4 hover:cursor-pointer border-[#e6ebfa]"
-          checked={isActive}
-          onChange={() => setIsActive((prev) => !prev)}
+          checked={driverWeeklyMileageData
+            .getIdentifiersMarkedForDeletion()
+            .includes(itemIdentifier)}
+          onChange={(e) => {
+            if (e.target.checked) {
+              driverWeeklyMileageData.markForDeletion(itemIdentifier);
+            } else {
+              driverWeeklyMileageData.unmarkForDeletion(itemIdentifier);
+            }
+          }}
         />
       </div>
       <LiveSearchCell
@@ -58,7 +55,11 @@ export const WeeklyMileage: React.FC<{
         constructor={User}
         object={driverWeeklyMileage.dispatcher}
         saveObject={(dispatcher: Renderable) =>
-          setDispatcher(setDriversWeeklyMileages, dispatcher, index)
+          setDispatcher(
+            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+            dispatcher,
+            itemIdentifier,
+          )
         }
         errorMessage={
           driverMileageError && (driverMileageError[DISPATCHER_KEY] as string)
@@ -69,9 +70,15 @@ export const WeeklyMileage: React.FC<{
         constructor={Driver}
         object={driverWeeklyMileage.driver}
         saveObject={(driver: Renderable) =>
-          setDriver(setDriversWeeklyMileages, driver, index)
+          setDriver(
+            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+            driver,
+            itemIdentifier,
+          )
         }
-        customSearchCriteria={[queryDriversByCompanyId(companyUuid)]}
+        customSearchCriteria={[
+          queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
+        ]}
         errorMessage={
           driverMileageError && (driverMileageError[DRIVER_KEY] as string)
         }
@@ -88,8 +95,8 @@ export const WeeklyMileage: React.FC<{
           value: string,
         ) =>
           setDriverWeeklyMileage(
-            setDriversWeeklyMileages,
-            index,
+            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+            itemIdentifier,
             mileageIndex,
             field,
             value,

@@ -21,18 +21,22 @@ import type {
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
 import type { DriverWeeklyMileageData } from "../../hooks/useDriverWeeklyMileage.ts";
-import { saveDriversMileage } from "../../service/driver-mileage-service.ts";
+import {
+  deleteDriversMileageByUuids,
+  saveDriversMileage,
+} from "../../service/driver-mileage-service.ts";
 import {
   MISSING_DISPATCHER,
   MISSING_DRIVER,
 } from "../global/error-messages.ts";
 import type { UpsertDriversMileageRequest } from "../../types/api/driver-mileage-api.ts";
+import { v4 as uuidv4 } from "uuid";
 
 export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   item: DriverWeeklyMileageResponse,
 ) => {
   return {
-    itemIdentifier: new Date().toISOString(),
+    itemIdentifier: uuidv4(),
     driver: new Driver(item.driver),
     dispatcher: new User(item.dispatcher),
     uuid: item.uuid,
@@ -124,6 +128,37 @@ export const saveDriversWeeklyMileage = async (
   });
 
   return {} as DriversMileageErrors;
+};
+
+export const deleteDriversMileage = async (
+  driversWeeklyMileageData: DriverWeeklyMileageData,
+): Promise<Error | null> => {
+  const itemIdentifiers =
+    driversWeeklyMileageData.getIdentifiersMarkedForDeletion();
+  console.log(itemIdentifiers);
+  const ids = driversWeeklyMileageData.currentDriversWeeklyMileage
+    .filter(
+      (item) =>
+        itemIdentifiers.includes(item.itemIdentifier) && item.uuid !== null,
+    )
+    .map((item) => item.uuid!!);
+  const response = await deleteDriversMileageByUuids(ids);
+  if (!response.error) {
+    const updatedDriversWeeklyMileageMap =
+      driversWeeklyMileageData.currentDriversWeeklyMileage.filter(
+        (item) => !itemIdentifiers.includes(item.itemIdentifier),
+      );
+    driversWeeklyMileageData.setCurrentDriversWeeklyMileage(
+      updatedDriversWeeklyMileageMap,
+    );
+    driversWeeklyMileageData.setPreviousDriversWeeklyMileage(
+      updatedDriversWeeklyMileageMap,
+    );
+    driversWeeklyMileageData.clearItemsMarkedForDeletion();
+    return null;
+  }
+
+  return response.error;
 };
 
 const handleApiErrors = (

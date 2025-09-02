@@ -17,6 +17,7 @@ import {
   EQUAL_SIGN,
   QUESTION_MARK,
 } from "../utils/constants/global-constants.ts";
+import type { Void } from "../types/global.ts";
 
 export const saveDriversMileage = async (
   upsertDriversMileageRequest: UpsertDriversMileageRequest,
@@ -51,5 +52,18 @@ export const fetchDriversMileageByCompanyUuid = async (
     return response.data.data;
   } catch (error) {
     throw error;
+  }
+};
+
+export const deleteDriversMileageByUuids = async (
+  ids: string[],
+): Promise<ApiResponse<Void, Error>> => {
+  try {
+    const response = await axios.delete(DRIVERS_MILEAGE_BASE_URL, {
+      data: ids,
+    });
+    return response.data;
+  } catch (error: any) {
+    return handleApiErrors(error);
   }
 };

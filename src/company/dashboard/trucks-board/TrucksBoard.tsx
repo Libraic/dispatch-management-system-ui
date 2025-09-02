@@ -54,20 +54,20 @@ export const TrucksBoard = () => {
         subheader="The Weekly Mileage of Drivers"
       />
       <div className="flex flex-col w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
-        <OptionBar driverWeeklyMileageData={driverWeeklyMileageData} />
+        <OptionBar
+          driverWeeklyMileageData={driverWeeklyMileageData}
+          toast={toastData}
+        />
         <MatrixHeader
           columns={COLUMNS}
           columnsLayout={TRUCKS_BOARD_COLUMNS_LAYOUT}
         />
         {driverWeeklyMileageData.currentDriversWeeklyMileage.map(
-          (driverWeeklyMileage, index) => (
+          (driverWeeklyMileage) => (
             <WeeklyMileage
+              key={driverWeeklyMileage.itemIdentifier}
               driverWeeklyMileage={driverWeeklyMileage}
-              setDriversWeeklyMileages={
-                driverWeeklyMileageData.setCurrentDriversWeeklyMileage
-              }
-              index={index}
-              companyUuid={driverWeeklyMileageData.getCompanyUuid()}
+              driverWeeklyMileageData={driverWeeklyMileageData}
               driverMileageError={
                 driverWeeklyMileageData.errors[
                   driverWeeklyMileage.itemIdentifier
