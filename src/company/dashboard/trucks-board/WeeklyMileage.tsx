@@ -15,7 +15,6 @@ import { DailyMileageView } from "./DailyMileageView.tsx";
 import {
   DISPATCHER_KEY,
   DRIVER_KEY,
-  type DriverMileageError,
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../../types/financial/trucks-board.ts";
@@ -27,9 +26,10 @@ import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMile
 export const WeeklyMileage: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;
   driverWeeklyMileageData: DriverWeeklyMileageData;
-  driverMileageError?: DriverMileageError;
-}> = ({ driverWeeklyMileage, driverWeeklyMileageData, driverMileageError }) => {
+}> = ({ driverWeeklyMileage, driverWeeklyMileageData }) => {
   const itemIdentifier = driverWeeklyMileage.itemIdentifier;
+  const driverMileageError =
+    driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
   return (
     <div
       className={`min-w-[1000px] min-h-[6rem] ${TRUCKS_BOARD_COLUMNS_LAYOUT} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}

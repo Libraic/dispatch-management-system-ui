@@ -2,7 +2,7 @@ import * as React from "react";
 import { useHoverPanel } from "../../../hooks/useHoverPanel.ts";
 import { HoverableInformation } from "../../../global/HoverableInformation.tsx";
 
-export const Button: React.FC<{
+export const IconButton: React.FC<{
   unfocusedResource: string;
   focusedResource: string;
   action: () => void;

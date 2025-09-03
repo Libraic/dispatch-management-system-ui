@@ -4,7 +4,10 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const BackButton: React.FC<{ url: string }> = ({ url }) => {
+export const BackButton: React.FC<{ url: string; action?: () => void }> = ({
+  url,
+  action,
+}) => {
   const [backIcon, setBackIcon] = useState(backUnhoveredIcon);
   const navigate = useNavigate();
   return (
@@ -15,7 +18,13 @@ export const BackButton: React.FC<{ url: string }> = ({ url }) => {
         className="w-6 h-6"
         onMouseEnter={() => setBackIcon(backHoveredIcon)}
         onMouseLeave={() => setBackIcon(backUnhoveredIcon)}
-        onClick={() => navigate(url)}
+        onClick={() => {
+          if (action) {
+            action();
+          } else {
+            navigate(url);
+          }
+        }}
       />
     </div>
   );

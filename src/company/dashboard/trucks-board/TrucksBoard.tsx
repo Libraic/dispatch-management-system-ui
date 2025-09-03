@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import { WeeklyMileage } from "./WeeklyMileage.tsx";
 import {
@@ -9,14 +9,18 @@ import {
 import { PageHeader } from "../../../global/PageHeader.tsx";
 import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
 import { OptionBar } from "./OptionBar.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchDriversMileageByCompanyUuid } from "../../../service/driver-mileage-service.ts";
-import { mapDriverWeeklyMileageResponseToDriverWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import {
+  mapDriverWeeklyMileageResponseToDriverWeeklyMileage,
+  saveDriversWeeklyMileage,
+} from "../../../utils/trucks-board/trucks-board-api-utils.ts";
 import { useToast } from "../../../hooks/useToast.ts";
 import { INTERNAL_SERVER_ERROR } from "../../../utils/global/error-messages.ts";
 import { ToastRenderer } from "../../../toast/ToastRenderer.tsx";
 import { BackButton } from "../../../global/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../utils/global/route-utils.ts";
+import { ConfirmationModal } from "../../../global/ConfirmationModal.tsx";
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
@@ -25,6 +29,8 @@ export const TrucksBoard = () => {
     WEEK_DAYS,
   );
   const toastData = useToast();
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDriversMileageByCompanyUuid(companyUuid!!)
@@ -51,7 +57,28 @@ export const TrucksBoard = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center mt-2 text-[0.8rem]">
-      <BackButton url={formatCompanyDashboardRoute(companyUuid!!)} />
+      <ConfirmationModal
+        showModal={showModal}
+        positiveAction={async () => {
+          const response = await saveDriversWeeklyMileage(
+            driverWeeklyMileageData,
+          );
+          driverWeeklyMileageData.setErrors(response);
+          if (Object.keys(response).length !== 0) {
+            setShowModal(false);
+          } else {
+            navigate(formatCompanyDashboardRoute(companyUuid!!));
+          }
+        }}
+        intermediaryAction={() => setShowModal(false)}
+        negativeAction={() =>
+          navigate(formatCompanyDashboardRoute(companyUuid!!))
+        }
+      />
+      <BackButton
+        url={formatCompanyDashboardRoute(companyUuid!!)}
+        action={() => setShowModal(true)}
+      />
       <PageHeader
         header="Trucks Board"
         subheader="The Weekly Mileage of Drivers"
@@ -71,11 +98,6 @@ export const TrucksBoard = () => {
               key={driverWeeklyMileage.itemIdentifier}
               driverWeeklyMileage={driverWeeklyMileage}
               driverWeeklyMileageData={driverWeeklyMileageData}
-              driverMileageError={
-                driverWeeklyMileageData.errors[
-                  driverWeeklyMileage.itemIdentifier
-                ]
-              }
             />
           ),
         )}

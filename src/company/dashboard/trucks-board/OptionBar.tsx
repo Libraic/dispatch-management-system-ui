@@ -1,4 +1,4 @@
-import { Button } from "./Button.tsx";
+import { IconButton } from "./IconButton.tsx";
 import addRecordUnfocused from "../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../assets/trucks-board/add-focused.svg";
 import { addDriverWeeklyMileage } from "../../../utils/trucks-board/trucks-board-utils.ts";
@@ -20,7 +20,7 @@ export const OptionBar: React.FC<{
 }> = ({ driverWeeklyMileageData, toast }) => {
   return (
     <div className="mb-3 sticky left-0 z-10 ">
-      <Button
+      <IconButton
         unfocusedResource={addRecordUnfocused}
         focusedResource={addRecordFocused}
         action={() =>
@@ -31,7 +31,7 @@ export const OptionBar: React.FC<{
         }
         information="Add a new record"
       />
-      <Button
+      <IconButton
         unfocusedResource={deleteRecordUnfocused}
         focusedResource={deleteRecordFocused}
         action={async () => {
@@ -53,7 +53,7 @@ export const OptionBar: React.FC<{
         }}
         information="Delete a record"
       />
-      <Button
+      <IconButton
         unfocusedResource={saveRecordsUnfocused}
         focusedResource={saveRecordsFocused}
         action={async () => {
