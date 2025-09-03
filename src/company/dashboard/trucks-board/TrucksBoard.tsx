@@ -15,6 +15,8 @@ import { mapDriverWeeklyMileageResponseToDriverWeeklyMileage } from "../../../ut
 import { useToast } from "../../../hooks/useToast.ts";
 import { INTERNAL_SERVER_ERROR } from "../../../utils/global/error-messages.ts";
 import { ToastRenderer } from "../../../toast/ToastRenderer.tsx";
+import { BackButton } from "../../../global/BackButton.tsx";
+import { formatCompanyDashboardRoute } from "../../../utils/global/route-utils.ts";
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
@@ -48,7 +50,8 @@ export const TrucksBoard = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center mt-10 text-[0.8rem]">
+    <div className="w-screen h-screen flex flex-col items-center mt-2 text-[0.8rem]">
+      <BackButton url={formatCompanyDashboardRoute(companyUuid!!)} />
       <PageHeader
         header="Trucks Board"
         subheader="The Weekly Mileage of Drivers"

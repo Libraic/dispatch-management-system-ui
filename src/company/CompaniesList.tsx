@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchCompanies } from "../service/company-service.ts";
 import type { CompanyData } from "../types/api/registration-api.ts";
-import backUnhoveredIcon from "../assets/global/back-icon-unhovered.svg";
-import backHoveredIcon from "../assets/global/back-icon-hovered.svg";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../utils/constants/internal-routes.ts";
 import {
@@ -10,11 +8,12 @@ import {
   getPropertySafe,
   getSpentDays,
 } from "../utils/list/companies-list-utils.ts";
+import { BackButton } from "../global/BackButton.tsx";
 
 export const CompaniesList = () => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
-  const [backIcon, setBackIcon] = useState(backUnhoveredIcon);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchCompanies().then((data) => {
       if (data) {
@@ -27,16 +26,7 @@ export const CompaniesList = () => {
 
   return (
     <div className="w-screen flex flex-col items-center mt-10">
-      <div className="absolute top-5 left-5 border-2 border-solid-black rounded-[50%] hover:cursor-pointer hover:bg-solid-black">
-        <img
-          src={backIcon}
-          alt="back-icon"
-          className="w-8 h-8"
-          onMouseEnter={() => setBackIcon(backHoveredIcon)}
-          onMouseLeave={() => setBackIcon(backUnhoveredIcon)}
-          onClick={() => navigate(HOME)}
-        />
-      </div>
+      <BackButton url={HOME} />
       <div
         className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-open-sans font-regular rounded-[0.3rem] px-[3rem] mt-6`}
       >
