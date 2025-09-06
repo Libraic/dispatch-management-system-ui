@@ -9,7 +9,7 @@ import { PageHeader } from "../../../global/PageHeader.tsx";
 import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
 import { OptionBar } from "./OptionBar.tsx";
 import { useEffect, useState } from "react";
-import { fetchDriversMileageByCompanyUuid } from "../../../service/driver-mileage-service.ts";
+import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
 import {
   mapDriverWeeklyMileageResponseToDriverWeeklyMileage,
   saveDriversWeeklyMileage,
@@ -21,6 +21,7 @@ import { BackButton } from "../../../global/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../utils/global/route-utils.ts";
 import { ConfirmationModal } from "../../../global/ConfirmationModal.tsx";
 import { DriversMileageView } from "./DriversMileageView.tsx";
+import { WeeklyBoardBar } from "./WeeklyBoardBar.tsx";
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
@@ -33,7 +34,7 @@ export const TrucksBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchDriversMileageByCompanyUuid(companyUuid!!, WEEK_DAYS)
+    fetchDriversMileageByCompanyUuidAndStartAndEndDate(companyUuid!!, WEEK_DAYS)
       .then((data) => {
         if (data) {
           const driversWeeklyMileage = data.map((item) =>
@@ -56,8 +57,8 @@ export const TrucksBoard = () => {
   }, []);
 
   return (
-    <>
-      <div className="w-screen h-screen flex flex-col items-center mt-2 text-[0.8rem]">
+    <div className="overflow-hidden hide-scrollbar">
+      <div className="w-screen h-screen flex flex-col mt-2 text-[0.8rem]">
         <ConfirmationModal
           showModal={showModal}
           positiveAction={async () => {
@@ -84,11 +85,13 @@ export const TrucksBoard = () => {
           header="Trucks Board"
           subheader="The Weekly Mileage of Drivers"
         />
-        <div className="flex flex-col w-[90%] h-[90%] overflow-x-auto hide-scrollbar ">
+        <div className="w-[90%] mx-auto">
           <OptionBar
             driverWeeklyMileageData={driverWeeklyMileageData}
             toast={toastData}
           />
+        </div>
+        <div className="flex-1 w-[90%] mx-auto overflow-y-auto hide-scrollbar">
           <MatrixHeader
             columns={COLUMNS}
             columnsLayout={TRUCKS_BOARD_COLUMNS_LAYOUT}
@@ -97,8 +100,12 @@ export const TrucksBoard = () => {
             driverWeeklyMileageData={driverWeeklyMileageData}
           />
         </div>
+        <div className="flex flex-row justify-center mt-10 mb-4">
+          <WeeklyBoardBar interval="01-01-2025 - 07-01-2025" />
+          <WeeklyBoardBar interval="08-01-2025 - 14-01-2025" />
+        </div>
         <ToastRenderer toast={toastData} />
       </div>
-    </>
+    </div>
   );
 };

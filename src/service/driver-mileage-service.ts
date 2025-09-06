@@ -16,14 +16,9 @@ import {
   LESS_THAN_EQUAL_CLAUSE,
   START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
-import {
-  BLANK_SPACE,
-  COLON,
-  DOT,
-  HIPHEN,
-} from "../utils/constants/global-constants.ts";
+import { COLON } from "../utils/constants/global-constants.ts";
 import type { Void } from "../types/global.ts";
-import { CURRENT_YEAR } from "../utils/global/date.ts";
+import { getLittleEndianDateFromDriversMileageDate } from "../utils/trucks-board/trucks-board-utils.ts";
 
 export const saveDriversMileage = async (
   upsertDriversMileageRequest: UpsertDriversMileageRequest,
@@ -41,18 +36,14 @@ export const saveDriversMileage = async (
   }
 };
 
-export const fetchDriversMileageByCompanyUuid = async (
+export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
   weekDays: string[],
 ): Promise<DriverWeeklyMileageResponse[] | undefined> => {
-  const startDateParts = weekDays[0].split(BLANK_SPACE)[1].split(DOT);
-  const endDateParts = weekDays[weekDays.length - 1]
-    .split(BLANK_SPACE)[1]
-    .split(DOT);
-  const startDate =
-    startDateParts[1] + HIPHEN + startDateParts[0] + HIPHEN + CURRENT_YEAR;
-  const endDate =
-    endDateParts[1] + HIPHEN + endDateParts[0] + HIPHEN + CURRENT_YEAR;
+  const startDate = getLittleEndianDateFromDriversMileageDate(weekDays[0]);
+  const endDate = getLittleEndianDateFromDriversMileageDate(
+    weekDays[weekDays.length - 1],
+  );
   try {
     const response = await axios.get<
       ApiResponse<DriverWeeklyMileageResponse[], Error>
