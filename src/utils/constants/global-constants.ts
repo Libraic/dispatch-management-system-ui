@@ -10,3 +10,4 @@ export const DOLLAR_SIGN = "$";
 export const BLANK_SPACE = " ";
 export const QUESTION_MARK = "?";
 export const EQUAL_SIGN = "=";
+export const HIPHEN = "-";

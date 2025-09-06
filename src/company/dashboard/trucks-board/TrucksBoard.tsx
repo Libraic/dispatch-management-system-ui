@@ -33,7 +33,7 @@ export const TrucksBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchDriversMileageByCompanyUuid(companyUuid!!)
+    fetchDriversMileageByCompanyUuid(companyUuid!!, WEEK_DAYS)
       .then((data) => {
         if (data) {
           const driversWeeklyMileage = data.map((item) =>

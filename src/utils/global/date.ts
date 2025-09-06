@@ -18,7 +18,7 @@ const WEEKDAYS = [
   "Sunday",
 ];
 
-const CURRENT_YEAR = new Date().getFullYear();
+export const CURRENT_YEAR = new Date().getFullYear();
 
 export const getWeekWithNames = (date: Date): string[] => {
   // Ensure week starts on Monday.
