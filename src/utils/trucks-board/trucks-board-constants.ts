@@ -9,8 +9,13 @@ export const TRUCKS_BOARD_PRIMARY_COLUMNS = [
   "Revenue",
 ];
 
+export const TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT =
+  "grid-cols-[4rem_9rem_14rem_5.7rem_6rem]";
+
+export const TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT =
+  "grid-cols-[repeat(7,17rem)]";
+
 export const TRUCKS_BOARD_COLUMNS_LAYOUT =
   "grid-cols-[4rem_9rem_14rem_5.7rem_6rem_repeat(7,17rem)]";
 
 export const WEEK_DAYS = getWeekWithNames(new Date());
-export const COLUMNS = [...TRUCKS_BOARD_PRIMARY_COLUMNS, ...WEEK_DAYS];

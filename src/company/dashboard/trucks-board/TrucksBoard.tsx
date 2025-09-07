@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import {
-  COLUMNS,
-  TRUCKS_BOARD_COLUMNS_LAYOUT,
+  TRUCKS_BOARD_PRIMARY_COLUMNS,
+  TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT,
+  TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT,
   WEEK_DAYS,
 } from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { PageHeader } from "../../../global/PageHeader.tsx";
@@ -91,10 +92,12 @@ export const TrucksBoard = () => {
             toast={toastData}
           />
         </div>
-        <div className="flex-1 w-[90%] mx-auto overflow-y-auto hide-scrollbar">
+        <div className="flex-1 w-[90%] mx-auto overflow-x-auto">
           <MatrixHeader
-            columns={COLUMNS}
-            columnsLayout={TRUCKS_BOARD_COLUMNS_LAYOUT}
+            stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
+            stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT}
+            scrollableColumns={WEEK_DAYS}
+            scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileageView
             driverWeeklyMileageData={driverWeeklyMileageData}

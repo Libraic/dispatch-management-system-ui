@@ -19,20 +19,22 @@ export const DriverMileage: React.FC<{
     driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
   return (
     <div
-      className={`min-w-[1000px] min-h-[6rem] ${TRUCKS_BOARD_COLUMNS_LAYOUT} grid grid-cols-3 rounded-[0.3rem] font-open-sans font-light bg-white`}
+      className={`min-w-[1000px] min-h-[6rem] ${TRUCKS_BOARD_COLUMNS_LAYOUT} grid rounded-[0.3rem] font-open-sans font-light bg-white`}
     >
-      <CheckBox
-        isChecked={driverWeeklyMileageData
-          .getIdentifiersMarkedForDeletion()
-          .includes(itemIdentifier)}
-        onChange={(e) => {
-          if (e.target.checked) {
-            driverWeeklyMileageData.markForDeletion(itemIdentifier);
-          } else {
-            driverWeeklyMileageData.unmarkForDeletion(itemIdentifier);
-          }
-        }}
-      />
+      <div className="sticky left-0 bg-white z-10">
+        <CheckBox
+          isChecked={driverWeeklyMileageData
+            .getIdentifiersMarkedForDeletion()
+            .includes(itemIdentifier)}
+          onChange={(e) => {
+            if (e.target.checked) {
+              driverWeeklyMileageData.markForDeletion(itemIdentifier);
+            } else {
+              driverWeeklyMileageData.unmarkForDeletion(itemIdentifier);
+            }
+          }}
+        />
+      </div>
       <DriverMileageMetadata
         driverWeeklyMileage={driverWeeklyMileage}
         driverWeeklyMileageData={driverWeeklyMileageData}

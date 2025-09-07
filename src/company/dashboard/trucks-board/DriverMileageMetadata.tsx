@@ -28,43 +28,51 @@ export const DriverMileageMetadata: React.FC<{
     driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
   return (
     <>
-      <LiveSearchCell
-        defaultSearchKey={LiveSearchKey.USER}
-        constructor={User}
-        object={driverWeeklyMileage.dispatcher}
-        saveObject={(dispatcher: Renderable) =>
-          setDispatcher(
-            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
-            dispatcher,
-            itemIdentifier,
-          )
-        }
-        errorMessage={
-          driverMileageError && (driverMileageError[DISPATCHER_KEY] as string)
-        }
-      />
-      <LiveSearchCell
-        defaultSearchKey={LiveSearchKey.DRIVER}
-        constructor={Driver}
-        object={driverWeeklyMileage.driver}
-        saveObject={(driver: Renderable) =>
-          setDriver(
-            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
-            driver,
-            itemIdentifier,
-          )
-        }
-        customSearchCriteria={[
-          queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
-        ]}
-        errorMessage={
-          driverMileageError && (driverMileageError[DRIVER_KEY] as string)
-        }
-      />
-      <ViewableCell
-        data={driverWeeklyMileage.driver?.getTruckData() ?? BLANK_STRING}
-      ></ViewableCell>
-      <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileageData} />
+      <div className="sticky left-[4rem] z-10">
+        <LiveSearchCell
+          defaultSearchKey={LiveSearchKey.USER}
+          constructor={User}
+          object={driverWeeklyMileage.dispatcher}
+          saveObject={(dispatcher: Renderable) =>
+            setDispatcher(
+              driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+              dispatcher,
+              itemIdentifier,
+            )
+          }
+          errorMessage={
+            driverMileageError && (driverMileageError[DISPATCHER_KEY] as string)
+          }
+        />
+      </div>
+      <div className="sticky left-[13rem] z-10">
+        <LiveSearchCell
+          defaultSearchKey={LiveSearchKey.DRIVER}
+          constructor={Driver}
+          object={driverWeeklyMileage.driver}
+          saveObject={(driver: Renderable) =>
+            setDriver(
+              driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+              driver,
+              itemIdentifier,
+            )
+          }
+          customSearchCriteria={[
+            queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
+          ]}
+          errorMessage={
+            driverMileageError && (driverMileageError[DRIVER_KEY] as string)
+          }
+        />
+      </div>
+      <div className="sticky left-[27rem] z-10">
+        <ViewableCell
+          data={driverWeeklyMileage.driver?.getTruckData() ?? BLANK_STRING}
+        />
+      </div>
+      <div className="sticky left-[32.7rem] z-8 w-[6rem]">
+        <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileageData} />
+      </div>
     </>
   );
 };

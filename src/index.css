@@ -47,3 +47,12 @@ input[type='number']::-webkit-outer-spin-button {
 .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
 }
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.6rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4ddf8;
+}
