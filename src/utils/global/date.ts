@@ -20,22 +20,26 @@ const WEEKDAYS = [
 
 export const CURRENT_YEAR = new Date().getFullYear();
 
-export const getWeekWithNames = (date: Date): string[] => {
+export const getWeekWithNames = (date: Date): string[][] => {
   const dayOfWeek = date.getDay() === 0 ? 6 : date.getDay() - 1;
   const monday = new Date(date);
   monday.setDate(monday.getDate() - dayOfWeek);
-  const result: string[] = [];
+  const results: string[][] = [];
 
-  for (let i = 0; i < 7; i++) {
-    const currentDay = new Date(monday);
-    currentDay.setDate(monday.getDate() + i);
-    const month = String(currentDay.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDay.getDate()).padStart(2, "0");
-    const year = String(currentDay.getFullYear());
-    result.push(`${WEEKDAYS[i]} ${month}.${day}.${year}`);
+  for (let j = 0; j < 3; ++j) {
+    const result: string[] = [];
+    for (let i = 0; i < 7; i++) {
+      const currentDay = new Date(monday);
+      currentDay.setDate(monday.getDate() - 7 * j + i);
+      const month = String(currentDay.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDay.getDate()).padStart(2, "0");
+      const year = String(currentDay.getFullYear());
+      result.push(`${WEEKDAYS[i]} ${month}.${day}.${year}`);
+    }
+    results.push(result);
   }
 
-  return result;
+  return results;
 };
 
 export const convertDateToLittleEndian = (date: YearData) => {
