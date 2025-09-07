@@ -2,12 +2,20 @@ import {
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../types/financial/trucks-board.ts";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+import {
+  BLANK_SPACE,
+  BLANK_STRING,
+  DOT,
+  HIPHEN,
+} from "../constants/global-constants.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
 import * as React from "react";
 import type { User } from "../../types/api/User.ts";
-import { convertMileageDayToLittleEndianDate } from "../global/date.ts";
+import {
+  convertMileageDayToLittleEndianDate,
+  CURRENT_YEAR,
+} from "../global/date.ts";
 import { v4 as uuidv4 } from "uuid";
 
 export const addDriverWeeklyMileage = (
@@ -104,6 +112,13 @@ export const setDriverWeeklyMileage = (
       return driverWeeklyMileage;
     }),
   );
+};
+
+export const getLittleEndianDateFromDriversMileageDate = (
+  apiStartDate: string,
+): string => {
+  const startDateParts = apiStartDate.split(BLANK_SPACE)[1].split(DOT);
+  return startDateParts[1] + HIPHEN + startDateParts[0] + HIPHEN + CURRENT_YEAR;
 };
 
 const mileagesMapperFunction = (

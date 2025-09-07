@@ -10,14 +10,15 @@ import type { UpsertDriversMileageRequest } from "../types/api/driver-mileage-ap
 import type { DriverWeeklyMileageResponse } from "../types/financial/trucks-board.ts";
 import {
   COMPANY_ID_QUERY_PARAM,
+  END_DATE_QUERY_PARAM,
+  GREATER_THAN_EQUAL_CLAUSE,
   JOIN_CLAUSE,
+  LESS_THAN_EQUAL_CLAUSE,
+  START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
-import {
-  COLON,
-  EQUAL_SIGN,
-  QUESTION_MARK,
-} from "../utils/constants/global-constants.ts";
+import { COLON } from "../utils/constants/global-constants.ts";
 import type { Void } from "../types/global.ts";
+import { getLittleEndianDateFromDriversMileageDate } from "../utils/trucks-board/trucks-board-utils.ts";
 
 export const saveDriversMileage = async (
   upsertDriversMileageRequest: UpsertDriversMileageRequest,
@@ -35,20 +36,24 @@ export const saveDriversMileage = async (
   }
 };
 
-export const fetchDriversMileageByCompanyUuid = async (
+export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
+  weekDays: string[],
 ): Promise<DriverWeeklyMileageResponse[] | undefined> => {
+  const startDate = getLittleEndianDateFromDriversMileageDate(weekDays[0]);
+  const endDate = getLittleEndianDateFromDriversMileageDate(
+    weekDays[weekDays.length - 1],
+  );
   try {
-    const url =
-      DRIVERS_MILEAGE_BASE_URL +
-      QUESTION_MARK +
-      COMPANY_ID_QUERY_PARAM +
-      EQUAL_SIGN +
-      JOIN_CLAUSE +
-      COLON +
-      companyUuid;
-    const response =
-      await axios.get<ApiResponse<DriverWeeklyMileageResponse[], Error>>(url);
+    const response = await axios.get<
+      ApiResponse<DriverWeeklyMileageResponse[], Error>
+    >(DRIVERS_MILEAGE_BASE_URL, {
+      params: {
+        [COMPANY_ID_QUERY_PARAM]: `${JOIN_CLAUSE}${COLON}${companyUuid}`,
+        [START_DATE_QUERY_PARAM]: `${GREATER_THAN_EQUAL_CLAUSE}${COLON}${startDate}`,
+        [END_DATE_QUERY_PARAM]: `${LESS_THAN_EQUAL_CLAUSE}${COLON}${endDate}`,
+      },
+    });
     return response.data.data;
   } catch (error) {
     throw error;

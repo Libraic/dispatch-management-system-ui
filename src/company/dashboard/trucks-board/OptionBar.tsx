@@ -19,7 +19,7 @@ export const OptionBar: React.FC<{
   toast: ToastData;
 }> = ({ driverWeeklyMileageData, toast }) => {
   return (
-    <div className="mb-3 sticky left-0 z-10 ">
+    <div className="mb-3 sticky left-0 z-10 overflow-hidden">
       <IconButton
         unfocusedResource={addRecordUnfocused}
         focusedResource={addRecordFocused}

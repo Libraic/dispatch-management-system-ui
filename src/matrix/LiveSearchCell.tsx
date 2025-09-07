@@ -60,7 +60,7 @@ export const LiveSearchCell = <D, R>({
 
   return (
     <div
-      className="relative"
+      className="relative h-full w-full"
       onMouseEnter={hoverData.handleMouseEnter}
       onMouseLeave={hoverData.handleMouseLeave}
     >

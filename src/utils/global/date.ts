@@ -18,14 +18,12 @@ const WEEKDAYS = [
   "Sunday",
 ];
 
-const CURRENT_YEAR = new Date().getFullYear();
+export const CURRENT_YEAR = new Date().getFullYear();
 
 export const getWeekWithNames = (date: Date): string[] => {
-  // Ensure week starts on Monday.
-  // Monday = 0, Sunday = 6.
-  const dayOfWeek = (date.getDay() % 7) - 1;
+  const dayOfWeek = date.getDay() === 0 ? 6 : date.getDay() - 1;
   const monday = new Date(date);
-  monday.setDate(date.getDate() - dayOfWeek);
+  monday.setDate(monday.getDate() - dayOfWeek);
   const result: string[] = [];
 
   for (let i = 0; i < 7; i++) {

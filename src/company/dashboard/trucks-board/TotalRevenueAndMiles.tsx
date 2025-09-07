@@ -14,7 +14,7 @@ export const TotalRevenueAndMiles: React.FC<{ mileages: Mileage[] }> = ({
 }) => {
   const [totalRevenue, totalMiles] = getTotalRevenueAndMiles(mileages);
   return (
-    <div className="grid grid-rows-2">
+    <div className="grid grid-rows-2 h-full">
       <ViewableCell
         data={`${totalRevenue !== 0 ? DOLLAR_SIGN + BLANK_SPACE + formatNumericValue(totalRevenue.toString()) : BLANK_STRING}`}
         font="bold"
