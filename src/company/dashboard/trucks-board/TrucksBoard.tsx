@@ -96,7 +96,9 @@ export const TrucksBoard = () => {
           <MatrixHeader
             stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
             stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT}
-            scrollableColumns={WEEK_DAYS}
+            scrollableColumns={WEEK_DAYS.map((day) =>
+              day.slice(0, day.length - 5),
+            )}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileageView

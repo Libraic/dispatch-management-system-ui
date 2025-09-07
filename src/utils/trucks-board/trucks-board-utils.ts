@@ -146,6 +146,8 @@ const getBlankDriverWeeklyMileage = (
     driver: null,
     dispatcher: null,
     itemIdentifier: uuidv4(),
+    startDate: getDate(weekDays[0]),
+    endDate: getDate(weekDays[weekDays.length - 1]),
     mileageData: getWeekMileages(weekDays),
   };
 };
@@ -158,4 +160,12 @@ const getWeekMileages = (weekDays: string[]): Mileage[] => {
     note: null,
     destinationNote: null,
   }));
+};
+
+const getDate = (day: string): string => {
+  const firstDay = day.split(BLANK_SPACE)[1];
+  const firstDayParts = firstDay.split(DOT);
+  return (
+    firstDayParts[2] + HIPHEN + firstDayParts[0] + HIPHEN + firstDayParts[1]
+  );
 };

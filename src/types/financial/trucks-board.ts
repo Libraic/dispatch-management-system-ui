@@ -27,6 +27,8 @@ export type DriverWeeklyMileage = {
   driver: Driver | null;
   dispatcher: User | null;
   itemIdentifier: string;
+  startDate: string;
+  endDate: string;
   mileageData: Mileage[];
 };
 

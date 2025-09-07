@@ -305,6 +305,8 @@ const getUpsertDriversMileageRequestFromDriversWeeklyMileage = (
       dispatcherUuid: value.dispatcher?.uuid!!,
       driverUuid: value.driver?.driverData.uuid!!,
       itemIdentifier: value.itemIdentifier,
+      startDate: value.startDate,
+      endDate: value.endDate,
       mileage: value.mileageData.map((mileage) => ({
         date: mileage.date,
         destinationNote: mileage.destinationNote,

@@ -31,7 +31,8 @@ export const getWeekWithNames = (date: Date): string[] => {
     currentDay.setDate(monday.getDate() + i);
     const month = String(currentDay.getMonth() + 1).padStart(2, "0");
     const day = String(currentDay.getDate()).padStart(2, "0");
-    result.push(`${WEEKDAYS[i]} ${month}.${day}`);
+    const year = String(currentDay.getFullYear());
+    result.push(`${WEEKDAYS[i]} ${month}.${day}.${year}`);
   }
 
   return result;
