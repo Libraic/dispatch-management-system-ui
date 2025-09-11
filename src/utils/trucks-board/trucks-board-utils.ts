@@ -6,7 +6,7 @@ import {
   BLANK_SPACE,
   BLANK_STRING,
   DOT,
-  HIPHEN,
+  HYPHEN,
 } from "../constants/global-constants.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 import { Driver } from "../../types/api/Driver.ts";
@@ -118,7 +118,7 @@ export const getLittleEndianDateFromDriversMileageDate = (
   apiStartDate: string,
 ): string => {
   const startDateParts = apiStartDate.split(BLANK_SPACE)[1].split(DOT);
-  return startDateParts[1] + HIPHEN + startDateParts[0] + HIPHEN + CURRENT_YEAR;
+  return startDateParts[1] + HYPHEN + startDateParts[0] + HYPHEN + CURRENT_YEAR;
 };
 
 const mileagesMapperFunction = (
@@ -166,6 +166,6 @@ const getDate = (day: string): string => {
   const firstDay = day.split(BLANK_SPACE)[1];
   const firstDayParts = firstDay.split(DOT);
   return (
-    firstDayParts[2] + HIPHEN + firstDayParts[0] + HIPHEN + firstDayParts[1]
+    firstDayParts[2] + HYPHEN + firstDayParts[0] + HYPHEN + firstDayParts[1]
   );
 };

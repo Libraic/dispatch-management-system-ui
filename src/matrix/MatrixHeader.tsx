@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Z_INDEX_TRUCKS_BOARD_TABLE } from "../utils/trucks-board/trucks-board-constants.ts";
 
 export const MatrixHeader: React.FC<{
   stickyColumns: string[];
@@ -12,9 +13,13 @@ export const MatrixHeader: React.FC<{
   scrollableColumnsLayout,
 }) => {
   return (
-    <div className="flex mx-auto sticky top-0 z-30 font-open-sans font-bold w-fit">
+    <div
+      style={{ zIndex: Z_INDEX_TRUCKS_BOARD_TABLE }}
+      className="flex mx-auto sticky top-0 font-open-sans font-bold w-fit"
+    >
       <div
-        className={`grid ${stickyColumnsLayout} bg-[#d4ddf8] sticky left-0 z-20 h-[3rem]`}
+        style={{ gridTemplateColumns: stickyColumnsLayout }}
+        className={`grid bg-[#d4ddf8] sticky left-0 z-20 h-[3rem]`}
       >
         {stickyColumns.map((column, index) => (
           <div className="flex items-center px-4" key={index}>
@@ -25,7 +30,8 @@ export const MatrixHeader: React.FC<{
       {scrollableColumns && (
         <div className="overflow-x-auto hide-scrollbar">
           <div
-            className={`grid ${scrollableColumnsLayout} bg-[#d4ddf8] h-[3rem]`}
+            style={{ gridTemplateColumns: scrollableColumnsLayout }}
+            className={`grid bg-[#d4ddf8] h-[3rem]`}
           >
             {scrollableColumns.map((day, index) => (
               <div className="flex items-center px-4" key={index}>
