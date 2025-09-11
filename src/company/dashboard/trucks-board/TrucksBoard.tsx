@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MatrixHeader } from "../../../matrix/MatrixHeader.tsx";
 import {
   TRUCKS_BOARD_PRIMARY_COLUMNS,
-  TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT,
+  TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS,
   TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT,
 } from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { PageHeader } from "../../../global/PageHeader.tsx";
@@ -26,7 +26,7 @@ import { getWeekWithNames } from "../../../utils/global/date.ts";
 import {
   BLANK_SPACE,
   DOT,
-  HIPHEN,
+  HYPHEN,
 } from "../../../utils/constants/global-constants.ts";
 
 const WEEKS = getWeekWithNames(new Date());
@@ -103,7 +103,10 @@ export const TrucksBoard = () => {
         <div className="flex-1 w-[90%] mx-auto overflow-x-auto">
           <MatrixHeader
             stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
-            stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_LAYOUT}
+            stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.replace(
+              /_/g,
+              " ",
+            )}
             scrollableColumns={week.map((day) => day.slice(0, day.length - 5))}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
@@ -117,7 +120,7 @@ export const TrucksBoard = () => {
             const lastParts = week[week.length - 1]
               .split(BLANK_SPACE)[1]
               .split(DOT);
-            const interval = `${firstParts[1]}${HIPHEN}${firstParts[0]}${HIPHEN}${firstParts[2]} ${HIPHEN} ${lastParts[1]}${HIPHEN}${lastParts[0]}${HIPHEN}${lastParts[2]}`;
+            const interval = `${firstParts[1]}${HYPHEN}${firstParts[0]}${HYPHEN}${firstParts[2]} ${HYPHEN} ${lastParts[1]}${HYPHEN}${lastParts[0]}${HYPHEN}${lastParts[2]}`;
             return (
               <WeeklyBoardBar
                 key={index}
