@@ -3,8 +3,11 @@ import type {
   DriversMileageErrors,
   DriverWeeklyMileage,
 } from "../types/financial/trucks-board.ts";
+import type { DriversMileageGroup } from "../company/dashboard/trucks-board/TrucksBoard.tsx";
 
 export type DriverWeeklyMileageData = {
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>;
+  getDriversMileageGroups: () => DriversMileageGroup[];
   previousDriversWeeklyMileage: DriverWeeklyMileage[];
   setPreviousDriversWeeklyMileage: Dispatch<
     SetStateAction<DriverWeeklyMileage[]>
@@ -13,8 +16,6 @@ export type DriverWeeklyMileageData = {
   setCurrentDriversWeeklyMileage: Dispatch<
     SetStateAction<DriverWeeklyMileage[]>
   >;
-  markForDeletion: (itemIdentifier: string) => void;
-  unmarkForDeletion: (itemIdentifier: string) => void;
   clearItemsMarkedForDeletion: () => void;
   getIdentifiersMarkedForDeletion: () => string[];
   errors: DriversMileageErrors;
@@ -33,18 +34,15 @@ export const useDriverWeeklyMileage = (
     useState<DriverWeeklyMileage[]>([]);
   const [errors, setErrors] = useState<DriversMileageErrors>({});
   const [identifiers, setIdentifiers] = useState<string[]>([]);
+  const [groups, setGroups] = useState<DriversMileageGroup[]>([]);
 
   return {
+    setDriversMileageGroups: setGroups,
+    getDriversMileageGroups: () => groups,
     previousDriversWeeklyMileage: previousDriversWeeklyMileage,
     setPreviousDriversWeeklyMileage: setPreviousDriversWeeklyMileage,
     currentDriversWeeklyMileage: currentDriversWeeklyMileage,
     setCurrentDriversWeeklyMileage: setCurrentDriversWeeklyMileage,
-    markForDeletion: (itemIdentifier: string) =>
-      setIdentifiers((prevIdentifiers) => [...prevIdentifiers, itemIdentifier]),
-    unmarkForDeletion: (itemIdentifier: string) =>
-      setIdentifiers((prev) =>
-        prev.filter((identifier) => identifier !== itemIdentifier),
-      ),
     clearItemsMarkedForDeletion: () => setIdentifiers([]),
     getIdentifiersMarkedForDeletion: () => identifiers,
     errors: errors,

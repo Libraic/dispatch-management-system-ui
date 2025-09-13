@@ -24,7 +24,10 @@ export const LiveSearchCell = <D, R>({
   saveObject,
   customSearchCriteria,
   errorMessage,
-}: LiveSearchCellData<D, R>) => {
+  style,
+}: LiveSearchCellData<D, R> & {
+  style?: React.CSSProperties;
+}) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
   const [isRendered, setIsRendered] = useState(false);
@@ -60,12 +63,13 @@ export const LiveSearchCell = <D, R>({
 
   return (
     <div
-      className="relative h-full w-full"
+      className="relative w-full h-full"
+      style={style}
       onMouseEnter={hoverData.handleMouseEnter}
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`px-4 flex items-center ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        className={`p-2 flex justify-center ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {

@@ -8,8 +8,7 @@ import {
   DOT,
   HYPHEN,
 } from "../constants/global-constants.ts";
-import type { Renderable } from "../../types/api/Renderable.ts";
-import { Driver } from "../../types/api/Driver.ts";
+import type { Dispatch, SetStateAction } from "react";
 import * as React from "react";
 import type { User } from "../../types/api/User.ts";
 import {
@@ -17,6 +16,9 @@ import {
   CURRENT_YEAR,
 } from "../global/date.ts";
 import { v4 as uuidv4 } from "uuid";
+import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
+import type { Driver } from "../../types/api/Driver.ts";
+import type { Renderable } from "../../types/api/Renderable.ts";
 
 export const addDriverWeeklyMileage = (
   setDriversWeeklyMileages: React.Dispatch<
@@ -48,42 +50,38 @@ export const getTotalRevenueAndMiles = (mileages: Mileage[]): number[] => {
 };
 
 export const setDispatcher = (
-  setDriversWeeklyMileages: React.Dispatch<
-    React.SetStateAction<DriverWeeklyMileage[]>
-  >,
   dispatcher: Renderable,
-  itemIdentifier: string,
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
+  groupIdentifier: string,
 ) => {
-  setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage) => {
-      if (driverWeeklyMileage.itemIdentifier === itemIdentifier) {
-        return {
-          ...driverWeeklyMileage,
-          dispatcher: dispatcher as User,
-        };
-      }
-      return driverWeeklyMileage;
-    }),
+  setDriversMileageGroups((groups) =>
+    groups.map((group) =>
+      group.groupIdentifier === groupIdentifier
+        ? { ...group, dispatcher: dispatcher as User }
+        : group,
+    ),
   );
 };
 
 export const setDriver = (
-  setDriversWeeklyMileages: React.Dispatch<
-    React.SetStateAction<DriverWeeklyMileage[]>
-  >,
+  dispatcher: User,
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
   driver: Renderable,
   itemIdentifier: string,
 ) => {
-  setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage) => {
-      if (driverWeeklyMileage.itemIdentifier === itemIdentifier) {
-        return {
-          ...driverWeeklyMileage,
-          driver: driver as Driver,
-        };
-      }
-      return driverWeeklyMileage;
-    }),
+  setDriversMileageGroups((groups) =>
+    groups.map((group) =>
+      group.dispatcher.getUuid() === dispatcher.getUuid()
+        ? {
+            ...group,
+            items: group.items.map((item) =>
+              item.itemIdentifier === itemIdentifier
+                ? { ...item, driver: driver as Driver }
+                : item,
+            ),
+          }
+        : group,
+    ),
   );
 };
 

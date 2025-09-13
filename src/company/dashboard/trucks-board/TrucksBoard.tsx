@@ -11,6 +11,7 @@ import { OptionBar } from "./OptionBar.tsx";
 import { useEffect, useState } from "react";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
 import {
+  groupDriverWeeklyMileageByDispatcher,
   mapDriverWeeklyMileageResponseToDriverWeeklyMileage,
   saveDriversWeeklyMileage,
 } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
@@ -28,8 +29,16 @@ import {
   DOT,
   HYPHEN,
 } from "../../../utils/constants/global-constants.ts";
+import type { User } from "../../../types/api/User.ts";
+import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.ts";
 
 const WEEKS = getWeekWithNames(new Date());
+
+export type DriversMileageGroup = {
+  dispatcher: User;
+  groupIdentifier: string;
+  items: DriverWeeklyMileage[];
+};
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
@@ -46,6 +55,10 @@ export const TrucksBoard = () => {
     fetchDriversMileageByCompanyUuidAndStartAndEndDate(companyUuid!!, week)
       .then((data) => {
         if (data) {
+          const groups = groupDriverWeeklyMileageByDispatcher(data);
+          driverWeeklyMileageData.setDriversMileageGroups(
+            Object.values(groups),
+          );
           const driversWeeklyMileage = data.map((item) =>
             mapDriverWeeklyMileageResponseToDriverWeeklyMileage(item),
           );
@@ -105,7 +118,7 @@ export const TrucksBoard = () => {
             stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
             stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.replace(
               /_/g,
-              " ",
+              BLANK_SPACE,
             )}
             scrollableColumns={week.map((day) => day.slice(0, day.length - 5))}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}

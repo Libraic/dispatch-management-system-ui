@@ -1,5 +1,4 @@
 import type { Driver } from "../api/Driver.ts";
-import type { User } from "../api/User.ts";
 import type { DriverData } from "../api/driver-api.ts";
 import type { UserData } from "../api/registration-api.ts";
 
@@ -25,7 +24,6 @@ export type MileageData = {
 export type DriverWeeklyMileage = {
   uuid: string | null;
   driver: Driver | null;
-  dispatcher: User | null;
   itemIdentifier: string;
   startDate: string;
   endDate: string;

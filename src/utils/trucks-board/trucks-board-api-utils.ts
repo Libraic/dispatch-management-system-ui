@@ -1,5 +1,4 @@
 import {
-  DISPATCHER_KEY,
   DRIVER_KEY,
   type DriverMileageError,
   type DriversMileageErrors,
@@ -25,12 +24,10 @@ import {
   deleteDriversMileageByUuids,
   saveDriversMileage,
 } from "../../service/driver-mileage-service.ts";
-import {
-  MISSING_DISPATCHER,
-  MISSING_DRIVER,
-} from "../global/error-messages.ts";
+import { MISSING_DRIVER } from "../global/error-messages.ts";
 import type { UpsertDriversMileageRequest } from "../../types/api/driver-mileage-api.ts";
 import { v4 as uuidv4 } from "uuid";
+import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
 
 export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   item: DriverWeeklyMileageResponse,
@@ -38,7 +35,6 @@ export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   return {
     itemIdentifier: uuidv4(),
     driver: new Driver(item.driver),
-    dispatcher: new User(item.dispatcher),
     uuid: item.uuid,
     mileageData: item.mileageData.map((mileage) => {
       return {
@@ -160,6 +156,28 @@ export const deleteDriversMileage = async (
   return response.error;
 };
 
+export const groupDriverWeeklyMileageByDispatcher = (
+  data: DriverWeeklyMileageResponse[],
+) => {
+  return data.reduce<Record<string, DriversMileageGroup>>((acc, curr) => {
+    const dispatcherId = curr.dispatcher.uuid;
+
+    if (!acc[dispatcherId]) {
+      acc[dispatcherId] = {
+        dispatcher: new User(curr.dispatcher),
+        groupIdentifier: uuidv4(),
+        items: [],
+      };
+    }
+
+    acc[dispatcherId].items.push(
+      mapDriverWeeklyMileageResponseToDriverWeeklyMileage(curr),
+    );
+
+    return acc;
+  }, {});
+};
+
 const handleApiErrors = (
   response: ApiResponse<
     DriverWeeklyMileageResponse[],
@@ -201,13 +219,6 @@ const getErrorsPriorUpsertion = (
       driverWeeklyMileage.driver.getUuid() === null
     ) {
       driverMileageError[DRIVER_KEY] = MISSING_DRIVER;
-    }
-
-    if (
-      driverWeeklyMileage.dispatcher === null ||
-      driverWeeklyMileage.dispatcher.getUuid() === null
-    ) {
-      driverMileageError[DISPATCHER_KEY] = MISSING_DISPATCHER;
     }
 
     if (Object.keys(driverMileageError).length !== 0) {
@@ -256,13 +267,6 @@ const hasAnyDriverWeeklyMileageFieldChanged = (
   if (
     curr.driver === null ||
     curr.driver.getUuid() !== prev.driver!!.getUuid()
-  ) {
-    return true;
-  }
-
-  if (
-    curr.dispatcher === null ||
-    curr.dispatcher.getUuid() !== prev.dispatcher!!.getUuid()
   ) {
     return true;
   }
