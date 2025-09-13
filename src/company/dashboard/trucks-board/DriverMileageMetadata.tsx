@@ -46,7 +46,6 @@ export const DriverMileageMetadata: React.FC<{
     setOffsets(offsets);
   }, []);
 
-  console.log(Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index);
   return (
     <>
       <div

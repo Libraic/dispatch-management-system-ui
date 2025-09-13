@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { LiveSearchCellData } from "../types/matrix/LiveSearchCellData.ts";
 import { LiveSearchEndpoints } from "../types/forms.ts";
 import { BLANK_STRING } from "../utils/constants/global-constants.ts";
@@ -44,6 +45,9 @@ export const LiveSearchCell = <D, R>({
   const hoverData = useHoverPanel(!!errorMessage);
   const isMounted = useRef(false);
 
+  const cellRef = useRef<HTMLDivElement>(null);
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+
   if (!isMounted.current) {
     if (object) {
       setText(object.renderOnForm());
@@ -61,15 +65,31 @@ export const LiveSearchCell = <D, R>({
     }
   }, [data, errorMessage, constructor, toast]);
 
+  useEffect(() => {
+    if (cellRef.current) {
+      const rect = cellRef.current.getBoundingClientRect();
+      setDropdownStyle({
+        position: "absolute",
+        top: rect.top + rect.height / 2 + window.scrollY - 50,
+        left: rect.left + rect.width / 2 + window.scrollX,
+        minWidth: rect.width,
+        zIndex: 9999,
+      });
+    }
+  }, [items.length]);
+
   return (
     <div
+      ref={cellRef}
       className="relative w-full h-full"
       style={style}
       onMouseEnter={hoverData.handleMouseEnter}
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`p-2 flex justify-center ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        className={`p-2 flex justify-center items-center ${
+          errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE
+        } border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {
@@ -87,20 +107,26 @@ export const LiveSearchCell = <D, R>({
           }
         }}
       ></div>
-      {toast.getMessage().length === 0 && items.length > 0 && (
-        <LiveSearchResultList
-          items={items}
-          onClick={(item: Renderable) => {
-            setQuery(BLANK_STRING);
-            setText(item.renderOnForm());
-            setItems([]);
-            setIsRendered(true);
-            if (saveObject) {
-              saveObject(item);
-            }
-          }}
-        />
-      )}
+
+      {toast.getMessage().length === 0 &&
+        items.length > 0 &&
+        createPortal(
+          <div style={dropdownStyle}>
+            <LiveSearchResultList
+              items={items}
+              onClick={(item: Renderable) => {
+                setQuery(BLANK_STRING);
+                setText(item.renderOnForm());
+                setItems([]);
+                setIsRendered(true);
+                if (saveObject) {
+                  saveObject(item);
+                }
+              }}
+            />
+          </div>,
+          document.body,
+        )}
 
       <ToastRenderer toast={toast} />
 
