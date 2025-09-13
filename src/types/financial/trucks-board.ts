@@ -25,8 +25,6 @@ export type DriverWeeklyMileage = {
   uuid: string | null;
   driver: Driver | null;
   itemIdentifier: string;
-  startDate: string;
-  endDate: string;
   mileageData: Mileage[];
 };
 

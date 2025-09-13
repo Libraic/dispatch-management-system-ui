@@ -1,7 +1,7 @@
 import { IconButton } from "./IconButton.tsx";
 import addRecordUnfocused from "../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../assets/trucks-board/add-focused.svg";
-import { addDriverWeeklyMileage } from "../../../utils/trucks-board/trucks-board-utils.ts";
+import { addNewDriversMileageGroup } from "../../../utils/trucks-board/trucks-board-utils.ts";
 import deleteRecordUnfocused from "../../../assets/trucks-board/delete-unfocused.svg";
 import deleteRecordFocused from "../../../assets/trucks-board/delete-focused.svg";
 import saveRecordsUnfocused from "../../../assets/trucks-board/save-records-unfocused.svg";
@@ -24,8 +24,8 @@ export const OptionBar: React.FC<{
         unfocusedResource={addRecordUnfocused}
         focusedResource={addRecordFocused}
         action={() =>
-          addDriverWeeklyMileage(
-            driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+          addNewDriversMileageGroup(
+            driverWeeklyMileageData.setDriversMileageGroups,
             driverWeeklyMileageData.getWeekDays(),
           )
         }

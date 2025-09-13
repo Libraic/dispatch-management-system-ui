@@ -50,7 +50,7 @@ export const DriversMileageView: React.FC<{
           {group.items.map((driverWeeklyMileage, idx) => (
             <div key={driverWeeklyMileage.itemIdentifier} className="contents">
               <DriverMileageMetadata
-                dispatcher={group.dispatcher}
+                groupIdentifier={group.groupIdentifier}
                 driverWeeklyMileage={driverWeeklyMileage}
                 driverWeeklyMileageData={driverWeeklyMileageData}
                 index={idx}
@@ -59,7 +59,8 @@ export const DriversMileageView: React.FC<{
                 driverWeeklyMileage={driverWeeklyMileage}
                 setDriverWeeklyMileage={(mileageIndex, field, value) =>
                   setDriverWeeklyMileage(
-                    driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+                    driverWeeklyMileageData.setDriversMileageGroups,
+                    group.groupIdentifier,
                     driverWeeklyMileage.itemIdentifier,
                     mileageIndex,
                     field,

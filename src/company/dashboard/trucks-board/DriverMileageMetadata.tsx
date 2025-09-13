@@ -21,14 +21,18 @@ import {
   TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS,
   Z_INDEX_TRUCKS_BOARD_TABLE,
 } from "../../../utils/trucks-board/trucks-board-constants.ts";
-import type { User } from "../../../types/api/User.ts";
 
 export const DriverMileageMetadata: React.FC<{
-  dispatcher: User;
+  groupIdentifier: string;
   driverWeeklyMileage: DriverWeeklyMileage;
   driverWeeklyMileageData: DriverWeeklyMileageData;
   index: number;
-}> = ({ dispatcher, driverWeeklyMileage, driverWeeklyMileageData, index }) => {
+}> = ({
+  groupIdentifier,
+  driverWeeklyMileage,
+  driverWeeklyMileageData,
+  index,
+}) => {
   const itemIdentifier = driverWeeklyMileage.itemIdentifier;
   const driverMileageError =
     driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
@@ -61,9 +65,9 @@ export const DriverMileageMetadata: React.FC<{
           object={driverWeeklyMileage.driver}
           saveObject={(driver: Renderable) =>
             setDriver(
-              dispatcher,
               driverWeeklyMileageData.setDriversMileageGroups,
               driver,
+              groupIdentifier,
               itemIdentifier,
             )
           }

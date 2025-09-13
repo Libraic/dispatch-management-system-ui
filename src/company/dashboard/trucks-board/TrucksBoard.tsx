@@ -35,8 +35,10 @@ import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.
 const WEEKS = getWeekWithNames(new Date());
 
 export type DriversMileageGroup = {
-  dispatcher: User;
+  dispatcher: User | null;
   groupIdentifier: string;
+  startDate: string;
+  endDate: string;
   items: DriverWeeklyMileage[];
 };
 

@@ -1,7 +1,4 @@
-import {
-  type DriverWeeklyMileage,
-  type Mileage,
-} from "../../types/financial/trucks-board.ts";
+import { type Mileage } from "../../types/financial/trucks-board.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
@@ -9,7 +6,6 @@ import {
   HYPHEN,
 } from "../constants/global-constants.ts";
 import type { Dispatch, SetStateAction } from "react";
-import * as React from "react";
 import type { User } from "../../types/api/User.ts";
 import {
   convertMileageDayToLittleEndianDate,
@@ -20,15 +16,13 @@ import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/T
 import type { Driver } from "../../types/api/Driver.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 
-export const addDriverWeeklyMileage = (
-  setDriversWeeklyMileages: React.Dispatch<
-    React.SetStateAction<DriverWeeklyMileage[]>
-  >,
+export const addNewDriversMileageGroup = (
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
   weekDays: string[],
 ) => {
-  setDriversWeeklyMileages((prev) => [
+  setDriversMileageGroups((prev) => [
     ...prev,
-    getBlankDriverWeeklyMileage(weekDays),
+    getBlankDriversMileageGroup(weekDays),
   ]);
 };
 
@@ -64,14 +58,14 @@ export const setDispatcher = (
 };
 
 export const setDriver = (
-  dispatcher: User,
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
   driver: Renderable,
+  groupIdentifier: string,
   itemIdentifier: string,
 ) => {
   setDriversMileageGroups((groups) =>
     groups.map((group) =>
-      group.dispatcher.getUuid() === dispatcher.getUuid()
+      group.groupIdentifier === groupIdentifier
         ? {
             ...group,
             items: group.items.map((item) =>
@@ -86,29 +80,34 @@ export const setDriver = (
 };
 
 export const setDriverWeeklyMileage = (
-  setDriversWeeklyMileages: React.Dispatch<
-    React.SetStateAction<DriverWeeklyMileage[]>
-  >,
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
+  groupIdentifier: string,
   driversMileageIdentifier: string,
   mileageIndex: number,
   field: keyof Mileage,
   value: string,
 ) => {
-  setDriversWeeklyMileages((driversWeeklyMileages) =>
-    driversWeeklyMileages.map((driverWeeklyMileage) => {
-      if (driverWeeklyMileage.itemIdentifier === driversMileageIdentifier) {
-        return {
-          ...driverWeeklyMileage,
-          mileageData: mileagesMapperFunction(
-            driverWeeklyMileage.mileageData,
-            mileageIndex,
-            field,
-            value,
-          ),
-        };
-      }
-      return driverWeeklyMileage;
-    }),
+  setDriversMileageGroups((groups) =>
+    groups.map((group) =>
+      group.groupIdentifier === groupIdentifier
+        ? {
+            ...group,
+            items: group.items.map((item) =>
+              item.itemIdentifier === driversMileageIdentifier
+                ? {
+                    ...item,
+                    mileageData: mileagesMapperFunction(
+                      item.mileageData,
+                      mileageIndex,
+                      field,
+                      value,
+                    ),
+                  }
+                : item,
+            ),
+          }
+        : group,
+    ),
   );
 };
 
@@ -136,17 +135,22 @@ const mileagesMapperFunction = (
   });
 };
 
-const getBlankDriverWeeklyMileage = (
+const getBlankDriversMileageGroup = (
   weekDays: string[],
-): DriverWeeklyMileage => {
+): DriversMileageGroup => {
   return {
-    uuid: null,
-    driver: null,
     dispatcher: null,
-    itemIdentifier: uuidv4(),
+    groupIdentifier: uuidv4(),
     startDate: getDate(weekDays[0]),
     endDate: getDate(weekDays[weekDays.length - 1]),
-    mileageData: getWeekMileages(weekDays),
+    items: [
+      {
+        uuid: null,
+        driver: null,
+        itemIdentifier: uuidv4(),
+        mileageData: getWeekMileages(weekDays),
+      },
+    ],
   };
 };
 
