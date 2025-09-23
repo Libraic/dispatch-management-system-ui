@@ -21,14 +21,11 @@ import { BackButton } from "../../../global/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../utils/global/route-utils.ts";
 import { ConfirmationModal } from "../../../global/ConfirmationModal.tsx";
 import { DriversMileageView } from "./DriversMileageView.tsx";
-import { WeeklyBoardBar } from "./WeeklyBoardBar.tsx";
 import { getWeekWithNames } from "../../../utils/global/date.ts";
-import {
-  BLANK_SPACE,
-  HYPHEN,
-} from "../../../utils/constants/global-constants.ts";
+import { BLANK_SPACE } from "../../../utils/constants/global-constants.ts";
 import type { User } from "../../../types/api/User.ts";
 import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.ts";
+import { TrucksBoardTimeline } from "./TrucksBoardTimeline.tsx";
 
 const WEEKS = getWeekWithNames(new Date());
 
@@ -47,9 +44,6 @@ export const TrucksBoard = () => {
   const toastData = useToast();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const [activeBars, setActiveBars] = useState<boolean[]>(
-    WEEKS.map((_, i) => i === 0),
-  );
 
   useEffect(() => {
     fetchDriversMileageByCompanyUuidAndStartAndEndDate(companyUuid!!, week)
@@ -122,24 +116,7 @@ export const TrucksBoard = () => {
             driverWeeklyMileageData={driverWeeklyMileageData}
           />
         </div>
-        <div className="flex flex-row justify-center mt-10 mb-4">
-          {WEEKS.map((week, index) => {
-            const startDate = week[0].split(BLANK_SPACE)[1];
-            const endDate = week[week.length - 1].split(BLANK_SPACE)[1];
-            const interval = `${startDate} ${HYPHEN} ${endDate}`;
-            return (
-              <WeeklyBoardBar
-                key={index}
-                interval={interval}
-                isActive={activeBars[index]}
-                setWeek={() => {
-                  setWeek(WEEKS[index]);
-                  setActiveBars((prev) => prev.map((_, i) => i === index));
-                }}
-              />
-            );
-          })}
-        </div>
+        <TrucksBoardTimeline weeks={WEEKS} setActiveWeek={setWeek} />
         <ToastRenderer toast={toastData} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const WeeklyBoardBar: React.FC<{
+export const TimelineWeek: React.FC<{
   interval: string;
   isActive: boolean;
   setWeek: () => void;
