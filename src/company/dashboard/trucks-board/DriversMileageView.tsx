@@ -11,10 +11,16 @@ import { LiveSearchKey } from "../../../types/forms.ts";
 import { User } from "../../../types/api/User.ts";
 import { LiveSearchCell } from "../../../matrix/LiveSearchCell.tsx";
 import type { Renderable } from "../../../types/api/Renderable.ts";
+import {
+  DISPATCHER_KEY,
+  type DriverMileageErrors,
+} from "../../../types/financial/trucks-board.ts";
+import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 
 export const DriversMileageView: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
 }> = ({ driverWeeklyMileageData }) => {
+  const errors = driverWeeklyMileageData.errors;
   return (
     <>
       {driverWeeklyMileageData.getDriversMileageGroups().map((group) => (
@@ -35,7 +41,14 @@ export const DriversMileageView: React.FC<{
                 dispatcher,
                 driverWeeklyMileageData.setDriversMileageGroups,
                 group.groupIdentifier,
+                driverWeeklyMileageData.getWeekDays(),
               )
+            }
+            errorMessage={
+              (errors &&
+                errors[group.groupIdentifier] &&
+                (errors[group.groupIdentifier][DISPATCHER_KEY] as string)) ||
+              BLANK_STRING
             }
             style={{
               gridRow: `1 / ${group.items.length + 1}`,
@@ -47,34 +60,43 @@ export const DriversMileageView: React.FC<{
             }}
           />
 
-          {group.items.map((driverWeeklyMileage, idx) => (
-            <div key={driverWeeklyMileage.itemIdentifier} className="contents">
-              <DriverMileageMetadata
-                groupIdentifier={group.groupIdentifier}
-                driverWeeklyMileage={driverWeeklyMileage}
-                driverWeeklyMileageData={driverWeeklyMileageData}
-                index={idx}
-              />
-              <DailyMileageView
-                driverWeeklyMileage={driverWeeklyMileage}
-                setDriverWeeklyMileage={(mileageIndex, field, value) =>
-                  setDriverWeeklyMileage(
-                    driverWeeklyMileageData.setDriversMileageGroups,
-                    group.groupIdentifier,
-                    driverWeeklyMileage.itemIdentifier,
-                    mileageIndex,
-                    field,
-                    value,
-                  )
-                }
-                error={
-                  driverWeeklyMileageData.errors[
-                    driverWeeklyMileage.itemIdentifier
-                  ]
-                }
-              />
-            </div>
-          ))}
+          {group.items.map((driverWeeklyMileage, idx) => {
+            const itemErrors =
+              (errors &&
+                errors[group.groupIdentifier] &&
+                (errors[group.groupIdentifier][
+                  driverWeeklyMileage.itemIdentifier
+                ] as DriverMileageErrors)) ||
+              {};
+            return (
+              <div
+                key={driverWeeklyMileage.itemIdentifier}
+                className="contents"
+              >
+                <DriverMileageMetadata
+                  groupIdentifier={group.groupIdentifier}
+                  driverWeeklyMileage={driverWeeklyMileage}
+                  driverWeeklyMileageData={driverWeeklyMileageData}
+                  index={idx}
+                  error={itemErrors}
+                />
+                <DailyMileageView
+                  driverWeeklyMileage={driverWeeklyMileage}
+                  setDriverWeeklyMileage={(mileageIndex, field, value) =>
+                    setDriverWeeklyMileage(
+                      driverWeeklyMileageData.setDriversMileageGroups,
+                      group.groupIdentifier,
+                      driverWeeklyMileage.itemIdentifier,
+                      mileageIndex,
+                      field,
+                      value,
+                    )
+                  }
+                  error={itemErrors}
+                />
+              </div>
+            );
+          })}
         </div>
       ))}
     </>

@@ -16,9 +16,7 @@ import {
   LESS_THAN_EQUAL_CLAUSE,
   START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
-import { COLON } from "../utils/constants/global-constants.ts";
-import type { Void } from "../types/global.ts";
-import { getLittleEndianDateFromDriversMileageDate } from "../utils/trucks-board/trucks-board-utils.ts";
+import { BLANK_SPACE, COLON } from "../utils/constants/global-constants.ts";
 
 export const saveDriversMileage = async (
   upsertDriversMileageRequest: UpsertDriversMileageRequest,
@@ -40,10 +38,8 @@ export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
   weekDays: string[],
 ): Promise<DriverWeeklyMileageResponse[] | undefined> => {
-  const startDate = getLittleEndianDateFromDriversMileageDate(weekDays[0]);
-  const endDate = getLittleEndianDateFromDriversMileageDate(
-    weekDays[weekDays.length - 1],
-  );
+  const startDate = weekDays[0].split(BLANK_SPACE)[1];
+  const endDate = weekDays[weekDays.length - 1].split(BLANK_SPACE)[1];
   try {
     const response = await axios.get<
       ApiResponse<DriverWeeklyMileageResponse[], Error>
@@ -57,18 +53,5 @@ export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
     return response.data.data;
   } catch (error) {
     throw error;
-  }
-};
-
-export const deleteDriversMileageByUuids = async (
-  ids: string[],
-): Promise<ApiResponse<Void, Error>> => {
-  try {
-    const response = await axios.delete(DRIVERS_MILEAGE_BASE_URL, {
-      data: ids,
-    });
-    return response.data;
-  } catch (error: any) {
-    return handleApiErrors(error);
   }
 };

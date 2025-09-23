@@ -7,7 +7,7 @@ export const TRUCKS_BOARD_PRIMARY_COLUMNS = [
   "Revenue",
 ];
 
-export const TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS = "3rem_14rem_5.3rem_5.5rem";
+export const TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS = "4rem_14rem_5.3rem_5.5rem";
 
 export const TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT = "repeat(7,17rem)";
 

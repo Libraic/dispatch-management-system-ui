@@ -34,16 +34,22 @@ export type DriverWeeklyMileageResponse = {
   driver: DriverData;
   dispatcher: UserData;
   mileageData: MileageData[];
+  startDate: string;
+  endDate: string;
 };
 
 export type MileageError = {
   [field: string]: string;
 };
 
-export type DriverMileageError = {
+export type DriverMileageErrors = {
   [identifier: string]: string | MileageError;
 };
 
-export type DriversMileageErrors = {
-  [identifier: string]: DriverMileageError;
+export type DriversMileageGroupErrors = {
+  [identifier: string]: string | DriverMileageErrors;
+};
+
+export type DriversMileageGroupsErrors = {
+  [identifier: string]: DriversMileageGroupErrors;
 };

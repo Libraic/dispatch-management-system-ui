@@ -1,4 +1,7 @@
-import { type Mileage } from "../../types/financial/trucks-board.ts";
+import {
+  type DriverWeeklyMileage,
+  type Mileage,
+} from "../../types/financial/trucks-board.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
@@ -7,10 +10,7 @@ import {
 } from "../constants/global-constants.ts";
 import type { Dispatch, SetStateAction } from "react";
 import type { User } from "../../types/api/User.ts";
-import {
-  convertMileageDayToLittleEndianDate,
-  CURRENT_YEAR,
-} from "../global/date.ts";
+import { CURRENT_YEAR } from "../global/date.ts";
 import { v4 as uuidv4 } from "uuid";
 import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
 import type { Driver } from "../../types/api/Driver.ts";
@@ -47,14 +47,27 @@ export const setDispatcher = (
   dispatcher: Renderable,
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
   groupIdentifier: string,
+  weekDays: string[],
 ) => {
-  setDriversMileageGroups((groups) =>
-    groups.map((group) =>
-      group.groupIdentifier === groupIdentifier
-        ? { ...group, dispatcher: dispatcher as User }
-        : group,
-    ),
-  );
+  setDriversMileageGroups((groups) => {
+    let found = false;
+    const updatedGroups = groups.map((group) => {
+      if (group.dispatcher?.getUuid() === dispatcher.getUuid()) {
+        found = true;
+        return {
+          ...group,
+          items: [...group.items, getBlankDriverWeeklyMileage(weekDays)],
+        };
+      }
+
+      if (group.groupIdentifier === groupIdentifier && !found) {
+        return { ...group, dispatcher: dispatcher as User };
+      }
+
+      return group;
+    });
+    return updatedGroups.filter((group) => group.dispatcher !== null);
+  });
 };
 
 export const setDriver = (
@@ -141,8 +154,8 @@ const getBlankDriversMileageGroup = (
   return {
     dispatcher: null,
     groupIdentifier: uuidv4(),
-    startDate: getDate(weekDays[0]),
-    endDate: getDate(weekDays[weekDays.length - 1]),
+    startDate: weekDays[0].split(BLANK_SPACE)[1],
+    endDate: weekDays[weekDays.length - 1].split(BLANK_SPACE)[1],
     items: [
       {
         uuid: null,
@@ -154,20 +167,21 @@ const getBlankDriversMileageGroup = (
   };
 };
 
+const getBlankDriverWeeklyMileage = (weekDays: string[]) => {
+  return {
+    uuid: null,
+    driver: null,
+    itemIdentifier: uuidv4(),
+    mileageData: getWeekMileages(weekDays),
+  } as DriverWeeklyMileage;
+};
+
 const getWeekMileages = (weekDays: string[]): Mileage[] => {
   return weekDays.map((value, _) => ({
-    date: convertMileageDayToLittleEndianDate(value),
+    date: value.split(BLANK_SPACE)[1],
     revenue: null,
     miles: null,
     note: null,
     destinationNote: null,
   }));
-};
-
-const getDate = (day: string): string => {
-  const firstDay = day.split(BLANK_SPACE)[1];
-  const firstDayParts = firstDay.split(DOT);
-  return (
-    firstDayParts[2] + HYPHEN + firstDayParts[0] + HYPHEN + firstDayParts[1]
-  );
 };

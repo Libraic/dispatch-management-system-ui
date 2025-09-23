@@ -2,16 +2,11 @@ import { IconButton } from "./IconButton.tsx";
 import addRecordUnfocused from "../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../assets/trucks-board/add-focused.svg";
 import { addNewDriversMileageGroup } from "../../../utils/trucks-board/trucks-board-utils.ts";
-import deleteRecordUnfocused from "../../../assets/trucks-board/delete-unfocused.svg";
-import deleteRecordFocused from "../../../assets/trucks-board/delete-focused.svg";
 import saveRecordsUnfocused from "../../../assets/trucks-board/save-records-unfocused.svg";
 import saveRecordsFocused from "../../../assets/trucks-board/save-records-focused.svg";
 import * as React from "react";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import {
-  deleteDriversMileage,
-  saveDriversWeeklyMileage,
-} from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import { saveDriversWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
 import type { ToastData } from "../../../hooks/useToast.ts";
 
 export const OptionBar: React.FC<{
@@ -30,28 +25,6 @@ export const OptionBar: React.FC<{
           )
         }
         information="Add a new record"
-      />
-      <IconButton
-        unfocusedResource={deleteRecordUnfocused}
-        focusedResource={deleteRecordFocused}
-        action={async () => {
-          if (
-            driverWeeklyMileageData.getIdentifiersMarkedForDeletion().length !==
-            0
-          ) {
-            const response = await deleteDriversMileage(
-              driverWeeklyMileageData,
-            );
-            if (!response) {
-              toast.withSuccessMessage(
-                "The records were successfully deleted.",
-              );
-            } else {
-              toast.withErrorMessage(response.message);
-            }
-          }
-        }}
-        information="Delete a record"
       />
       <IconButton
         unfocusedResource={saveRecordsUnfocused}

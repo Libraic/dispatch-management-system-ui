@@ -4,6 +4,7 @@ import type { Renderable } from "../../../types/api/Renderable.ts";
 import { setDriver } from "../../../utils/trucks-board/trucks-board-utils.ts";
 import {
   DRIVER_KEY,
+  type DriverMileageErrors,
   type DriverWeeklyMileage,
 } from "../../../types/financial/trucks-board.ts";
 import { Driver } from "../../../types/api/Driver.ts";
@@ -27,15 +28,15 @@ export const DriverMileageMetadata: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;
   driverWeeklyMileageData: DriverWeeklyMileageData;
   index: number;
+  error?: DriverMileageErrors;
 }> = ({
   groupIdentifier,
   driverWeeklyMileage,
   driverWeeklyMileageData,
   index,
+  error,
 }) => {
   const itemIdentifier = driverWeeklyMileage.itemIdentifier;
-  const driverMileageError =
-    driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
   const [offsets, setOffsets] = useState<string[]>([]);
 
   useEffect(() => {
@@ -74,9 +75,7 @@ export const DriverMileageMetadata: React.FC<{
           customSearchCriteria={[
             queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
           ]}
-          errorMessage={
-            driverMileageError && (driverMileageError[DRIVER_KEY] as string)
-          }
+          errorMessage={error && (error[DRIVER_KEY] as string)}
         />
       </div>
       <div

@@ -11,6 +11,8 @@ export type DriverMileage = {
   dispatcherUuid: string;
   driverUuid: string;
   itemIdentifier: string;
+  startDate: string;
+  endDate: string;
   mileage: Mileage[];
 };
 

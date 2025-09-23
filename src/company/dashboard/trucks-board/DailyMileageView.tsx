@@ -1,6 +1,6 @@
 import { DailyMileage } from "./DailyMileage.tsx";
 import type {
-  DriverMileageError,
+  DriverMileageErrors,
   DriverWeeklyMileage,
   Mileage,
   MileageError,
@@ -14,7 +14,7 @@ export const DailyMileageView: React.FC<{
     field: keyof Mileage,
     value: string,
   ) => void;
-  error?: DriverMileageError;
+  error?: DriverMileageErrors;
 }> = ({ driverWeeklyMileage, setDriverWeeklyMileage, error }) => {
   return (
     <>
