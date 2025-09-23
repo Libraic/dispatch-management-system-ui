@@ -2,15 +2,9 @@ import {
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../types/financial/trucks-board.ts";
-import {
-  BLANK_SPACE,
-  BLANK_STRING,
-  DOT,
-  HYPHEN,
-} from "../constants/global-constants.ts";
+import { BLANK_SPACE, BLANK_STRING } from "../constants/global-constants.ts";
 import type { Dispatch, SetStateAction } from "react";
 import type { User } from "../../types/api/User.ts";
-import { CURRENT_YEAR } from "../global/date.ts";
 import { v4 as uuidv4 } from "uuid";
 import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
 import type { Driver } from "../../types/api/Driver.ts";
@@ -124,14 +118,7 @@ export const setDriverWeeklyMileage = (
   );
 };
 
-export const getLittleEndianDateFromDriversMileageDate = (
-  apiStartDate: string,
-): string => {
-  const startDateParts = apiStartDate.split(BLANK_SPACE)[1].split(DOT);
-  return startDateParts[1] + HYPHEN + startDateParts[0] + HYPHEN + CURRENT_YEAR;
-};
-
-const mileagesMapperFunction = (
+export const mileagesMapperFunction = (
   mileages: Mileage[],
   index: number,
   field: keyof Mileage,
@@ -145,6 +132,14 @@ const mileagesMapperFunction = (
       };
     }
     return mileage;
+  });
+};
+
+export const getWeekWithDayAndMonth = (week: string[]) => {
+  return week.map((day) => {
+    const parts = day.split(BLANK_SPACE);
+    const dateParts = parts[1].split("-");
+    return `${parts[0]} ${dateParts[2]}.${dateParts[1]}`;
   });
 };
 

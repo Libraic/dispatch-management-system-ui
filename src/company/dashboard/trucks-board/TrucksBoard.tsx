@@ -9,13 +9,8 @@ import { PageHeader } from "../../../global/PageHeader.tsx";
 import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
 import { OptionBar } from "./OptionBar.tsx";
 import { useEffect, useState } from "react";
-import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
-import {
-  groupDriverWeeklyMileageByDispatcher,
-  saveDriversWeeklyMileage,
-} from "../../../utils/trucks-board/trucks-board-api-utils.ts";
+import { saveDriversWeeklyMileage } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
 import { useToast } from "../../../hooks/useToast.ts";
-import { INTERNAL_SERVER_ERROR } from "../../../utils/global/error-messages.ts";
 import { ToastRenderer } from "../../../toast/ToastRenderer.tsx";
 import { BackButton } from "../../../global/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../utils/global/route-utils.ts";
@@ -26,6 +21,8 @@ import { BLANK_SPACE } from "../../../utils/constants/global-constants.ts";
 import type { User } from "../../../types/api/User.ts";
 import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.ts";
 import { TrucksBoardTimeline } from "./TrucksBoardTimeline.tsx";
+import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
+import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
 
 const WEEKS = getWeekWithNames(new Date());
 
@@ -46,20 +43,16 @@ export const TrucksBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchDriversMileageByCompanyUuidAndStartAndEndDate(companyUuid!!, week)
-      .then((data) => {
-        if (data) {
-          const groups = groupDriverWeeklyMileageByDispatcher(data);
-          driverWeeklyMileageData.setDriversMileageGroups(
-            Object.values(groups),
-          );
-        } else {
-          toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
-        }
-      })
-      .catch((err) =>
-        toastData.withErrorMessage(err.message || INTERNAL_SERVER_ERROR),
-      );
+    fetchDriversMileageByCompanyUuidAndStartAndEndDate(
+      companyUuid!!,
+      week,
+    ).then((response) => {
+      if (Array.isArray(response)) {
+        driverWeeklyMileageData.setDriversMileageGroups(response);
+      } else {
+        toastData.withErrorMessage(response);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [week]);
 
@@ -105,11 +98,7 @@ export const TrucksBoard = () => {
               /_/g,
               BLANK_SPACE,
             )}
-            scrollableColumns={week.map((day) => {
-              const parts = day.split(BLANK_SPACE);
-              const dateParts = parts[1].split("-");
-              return `${parts[0]} ${dateParts[2]}.${dateParts[1]}`;
-            })}
+            scrollableColumns={getWeekWithDayAndMonth(week)}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileageView

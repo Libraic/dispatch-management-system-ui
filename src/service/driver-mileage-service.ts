@@ -17,6 +17,9 @@ import {
   START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
 import { BLANK_SPACE, COLON } from "../utils/constants/global-constants.ts";
+import type { DriversMileageGroup } from "../company/dashboard/trucks-board/TrucksBoard.tsx";
+import { INTERNAL_SERVER_ERROR } from "../utils/global/error-messages.ts";
+import { groupDriverWeeklyMileageByDispatcher } from "../utils/trucks-board/trucks-board-api-utils.ts";
 
 export const saveDriversMileage = async (
   upsertDriversMileageRequest: UpsertDriversMileageRequest,
@@ -36,10 +39,26 @@ export const saveDriversMileage = async (
 
 export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
-  weekDays: string[],
+  week: string[],
+): Promise<DriversMileageGroup[] | string> => {
+  const startDate = week[0].split(BLANK_SPACE)[1];
+  const endDate = week[week.length - 1].split(BLANK_SPACE)[1];
+
+  const data = await fetchDriversMileage(companyUuid, startDate, endDate);
+
+  if (data) {
+    const groups = groupDriverWeeklyMileageByDispatcher(data);
+    return Object.values(groups);
+  } else {
+    return INTERNAL_SERVER_ERROR;
+  }
+};
+
+const fetchDriversMileage = async (
+  companyUuid: string,
+  startDate: string,
+  endDate: string,
 ): Promise<DriverWeeklyMileageResponse[] | undefined> => {
-  const startDate = weekDays[0].split(BLANK_SPACE)[1];
-  const endDate = weekDays[weekDays.length - 1].split(BLANK_SPACE)[1];
   try {
     const response = await axios.get<
       ApiResponse<DriverWeeklyMileageResponse[], Error>
