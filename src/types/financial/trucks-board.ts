@@ -1,5 +1,4 @@
 import type { Driver } from "../api/Driver.ts";
-import type { User } from "../api/User.ts";
 import type { DriverData } from "../api/driver-api.ts";
 import type { UserData } from "../api/registration-api.ts";
 
@@ -25,10 +24,7 @@ export type MileageData = {
 export type DriverWeeklyMileage = {
   uuid: string | null;
   driver: Driver | null;
-  dispatcher: User | null;
   itemIdentifier: string;
-  startDate: string;
-  endDate: string;
   mileageData: Mileage[];
 };
 
@@ -38,16 +34,22 @@ export type DriverWeeklyMileageResponse = {
   driver: DriverData;
   dispatcher: UserData;
   mileageData: MileageData[];
+  startDate: string;
+  endDate: string;
 };
 
 export type MileageError = {
   [field: string]: string;
 };
 
-export type DriverMileageError = {
+export type DriverMileageErrors = {
   [identifier: string]: string | MileageError;
 };
 
-export type DriversMileageErrors = {
-  [identifier: string]: DriverMileageError;
+export type DriversMileageGroupErrors = {
+  [identifier: string]: string | DriverMileageErrors;
+};
+
+export type DriversMileageGroupsErrors = {
+  [identifier: string]: DriversMileageGroupErrors;
 };

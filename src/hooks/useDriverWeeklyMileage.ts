@@ -1,24 +1,20 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import type {
-  DriversMileageErrors,
+  DriversMileageGroupsErrors,
   DriverWeeklyMileage,
 } from "../types/financial/trucks-board.ts";
+import type { DriversMileageGroup } from "../company/dashboard/trucks-board/TrucksBoard.tsx";
 
 export type DriverWeeklyMileageData = {
-  previousDriversWeeklyMileage: DriverWeeklyMileage[];
-  setPreviousDriversWeeklyMileage: Dispatch<
-    SetStateAction<DriverWeeklyMileage[]>
-  >;
+  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>;
+  getDriversMileageGroups: () => DriversMileageGroup[];
   currentDriversWeeklyMileage: DriverWeeklyMileage[];
   setCurrentDriversWeeklyMileage: Dispatch<
     SetStateAction<DriverWeeklyMileage[]>
   >;
-  markForDeletion: (itemIdentifier: string) => void;
-  unmarkForDeletion: (itemIdentifier: string) => void;
-  clearItemsMarkedForDeletion: () => void;
-  getIdentifiersMarkedForDeletion: () => string[];
-  errors: DriversMileageErrors;
-  setErrors: Dispatch<SetStateAction<DriversMileageErrors>>;
+
+  errors: DriversMileageGroupsErrors;
+  setErrors: Dispatch<SetStateAction<DriversMileageGroupsErrors>>;
   getCompanyUuid: () => string;
   getWeekDays: () => string[];
 };
@@ -27,26 +23,16 @@ export const useDriverWeeklyMileage = (
   companyUuid: string,
   weekDays: string[],
 ) => {
-  const [previousDriversWeeklyMileage, setPreviousDriversWeeklyMileage] =
-    useState<DriverWeeklyMileage[]>([]);
   const [currentDriversWeeklyMileage, setCurrentDriversWeeklyMileage] =
     useState<DriverWeeklyMileage[]>([]);
-  const [errors, setErrors] = useState<DriversMileageErrors>({});
-  const [identifiers, setIdentifiers] = useState<string[]>([]);
+  const [errors, setErrors] = useState<DriversMileageGroupsErrors>({});
+  const [groups, setGroups] = useState<DriversMileageGroup[]>([]);
 
   return {
-    previousDriversWeeklyMileage: previousDriversWeeklyMileage,
-    setPreviousDriversWeeklyMileage: setPreviousDriversWeeklyMileage,
+    setDriversMileageGroups: setGroups,
+    getDriversMileageGroups: () => groups,
     currentDriversWeeklyMileage: currentDriversWeeklyMileage,
     setCurrentDriversWeeklyMileage: setCurrentDriversWeeklyMileage,
-    markForDeletion: (itemIdentifier: string) =>
-      setIdentifiers((prevIdentifiers) => [...prevIdentifiers, itemIdentifier]),
-    unmarkForDeletion: (itemIdentifier: string) =>
-      setIdentifiers((prev) =>
-        prev.filter((identifier) => identifier !== itemIdentifier),
-      ),
-    clearItemsMarkedForDeletion: () => setIdentifiers([]),
-    getIdentifiersMarkedForDeletion: () => identifiers,
     errors: errors,
     setErrors: setErrors,
     getCompanyUuid: () => companyUuid,

@@ -11,7 +11,7 @@ import { OptionBar } from "./OptionBar.tsx";
 import { useEffect, useState } from "react";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
 import {
-  mapDriverWeeklyMileageResponseToDriverWeeklyMileage,
+  groupDriverWeeklyMileageByDispatcher,
   saveDriversWeeklyMileage,
 } from "../../../utils/trucks-board/trucks-board-api-utils.ts";
 import { useToast } from "../../../hooks/useToast.ts";
@@ -25,11 +25,20 @@ import { WeeklyBoardBar } from "./WeeklyBoardBar.tsx";
 import { getWeekWithNames } from "../../../utils/global/date.ts";
 import {
   BLANK_SPACE,
-  DOT,
   HYPHEN,
 } from "../../../utils/constants/global-constants.ts";
+import type { User } from "../../../types/api/User.ts";
+import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.ts";
 
 const WEEKS = getWeekWithNames(new Date());
+
+export type DriversMileageGroup = {
+  dispatcher: User | null;
+  groupIdentifier: string;
+  startDate: string;
+  endDate: string;
+  items: DriverWeeklyMileage[];
+};
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
@@ -46,14 +55,9 @@ export const TrucksBoard = () => {
     fetchDriversMileageByCompanyUuidAndStartAndEndDate(companyUuid!!, week)
       .then((data) => {
         if (data) {
-          const driversWeeklyMileage = data.map((item) =>
-            mapDriverWeeklyMileageResponseToDriverWeeklyMileage(item),
-          );
-          driverWeeklyMileageData.setCurrentDriversWeeklyMileage(
-            driversWeeklyMileage,
-          );
-          driverWeeklyMileageData.setPreviousDriversWeeklyMileage(
-            driversWeeklyMileage,
+          const groups = groupDriverWeeklyMileageByDispatcher(data);
+          driverWeeklyMileageData.setDriversMileageGroups(
+            Object.values(groups),
           );
         } else {
           toastData.withErrorMessage(INTERNAL_SERVER_ERROR);
@@ -105,9 +109,13 @@ export const TrucksBoard = () => {
             stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
             stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.replace(
               /_/g,
-              " ",
+              BLANK_SPACE,
             )}
-            scrollableColumns={week.map((day) => day.slice(0, day.length - 5))}
+            scrollableColumns={week.map((day) => {
+              const parts = day.split(BLANK_SPACE);
+              const dateParts = parts[1].split("-");
+              return `${parts[0]} ${dateParts[2]}.${dateParts[1]}`;
+            })}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileageView
@@ -116,11 +124,9 @@ export const TrucksBoard = () => {
         </div>
         <div className="flex flex-row justify-center mt-10 mb-4">
           {WEEKS.map((week, index) => {
-            const firstParts = week[0].split(BLANK_SPACE)[1].split(DOT);
-            const lastParts = week[week.length - 1]
-              .split(BLANK_SPACE)[1]
-              .split(DOT);
-            const interval = `${firstParts[1]}${HYPHEN}${firstParts[0]}${HYPHEN}${firstParts[2]} ${HYPHEN} ${lastParts[1]}${HYPHEN}${lastParts[0]}${HYPHEN}${lastParts[2]}`;
+            const startDate = week[0].split(BLANK_SPACE)[1];
+            const endDate = week[week.length - 1].split(BLANK_SPACE)[1];
+            const interval = `${startDate} ${HYPHEN} ${endDate}`;
             return (
               <WeeklyBoardBar
                 key={index}

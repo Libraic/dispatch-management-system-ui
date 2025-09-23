@@ -1,14 +1,10 @@
 import { LiveSearchCell } from "../../../matrix/LiveSearchCell.tsx";
 import { LiveSearchKey } from "../../../types/forms.ts";
-import { User } from "../../../types/api/User.ts";
 import type { Renderable } from "../../../types/api/Renderable.ts";
+import { setDriver } from "../../../utils/trucks-board/trucks-board-utils.ts";
 import {
-  setDispatcher,
-  setDriver,
-} from "../../../utils/trucks-board/trucks-board-utils.ts";
-import {
-  DISPATCHER_KEY,
   DRIVER_KEY,
+  type DriverMileageErrors,
   type DriverWeeklyMileage,
 } from "../../../types/financial/trucks-board.ts";
 import { Driver } from "../../../types/api/Driver.ts";
@@ -28,13 +24,19 @@ import {
 } from "../../../utils/trucks-board/trucks-board-constants.ts";
 
 export const DriverMileageMetadata: React.FC<{
+  groupIdentifier: string;
   driverWeeklyMileage: DriverWeeklyMileage;
   driverWeeklyMileageData: DriverWeeklyMileageData;
   index: number;
-}> = ({ driverWeeklyMileage, driverWeeklyMileageData, index }) => {
+  error?: DriverMileageErrors;
+}> = ({
+  groupIdentifier,
+  driverWeeklyMileage,
+  driverWeeklyMileageData,
+  index,
+  error,
+}) => {
   const itemIdentifier = driverWeeklyMileage.itemIdentifier;
-  const driverMileageError =
-    driverWeeklyMileageData.errors[driverWeeklyMileage.itemIdentifier];
   const [offsets, setOffsets] = useState<string[]>([]);
 
   useEffect(() => {
@@ -53,29 +55,6 @@ export const DriverMileageMetadata: React.FC<{
     <>
       <div
         style={{
-          left: offsets[0],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
-          position: "sticky",
-        }}
-      >
-        <LiveSearchCell
-          defaultSearchKey={LiveSearchKey.USER}
-          constructor={User}
-          object={driverWeeklyMileage.dispatcher}
-          saveObject={(dispatcher: Renderable) =>
-            setDispatcher(
-              driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
-              dispatcher,
-              itemIdentifier,
-            )
-          }
-          errorMessage={
-            driverMileageError && (driverMileageError[DISPATCHER_KEY] as string)
-          }
-        />
-      </div>
-      <div
-        style={{
           left: offsets[1],
           zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
           position: "sticky",
@@ -87,23 +66,22 @@ export const DriverMileageMetadata: React.FC<{
           object={driverWeeklyMileage.driver}
           saveObject={(driver: Renderable) =>
             setDriver(
-              driverWeeklyMileageData.setCurrentDriversWeeklyMileage,
+              driverWeeklyMileageData.setDriversMileageGroups,
               driver,
+              groupIdentifier,
               itemIdentifier,
             )
           }
           customSearchCriteria={[
             queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
           ]}
-          errorMessage={
-            driverMileageError && (driverMileageError[DRIVER_KEY] as string)
-          }
+          errorMessage={error && (error[DRIVER_KEY] as string)}
         />
       </div>
       <div
         style={{
           left: offsets[2],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1,
+          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
           position: "sticky",
         }}
       >
@@ -114,7 +92,7 @@ export const DriverMileageMetadata: React.FC<{
       <div
         style={{
           left: offsets[3],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1,
+          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
           position: "sticky",
         }}
       >

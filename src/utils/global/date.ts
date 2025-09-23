@@ -1,5 +1,4 @@
 import type { YearData } from "../../types/global.ts";
-import { BLANK_SPACE, DOT } from "../constants/global-constants.ts";
 
 export const LAST_ADMITTABLE_BIRTH_YEAR = 2007;
 export const DEFAULT_BIRTH_DATE: YearData = {
@@ -34,7 +33,7 @@ export const getWeekWithNames = (date: Date): string[][] => {
       const month = String(currentDay.getMonth() + 1).padStart(2, "0");
       const day = String(currentDay.getDate()).padStart(2, "0");
       const year = String(currentDay.getFullYear());
-      result.push(`${WEEKDAYS[i]} ${month}.${day}.${year}`);
+      result.push(`${WEEKDAYS[i]} ${year}-${month}-${day}`);
     }
     results.push(result);
   }
@@ -55,10 +54,4 @@ export const getCurrentYearData = (): YearData => {
     month: date.getMonth() + 1,
     year: date.getFullYear(),
   };
-};
-
-export const convertMileageDayToLittleEndianDate = (day: string) => {
-  const date = day.split(BLANK_SPACE)[1];
-  const monthAndDay = date.split(DOT);
-  return `${monthAndDay[1]}-${monthAndDay[0]}-${CURRENT_YEAR}`;
 };
