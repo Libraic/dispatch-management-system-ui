@@ -28,6 +28,7 @@ import { StartAndServiceDate } from "./StartAndServiceDate.tsx";
 import { CompanyBasicData } from "./CompanyBasicData.tsx";
 import { handleErrors } from "../../utils/api/common-api-error-utils.ts";
 import type { Error } from "../../types/api/common.ts";
+import { COMPANY_REGISTRATION_HEADER } from "../../utils/constants/headers.ts";
 
 export const CompanyRegistrationForm = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
@@ -69,10 +70,7 @@ export const CompanyRegistrationForm = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="h-1/4">
-        <PageHeader
-          header="Company"
-          subheader="Add a new Company to the system"
-        />
+        <PageHeader headerInfo={COMPANY_REGISTRATION_HEADER} />
       </div>
       <div className="flex flex-col justify-between h-3/4 m-">
         <div className="flex flex-col gap-y-5 justify-center items-center">

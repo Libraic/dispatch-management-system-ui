@@ -5,6 +5,7 @@ import { EMAIL_PLACEHOLDER } from "../../../../utils/constants/placeholder-const
 import { setRegistrationDataStringField } from "../../../../utils/user/user-registration.ts";
 import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
+import { CONTACT_INFORMATION_HEADER } from "../../../../utils/constants/headers.ts";
 
 export const ContactInformation = () => {
   const context = useContext(UserRegistrationContext)!;
@@ -12,10 +13,7 @@ export const ContactInformation = () => {
     context;
   return (
     <>
-      <PageHeader
-        header="Contact Information"
-        subheader="The contact data of the employee"
-      />
+      <PageHeader headerInfo={CONTACT_INFORMATION_HEADER} />
       <InputForm
         label="Personal E-mail"
         placeholder={EMAIL_PLACEHOLDER}

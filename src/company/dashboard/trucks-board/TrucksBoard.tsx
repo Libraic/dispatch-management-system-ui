@@ -23,6 +23,7 @@ import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.
 import { TrucksBoardTimeline } from "./TrucksBoardTimeline.tsx";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
+import { TRUCKS_BOARD_HEADER } from "../../../utils/constants/headers.ts";
 
 const WEEKS = getWeekWithNames(new Date());
 
@@ -81,10 +82,7 @@ export const TrucksBoard = () => {
           url={formatCompanyDashboardRoute(companyUuid!!)}
           action={() => setShowModal(true)}
         />
-        <PageHeader
-          header="Trucks Board"
-          subheader="The Weekly Mileage of Drivers"
-        />
+        <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
         <div className="w-[90%] mx-auto">
           <OptionBar
             driverWeeklyMileageData={driverWeeklyMileageData}

@@ -36,6 +36,7 @@ import type {
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
 import type { DriverData } from "../../types/api/driver-api.ts";
+import { DRIVER_REGISTRATION_HEADER } from "../../utils/constants/headers.ts";
 
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -111,10 +112,7 @@ export const DriverRegistrationForm = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between">
       <div className="flex flex-col items-center">
-        <PageHeader
-          header="Add Driver"
-          subheader="Complete the required information from the sections"
-        />
+        <PageHeader headerInfo={DRIVER_REGISTRATION_HEADER} />
         <div className="flex flex-row gap-x-6 w-[100%] h-[3.5rem] justify-center my-20">
           {sections.map((section, index) => (
             <div className="flex flex-row items-center gap-x-4" key={index}>

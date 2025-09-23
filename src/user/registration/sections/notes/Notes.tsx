@@ -1,13 +1,11 @@
 import { PageHeader } from "../../../../global/PageHeader.tsx";
 import { AddNote } from "./AddNote.tsx";
+import { NOTES_HEADER } from "../../../../utils/constants/headers.ts";
 
 export const Notes = () => {
   return (
     <div>
-      <PageHeader
-        header="Notes"
-        subheader="Additional information about the employee"
-      />
+      <PageHeader headerInfo={NOTES_HEADER} />
       <AddNote />
     </div>
   );
