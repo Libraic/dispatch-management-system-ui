@@ -1,6 +1,7 @@
 import type { Driver } from "../api/Driver.ts";
 import type { DriverData } from "../api/driver-api.ts";
 import type { UserData } from "../api/registration-api.ts";
+import type { User } from "../api/User.ts";
 
 export const DRIVER_KEY = "driver";
 export const DISPATCHER_KEY = "dispatcher";
@@ -26,6 +27,14 @@ export type DriverWeeklyMileage = {
   driver: Driver | null;
   itemIdentifier: string;
   mileageData: Mileage[];
+};
+
+export type DriversMileageGroup = {
+  dispatcher: User | null;
+  groupIdentifier: string;
+  startDate: string;
+  endDate: string;
+  items: DriverWeeklyMileage[];
 };
 
 export type DriverWeeklyMileageResponse = {

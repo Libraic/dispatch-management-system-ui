@@ -7,7 +7,10 @@ import axios from "axios";
 import { DRIVERS_MILEAGE_BASE_URL } from "../utils/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/common-api-error-utils.ts";
 import type { UpsertDriversMileageRequest } from "../types/api/driver-mileage-api.ts";
-import type { DriverWeeklyMileageResponse } from "../types/financial/trucks-board.ts";
+import type {
+  DriversMileageGroup,
+  DriverWeeklyMileageResponse,
+} from "../types/financial/trucks-board.ts";
 import {
   COMPANY_ID_QUERY_PARAM,
   END_DATE_QUERY_PARAM,
@@ -17,7 +20,6 @@ import {
   START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
 import { BLANK_SPACE, COLON } from "../utils/constants/global-constants.ts";
-import type { DriversMileageGroup } from "../company/dashboard/trucks-board/TrucksBoard.tsx";
 import { INTERNAL_SERVER_ERROR } from "../utils/global/error-messages.ts";
 import { groupDriverWeeklyMileageByDispatcher } from "../utils/trucks-board/trucks-board-api-utils.ts";
 

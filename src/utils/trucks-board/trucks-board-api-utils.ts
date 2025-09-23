@@ -1,6 +1,7 @@
 import {
   DISPATCHER_KEY,
   DRIVER_KEY,
+  type DriversMileageGroup,
   type DriversMileageGroupErrors,
   type DriversMileageGroupsErrors,
   type DriverWeeklyMileage,
@@ -25,7 +26,6 @@ import type {
   UpsertDriversMileageRequest,
 } from "../../types/api/driver-mileage-api.ts";
 import { v4 as uuidv4 } from "uuid";
-import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
 
 export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   item: DriverWeeklyMileageResponse,

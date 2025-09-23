@@ -18,22 +18,12 @@ import { ConfirmationModal } from "../../../global/ConfirmationModal.tsx";
 import { DriversMileageView } from "./DriversMileageView.tsx";
 import { getWeekWithNames } from "../../../utils/global/date.ts";
 import { BLANK_SPACE } from "../../../utils/constants/global-constants.ts";
-import type { User } from "../../../types/api/User.ts";
-import type { DriverWeeklyMileage } from "../../../types/financial/trucks-board.ts";
 import { TrucksBoardTimeline } from "./TrucksBoardTimeline.tsx";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driver-mileage-service.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../utils/constants/headers.ts";
 
 const WEEKS = getWeekWithNames(new Date());
-
-export type DriversMileageGroup = {
-  dispatcher: User | null;
-  groupIdentifier: string;
-  startDate: string;
-  endDate: string;
-  items: DriverWeeklyMileage[];
-};
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();

@@ -1,4 +1,5 @@
 import {
+  type DriversMileageGroup,
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../types/financial/trucks-board.ts";
@@ -6,7 +7,6 @@ import { BLANK_SPACE, BLANK_STRING } from "../constants/global-constants.ts";
 import type { Dispatch, SetStateAction } from "react";
 import type { User } from "../../types/api/User.ts";
 import { v4 as uuidv4 } from "uuid";
-import type { DriversMileageGroup } from "../../company/dashboard/trucks-board/TrucksBoard.tsx";
 import type { Driver } from "../../types/api/Driver.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
 
