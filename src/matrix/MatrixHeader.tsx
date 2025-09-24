@@ -15,7 +15,7 @@ export const MatrixHeader: React.FC<{
   return (
     <div
       style={{ zIndex: Z_INDEX_TRUCKS_BOARD_TABLE }}
-      className="flex mx-auto sticky top-0 font-open-sans font-bold w-fit"
+      className="flex mx-auto sticky top-0 font-open-sans font-bold w-fit text-[0.7rem] "
     >
       <div
         style={{ gridTemplateColumns: stickyColumnsLayout }}

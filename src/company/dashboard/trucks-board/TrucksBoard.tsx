@@ -27,7 +27,7 @@ const WEEKS = getWeekWithNames(new Date());
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
-  const [week, setWeek] = useState<string[]>(WEEKS[0]);
+  const [week, setWeek] = useState<string[]>(WEEKS[1]);
   const driverWeeklyMileageData = useDriverWeeklyMileage(companyUuid!!, week);
   const toastData = useToast();
   const [showModal, setShowModal] = useState(false);
@@ -73,13 +73,13 @@ export const TrucksBoard = () => {
           action={() => setShowModal(true)}
         />
         <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
-        <div className="w-[90%] mx-auto">
+        <div className="w-[95%] mx-auto">
           <OptionBar
             driverWeeklyMileageData={driverWeeklyMileageData}
             toast={toastData}
           />
         </div>
-        <div className="flex-1 w-[90%] mx-auto overflow-x-auto">
+        <div className="flex-1 w-[95%] mx-auto overflow-x-auto">
           <MatrixHeader
             stickyColumns={TRUCKS_BOARD_PRIMARY_COLUMNS}
             stickyColumnsLayout={TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.replace(
