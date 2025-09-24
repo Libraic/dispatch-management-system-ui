@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import { TRUCKS_BOARD_COLUMNS_LAYOUT } from "../../../utils/trucks-board/trucks-board-constants.ts";
 import { DriverMileageMetadata } from "./DriverMileageMetadata.tsx";
 import { DailyMileageView } from "./DailyMileageView.tsx";
 import {
@@ -16,6 +15,10 @@ import {
   type DriverMileageErrors,
 } from "../../../types/financial/trucks-board.ts";
 import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
+import {
+  getDispatcherLiveSearchCellStyles,
+  TRUCKS_BOARD_LAYOUT_STYLES,
+} from "../../../utils/trucks-board/trucks-board-styles-utils.ts";
 
 export const DriversMileageView: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
@@ -26,10 +29,7 @@ export const DriversMileageView: React.FC<{
       {driverWeeklyMileageData.getDriversMileageGroups().map((group) => (
         <div
           key={group.groupIdentifier}
-          style={{
-            gridTemplateColumns: TRUCKS_BOARD_COLUMNS_LAYOUT,
-            gridAutoRows: "min-content", // each driver will make a row
-          }}
+          style={TRUCKS_BOARD_LAYOUT_STYLES}
           className="min-w-[1000px] grid rounded-[0.3rem] font-open-sans font-light bg-white"
         >
           <LiveSearchCell
@@ -50,14 +50,7 @@ export const DriversMileageView: React.FC<{
                 (errors[group.groupIdentifier][DISPATCHER_KEY] as string)) ||
               BLANK_STRING
             }
-            style={{
-              gridRow: `1 / ${group.items.length + 1}`,
-              alignSelf: "stretch",
-              position: "sticky",
-              left: 0,
-              writingMode: "sideways-lr",
-              borderLeft: "0.2rem solid #e6ebfa",
-            }}
+            style={getDispatcherLiveSearchCellStyles(group.items.length)}
           />
 
           {group.items.map((driverWeeklyMileage, idx) => {

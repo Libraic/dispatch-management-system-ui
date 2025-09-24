@@ -18,10 +18,8 @@ import { TotalRevenueAndMiles } from "./TotalRevenueAndMiles.tsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import {
-  TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS,
-  Z_INDEX_TRUCKS_BOARD_TABLE,
-} from "../../../utils/trucks-board/trucks-board-constants.ts";
+import { TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS } from "../../../utils/trucks-board/trucks-board-constants.ts";
+import { getStickyCellStyles } from "../../../utils/trucks-board/trucks-board-styles-utils.ts";
 
 export const DriverMileageMetadata: React.FC<{
   groupIdentifier: string;
@@ -53,13 +51,7 @@ export const DriverMileageMetadata: React.FC<{
 
   return (
     <>
-      <div
-        style={{
-          left: offsets[1],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
-          position: "sticky",
-        }}
-      >
+      <div style={getStickyCellStyles(offsets[1], index)}>
         <LiveSearchCell
           defaultSearchKey={LiveSearchKey.DRIVER}
           constructor={Driver}
@@ -78,24 +70,12 @@ export const DriverMileageMetadata: React.FC<{
           errorMessage={error && (error[DRIVER_KEY] as string)}
         />
       </div>
-      <div
-        style={{
-          left: offsets[2],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
-          position: "sticky",
-        }}
-      >
+      <div style={getStickyCellStyles(offsets[2], index)}>
         <ViewableCell
           data={driverWeeklyMileage.driver?.getTruckData() ?? BLANK_STRING}
         />
       </div>
-      <div
-        style={{
-          left: offsets[3],
-          zIndex: Z_INDEX_TRUCKS_BOARD_TABLE - 1 - index,
-          position: "sticky",
-        }}
-      >
+      <div style={getStickyCellStyles(offsets[3], index)}>
         <TotalRevenueAndMiles mileages={driverWeeklyMileage.mileageData} />
       </div>
     </>

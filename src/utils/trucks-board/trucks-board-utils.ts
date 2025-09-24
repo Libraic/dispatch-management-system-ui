@@ -4,7 +4,7 @@ import {
   type Mileage,
 } from "../../types/financial/trucks-board.ts";
 import { BLANK_SPACE, BLANK_STRING } from "../constants/global-constants.ts";
-import type { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import type { User } from "../../types/api/User.ts";
 import { v4 as uuidv4 } from "uuid";
 import type { Driver } from "../../types/api/Driver.ts";
