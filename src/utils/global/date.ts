@@ -32,7 +32,7 @@ export const getWeekWithNames = (date: Date): string[][] => {
   monday.setDate(monday.getDate() - dayOfWeek);
   const results: string[][] = [];
 
-  for (let j = 0; j < 3; ++j) {
+  for (let j = 2; j >= 0; --j) {
     const result: string[] = [];
     for (let i = 0; i < 7; i++) {
       result.push(getDateInIsoFormat(monday, -j, i));
@@ -45,7 +45,7 @@ export const getWeekWithNames = (date: Date): string[][] => {
     result.push(getDateInIsoFormat(monday, 1, i));
   }
 
-  return [result, ...results];
+  return [...results, result];
 };
 
 export const convertDateToLittleEndian = (date: YearData) => {
