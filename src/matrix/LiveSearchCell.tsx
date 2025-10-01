@@ -130,14 +130,18 @@ export const LiveSearchCell = <D, R>({
 
       <ToastRenderer toast={toast} />
 
-      {hoverData.shouldDisplayMessage() && (
-        <HoverableInformation
-          message={errorMessage!!}
-          icon={errorIcon}
-          topPosition="top-[2rem]"
-          leftPosition="left-[4.2rem]"
-        />
-      )}
+      {hoverData.shouldDisplayMessage() &&
+        createPortal(
+          <div style={dropdownStyle}>
+            <HoverableInformation
+              message={errorMessage!!}
+              icon={errorIcon}
+              topPosition="top-[2rem]"
+              leftPosition="left-[4.2rem]"
+            />
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };

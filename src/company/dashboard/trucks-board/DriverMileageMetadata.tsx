@@ -12,6 +12,8 @@ import { queryDriversByCompanyId } from "../../../utils/api/query-utils.ts";
 import { ViewableCell } from "../../../matrix/ViewableCell.tsx";
 import {
   BLANK_STRING,
+  REM_UNIT,
+  TRAILING_ZERO,
   UNDERSCORE,
 } from "../../../utils/constants/global-constants.ts";
 import { TotalRevenueAndMiles } from "./TotalRevenueAndMiles.tsx";
@@ -39,12 +41,12 @@ export const DriverMileageMetadata: React.FC<{
 
   useEffect(() => {
     const widths = TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.split(UNDERSCORE);
-    const offsets = ["0"];
+    const offsets = [TRAILING_ZERO];
     let offset = 0;
     for (let i = 0; i < widths.length - 1; i++) {
       const width = widths[i];
       offset += parseFloat(width);
-      offsets.push(`${offset}rem`);
+      offsets.push(`${offset}${REM_UNIT}`);
     }
     setOffsets(offsets);
   }, []);

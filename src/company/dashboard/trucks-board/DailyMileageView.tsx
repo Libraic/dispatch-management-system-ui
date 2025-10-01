@@ -16,7 +16,6 @@ export const DailyMileageView: React.FC<{
   ) => void;
   error?: DriverMileageErrors;
 }> = ({ driverWeeklyMileage, setDriverWeeklyMileage, error }) => {
-  console.log(driverWeeklyMileage);
   return (
     <>
       {driverWeeklyMileage.mileageData.map((mileage, index) => (
