@@ -19,7 +19,7 @@ import {
   LESS_THAN_EQUAL_CLAUSE,
   START_DATE_QUERY_PARAM,
 } from "../utils/api/api-query-constants.ts";
-import { BLANK_SPACE, COLON } from "../utils/constants/global-constants.ts";
+import { COLON } from "../utils/constants/global-constants.ts";
 import { INTERNAL_SERVER_ERROR } from "../utils/global/error-messages.ts";
 import { groupDriverWeeklyMileageByDispatcher } from "../utils/trucks-board/trucks-board-api-utils.ts";
 
@@ -43,8 +43,8 @@ export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
   week: string[],
 ): Promise<DriversMileageGroup[] | string> => {
-  const startDate = week[0].split(BLANK_SPACE)[1];
-  const endDate = week[week.length - 1].split(BLANK_SPACE)[1];
+  const startDate = week[0];
+  const endDate = week[week.length - 1];
 
   const data = await fetchDriversMileage(companyUuid, startDate, endDate);
 

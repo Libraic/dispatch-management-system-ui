@@ -24,7 +24,7 @@ export const DailyMileage: React.FC<{
           setDriverWeeklyMileage(index, "destinationNote", content)
         }
       />
-      <div className="grid grid-rows-2 w-full">
+      <div className="grid grid-rows-2 w-[60%]">
         <EditableCell
           content={mileage.revenue}
           cellType={CellType.CURRENCY}

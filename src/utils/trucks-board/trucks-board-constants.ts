@@ -7,9 +7,9 @@ export const TRUCKS_BOARD_PRIMARY_COLUMNS = [
   "Revenue",
 ];
 
-export const TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS = "4rem_14rem_5.3rem_5.5rem";
+export const TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS = "3rem_11rem_4.9rem_4.2rem";
 
-export const TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT = "repeat(7,17rem)";
+export const TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT = "repeat(14,12.05rem)";
 
 export const TRUCKS_BOARD_COLUMNS_LAYOUT = `${TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS.replace(/_/g, BLANK_SPACE)} ${TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}`;
 

@@ -7,7 +7,7 @@ export const DEFAULT_BIRTH_DATE: YearData = {
   year: LAST_ADMITTABLE_BIRTH_YEAR,
 };
 
-const WEEKDAYS = [
+export const WEEKDAYS = [
   "Monday",
   "Tuesday",
   "Wednesday",
@@ -16,8 +16,6 @@ const WEEKDAYS = [
   "Saturday",
   "Sunday",
 ];
-
-export const CURRENT_YEAR = new Date().getFullYear();
 
 export const getWeekWithNames = (date: Date): string[][] => {
   const dayOfWeek = date.getDay() === 0 ? 6 : date.getDay() - 1;
@@ -33,12 +31,21 @@ export const getWeekWithNames = (date: Date): string[][] => {
       const month = String(currentDay.getMonth() + 1).padStart(2, "0");
       const day = String(currentDay.getDate()).padStart(2, "0");
       const year = String(currentDay.getFullYear());
-      result.push(`${WEEKDAYS[i]} ${year}-${month}-${day}`);
+      result.push(`${year}-${month}-${day}`);
     }
     results.push(result);
   }
 
-  return results;
+  const result: string[] = [];
+  for (let i = 0; i < 7; i++) {
+    const currentDay = new Date(monday);
+    currentDay.setDate(monday.getDate() + 7 + i);
+    const month = String(currentDay.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDay.getDate()).padStart(2, "0");
+    const year = String(currentDay.getFullYear());
+    result.push(`${year}-${month}-${day}`);
+  }
+  return [result, ...results];
 };
 
 export const convertDateToLittleEndian = (date: YearData) => {

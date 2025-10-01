@@ -15,7 +15,7 @@ export const EditableCell: React.FC<{
 }> = ({ content, setContent, cellType, errorMessage }) => {
   return (
     <div
-      className={`flex justify-center items-center w-full h-full ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} p-2 text-center align-middle overflow-hidden break-words whitespace-pre-wrap`}
+      className={`flex justify-center items-center w-full h-full ${errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE} p-1 text-center align-middle overflow-hidden break-words whitespace-pre-wrap`}
       contentEditable
       suppressContentEditableWarning={true}
       onInput={(e: React.FormEvent<HTMLDivElement>) => {

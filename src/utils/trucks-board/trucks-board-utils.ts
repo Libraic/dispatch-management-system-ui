@@ -3,12 +3,13 @@ import {
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../types/financial/trucks-board.ts";
-import { BLANK_SPACE, BLANK_STRING } from "../constants/global-constants.ts";
+import { BLANK_STRING } from "../constants/global-constants.ts";
 import { type Dispatch, type SetStateAction } from "react";
 import type { User } from "../../types/api/User.ts";
 import { v4 as uuidv4 } from "uuid";
 import type { Driver } from "../../types/api/Driver.ts";
 import type { Renderable } from "../../types/api/Renderable.ts";
+import { WEEKDAYS } from "../global/date.ts";
 
 export const addNewDriversMileageGroup = (
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
@@ -136,10 +137,16 @@ export const mileagesMapperFunction = (
 };
 
 export const getWeekWithDayAndMonth = (week: string[]) => {
-  return week.map((day) => {
-    const parts = day.split(BLANK_SPACE);
-    const dateParts = parts[1].split("-");
-    return `${parts[0]} ${dateParts[2]}.${dateParts[1]}`;
+  const biweeklyTimeline = [...week];
+  for (const weekDay of week) {
+    const date = new Date(weekDay);
+    date.setDate(date.getDate() + 7);
+    biweeklyTimeline.push(date.toISOString().split("T")[0]);
+  }
+
+  return biweeklyTimeline.map((day, index) => {
+    const dateParts = day.split("-");
+    return `${WEEKDAYS[index % 7]} ${dateParts[2]}.${dateParts[1]}`;
   });
 };
 
@@ -149,8 +156,8 @@ const getBlankDriversMileageGroup = (
   return {
     dispatcher: null,
     groupIdentifier: uuidv4(),
-    startDate: weekDays[0].split(BLANK_SPACE)[1],
-    endDate: weekDays[weekDays.length - 1].split(BLANK_SPACE)[1],
+    startDate: weekDays[0],
+    endDate: weekDays[weekDays.length - 1],
     items: [
       {
         uuid: null,
@@ -172,8 +179,15 @@ const getBlankDriverWeeklyMileage = (weekDays: string[]) => {
 };
 
 const getWeekMileages = (weekDays: string[]): Mileage[] => {
-  return weekDays.map((value, _) => ({
-    date: value.split(BLANK_SPACE)[1],
+  const biweeklyTimeline = [...weekDays];
+  for (const weekDay of weekDays) {
+    const date = new Date(weekDay);
+    date.setDate(date.getDate() + 7);
+    biweeklyTimeline.push(date.toISOString().split("T")[0]);
+  }
+
+  return biweeklyTimeline.map((value, _) => ({
+    date: value,
     revenue: null,
     miles: null,
     note: null,
