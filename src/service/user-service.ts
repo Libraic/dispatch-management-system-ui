@@ -18,6 +18,6 @@ export const saveUser = async (
     const response = await axios.post(SAVE_USER, createUserRequest);
     return response.data;
   } catch (error: any) {
-    return handleApiErrors(error);
+    return handleApiErrors();
   }
 };

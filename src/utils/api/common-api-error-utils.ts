@@ -4,10 +4,12 @@ import type {
   GroupsErrorResponse,
 } from "../../types/api/common.ts";
 import type { ItemError } from "../../types/registration/user/user-registration-data.ts";
-import { NETWORK_ERROR } from "../global/error-messages.ts";
+import {
+  INTERNAL_SERVER_ERROR,
+  NETWORK_ERROR,
+} from "../global/error-messages.ts";
 
 export const ERRORS_KEY = "errors";
-export const NETWORK_ERROR_KEY = "ERR_NETWORK";
 
 export const handleErrors = <
   T,
@@ -54,14 +56,20 @@ export const handleErrors = <
   return null;
 };
 
-export const handleApiErrors = <T>(error: any): ApiResponse<T, Error> => {
-  if (error.code === NETWORK_ERROR_KEY) {
+export const handleApiErrors = <T>(error?: any): ApiResponse<T, Error> => {
+  if (error && error.status >= 400) {
+    const errorMessage =
+      error?.response?.data?.error?.message ?? INTERNAL_SERVER_ERROR;
     return {
       error: {
-        message: NETWORK_ERROR,
-      },
-    };
+        message: errorMessage,
+      } as Error,
+    } as ApiResponse<T, Error>;
   }
 
-  return error.response.data;
+  return {
+    error: {
+      message: NETWORK_ERROR,
+    } as Error,
+  } as ApiResponse<T, Error>;
 };

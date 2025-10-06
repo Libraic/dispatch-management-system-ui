@@ -12,3 +12,4 @@ export const HYPHEN = "-";
 export const UNDERSCORE = "_";
 export const TRAILING_ZERO = "0";
 export const REM_UNIT = "rem";
+export const ZERO = 0;

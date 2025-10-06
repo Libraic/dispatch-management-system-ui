@@ -36,7 +36,7 @@ export const Section: React.FC<{
     <>
       <div
         onClick={() => activateSection(sectionTitle)}
-        className={`flex justify-center items-center w-9 h-9 rounded-[50%] border-[0.1rem]  cursor-pointer ${borderColor} ${borderColorOnHover} ${backgroundColor} ${backgroundColorOnHover} ${textColor} hover:text-white transition-all ease-in duration-100`}
+        className={`flex justify-center items-center w-9 h-9 rounded-[50%] border-[0.1rem] cursor-pointer ${borderColor} ${borderColorOnHover} ${backgroundColor} ${backgroundColorOnHover} ${textColor} hover:text-white transition-all ease-in duration-100`}
       >
         <p className="font-lato font-medium text-[1rem]">{sectionIndex}</p>
       </div>
