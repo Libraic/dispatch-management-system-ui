@@ -18,6 +18,6 @@ export const saveDriver = async (
     const response = await axios.post(SAVE_DRIVER, createDriverRequest);
     return response.data;
   } catch (error: any) {
-    return handleApiErrors(error);
+    return handleApiErrors();
   }
 };

@@ -35,7 +35,7 @@ export const saveDriversMileage = async (
     );
     return response.data;
   } catch (error: any) {
-    return handleApiErrors(error);
+    return handleApiErrors();
   }
 };
 

@@ -7,10 +7,12 @@ import type { CompanyData } from "../../types/api/registration-api.ts";
 import trucksBoardUnhoveredIcon from "../../assets/company-menu/trucks-board-unhovered.svg";
 import companyProfileIcon from "../../assets/company-menu/company-profile.svg";
 import addDriverIcon from "../../assets/company-menu/add-driver.svg";
+import addAssetIcon from "../../assets/company-menu/add-asset-icon.svg";
 import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import {
+  ASSET_CREATION,
   DRIVER_REGISTRATION,
   TRUCKS_BOARD,
 } from "../../utils/constants/internal-routes.ts";
@@ -56,6 +58,11 @@ export const CompanyDashboard = () => {
           label="Add Driver"
           icon={addDriverIcon}
           route={`${baseRoute}${DRIVER_REGISTRATION}`}
+        />
+        <CompanyFunctionality
+          label="Add Asset"
+          icon={addAssetIcon}
+          route={`${baseRoute}${ASSET_CREATION}`}
         />
       </div>
       <div className="w-9/10 flex flex-col gap-y-2 items-center">

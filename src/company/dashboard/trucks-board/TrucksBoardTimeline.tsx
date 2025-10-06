@@ -8,7 +8,7 @@ export const TrucksBoardTimeline: React.FC<{
   setActiveWeek: (week: string[]) => void;
 }> = ({ weeks, setActiveWeek }) => {
   const [activeBars, setActiveBars] = useState<boolean[]>(
-    weeks.map((_, i) => i === 1),
+    weeks.map((_, i) => i === 2),
   );
 
   return (

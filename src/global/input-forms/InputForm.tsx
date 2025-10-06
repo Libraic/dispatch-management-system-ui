@@ -26,25 +26,20 @@ export const InputForm: React.FC<{
   errorMessage,
   saveInputData,
 }) => {
-  const [placeholderText, setPlaceholderText] = React.useState(placeholder);
-  const [value, setValue] = React.useState(inputFieldValue);
+  const [isFocused, setIsFocused] = useState(false);
   const [borderColor, setBorderColor] = useState("border-light-grey");
 
   const handleFocus = () => {
-    setPlaceholderText(BLANK_STRING);
+    setIsFocused(true);
     setBorderColor("border-solid-blue");
   };
 
   const handleBlur = () => {
-    if (value === BLANK_STRING) {
-      setPlaceholderText(placeholder);
-    }
-
+    setIsFocused(false);
     setBorderColor("border-light-grey");
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
     saveInputData(e.target.value);
   };
 
@@ -63,8 +58,12 @@ export const InputForm: React.FC<{
           className={`${inputFormStyle} w-[19rem]`}
           type={type}
           name={name}
-          placeholder={placeholderText}
-          value={value}
+          placeholder={
+            !isFocused && (inputFieldValue === BLANK_STRING || !inputFieldValue)
+              ? placeholder
+              : BLANK_STRING
+          }
+          value={inputFieldValue}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}

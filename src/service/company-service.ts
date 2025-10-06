@@ -45,6 +45,6 @@ export const saveCompany = async (
     const response = await axios.post(SAVE_COMPANY, createCompanyRequest);
     return response.data;
   } catch (error: any) {
-    return handleApiErrors(error);
+    return handleApiErrors();
   }
 };

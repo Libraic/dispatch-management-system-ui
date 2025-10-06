@@ -27,7 +27,7 @@ const WEEKS = getWeekWithNames(new Date());
 
 export const TrucksBoard = () => {
   const { companyUuid } = useParams();
-  const [week, setWeek] = useState<string[]>(WEEKS[1]);
+  const [week, setWeek] = useState<string[]>(WEEKS[WEEKS.length - 2]);
   const driverWeeklyMileageData = useDriverWeeklyMileage(companyUuid!!, week);
   const toastData = useToast();
   const [showModal, setShowModal] = useState(false);

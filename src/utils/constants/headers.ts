@@ -18,6 +18,11 @@ export const DRIVER_REGISTRATION_HEADER = {
   subheader: "Complete the required information from the sections",
 };
 
+export const ASSET_CREATION_HEADER = {
+  header: "Add Asset",
+  subheader: "Add a new Asset",
+};
+
 export const BASIC_INFORMATION_HEADER = {
   header: "Personal Information",
   subheader: "The personal data of the employee",
