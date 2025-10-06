@@ -27,6 +27,7 @@ export const getBlankTrailerRegistrationErrors =
       vinNumber: BLANK_STRING,
       trailerYear: BLANK_STRING,
       equipmentSize: BLANK_STRING,
+      equipmentType: BLANK_STRING,
       palletCapacity: BLANK_STRING,
       maxWeight: BLANK_STRING,
     };
