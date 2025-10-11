@@ -7,6 +7,7 @@ import { LiveSearchKey } from "../../../types/forms.ts";
 import type { Renderable } from "../../../types/api/Renderable.ts";
 import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 import { Truck } from "../../../types/api/Truck.ts";
+import { Trailer } from "../../../types/api/Trailer.ts";
 
 export const GeneralDetailsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
@@ -80,7 +81,8 @@ export const GeneralDetailsSection = () => {
             )
           }
         />
-
+      </div>
+      <div className="flex flex-row gap-x-20 mt-20">
         <LiveSearchInputForm
           label="Truck"
           placeholder={"RK-2021"}
@@ -100,6 +102,26 @@ export const GeneralDetailsSection = () => {
             })
           }
           constructor={Truck}
+        />
+        <LiveSearchInputForm
+          label="Trailer"
+          placeholder={"TK-2013"}
+          value={driverRegistrationData.trailerNumber}
+          searchKey={LiveSearchKey.TRAILER}
+          saveData={(trailerData: Renderable) =>
+            setObjectStringField(
+              setDriverRegistrationData,
+              "trailerNumber",
+              trailerData.renderOnForm(),
+            )
+          }
+          cleanData={() =>
+            setDriverRegistrationData({
+              ...driverRegistrationData,
+              trailerNumber: BLANK_STRING,
+            })
+          }
+          constructor={Trailer}
         />
       </div>
     </div>

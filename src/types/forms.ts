@@ -8,6 +8,7 @@ export enum LiveSearchKey {
   COMPANY = "COMPANY",
   DRIVER = "DRIVER",
   TRUCK = "TRUCK",
+  TRAILER = "TRAILER",
 }
 
 export const LiveSearchEndpoints: Record<string, LiveSearchEndpointConfig> = {
@@ -26,5 +27,9 @@ export const LiveSearchEndpoints: Record<string, LiveSearchEndpointConfig> = {
   TRUCK: {
     endpoint: "http://localhost:8090/api/trucks",
     searchField: "truckNumber",
+  },
+  TRAILER: {
+    endpoint: "http://localhost:8090/api/trailers",
+    searchField: "trailerNumber",
   },
 } as const;

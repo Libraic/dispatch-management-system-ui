@@ -71,6 +71,8 @@ export type TruckData = {
 
 export type TrailerData = {
   uuid: string;
+  trailerNumber: string;
+  createdAt: string;
 };
 
 export enum AssetTypeEnum {
