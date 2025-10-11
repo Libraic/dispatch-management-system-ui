@@ -1,24 +1,13 @@
 import type { LiveSearchResultData } from "../../types/live-search.ts";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { useBlur } from "../../hooks/useBlur.ts";
 
 export const LiveSearchResultList = ({
   items,
   onClick,
 }: LiveSearchResultData) => {
-  const listRef = useRef<HTMLDivElement>(null);
   const [isListVisible, setIsListVisible] = useState(true);
-
-  const hideList = (e: MouseEvent) => {
-    const target = e!!.target as Node;
-    if (isListVisible && !listRef.current?.contains(target)) {
-      setIsListVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", hideList);
-  });
-
+  const listRef = useBlur(() => setIsListVisible(false));
   return (
     isListVisible && (
       <div

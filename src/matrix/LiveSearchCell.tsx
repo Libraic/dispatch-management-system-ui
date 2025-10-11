@@ -17,6 +17,7 @@ import {
   NO_ERROR_BACKGROUND_STYLE,
 } from "../utils/matrix/cell-constants.ts";
 import { ToastRenderer } from "../toast/ToastRenderer.tsx";
+import { useBlur } from "../hooks/useBlur.ts";
 
 export const LiveSearchCell = <D, R>({
   defaultSearchKey,
@@ -36,16 +37,21 @@ export const LiveSearchCell = <D, R>({
   const searchField = LiveSearchEndpoints[defaultSearchKey].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
+  const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
     query,
+    isLiveSearchActive,
     customSearchCriteria,
   );
   const hoverData = useHoverPanel(!!errorMessage);
   const isMounted = useRef(false);
 
-  const cellRef = useRef<HTMLDivElement>(null);
+  const cellRef = useBlur(() => {
+    setIsLiveSearchActive(false);
+    setItems([]);
+  });
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
 
   if (!isMounted.current) {
@@ -92,6 +98,7 @@ export const LiveSearchCell = <D, R>({
         } border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
+        onFocus={() => setIsLiveSearchActive(true)}
         onInput={(e: React.FormEvent<HTMLDivElement>) => {
           const input =
             !e.currentTarget.textContent || isRendered

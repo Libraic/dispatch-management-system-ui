@@ -6,19 +6,22 @@ import type {
   LiveSearchResult,
   SearchCriteria,
 } from "../types/api/common.ts";
-import { COLON, DEBOUNCING_TIME } from "../utils/constants/global-constants.ts";
+import {
+  BLANK_STRING,
+  COLON,
+  DEBOUNCING_TIME,
+} from "../utils/constants/global-constants.ts";
 import { LIKE_CLAUSE } from "../utils/api/api-query-constants.ts";
-
-const EMPTY_OBJECT = {
-  items: [],
-  error: null,
-};
 
 const constructSearchCriteria = (
   defaultKey: string,
   defaultValue: string,
   customSearchCriteria?: SearchCriteria[],
 ): any => {
+  if (defaultValue === BLANK_STRING) {
+    return {};
+  }
+
   const params = { [defaultKey]: `${LIKE_CLAUSE}${COLON}${defaultValue}` };
   if (customSearchCriteria) {
     for (const searchCriteria of customSearchCriteria) {
@@ -32,34 +35,35 @@ export const useLiveSearch = <T>(
   endpoint: string,
   searchField: string,
   query: string,
+  isLiveSearchActive: boolean,
   defaultSearchCriteria?: SearchCriteria[],
 ): LiveSearchResult<T> => {
-  const [items, setItems] = useState<LiveSearchResult<T>>(EMPTY_OBJECT);
+  const [items, setItems] = useState<LiveSearchResult<T>>({
+    items: [],
+    error: null,
+  });
   useEffect(() => {
     const debounced = debounce((value: string) => {
-      if (value.trim().length === 0) {
-        setItems(EMPTY_OBJECT);
-        return;
-      }
-
-      if (value.trim().length > 0) {
-        getData<T[], Error>(
-          endpoint,
-          constructSearchCriteria(searchField, value, defaultSearchCriteria),
-        ).then((result) => {
-          const localItems =
-            result.error !== null
-              ? { items: [], error: result.error!.message }
-              : { items: result.data ?? [], error: null };
-          setItems(localItems);
-        });
-      }
+      const searchCriteria = constructSearchCriteria(
+        searchField,
+        value,
+        defaultSearchCriteria,
+      );
+      getData<T[], Error>(endpoint, searchCriteria).then((result) => {
+        const localItems =
+          result.error !== null
+            ? { items: [], error: result.error!.message }
+            : { items: result.data ?? [], error: null };
+        setItems(localItems);
+      });
     }, DEBOUNCING_TIME);
 
-    debounced(query);
+    if (isLiveSearchActive) {
+      debounced(query);
+    }
 
     return () => debounced.cancel();
-  }, [query, endpoint, searchField, defaultSearchCriteria]);
+  }, [query, endpoint, searchField, defaultSearchCriteria, isLiveSearchActive]);
 
   return items;
 };

@@ -65,6 +65,8 @@ export type CreateTrailerRequest = {
 
 export type TruckData = {
   uuid: string;
+  truckNumber: string;
+  createdAt: string;
 };
 
 export type TrailerData = {
