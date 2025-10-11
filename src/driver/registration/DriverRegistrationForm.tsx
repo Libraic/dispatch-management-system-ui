@@ -37,6 +37,7 @@ import type {
 } from "../../types/api/common.ts";
 import type { DriverData } from "../../types/api/driver-api.ts";
 import { DRIVER_REGISTRATION_HEADER } from "../../utils/constants/headers.ts";
+import { DRIVERS_VIEW } from "../../utils/constants/internal-routes.ts";
 
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -76,7 +77,7 @@ export const DriverRegistrationForm = () => {
       (_) => false,
     );
     if (errors == null) {
-      navigate(baseRoute);
+      navigate(`${baseRoute}${DRIVERS_VIEW}`);
     } else if (!Array.isArray(errors)) {
       const e = errors as Error;
       toast.withErrorMessage(e.message);

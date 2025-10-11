@@ -47,3 +47,8 @@ export const WORKLOAD_HEADER = {
   header: "Workload",
   subheader: "The working area of the employee",
 };
+
+export const DRIVERS_VIEW = {
+  header: "Drivers",
+  subheader: "Manage your Drivers",
+};
