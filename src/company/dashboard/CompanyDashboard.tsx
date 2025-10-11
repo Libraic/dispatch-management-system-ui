@@ -13,7 +13,7 @@ import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import {
   ASSET_CREATION,
-  DRIVER_REGISTRATION,
+  DRIVERS_VIEW,
   TRUCKS_BOARD,
 } from "../../utils/constants/internal-routes.ts";
 import { ToastRenderer } from "../../toast/ToastRenderer.tsx";
@@ -55,9 +55,9 @@ export const CompanyDashboard = () => {
           route={`${baseRoute}${TRUCKS_BOARD}`}
         />
         <CompanyFunctionality
-          label="Add Driver"
+          label="Drivers"
           icon={addDriverIcon}
-          route={`${baseRoute}${DRIVER_REGISTRATION}`}
+          route={`${baseRoute}${DRIVERS_VIEW}`}
         />
         <CompanyFunctionality
           label="Add Asset"

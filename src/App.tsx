@@ -8,6 +8,7 @@ import {
   COMPANY_DASHBOARD,
   COMPANY_REGISTRATION,
   DRIVER_REGISTRATION,
+  DRIVERS_VIEW,
   HOME,
   TRUCKS_BOARD,
   USER_REGISTRATION,
@@ -17,6 +18,7 @@ import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
 import { TrucksBoard } from "./company/dashboard/trucks-board/TrucksBoard.tsx";
 import { DriverRegistrationForm } from "./driver/registration/DriverRegistrationForm.tsx";
 import { AssetCreationForm } from "./company/dashboard/assets/AssetCreationForm.tsx";
+import { DriversView } from "./driver/view/DriversView.tsx";
 
 export const App = () => {
   return (
@@ -33,6 +35,10 @@ export const App = () => {
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_BOARD}`}
           element={<TrucksBoard />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${DRIVERS_VIEW}`}
+          element={<DriversView />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}
