@@ -10,13 +10,6 @@ import {
 } from "../location/location-utils.ts";
 import type { CreateDriverRequest } from "../../types/api/driver-api.ts";
 
-export const trailerTypes = [
-  "Flatbed",
-  "Stepdeck",
-  "Flatbed Conestoga",
-  "Stepdeck Conestoga",
-];
-export const trailerLengths = ["48", "53"];
 export const documentsStatuses = ["Work Permit", "Green Card", "Citizen"];
 export const driverPositions = ["Owner Operator", "Company Driver"];
 
@@ -26,16 +19,18 @@ export const getBlankDriverRegistrationData = (): DriverRegistrationData => {
     lastName: BLANK_STRING,
     phoneNumber: BLANK_STRING,
     email: BLANK_STRING,
-    truckNumber: BLANK_STRING,
-    trailerNumber: BLANK_STRING,
-    height: BLANK_STRING,
-    maxLegalWeightCapacity: BLANK_STRING,
-    trailerType: trailerTypes[0],
-    trailerLength: trailerLengths[0],
     documentsStatus: documentsStatuses[0],
     position: driverPositions[0],
     state: getFirstStateOfCountryByIsoCode(USA_COUNTRY_ISO_CODE),
     city: getFirstCityOfStateByCountryIsoCode(USA_COUNTRY_ISO_CODE),
+    truckAssignmentData: {
+      truckNumber: BLANK_STRING,
+      truckUuid: BLANK_STRING,
+    },
+    trailerAssignmentData: {
+      trailerNumber: BLANK_STRING,
+      trailerUuid: BLANK_STRING,
+    },
   };
 };
 
@@ -47,8 +42,6 @@ export const getBlankDriverRegistrationError = (): DriverRegistrationError => {
     email: BLANK_STRING,
     truckNumber: BLANK_STRING,
     trailerNumber: BLANK_STRING,
-    height: BLANK_STRING,
-    maxLegalWeightCapacity: BLANK_STRING,
   };
 };
 
@@ -61,16 +54,18 @@ export const createCreateDriverRequestFromDriverRegistrationData = (
     lastName: driverRegistrationData.lastName,
     phoneNumber: driverRegistrationData.phoneNumber,
     email: driverRegistrationData.email,
-    truckNumber: driverRegistrationData.truckNumber,
-    trailerNumber: driverRegistrationData.trailerNumber,
-    trailerHeight: driverRegistrationData.height,
-    maxLegalWeightCapacity: driverRegistrationData.maxLegalWeightCapacity,
-    trailerType: driverRegistrationData.trailerType,
-    trailerLength: driverRegistrationData.trailerLength,
     documentsStatus: driverRegistrationData.documentsStatus,
     position: driverRegistrationData.position,
     state: driverRegistrationData.state,
     city: driverRegistrationData.city,
     companyUuid: companyUuid,
+    trailerUuid:
+      driverRegistrationData.trailerAssignmentData.trailerUuid !== BLANK_STRING
+        ? driverRegistrationData.trailerAssignmentData.trailerUuid
+        : null,
+    truckUuid:
+      driverRegistrationData.truckAssignmentData.truckUuid !== BLANK_STRING
+        ? driverRegistrationData.truckAssignmentData.truckUuid
+        : null,
   };
 };

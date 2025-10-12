@@ -60,7 +60,7 @@ export const DriversView = () => {
             >
               <div>{`${driver.firstName} ${driver.lastName}`}</div>
               <div>{driver.truckNumber}</div>
-              <div>{driver.trailerType}</div>
+              <div>{driver.trailerNumber}</div>
               <div>{driver.state}</div>
               <div>{driver.city}</div>
               <div className="hover:cursor-pointer font-black pb-[0.4rem]">

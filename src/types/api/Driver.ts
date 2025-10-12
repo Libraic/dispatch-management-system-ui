@@ -19,7 +19,7 @@ export class Driver implements Renderable {
       this.driverData.city != null ? this.driverData.city : BLANK_STRING;
     return `
       ${this.driverData.firstName} ${this.driverData.lastName} | ${this.driverData.phoneNumber}<br>
-      Trk# ${this.driverData.truckNumber} Trl# ${this.driverData.trailerNumber} | ${this.driverData.maxLegalWeightCapacity} lbs<br>
+      Trk# ${this.driverData.truckNumber} Trl# ${this.driverData.trailerNumber}<br>
       ${city}, ${stateCode} | ${this.driverData.documentsStatus}<br>
       ${this.driverData.email}
     `;
@@ -31,8 +31,7 @@ export class Driver implements Renderable {
 
   getTruckData(): string {
     return `
-      ${this.driverData.trailerLength}' ${this.driverData.trailerType}
-      ${this.driverData.trailerHeight}'' tall
+      N/A
     `;
   }
 }

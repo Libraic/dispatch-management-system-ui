@@ -1,106 +1,68 @@
 import { useContext } from "react";
-import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
-import { InputForm } from "../../../global/input-forms/InputForm.tsx";
-import { SelectForm } from "../../../global/input-forms/SelectForm.tsx";
-import {
-  trailerLengths,
-  trailerTypes,
-} from "../../../utils/driver/driver-registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
+import { LiveSearchInputForm } from "../../../global/live-search/LiveSearchInputForm.tsx";
+import { LiveSearchKey } from "../../../types/forms.ts";
+import type { Renderable } from "../../../types/api/Renderable.ts";
+import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
+import { Truck } from "../../../types/api/Truck.ts";
+import { Trailer } from "../../../types/api/Trailer.ts";
 
 export const TruckDetailsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
   const driverRegistrationData = context.registrationData;
-  const driverRegistrationError = context.registrationDataError;
   const setDriverRegistrationData = context.setRegistrationData;
   return (
     <div>
       <div className="flex flex-row items-center justify-center gap-x-20">
-        <SelectForm
+        <LiveSearchInputForm
+          label="Truck"
+          placeholder={"RK-2021"}
+          value={driverRegistrationData.truckAssignmentData.truckNumber}
+          searchKey={LiveSearchKey.TRUCK}
+          saveData={(truckData: Renderable) =>
+            setDriverRegistrationData((prev) => ({
+              ...prev,
+              truckAssignmentData: {
+                truckUuid: truckData.getUuid(),
+                truckNumber: truckData.renderOnForm(),
+              },
+            }))
+          }
+          cleanData={() =>
+            setDriverRegistrationData({
+              ...driverRegistrationData,
+              truckAssignmentData: {
+                truckNumber: BLANK_STRING,
+                truckUuid: BLANK_STRING,
+              },
+            })
+          }
+          constructor={Truck}
+        />
+        <LiveSearchInputForm
           label="Trailer"
-          initialValue={driverRegistrationData.trailerType}
-          data={trailerTypes}
-          setElement={(trailerType: string) =>
+          placeholder={"TK-2013"}
+          value={driverRegistrationData.trailerAssignmentData.trailerNumber}
+          searchKey={LiveSearchKey.TRAILER}
+          saveData={(trailerData: Renderable) =>
+            setDriverRegistrationData((prev) => ({
+              ...prev,
+              trailerAssignmentData: {
+                trailerUuid: trailerData.getUuid(),
+                trailerNumber: trailerData.renderOnForm(),
+              },
+            }))
+          }
+          cleanData={() =>
             setDriverRegistrationData({
               ...driverRegistrationData,
-              trailerType: trailerType,
+              trailerAssignmentData: {
+                trailerUuid: BLANK_STRING,
+                trailerNumber: BLANK_STRING,
+              },
             })
           }
-        />
-        <SelectForm
-          label="Length (ft)"
-          initialValue={driverRegistrationData.trailerLength}
-          data={trailerLengths}
-          setElement={(trailerLength: string) =>
-            setDriverRegistrationData({
-              ...driverRegistrationData,
-              trailerLength: trailerLength,
-            })
-          }
-        />
-      </div>
-      <div className="flex flex-row gap-x-20 mt-20">
-        <InputForm
-          label="Max Legal Weight Capacity (in lbs)"
-          placeholder="47000"
-          type="number"
-          name="weight-capacity"
-          inputFieldValue={driverRegistrationData.maxLegalWeightCapacity}
-          isMandatory={true}
-          errorMessage={driverRegistrationError.maxLegalWeightCapacity}
-          saveInputData={(maxLegalWeightCapacity: string) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "maxLegalWeightCapacity",
-              maxLegalWeightCapacity,
-            )
-          }
-        />
-        <InputForm
-          label="Height (ft)"
-          placeholder="97"
-          type="number"
-          name="height"
-          inputFieldValue={driverRegistrationData.height}
-          isMandatory={true}
-          errorMessage={driverRegistrationError.height}
-          saveInputData={(height: string) =>
-            setObjectStringField(setDriverRegistrationData, "height", height)
-          }
-        />
-      </div>
-      <div className="flex flex-row gap-x-20 mt-20">
-        <InputForm
-          label="Truck Number"
-          placeholder="105"
-          type="text"
-          name="truck-number"
-          inputFieldValue={driverRegistrationData.truckNumber}
-          isMandatory={true}
-          errorMessage={driverRegistrationError.truckNumber}
-          saveInputData={(truckNumber: string) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "truckNumber",
-              truckNumber,
-            )
-          }
-        />
-        <InputForm
-          label="Trailer Number"
-          placeholder="888"
-          type="text"
-          name="trailer-number"
-          inputFieldValue={driverRegistrationData.trailerNumber}
-          isMandatory={true}
-          errorMessage={driverRegistrationError.trailerNumber}
-          saveInputData={(trailerNumber: string) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "trailerNumber",
-              trailerNumber,
-            )
-          }
+          constructor={Trailer}
         />
       </div>
     </div>

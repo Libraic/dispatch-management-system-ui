@@ -48,10 +48,7 @@ export const LiveSearchCell = <D, R>({
   const hoverData = useHoverPanel(!!errorMessage);
   const isMounted = useRef(false);
 
-  const cellRef = useBlur(() => {
-    setIsLiveSearchActive(false);
-    setItems([]);
-  });
+  const cellRef = useBlur(() => setIsLiveSearchActive(false));
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
 
   if (!isMounted.current) {
@@ -122,6 +119,7 @@ export const LiveSearchCell = <D, R>({
             <LiveSearchResultList
               items={items}
               onClick={(item: Renderable) => {
+                console.log("Here");
                 setQuery(BLANK_STRING);
                 setText(item.renderOnForm());
                 setItems([]);

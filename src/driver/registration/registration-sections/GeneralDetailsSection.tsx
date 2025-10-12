@@ -2,12 +2,6 @@ import { InputForm } from "../../../global/input-forms/InputForm.tsx";
 import { useContext } from "react";
 import { setObjectStringField } from "../../../utils/registration/registration-utils.ts";
 import { DriverRegistrationContext } from "../../../context/DriverRegistrationContext.ts";
-import { LiveSearchInputForm } from "../../../global/live-search/LiveSearchInputForm.tsx";
-import { LiveSearchKey } from "../../../types/forms.ts";
-import type { Renderable } from "../../../types/api/Renderable.ts";
-import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
-import { Truck } from "../../../types/api/Truck.ts";
-import { Trailer } from "../../../types/api/Trailer.ts";
 
 export const GeneralDetailsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
@@ -80,48 +74,6 @@ export const GeneralDetailsSection = () => {
               phoneNumber,
             )
           }
-        />
-      </div>
-      <div className="flex flex-row gap-x-20 mt-20">
-        <LiveSearchInputForm
-          label="Truck"
-          placeholder={"RK-2021"}
-          value={driverRegistrationData.truckNumber}
-          searchKey={LiveSearchKey.TRUCK}
-          saveData={(truckData: Renderable) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "truckNumber",
-              truckData.renderOnForm(),
-            )
-          }
-          cleanData={() =>
-            setDriverRegistrationData({
-              ...driverRegistrationData,
-              truckNumber: BLANK_STRING,
-            })
-          }
-          constructor={Truck}
-        />
-        <LiveSearchInputForm
-          label="Trailer"
-          placeholder={"TK-2013"}
-          value={driverRegistrationData.trailerNumber}
-          searchKey={LiveSearchKey.TRAILER}
-          saveData={(trailerData: Renderable) =>
-            setObjectStringField(
-              setDriverRegistrationData,
-              "trailerNumber",
-              trailerData.renderOnForm(),
-            )
-          }
-          cleanData={() =>
-            setDriverRegistrationData({
-              ...driverRegistrationData,
-              trailerNumber: BLANK_STRING,
-            })
-          }
-          constructor={Trailer}
         />
       </div>
     </div>
