@@ -7,7 +7,7 @@ import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 import { Truck } from "../../../types/api/Truck.ts";
 import { Trailer } from "../../../types/api/Trailer.ts";
 
-export const TruckDetailsSection = () => {
+export const AssetsAssignment = () => {
   const context = useContext(DriverRegistrationContext)!;
   const driverRegistrationData = context.registrationData;
   const setDriverRegistrationData = context.setRegistrationData;

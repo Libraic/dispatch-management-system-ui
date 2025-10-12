@@ -1,6 +1,6 @@
 export const DRIVER_REGISTRATION_SECTIONS = {
   GENERAL_DETAILS: "General Details",
-  TRUCK_DETAILS: "Truck Details",
+  TRUCK_DETAILS: "Assets Assignment",
   EMPLOYMENT_DATA: "Employment Data",
 } as const;
 

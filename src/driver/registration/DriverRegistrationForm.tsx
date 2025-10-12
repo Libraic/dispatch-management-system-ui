@@ -7,7 +7,7 @@ import { Section } from "./registration-sections/Section.tsx";
 import { GeneralDetailsSection } from "./registration-sections/GeneralDetailsSection.tsx";
 import * as React from "react";
 import { useState } from "react";
-import { TruckDetailsSection } from "./registration-sections/TruckDetailsSection.tsx";
+import { AssetsAssignment } from "./registration-sections/AssetsAssignment.tsx";
 import {
   createCreateDriverRequestFromDriverRegistrationData,
   getBlankDriverRegistrationData,
@@ -42,7 +42,7 @@ import { DRIVERS_VIEW } from "../../utils/constants/internal-routes.ts";
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
   [sections[0]]: <GeneralDetailsSection />,
-  [sections[1]]: <TruckDetailsSection />,
+  [sections[1]]: <AssetsAssignment />,
   [sections[2]]: <EmploymentData />,
 };
 
