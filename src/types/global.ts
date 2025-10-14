@@ -30,5 +30,3 @@ export type SelectFormData<T extends ReactNode, D extends string | number> = {
   pagination?: Pagination;
   setElement: (value: string) => void;
 };
-
-export type Void = {};

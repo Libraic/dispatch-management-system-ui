@@ -119,7 +119,6 @@ export const LiveSearchCell = <D, R>({
             <LiveSearchResultList
               items={items}
               onClick={(item: Renderable) => {
-                console.log("Here");
                 setQuery(BLANK_STRING);
                 setText(item.renderOnForm());
                 setItems([]);

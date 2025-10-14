@@ -1,5 +1,3 @@
-import type { Pagination } from "../global.ts";
-
 export type Link = {
   rel: string;
   href: string;
@@ -27,12 +25,6 @@ export type ApiResponse<T, E extends Error | GroupsErrorResponse> = {
   error?: E;
 };
 
-export type PaginatedData<T> = {
-  data: T[];
-  pagination: Pagination;
-  error: Error | undefined;
-};
-
 export type SearchCriteria = {
   field: string;
   operation: string;
@@ -41,4 +33,9 @@ export type SearchCriteria = {
 export type LiveSearchResult<T> = {
   items: T[];
   error: string | null;
+};
+
+export type PaginationData = {
+  size: number;
+  pages: number;
 };

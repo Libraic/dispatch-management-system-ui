@@ -64,7 +64,7 @@ export const DriverRegistrationForm = () => {
     sectionComponents[sectionsHandler.getActiveSection()];
   const toast = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `/dashboard/${companyUuid}`;
+  const baseRoute = `/dashboard/${companyUuid}${DRIVERS_VIEW}`;
   const navigate = useNavigate();
 
   const processErrors = (
@@ -77,7 +77,7 @@ export const DriverRegistrationForm = () => {
       (_) => false,
     );
     if (errors == null) {
-      navigate(`${baseRoute}${DRIVERS_VIEW}`);
+      navigate(baseRoute);
     } else if (!Array.isArray(errors)) {
       const e = errors as Error;
       toast.withErrorMessage(e.message);

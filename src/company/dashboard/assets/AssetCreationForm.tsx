@@ -86,7 +86,6 @@ export const AssetCreationForm = () => {
               const errorsPriorApiCall =
                 validateTruckRegistrationData(truckData);
               if (errorsPriorApiCall !== null) {
-                console.log("here");
                 setTruckErrorData(errorsPriorApiCall);
                 return;
               }
@@ -118,7 +117,6 @@ export const AssetCreationForm = () => {
                 validateTrailerRegistrationData(trailerData);
               if (errorsPriorApiCall !== null) {
                 setTrailerErrorData(errorsPriorApiCall);
-                console.log("here");
                 return;
               }
 
