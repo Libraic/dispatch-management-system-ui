@@ -1,7 +1,6 @@
 import { CompanySidebarHeader } from "./CompanySidebarHeader.tsx";
 import { BLANK_STRING } from "../../../utils/constants/global-constants.ts";
 import { CompanySidebarItem } from "./CompanySidebarItem.tsx";
-import companyProfileIcon from "../../../assets/company-menu/company-profile.svg";
 import trucksBoardUnhoveredIcon from "../../../assets/company-menu/trucks-board-unhovered.svg";
 import {
   DRIVERS_VIEW,
@@ -22,11 +21,8 @@ export const CompanySidebar: React.FC<{ company: CompanyData }> = ({
   const baseRoute = `/dashboard/${companyUuid}`;
   return (
     <div className="w-1/10 bg-solid-black py-5">
-      <CompanySidebarHeader companyName={company ? company.name : BLANK_STRING} />
-      <CompanySidebarItem
-        label="Profile"
-        icon={companyProfileIcon}
-        baseRoute={baseRoute}
+      <CompanySidebarHeader
+        companyName={company ? company.name : BLANK_STRING}
       />
       <CompanySidebarItem
         label="Trucks Board"
