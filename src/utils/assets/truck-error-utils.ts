@@ -1,7 +1,3 @@
-import type {
-  TruckRegistrationData,
-  TruckRegistrationError,
-} from "../../types/assets/trailer-data.ts";
 import { getBlankTruckRegistrationErrors } from "./truck-utils.ts";
 import { BLANK_STRING } from "../constants/global-constants.ts";
 import {
@@ -10,6 +6,10 @@ import {
   TRUCK_YEAR_INVALID,
   VIN_NUMBER_IS_MANDATORY,
 } from "../global/error-messages.ts";
+import type {
+  TruckRegistrationData,
+  TruckRegistrationError,
+} from "../../types/assets/truck-data.ts";
 
 export const validateTruckRegistrationData = (
   data: TruckRegistrationData,

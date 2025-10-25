@@ -8,7 +8,7 @@ import { TRUCKS_BASE_URL } from "../utils/api/api-paths.ts";
 import type {
   CreateTruckRequest,
   TruckData,
-} from "../types/assets/trailer-data.ts";
+} from "../types/assets/truck-data.ts";
 
 export const saveTruck = async (
   createTruckRequest: CreateTruckRequest,
