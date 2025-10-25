@@ -8,13 +8,14 @@ import trucksBoardUnhoveredIcon from "../../assets/company-menu/trucks-board-unh
 import companyProfileIcon from "../../assets/company-menu/company-profile.svg";
 import addDriverIcon from "../../assets/company-menu/add-driver.svg";
 import addAssetIcon from "../../assets/company-menu/add-asset-icon.svg";
-import { CompanyFunctionality } from "./CompanyFunctionality.tsx";
+import { MenuAction } from "./MenuAction.tsx";
 import { CompanyMenuHeader } from "./CompanyMenuHeader.tsx";
 import { BLANK_STRING } from "../../utils/constants/global-constants.ts";
 import {
-  ASSET_CREATION,
   DRIVERS_VIEW,
+  TRAILERS_VIEW,
   TRUCKS_BOARD,
+  TRUCKS_VIEW,
 } from "../../utils/constants/internal-routes.ts";
 import { ToastRenderer } from "../../toast/ToastRenderer.tsx";
 
@@ -44,25 +45,34 @@ export const CompanyDashboard = () => {
         <CompanyMenuHeader
           companyName={company ? company.name : BLANK_STRING}
         />
-        <CompanyFunctionality
+        <MenuAction
           label="Profile"
           icon={companyProfileIcon}
-          route={baseRoute}
+          baseRoute={baseRoute}
         />
-        <CompanyFunctionality
+        <MenuAction
           label="Trucks Board"
           icon={trucksBoardUnhoveredIcon}
-          route={`${baseRoute}${TRUCKS_BOARD}`}
+          baseRoute={`${baseRoute}${TRUCKS_BOARD}`}
         />
-        <CompanyFunctionality
+        <MenuAction
           label="Drivers"
           icon={addDriverIcon}
-          route={`${baseRoute}${DRIVERS_VIEW}`}
+          baseRoute={`${baseRoute}${DRIVERS_VIEW}`}
         />
-        <CompanyFunctionality
-          label="Add Asset"
+        <MenuAction
+          label="Assets"
           icon={addAssetIcon}
-          route={`${baseRoute}${ASSET_CREATION}`}
+          submenuData={[
+            {
+              label: "Trucks",
+              route: `${baseRoute}${TRUCKS_VIEW}`,
+            },
+            {
+              label: "Trailers",
+              route: `${baseRoute}${TRAILERS_VIEW}`,
+            },
+          ]}
         />
       </div>
       <div className="w-9/10 flex flex-col gap-y-2 items-center">

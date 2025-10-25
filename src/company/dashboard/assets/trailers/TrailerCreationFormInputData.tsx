@@ -1,23 +1,22 @@
-import { InputForm } from "../../../global/input-forms/InputForm.tsx";
-import type { SetStateAction } from "react";
-import * as React from "react";
-import type {
-  TrailerRegistrationData,
-  TrailerRegistrationError,
-} from "../../../types/assets/asset-data.ts";
-import { setTrailerDataField } from "../../../utils/assets/trailer-utils.ts";
+import { InputForm } from "../../../../global/input-forms/InputForm.tsx";
+import { setTrailerDataField } from "../../../../utils/assets/trailer-utils.ts";
 import {
   BLANK_STRING,
   ZERO,
-} from "../../../utils/constants/global-constants.ts";
+} from "../../../../utils/constants/global-constants.ts";
+import type {
+  TrailerRegistrationData,
+  TrailerRegistrationError,
+} from "../../../../types/assets/trailer-data.ts";
+import * as React from "react";
 
-export const TrailerCreationForm: React.FC<{
+export const TrailerCreationFormInputData: React.FC<{
   trailerData: TrailerRegistrationData;
-  trailerRegistrationErrors: TrailerRegistrationError;
-  setTrailerData: React.Dispatch<SetStateAction<TrailerRegistrationData>>;
-}> = ({ trailerData, trailerRegistrationErrors, setTrailerData }) => {
+  setTrailerData: React.Dispatch<React.SetStateAction<TrailerRegistrationData>>;
+  trailerErrorData: TrailerRegistrationError;
+}> = ({ trailerData, setTrailerData, trailerErrorData }) => {
   return (
-    <div className="flex flex-col gap-y-10">
+    <div className="flex items-center flex-col h-fit mt-[10rem]">
       <div className="flex flex-row gap-[3rem]">
         <InputForm
           label="Trailer Number"
@@ -26,7 +25,7 @@ export const TrailerCreationForm: React.FC<{
           name="trailer-number"
           inputFieldValue={trailerData.trailerNumber}
           isMandatory={true}
-          errorMessage={trailerRegistrationErrors.trailerNumber}
+          errorMessage={trailerErrorData.trailerNumber}
           saveInputData={(trailerNumber: string) =>
             setTrailerDataField(setTrailerData, "trailerNumber", trailerNumber)
           }
@@ -38,7 +37,7 @@ export const TrailerCreationForm: React.FC<{
           name="vin-number"
           inputFieldValue={trailerData.vinNumber}
           isMandatory={true}
-          errorMessage={trailerRegistrationErrors.vinNumber}
+          errorMessage={trailerErrorData.vinNumber}
           saveInputData={(vinNumber: string) =>
             setTrailerDataField(setTrailerData, "vinNumber", vinNumber)
           }
@@ -50,7 +49,7 @@ export const TrailerCreationForm: React.FC<{
           name="trailer-year"
           inputFieldValue={trailerData.trailerYear.toString()}
           isMandatory={false}
-          errorMessage={trailerRegistrationErrors.trailerYear}
+          errorMessage={trailerErrorData.trailerYear}
           saveInputData={(trailerYear: string) =>
             setTrailerDataField(
               setTrailerData,
@@ -92,7 +91,7 @@ export const TrailerCreationForm: React.FC<{
           name="equipment-size"
           inputFieldValue={trailerData.equipmentSize.toString()}
           isMandatory={true}
-          errorMessage={trailerRegistrationErrors.equipmentSize}
+          errorMessage={trailerErrorData.equipmentSize}
           saveInputData={(equipmentSize: string) =>
             setTrailerDataField(
               setTrailerData,
@@ -110,7 +109,7 @@ export const TrailerCreationForm: React.FC<{
           name="pallet-capacity"
           inputFieldValue={trailerData.palletCapacity.toString()}
           isMandatory={false}
-          errorMessage={trailerRegistrationErrors.palletCapacity}
+          errorMessage={trailerErrorData.palletCapacity}
           saveInputData={(palletCapacity: string) =>
             setTrailerDataField(
               setTrailerData,
@@ -126,7 +125,7 @@ export const TrailerCreationForm: React.FC<{
           name="max-weight"
           inputFieldValue={trailerData.maxWeight.toString()}
           isMandatory={true}
-          errorMessage={trailerRegistrationErrors.maxWeight}
+          errorMessage={trailerErrorData.maxWeight}
           saveInputData={(maxWeight: string) =>
             setTrailerDataField(
               setTrailerData,

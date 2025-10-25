@@ -1,7 +1,7 @@
 import type {
   TruckRegistrationData,
   TruckRegistrationError,
-} from "../../types/assets/asset-data.ts";
+} from "../../types/assets/trailer-data.ts";
 import { getBlankTruckRegistrationErrors } from "./truck-utils.ts";
 import { BLANK_STRING } from "../constants/global-constants.ts";
 import {

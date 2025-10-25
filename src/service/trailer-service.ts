@@ -8,7 +8,7 @@ import { TRAILERS_BASE_URL } from "../utils/api/api-paths.ts";
 import type {
   CreateTrailerRequest,
   TrailerData,
-} from "../types/assets/asset-data.ts";
+} from "../types/assets/trailer-data.ts";
 
 export const saveTrailer = async (
   createTrailerRequest: CreateTrailerRequest,

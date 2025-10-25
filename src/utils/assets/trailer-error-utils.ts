@@ -1,7 +1,7 @@
 import type {
   TrailerRegistrationData,
   TrailerRegistrationError,
-} from "../../types/assets/asset-data.ts";
+} from "../../types/assets/trailer-data.ts";
 import { getBlankTrailerRegistrationErrors } from "./trailer-utils.ts";
 import { BLANK_STRING } from "../constants/global-constants.ts";
 import {

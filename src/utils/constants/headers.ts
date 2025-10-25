@@ -23,6 +23,16 @@ export const ASSET_CREATION_HEADER = {
   subheader: "Add a new Asset",
 };
 
+export const TRUCK_CREATION_HEADER = {
+  header: "Add Truck",
+  subheader: "Create a new Truck in the system",
+};
+
+export const TRAILER_CREATION_HEADER = {
+  header: "Add Trailer",
+  subheader: "Create a new Trailer in the system",
+};
+
 export const BASIC_INFORMATION_HEADER = {
   header: "Personal Information",
   subheader: "The personal data of the employee",

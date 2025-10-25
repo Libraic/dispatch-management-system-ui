@@ -4,7 +4,7 @@ import {
   type CreateTrailerRequest,
   type TrailerRegistrationData,
   type TrailerRegistrationError,
-} from "../../types/assets/asset-data.ts";
+} from "../../types/assets/trailer-data.ts";
 
 export const getBlankTrailerRegistrationData = () => {
   return {

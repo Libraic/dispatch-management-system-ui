@@ -1,5 +1,5 @@
 import type { Renderable } from "./Renderable.ts";
-import type { TrailerData } from "../assets/asset-data.ts";
+import type { TrailerData } from "../assets/trailer-data.ts";
 
 export class Trailer implements Renderable {
   trailerNumber: string;

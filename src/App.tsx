@@ -3,22 +3,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserRegistrationForm } from "./user/registration/UserRegistrationForm.tsx";
 import { CompanyRegistrationForm } from "./company/registration/CompanyRegistrationForm.tsx";
 import {
-  ASSET_CREATION,
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
   COMPANY_REGISTRATION,
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
   HOME,
+  TRAILERS_VIEW,
   TRUCKS_BOARD,
+  TRUCKS_VIEW,
   USER_REGISTRATION,
 } from "./utils/constants/internal-routes.ts";
 import { CompaniesList } from "./company/CompaniesList.tsx";
 import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
 import { TrucksBoard } from "./company/dashboard/trucks-board/TrucksBoard.tsx";
 import { DriverRegistrationForm } from "./driver/registration/DriverRegistrationForm.tsx";
-import { AssetCreationForm } from "./company/dashboard/assets/AssetCreationForm.tsx";
 import { DriversView } from "./driver/view/DriversView.tsx";
+import { TruckCreationForm } from "./company/dashboard/assets/trucks/TruckCreationForm.tsx";
+import { TrailerCreationForm } from "./company/dashboard/assets/trailers/TrailerCreationForm.tsx";
 
 export const App = () => {
   return (
@@ -45,8 +47,12 @@ export const App = () => {
           element={<DriverRegistrationForm />}
         />
         <Route
-          path={`${COMPANY_DASHBOARD}${ASSET_CREATION}`}
-          element={<AssetCreationForm />}
+          path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}
+          element={<TruckCreationForm />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${TRAILERS_VIEW}`}
+          element={<TrailerCreationForm />}
         />
       </Routes>
     </BrowserRouter>

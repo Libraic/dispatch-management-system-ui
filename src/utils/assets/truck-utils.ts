@@ -3,7 +3,7 @@ import {
   type CreateTruckRequest,
   type TruckRegistrationData,
   type TruckRegistrationError,
-} from "../../types/assets/asset-data.ts";
+} from "../../types/assets/trailer-data.ts";
 import * as React from "react";
 
 export const getBlankTruckRegistrationData = () => {

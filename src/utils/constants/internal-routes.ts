@@ -6,4 +6,5 @@ export const COMPANY_DASHBOARD = "/dashboard/:companyUuid";
 export const TRUCKS_BOARD = "/trucks-board";
 export const DRIVER_REGISTRATION = "/driver/registration";
 export const DRIVERS_VIEW = "/drivers";
-export const ASSET_CREATION = "/asset";
+export const TRUCKS_VIEW = "/trucks";
+export const TRAILERS_VIEW = "/trailers";
