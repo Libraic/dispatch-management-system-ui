@@ -17,7 +17,7 @@ export const MenuAction: React.FC<{
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
   return (
-    <div className="mt-5 flex flex-col align-top gap-y-2 cursor-pointer">
+    <div className="mt-5 flex flex-col align-top gap-y-2">
       <div
         className={`${isSubmenuActive ? "bg-solid-blue" : "bg-solid-black"} ${isSubmenuActive ? "hover:bg-solid-blue" : "hover:bg-light-blue"}`}
         onClick={() => {
@@ -31,18 +31,22 @@ export const MenuAction: React.FC<{
         <ActionDriver label={label} img={icon} />
       </div>
 
-      {isSubmenuActive &&
-        submenuData &&
-        submenuData.map((submenu, index) => (
-          <div className="pl-2">
-            <ActionDriver
-              label={submenu.label}
-              route={submenu.route}
-              key={index}
-            />
+      {isSubmenuActive && submenuData && (
+        <div className="flex flex-row items-center pl-5">
+          <div className="w-[0.1rem] h-8 bg-light-blue"></div>
+          <div>
+            {submenuData.map((submenu, index) => (
+              <div className="flex flex-row items-center pl-2 py-[0.1rem]">
+                <ActionDriver
+                  label={submenu.label}
+                  route={submenu.route}
+                  key={index}
+                />
+              </div>
+            ))}
           </div>
-
-        ))}
+        </div>
+      )}
     </div>
   );
 };
