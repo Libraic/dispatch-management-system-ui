@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ActionDriver } from "./trucks-board/ActionDriver.tsx";
+import { CompanySidebarItemData } from "./CompanySidebarItemData.tsx";
 
 export type SubmenuData = {
   label: string;
   route: string;
 };
 
-export const MenuAction: React.FC<{
+export const CompanySidebarItem: React.FC<{
   label: string;
   icon: string;
   baseRoute?: string;
@@ -28,7 +28,7 @@ export const MenuAction: React.FC<{
           }
         }}
       >
-        <ActionDriver label={label} img={icon} />
+        <CompanySidebarItemData label={label} img={icon} />
       </div>
 
       {isSubmenuActive && submenuData && (
@@ -37,7 +37,7 @@ export const MenuAction: React.FC<{
           <div>
             {submenuData.map((submenu, index) => (
               <div className="flex flex-row items-center pl-2 py-[0.1rem]">
-                <ActionDriver
+                <CompanySidebarItemData
                   label={submenu.label}
                   route={submenu.route}
                   key={index}

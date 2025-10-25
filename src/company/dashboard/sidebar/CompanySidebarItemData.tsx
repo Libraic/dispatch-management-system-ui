@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ActionDriver: React.FC<{
+export const CompanySidebarItemData: React.FC<{
   label: string;
   route?: string;
   img?: string;
