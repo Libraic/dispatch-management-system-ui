@@ -1,8 +1,8 @@
 import type {
   CompanyRegistrationData,
   CompanyRegistrationError,
-} from "../../types/registration/company/company-registration-data.ts";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+} from "../../types/internal/company/company-registration-data.ts";
+import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 
 export const getBlankCompanyRegistrationErrors = () => {
   return {
@@ -20,10 +20,4 @@ export const getCompanyRegistrationErrors = (
   }
 
   return errors;
-};
-
-export const areErrors = (
-  companyRegistrationErrors: CompanyRegistrationError,
-) => {
-  return companyRegistrationErrors.name !== BLANK_STRING;
 };

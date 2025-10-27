@@ -1,7 +1,7 @@
 import {
   TRUCKS_BOARD_COLUMNS_LAYOUT,
   Z_INDEX_TRUCKS_BOARD_TABLE,
-} from "./trucks-board-constants.ts";
+} from "../../constants/trucks-board/trucks-board-constants.ts";
 import * as React from "react";
 
 export const TRUCKS_BOARD_LAYOUT_STYLES = {

@@ -1,14 +1,14 @@
 import type {
   DriverRegistrationData,
   DriverRegistrationError,
-} from "../../types/registration/driver/driver-registration-types.ts";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+} from "../../types/internal/driver/driver-registration-types.ts";
+import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import {
   getFirstCityOfStateByCountryIsoCode,
   getFirstStateOfCountryByIsoCode,
   USA_COUNTRY_ISO_CODE,
 } from "../location/location-utils.ts";
-import type { CreateDriverRequest } from "../../types/api/driver-api.ts";
+import type { CreateDriverRequest } from "../../types/api/driver/driver-api-request-types.ts";
 
 export const documentsStatuses = ["Work Permit", "Green Card", "Citizen"];
 export const driverPositions = ["Owner Operator", "Company Driver"];

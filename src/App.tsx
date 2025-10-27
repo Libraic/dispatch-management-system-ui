@@ -1,7 +1,7 @@
-import { Home } from "./home/Home.tsx";
+import { HomePage } from "./components/pages/Home/HomePage.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserRegistrationForm } from "./user/registration/UserRegistrationForm.tsx";
-import { CompanyRegistrationForm } from "./company/registration/CompanyRegistrationForm.tsx";
+import { UserRegistrationPage } from "./components/pages/User/UserRegistrationPage.tsx";
+import { CompanyRegistrationPage } from "./components/pages/Company/Registration/CompanyRegistrationPage.tsx";
 import {
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
@@ -13,46 +13,46 @@ import {
   TRUCKS_BOARD,
   TRUCKS_VIEW,
   USER_REGISTRATION,
-} from "./utils/constants/internal-routes.ts";
-import { CompaniesList } from "./company/CompaniesList.tsx";
-import { CompanyDashboard } from "./company/dashboard/CompanyDashboard.tsx";
-import { TrucksBoard } from "./company/dashboard/trucks-board/TrucksBoard.tsx";
-import { DriverRegistrationForm } from "./driver/registration/DriverRegistrationForm.tsx";
-import { DriversView } from "./driver/view/DriversView.tsx";
-import { TruckCreationForm } from "./company/dashboard/assets/trucks/TruckCreationForm.tsx";
-import { TrailerCreationForm } from "./company/dashboard/assets/trailers/TrailerCreationForm.tsx";
+} from "./constants/route/internal-route-constants.ts";
+import { CompaniesPage } from "./components/pages/Company/View/CompaniesPage.tsx";
+import { CompanyDashboardPage } from "./components/pages/Company/Dashboard/CompanyDashboardPage.tsx";
+import { TrucksBoardPage } from "./components/pages/Company/TrucksBoard/TrucksBoardPage.tsx";
+import { DriverRegistrationPage } from "./components/pages/Driver/DriverRegistrationPage.tsx";
+import { DriversPage } from "./components/pages/Driver/DriversPage.tsx";
+import { TruckRegistrationForm } from "./components/pages/Truck/Registration/TruckRegistrationForm.tsx";
+import { TrailerRegistrationPage } from "./components/pages/Trailer/Registration/TrailerRegistrationPage.tsx";
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={HOME} element={<Home />} />
-        <Route path={USER_REGISTRATION} element={<UserRegistrationForm />} />
+        <Route path={HOME} element={<HomePage />} />
+        <Route path={USER_REGISTRATION} element={<UserRegistrationPage />} />
         <Route
           path={COMPANY_REGISTRATION}
-          element={<CompanyRegistrationForm />}
+          element={<CompanyRegistrationPage />}
         />
-        <Route path={COMPANIES_LIST} element={<CompaniesList />} />
-        <Route path={COMPANY_DASHBOARD} element={<CompanyDashboard />} />
+        <Route path={COMPANIES_LIST} element={<CompaniesPage />} />
+        <Route path={COMPANY_DASHBOARD} element={<CompanyDashboardPage />} />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_BOARD}`}
-          element={<TrucksBoard />}
+          element={<TrucksBoardPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVERS_VIEW}`}
-          element={<DriversView />}
+          element={<DriversPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}
-          element={<DriverRegistrationForm />}
+          element={<DriverRegistrationPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}
-          element={<TruckCreationForm />}
+          element={<TruckRegistrationForm />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRAILERS_VIEW}`}
-          element={<TrailerCreationForm />}
+          element={<TrailerRegistrationPage />}
         />
       </Routes>
     </BrowserRouter>

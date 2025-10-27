@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 
 export const setObjectStringField = <T>(
   setData: React.Dispatch<React.SetStateAction<T>>,
