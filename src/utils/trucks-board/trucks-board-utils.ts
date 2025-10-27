@@ -2,14 +2,14 @@ import {
   type DriversMileageGroup,
   type DriverWeeklyMileage,
   type Mileage,
-} from "../../types/financial/trucks-board.ts";
-import { BLANK_STRING } from "../constants/global-constants.ts";
+} from "../../types/internal/trucks-board/trucks-board-types.ts";
+import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { type Dispatch, type SetStateAction } from "react";
-import type { User } from "../../types/api/User.ts";
+import type { User } from "../../types/internal/classes/User.ts";
 import { v4 as uuidv4 } from "uuid";
-import type { Driver } from "../../types/api/Driver.ts";
-import type { Renderable } from "../../types/api/Renderable.ts";
-import { WEEKDAYS } from "../global/date.ts";
+import type { Driver } from "../../types/internal/classes/Driver.ts";
+import type { Renderable } from "../../types/internal/classes/Renderable.ts";
+import { WEEKDAYS } from "../../constants/date/date-constants.ts";
 
 export const addNewDriversMileageGroup = (
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { BLANK_STRING } from "../utils/constants/global-constants.ts";
-import { ToastTypeEnum } from "../types/toast.ts";
+import { BLANK_STRING } from "../constants/common/global-constants.ts";
+import { ToastTypeEnum } from "../types/internal/common/toast-types.ts";
 
 export type ToastData = {
   getMessage: () => string;

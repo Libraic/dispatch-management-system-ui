@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { debounce } from "lodash";
-import { getData } from "../service/live-search-service.ts";
-import type {
-  Error,
-  LiveSearchResult,
-  SearchCriteria,
-} from "../types/api/common.ts";
+import { getData } from "../service/liveSearchService.ts";
 import {
   BLANK_STRING,
   COLON,
   DEBOUNCING_TIME,
-} from "../utils/constants/global-constants.ts";
-import { LIKE_CLAUSE } from "../utils/api/api-query-constants.ts";
+} from "../constants/common/global-constants.ts";
+import { LIKE_CLAUSE } from "../constants/api/api-query-constants.ts";
+import type { SearchCriteria } from "../types/api/common/api-query-types.ts";
+import type { LiveSearchResult } from "../types/api/common/api-response-types.ts";
 
 const constructSearchCriteria = (
   defaultKey: string,

@@ -1,10 +1,10 @@
-import { CellType } from "../../types/matrix/matrix-types.ts";
+import { CellType } from "../../types/internal/matrix/matrix-types.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
   DOLLAR_SIGN,
   DOT,
-} from "../constants/global-constants.ts";
+} from "../../constants/common/global-constants.ts";
 
 export const formatNumericValue = (input: string) => {
   const parts = input.split(DOT);
