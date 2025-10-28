@@ -1,4 +1,4 @@
-import { TableCell } from "../../../atoms/TableView/TableCell.tsx";
+import { TableCell } from "../../../atoms/Table/TableCell.tsx";
 import * as React from "react";
 import type { TruckData } from "../../../../types/api/truck/truck-api-response-types.ts";
 import { TRUCKS_VIEW_COLUMNS_LAYOUT } from "../../../../constants/trucks/trucks-table-constants.ts";

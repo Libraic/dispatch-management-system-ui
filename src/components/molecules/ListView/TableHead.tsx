@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const ListHeader: React.FC<{
+export const TableHead: React.FC<{
   columnsLayout: string;
   listColumns: string[];
 }> = ({ columnsLayout, listColumns }) => {

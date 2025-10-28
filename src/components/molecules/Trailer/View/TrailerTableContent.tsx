@@ -1,4 +1,4 @@
-import { TableCell } from "../../../atoms/TableView/TableCell.tsx";
+import { TableCell } from "../../../atoms/Table/TableCell.tsx";
 import * as React from "react";
 import type { TrailerData } from "../../../../types/api/trailer/trailer-api-response-types.ts";
 import { TRAILERS_VIEW_COLUMNS_LAYOUT } from "../../../../constants/trailers/trailers-table-constants.ts";

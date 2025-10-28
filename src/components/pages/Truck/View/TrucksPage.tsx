@@ -1,4 +1,4 @@
-import { ListViewHeader } from "../../../organisms/Table/ListViewHeader.tsx";
+import { TableHeader } from "../../../molecules/Table/TableHeader.tsx";
 import { TRUCK_REGISTRATION } from "../../../../constants/route/internal-route-constants.ts";
 import { useParams } from "react-router-dom";
 import truckIcon from "../../../../assets/company-menu/trucks-list.svg";
@@ -28,7 +28,7 @@ export const TrucksPage = () => {
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
-      <ListViewHeader
+      <TableHeader
         companyUuid={companyUuid!!}
         headerData={TRUCKS_PAGE_HEADER}
         viewIcon={truckIcon}

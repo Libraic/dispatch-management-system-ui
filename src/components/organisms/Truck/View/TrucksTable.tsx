@@ -1,4 +1,4 @@
-import { ListHeader } from "../../../molecules/ListView/ListHeader.tsx";
+import { TableHead } from "../../../molecules/ListView/TableHead.tsx";
 import {
   TRUCKS_VIEW_COLUMNS,
   TRUCKS_VIEW_COLUMNS_LAYOUT,
@@ -11,7 +11,7 @@ export const TrucksTable: React.FC<{ trucks: TruckData[] }> = ({ trucks }) => {
   return (
     <div className="h-[30rem]">
       <div className="flex flex-col items-center justify-center text-solid-black">
-        <ListHeader
+        <TableHead
           columnsLayout={TRUCKS_VIEW_COLUMNS_LAYOUT}
           listColumns={TRUCKS_VIEW_COLUMNS}
         />

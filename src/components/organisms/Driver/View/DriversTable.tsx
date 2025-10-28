@@ -1,4 +1,4 @@
-import { ListHeader } from "../../../molecules/ListView/ListHeader.tsx";
+import { TableHead } from "../../../molecules/ListView/TableHead.tsx";
 import { DriversTableContent } from "../../../molecules/Driver/View/DriversTableContent.tsx";
 import * as React from "react";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
@@ -13,7 +13,7 @@ export const DriversTable: React.FC<{ drivers: DriverData[] }> = ({
   return (
     <div className="h-[30rem]">
       <div className="flex flex-col items-center justify-center text-solid-black">
-        <ListHeader
+        <TableHead
           columnsLayout={DRIVERS_VIEW_COLUMNS_LAYOUT}
           listColumns={DRIVERS_VIEW_COLUMNS}
         />

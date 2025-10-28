@@ -1,7 +1,7 @@
 import { DRIVERS_VIEW_COLUMNS_LAYOUT } from "../../../../constants/driver/drivers-table-constants.ts";
 import * as React from "react";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
-import { TableCell } from "../../../atoms/TableView/TableCell.tsx";
+import { TableCell } from "../../../atoms/Table/TableCell.tsx";
 
 export const DriversTableContent: React.FC<{ drivers: DriverData[] }> = ({
   drivers,

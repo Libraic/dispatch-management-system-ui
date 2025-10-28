@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import { ListViewHeader } from "../../../organisms/Table/ListViewHeader.tsx";
+import { TableHeader } from "../../../molecules/Table/TableHeader.tsx";
 import trailerIcon from "../../../../assets/company-menu/trailers-list.svg";
 import { TRAILER_REGISTRATION } from "../../../../constants/route/internal-route-constants.ts";
 import { PaginationBar } from "../../../organisms/Pagination/PaginationBar.tsx";
@@ -28,7 +28,7 @@ export const TrailersPage = () => {
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
-      <ListViewHeader
+      <TableHeader
         companyUuid={companyUuid!!}
         headerData={TRAILERS_PAGE_HEADER}
         viewIcon={trailerIcon}

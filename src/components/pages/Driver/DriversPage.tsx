@@ -3,7 +3,7 @@ import { getDrivers } from "../../../service/driverService.ts";
 import { useParams } from "react-router-dom";
 import { PaginationBar } from "../../organisms/Pagination/PaginationBar.tsx";
 import { DriversTable } from "../../organisms/Driver/View/DriversTable.tsx";
-import { ListViewHeader } from "../../organisms/Table/ListViewHeader.tsx";
+import { TableHeader } from "../../molecules/Table/TableHeader.tsx";
 import type { DriverData } from "../../../types/api/driver/driver-api-response-types.ts";
 import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
 import driverIcon from "../../../assets/company-menu/drivers-black.svg";
@@ -28,7 +28,7 @@ export const DriversPage = () => {
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
-      <ListViewHeader
+      <TableHeader
         companyUuid={companyUuid!!}
         headerData={DRIVERS_PAGE_HEADER}
         viewIcon={driverIcon}
