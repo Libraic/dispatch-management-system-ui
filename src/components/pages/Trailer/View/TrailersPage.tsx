@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ListViewHeader } from "../../../organisms/Table/ListViewHeader.tsx";
 import trailerIcon from "../../../../assets/company-menu/trailers-list.svg";
 import { TRAILER_REGISTRATION } from "../../../../constants/route/internal-route-constants.ts";
-import { PaginationDetails } from "../../../organisms/Pagination/PaginationDetails.tsx";
+import { PaginationBar } from "../../../organisms/Pagination/PaginationBar.tsx";
 import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
 import type { TrailerData } from "../../../../types/api/trailer/trailer-api-response-types.ts";
 import { getTrailers } from "../../../../service/trailerService.ts";
@@ -18,10 +18,13 @@ export const TrailersPage = () => {
     getTrailers(companyUuid!!).then((data) => setTrailers(data));
   }, [companyUuid]);
 
-  const fetchTrailersBasedOnPage = async (pageNumber: number) => {
-    const trailers = await getTrailers(companyUuid!!, pageNumber);
-    setTrailers(trailers);
-  };
+  const fetchTrailersBasedOnPage = useCallback(
+    async (pageNumber: number) => {
+      const trailers = await getTrailers(companyUuid!!, pageNumber);
+      setTrailers(trailers);
+    },
+    [companyUuid],
+  );
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
@@ -33,7 +36,7 @@ export const TrailersPage = () => {
         buttonLabel="Add Trailer"
       />
       <TrailersTable trailers={trailers} />
-      <PaginationDetails
+      <PaginationBar
         joinableEntityId={companyUuid!!}
         entityType={PageableEntity.TRAILER}
         fetchFn={fetchTrailersBasedOnPage}

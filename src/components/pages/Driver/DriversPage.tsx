@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getDrivers } from "../../../service/driverService.ts";
 import { useParams } from "react-router-dom";
-import { PaginationDetails } from "../../organisms/Pagination/PaginationDetails.tsx";
+import { PaginationBar } from "../../organisms/Pagination/PaginationBar.tsx";
 import { DriversTable } from "../../organisms/Driver/View/DriversTable.tsx";
 import { ListViewHeader } from "../../organisms/Table/ListViewHeader.tsx";
 import type { DriverData } from "../../../types/api/driver/driver-api-response-types.ts";
@@ -18,10 +18,13 @@ export const DriversPage = () => {
     getDrivers(companyUuid!!).then((data) => setDrivers(data));
   }, [companyUuid]);
 
-  const fetchDriversBasedOnPage = async (pageNumber: number) => {
-    const drivers = await getDrivers(companyUuid!!, pageNumber);
-    setDrivers(drivers);
-  };
+  const fetchDriversBasedOnPage = useCallback(
+    async (pageNumber: number) => {
+      const drivers = await getDrivers(companyUuid!!, pageNumber);
+      setDrivers(drivers);
+    },
+    [companyUuid],
+  );
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
@@ -33,7 +36,7 @@ export const DriversPage = () => {
         buttonLabel="Add Driver"
       />
       <DriversTable drivers={drivers} />
-      <PaginationDetails
+      <PaginationBar
         joinableEntityId={companyUuid!!}
         entityType={PageableEntity.DRIVER}
         fetchFn={fetchDriversBasedOnPage}

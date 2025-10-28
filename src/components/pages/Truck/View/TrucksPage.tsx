@@ -3,10 +3,10 @@ import { TRUCK_REGISTRATION } from "../../../../constants/route/internal-route-c
 import { useParams } from "react-router-dom";
 import truckIcon from "../../../../assets/company-menu/trucks-list.svg";
 import { TrucksTable } from "../../../organisms/Truck/View/TrucksTable.tsx";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { TruckData } from "../../../../types/api/truck/truck-api-response-types.ts";
 import { getTrucks } from "../../../../service/truckService.ts";
-import { PaginationDetails } from "../../../organisms/Pagination/PaginationDetails.tsx";
+import { PaginationBar } from "../../../organisms/Pagination/PaginationBar.tsx";
 import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
 import { TRUCKS_PAGE_HEADER } from "../../../../constants/common/header-constants.ts";
 
@@ -18,10 +18,13 @@ export const TrucksPage = () => {
     getTrucks(companyUuid!!).then((data) => setTrucks(data));
   }, [companyUuid]);
 
-  const fetchTrucksBasedOnPage = async (pageNumber: number) => {
-    const trucks = await getTrucks(companyUuid!!, pageNumber);
-    setTrucks(trucks);
-  };
+  const fetchTrucksBasedOnPage = useCallback(
+    async (pageNumber: number) => {
+      const trucks = await getTrucks(companyUuid!!, pageNumber);
+      setTrucks(trucks);
+    },
+    [companyUuid],
+  );
 
   return (
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
@@ -33,7 +36,7 @@ export const TrucksPage = () => {
         buttonLabel="Add Truck"
       />
       <TrucksTable trucks={trucks} />
-      <PaginationDetails
+      <PaginationBar
         joinableEntityId={companyUuid!!}
         entityType={PageableEntity.TRUCK}
         fetchFn={fetchTrucksBasedOnPage}

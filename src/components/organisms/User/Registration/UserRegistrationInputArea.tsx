@@ -25,11 +25,11 @@ import { UserRegistrationContext } from "../../../../context/UserRegistrationCon
 import { saveUser } from "../../../../service/userService.ts";
 import { handleErrors } from "../../../../utils/api/api-common-error-utils.ts";
 import type { SectionsHandler } from "../../../../hooks/useSections.ts";
-import { UserBasicDataSectionLayout } from "../../../layouts/User/Registration/UserBasicDataSectionLayout.tsx";
-import { UserContactSectionLayout } from "../../../layouts/User/Registration/UserContactSectionLayout.tsx";
-import { UserEmploymentSectionLayout } from "../../../layouts/User/Registration/UserEmploymentSectionLayout.tsx";
-import { UserWorkloadsSectionLayout } from "../../../layouts/User/Registration/UserWorkloadsSectionLayout.tsx";
-import { UserNotesSectionLayout } from "../../../layouts/User/Registration/UserNotesSectionLayout.tsx";
+import { UserBasicDataSectionLayout } from "../../../templates/User/Registration/UserBasicDataSectionLayout.tsx";
+import { UserContactSectionLayout } from "../../../templates/User/Registration/UserContactSectionLayout.tsx";
+import { UserEmploymentSectionLayout } from "../../../templates/User/Registration/UserEmploymentSectionLayout.tsx";
+import { UserWorkloadsSectionLayout } from "../../../templates/User/Registration/UserWorkloadsSectionLayout.tsx";
+import { UserNotesSectionLayout } from "../../../templates/User/Registration/UserNotesSectionLayout.tsx";
 import type { UserRegistrationErrors } from "../../../../types/internal/user/user-registration-error-types.ts";
 import type { CreateUserRequest } from "../../../../types/api/user/user-api-request-types.ts";
 
