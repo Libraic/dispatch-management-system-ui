@@ -13,3 +13,4 @@ export const TRUCKS_VIEW = "/trucks";
 export const TRUCK_REGISTRATION = `${TRUCKS_VIEW}/registration`;
 
 export const TRAILERS_VIEW = "/trailers";
+export const TRAILER_REGISTRATION = `${TRAILERS_VIEW}/registration`;

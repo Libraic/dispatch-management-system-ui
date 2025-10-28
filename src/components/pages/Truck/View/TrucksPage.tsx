@@ -8,6 +8,7 @@ import type { TruckData } from "../../../../types/api/truck/truck-api-response-t
 import { getTrucks } from "../../../../service/truckService.ts";
 import { PaginationDetails } from "../../../organisms/Pagination/PaginationDetails.tsx";
 import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
+import { TRUCKS_PAGE_HEADER } from "../../../../constants/common/header-constants.ts";
 
 export const TrucksPage = () => {
   const { companyUuid } = useParams();
@@ -26,8 +27,7 @@ export const TrucksPage = () => {
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
       <ListViewHeader
         companyUuid={companyUuid!!}
-        viewTitle="Trucks List"
-        viewDescription="Manage your trucks"
+        headerData={TRUCKS_PAGE_HEADER}
         viewIcon={truckIcon}
         buttonSubroute={TRUCK_REGISTRATION}
         buttonLabel="Add Truck"

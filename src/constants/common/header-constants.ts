@@ -5,21 +5,21 @@ export const TRUCKS_BOARD_HEADER = {
 
 export const COMPANY_REGISTRATION_HEADER = {
   header: "Company",
-  subheader: "AddButton a new Company to the system",
+  subheader: "Add a new Company to the system",
 };
 
 export const DRIVER_REGISTRATION_HEADER = {
-  header: "AddButton Driver",
+  header: "Add Driver",
   subheader: "Complete the required information from the sections",
 };
 
 export const TRUCK_CREATION_HEADER = {
-  header: "AddButton Truck",
+  header: "Add Truck",
   subheader: "Create a new Truck in the system",
 };
 
 export const TRAILER_CREATION_HEADER = {
-  header: "AddButton Trailer",
+  header: "Add Trailer",
   subheader: "Create a new Trailer in the system",
 };
 
@@ -48,7 +48,17 @@ export const WORKLOAD_HEADER = {
   subheader: "The working area of the employee",
 };
 
-export const DRIVERS_VIEW = {
-  header: "Drivers",
-  subheader: "Manage your Drivers",
+export const DRIVERS_PAGE_HEADER = {
+  header: "Drivers List",
+  subheader: "Manage your drivers",
+};
+
+export const TRUCKS_PAGE_HEADER = {
+  header: "Trucks List",
+  subheader: "Manage your trucks",
+};
+
+export const TRAILERS_PAGE_HEADER = {
+  header: "Trailers List",
+  subheader: "Manage your trailers",
 };

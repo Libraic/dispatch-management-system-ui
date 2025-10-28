@@ -8,6 +8,7 @@ import type { DriverData } from "../../../types/api/driver/driver-api-response-t
 import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
 import driverIcon from "../../../assets/company-menu/drivers-black.svg";
 import { PageableEntity } from "../../../types/api/common/api-query-types.ts";
+import { DRIVERS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
 
 export const DriversPage = () => {
   const [drivers, setDrivers] = useState<DriverData[]>([]);
@@ -26,8 +27,7 @@ export const DriversPage = () => {
     <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
       <ListViewHeader
         companyUuid={companyUuid!!}
-        viewTitle="Drivers List"
-        viewDescription="Manage your drivers"
+        headerData={DRIVERS_PAGE_HEADER}
         viewIcon={driverIcon}
         buttonSubroute={DRIVER_REGISTRATION}
         buttonLabel="Add Driver"

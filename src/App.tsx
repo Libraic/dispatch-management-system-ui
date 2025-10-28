@@ -9,6 +9,7 @@ import {
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
   HOME,
+  TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
   TRUCKS_BOARD,
@@ -23,6 +24,7 @@ import { DriversPage } from "./components/pages/Driver/DriversPage.tsx";
 import { TrailerRegistrationPage } from "./components/pages/Trailer/Registration/TrailerRegistrationPage.tsx";
 import { TrucksPage } from "./components/pages/Truck/View/TrucksPage.tsx";
 import { TruckRegistrationPage } from "./components/pages/Truck/Registration/TruckRegistrationPage.tsx";
+import { TrailersPage } from "./components/pages/Trailer/View/TrailersPage.tsx";
 
 export const App = () => {
   return (
@@ -58,6 +60,10 @@ export const App = () => {
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRAILERS_VIEW}`}
+          element={<TrailersPage />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${TRAILER_REGISTRATION}`}
           element={<TrailerRegistrationPage />}
         />
       </Routes>

@@ -19,6 +19,7 @@ import { CancelButton } from "../../../atoms/Button/CancelButton.tsx";
 import { ToastRenderer } from "../../../organisms/Toast/ToastRenderer.tsx";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { useNavigate, useParams } from "react-router-dom";
+import { TRAILERS_VIEW } from "../../../../constants/route/internal-route-constants.ts";
 
 export const TrailerRegistrationPage = () => {
   const [trailerErrorData, setTrailerErrorData] =
@@ -28,7 +29,7 @@ export const TrailerRegistrationPage = () => {
   );
   const toastData = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `/dashboard/${companyUuid}`;
+  const baseRoute = `/dashboard/${companyUuid}${TRAILERS_VIEW}`;
   const navigate = useNavigate();
 
   return (
