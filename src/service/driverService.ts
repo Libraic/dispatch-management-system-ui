@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  DRIVERS_BASE_URL,
-  DRIVERS_PAGINATION_DETAILS,
-} from "../constants/api/api-paths.ts";
+import { DRIVERS_BASE_URL } from "../constants/api/api-paths.ts";
 import type { CreateDriverRequest } from "../types/api/driver/driver-api-request-types.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import {
@@ -19,7 +16,6 @@ import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common/api-errors-types.ts";
-import type { PaginationData } from "../types/api/common/api-query-types.ts";
 
 export const saveDriver = async (
   createDriverRequest: CreateDriverRequest,
@@ -52,26 +48,5 @@ export const getDrivers = async (
     return data ? data : [];
   } catch (error: any) {
     return [];
-  }
-};
-
-export const getPaginationDetails = async (
-  companyUuid: string,
-): Promise<PaginationData> => {
-  const params = {
-    pageSize: DEFAULT_SIZE,
-    joinableEntityId: companyUuid,
-  };
-  try {
-    const response = await axios.get<PaginationData>(
-      DRIVERS_PAGINATION_DETAILS,
-      { params: params },
-    );
-    return response.data;
-  } catch (error: any) {
-    return {
-      size: DEFAULT_SIZE,
-      pages: 0,
-    };
   }
 };

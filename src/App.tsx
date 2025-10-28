@@ -10,6 +10,7 @@ import {
   DRIVERS_VIEW,
   HOME,
   TRAILERS_VIEW,
+  TRUCK_REGISTRATION,
   TRUCKS_BOARD,
   TRUCKS_VIEW,
   USER_REGISTRATION,
@@ -19,8 +20,9 @@ import { CompanyDashboardPage } from "./components/pages/Company/Dashboard/Compa
 import { TrucksBoardPage } from "./components/pages/Company/TrucksBoard/TrucksBoardPage.tsx";
 import { DriverRegistrationPage } from "./components/pages/Driver/DriverRegistrationPage.tsx";
 import { DriversPage } from "./components/pages/Driver/DriversPage.tsx";
-import { TruckRegistrationForm } from "./components/pages/Truck/Registration/TruckRegistrationForm.tsx";
 import { TrailerRegistrationPage } from "./components/pages/Trailer/Registration/TrailerRegistrationPage.tsx";
+import { TrucksPage } from "./components/pages/Truck/View/TrucksPage.tsx";
+import { TruckRegistrationPage } from "./components/pages/Truck/Registration/TruckRegistrationPage.tsx";
 
 export const App = () => {
   return (
@@ -48,7 +50,11 @@ export const App = () => {
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}
-          element={<TruckRegistrationForm />}
+          element={<TrucksPage />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${TRUCK_REGISTRATION}`}
+          element={<TruckRegistrationPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRAILERS_VIEW}`}
