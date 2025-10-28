@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { getPaginationDetails } from "../../../service/driverService.ts";
 import { DEFAULT_SIZE } from "../../../constants/api/api-query-constants.ts";
 
 import previousIcon from "../../../assets/global/previous.svg";
@@ -8,11 +7,13 @@ import nextIcon from "../../../assets/global/next.svg";
 import previousIconFocused from "../../../assets/global/previous-focused.svg";
 import nextIconFocused from "../../../assets/global/next-focused.svg";
 import type { PaginationData } from "../../../types/api/common/api-query-types.ts";
+import { getPaginationDetails } from "../../../service/paginationService.ts";
 
 export const PaginationDetails: React.FC<{
   joinableEntityId: string;
+  paginationUrl: string;
   fetchFn: (pageNumber: number) => void;
-}> = ({ joinableEntityId, fetchFn }) => {
+}> = ({ joinableEntityId, paginationUrl, fetchFn }) => {
   const [paginationDetails, setPaginationDetails] = useState<PaginationData>({
     pages: 0,
     size: DEFAULT_SIZE,
@@ -22,14 +23,14 @@ export const PaginationDetails: React.FC<{
   const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
-    getPaginationDetails(joinableEntityId).then((data) => {
+    getPaginationDetails(joinableEntityId, paginationUrl).then((data) => {
       setPaginationDetails(data);
     });
-  }, [joinableEntityId]);
+  }, [joinableEntityId, paginationUrl]);
   return (
     <div className="flex items-center justify-between mx-[2.7rem]">
       <div className="border-[0.1rem] rounded-[0.2rem] border-[#cccccc] px-2 font-bold font-roboto text-[0.9rem] text-solid-black">
-        {paginationDetails.size} Drivers
+        {paginationDetails.size} Records
       </div>
       <div className="flex flex-row items-center gap-x-3">
         {Array.from({ length: paginationDetails.pages }, (_, index) => (

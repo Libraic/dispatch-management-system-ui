@@ -19,8 +19,12 @@ import type {
   TruckRegistrationData,
   TruckRegistrationError,
 } from "../../../../types/internal/truck/truck-registration-types.ts";
+import {
+  DASHBOARD,
+  TRUCKS_VIEW,
+} from "../../../../constants/route/internal-route-constants.ts";
 
-export const TruckRegistrationForm = () => {
+export const TruckRegistrationPage = () => {
   const [truckData, setTruckData] = useState<TruckRegistrationData>(
     getBlankTruckRegistrationData(),
   );
@@ -29,7 +33,7 @@ export const TruckRegistrationForm = () => {
   );
   const toastData = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `/dashboard/${companyUuid}`;
+  const baseRoute = `${DASHBOARD}/${companyUuid}${TRUCKS_VIEW}`;
   const navigate = useNavigate();
   return (
     <>

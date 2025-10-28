@@ -7,7 +7,9 @@ export const PAGE = "page";
 
 export const DEFAULT_SIZE = 10;
 
-// Drivers Mileage
+// Companies
 export const COMPANY_ID_QUERY_PARAM = "companyId";
+
+// Drivers Mileage
 export const START_DATE_QUERY_PARAM = "startDate";
 export const END_DATE_QUERY_PARAM = "endDate";
