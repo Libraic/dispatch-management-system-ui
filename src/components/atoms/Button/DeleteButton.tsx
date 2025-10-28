@@ -2,7 +2,9 @@ import removeWorkloadFocused from "../../../assets/global/remove-focused.svg";
 import removeWorkloadUnfocused from "../../../assets/global/remove-unfocused.svg";
 import * as React from "react";
 
-export const Delete: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+export const DeleteButton: React.FC<{ onClick: () => void }> = ({
+  onClick,
+}) => {
   const [removeActiveIcon, setRemoveActiveIcon] = React.useState(
     removeWorkloadUnfocused,
   );

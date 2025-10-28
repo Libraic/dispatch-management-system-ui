@@ -30,7 +30,7 @@ export const TrucksPage = () => {
         viewDescription="Manage your trucks"
         viewIcon={truckIcon}
         buttonSubroute={TRUCK_REGISTRATION}
-        buttonLabel="Add Truck"
+        buttonLabel="AddButton Truck"
       />
       <TrucksTable trucks={trucks} />
       <PaginationDetails

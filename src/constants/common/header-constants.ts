@@ -5,21 +5,21 @@ export const TRUCKS_BOARD_HEADER = {
 
 export const COMPANY_REGISTRATION_HEADER = {
   header: "Company",
-  subheader: "Add a new Company to the system",
+  subheader: "AddButton a new Company to the system",
 };
 
 export const DRIVER_REGISTRATION_HEADER = {
-  header: "Add Driver",
+  header: "AddButton Driver",
   subheader: "Complete the required information from the sections",
 };
 
 export const TRUCK_CREATION_HEADER = {
-  header: "Add Truck",
+  header: "AddButton Truck",
   subheader: "Create a new Truck in the system",
 };
 
 export const TRAILER_CREATION_HEADER = {
-  header: "Add Trailer",
+  header: "AddButton Trailer",
   subheader: "Create a new Trailer in the system",
 };
 

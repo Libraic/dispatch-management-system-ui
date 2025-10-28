@@ -18,16 +18,16 @@ export const HomePage = () => {
       <Option
         unhoveredIcon={createUserUnhoveredIcon}
         hoveredIcon={createUserHoveredIcon}
-        header="Add Employee"
-        description="Add a new employee to the system"
+        header="AddButton Employee"
+        description="AddButton a new employee to the system"
         bgColor="bg-[#e6eaff]"
         navigateTo={USER_REGISTRATION}
       />
       <Option
         unhoveredIcon={createCompanyUnhoveredIcon}
         hoveredIcon={createCompanyHoveredIcon}
-        header="Add Company"
-        description="Add a new company to the system"
+        header="AddButton Company"
+        description="AddButton a new company to the system"
         bgColor="bg-[#fee2e7]"
         navigateTo={COMPANY_REGISTRATION}
       />

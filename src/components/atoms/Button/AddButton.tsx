@@ -2,7 +2,7 @@ import addWorkloadHoveredIcon from "../../../assets/global/add-hovered.svg";
 import addWorkloadIcon from "../../../assets/global/add.svg";
 import * as React from "react";
 
-export const Add: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+export const AddButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const [activeIcon, setActiveIcon] = React.useState(addWorkloadIcon);
 
   return (

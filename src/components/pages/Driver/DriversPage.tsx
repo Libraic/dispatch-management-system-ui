@@ -30,7 +30,7 @@ export const DriversPage = () => {
         viewDescription="Manage your drivers"
         viewIcon={driverIcon}
         buttonSubroute={DRIVER_REGISTRATION}
-        buttonLabel="Add Driver"
+        buttonLabel="AddButton Driver"
       />
       <DriversTable drivers={drivers} />
       <PaginationDetails

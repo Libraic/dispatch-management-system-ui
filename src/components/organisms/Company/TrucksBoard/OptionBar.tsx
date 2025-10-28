@@ -24,7 +24,7 @@ export const OptionBar: React.FC<{
             driverWeeklyMileageData.getWeekDays(),
           )
         }
-        information="Add a new record"
+        information="AddButton a new record"
       />
       <IconButton
         unfocusedResource={saveRecordsUnfocused}

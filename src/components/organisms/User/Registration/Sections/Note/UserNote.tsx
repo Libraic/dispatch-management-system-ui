@@ -9,7 +9,7 @@ import {
   alterNote,
   deleteNote,
 } from "../../../../../../utils/user/user-registration-utils.ts";
-import { Delete } from "../../../../../atoms/Button/Delete";
+import { DeleteButton } from "../../../../../atoms/Button/DeleteButton.tsx";
 import { InputFormError } from "../../../../../atoms/InputForm/InputFormError.tsx";
 
 export const UserNote: React.FC<{
@@ -40,7 +40,9 @@ export const UserNote: React.FC<{
           }}
           onChange={(e) => alterNote(setRegistrationData, e, noteData)}
         />
-        <Delete onClick={() => deleteNote(setRegistrationData, noteData)} />
+        <DeleteButton
+          onClick={() => deleteNote(setRegistrationData, noteData)}
+        />
       </div>
 
       {errorMessage.length > 0 && (

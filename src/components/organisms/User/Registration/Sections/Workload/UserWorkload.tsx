@@ -11,7 +11,7 @@ import {
 } from "../../../../../../utils/user/user-registration-utils.ts";
 import type { Renderable } from "../../../../../../types/internal/classes/Renderable.ts";
 import { InputForm } from "../../../../../atoms/InputForm/InputForm";
-import { Delete } from "../../../../../atoms/Button/Delete";
+import { DeleteButton } from "../../../../../atoms/Button/DeleteButton.tsx";
 import { Company } from "../../../../../../types/internal/classes/Company.ts";
 import { LiveSearchKey } from "../../../../../../types/internal/live-search/live-search-data.ts";
 
@@ -49,7 +49,7 @@ export const UserWorkload: React.FC<{
           alterWorkloadCommission(setRegistrationData, workloadData, value)
         }
       />
-      <Delete
+      <DeleteButton
         onClick={() => deleteWorkload(setRegistrationData, workloadData)}
       />
     </div>
