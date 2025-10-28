@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import type { TruckData } from "../../../../types/api/truck/truck-api-response-types.ts";
 import { getTrucks } from "../../../../service/truckService.ts";
 import { PaginationDetails } from "../../../organisms/Pagination/PaginationDetails.tsx";
-import { TRUCKS_PAGINATION_DETAILS } from "../../../../constants/api/api-paths.ts";
+import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
 
 export const TrucksPage = () => {
   const { companyUuid } = useParams();
@@ -30,12 +30,12 @@ export const TrucksPage = () => {
         viewDescription="Manage your trucks"
         viewIcon={truckIcon}
         buttonSubroute={TRUCK_REGISTRATION}
-        buttonLabel="AddButton Truck"
+        buttonLabel="Add Truck"
       />
       <TrucksTable trucks={trucks} />
       <PaginationDetails
         joinableEntityId={companyUuid!!}
-        paginationUrl={TRUCKS_PAGINATION_DETAILS}
+        entityType={PageableEntity.TRUCK}
         fetchFn={fetchTrucksBasedOnPage}
       />
     </div>

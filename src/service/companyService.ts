@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_COMPANIES, SAVE_COMPANY } from "../constants/api/api-paths.ts";
+import { COMPANIES_BASE_URL } from "../constants/api/api-paths.ts";
 import type { CreateCompanyRequest } from "../types/internal/company/company-registration-data.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import type { ApiResponse } from "../types/api/common/api-response-types.ts";
@@ -13,7 +13,7 @@ export const fetchCompanies = async (): Promise<CompanyData[] | undefined> => {
   try {
     const response =
       await axios.get<ApiResponse<CompanyData[], GroupsErrorResponse>>(
-        FETCH_COMPANIES,
+        COMPANIES_BASE_URL,
       );
     return response.data.data;
   } catch (error) {
@@ -25,7 +25,7 @@ export const fetchCompanyByUuid = async (
   companyUuid: string,
 ): Promise<CompanyData | undefined> => {
   try {
-    const url = `${FETCH_COMPANIES}?uuid=eq:${companyUuid}`;
+    const url = `${COMPANIES_BASE_URL}?uuid=eq:${companyUuid}`;
     const response =
       await axios.get<ApiResponse<CompanyData[], GroupsErrorResponse>>(url);
     return response.data.data ? response.data.data[0] : undefined;
@@ -42,7 +42,7 @@ export const saveCompany = async (
   createCompanyRequest: CreateCompanyRequest,
 ): Promise<ApiResponse<CompanyData, Error | GroupsErrorResponse>> => {
   try {
-    const response = await axios.post(SAVE_COMPANY, createCompanyRequest);
+    const response = await axios.post(COMPANIES_BASE_URL, createCompanyRequest);
     return response.data;
   } catch (error: any) {
     return handleApiErrors();

@@ -7,7 +7,7 @@ import { ListViewHeader } from "../../organisms/Table/ListViewHeader.tsx";
 import type { DriverData } from "../../../types/api/driver/driver-api-response-types.ts";
 import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
 import driverIcon from "../../../assets/company-menu/drivers-black.svg";
-import { DRIVERS_PAGINATION_DETAILS } from "../../../constants/api/api-paths.ts";
+import { PageableEntity } from "../../../types/api/common/api-query-types.ts";
 
 export const DriversPage = () => {
   const [drivers, setDrivers] = useState<DriverData[]>([]);
@@ -30,12 +30,12 @@ export const DriversPage = () => {
         viewDescription="Manage your drivers"
         viewIcon={driverIcon}
         buttonSubroute={DRIVER_REGISTRATION}
-        buttonLabel="AddButton Driver"
+        buttonLabel="Add Driver"
       />
       <DriversTable drivers={drivers} />
       <PaginationDetails
         joinableEntityId={companyUuid!!}
-        paginationUrl={DRIVERS_PAGINATION_DETAILS}
+        entityType={PageableEntity.DRIVER}
         fetchFn={fetchDriversBasedOnPage}
       />
     </div>

@@ -7,3 +7,9 @@ export type PaginationData = {
   size: number;
   pages: number;
 };
+
+export enum PageableEntity {
+  DRIVER = "Driver",
+  TRUCK = "Truck",
+  TRAILER = "Trailer",
+}

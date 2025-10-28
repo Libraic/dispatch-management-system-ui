@@ -1,14 +1,37 @@
-export const BASE_URL = "http://localhost:8090/api";
+/**
+ * General API paths.
+ */
+export const HOST = "http://localhost:8090";
+export const BASE_URL = HOST + "/api";
+export const CORE_URL = BASE_URL + "/core";
+export const PAGINATION_DETAILS = CORE_URL + "/pagination";
+
+/**
+ * User-related API paths.
+ */
 export const SAVE_USER = BASE_URL + "/users";
-export const SAVE_COMPANY = BASE_URL + "/companies";
+
+/**
+ * Company-related API paths.
+ */
+export const COMPANIES_BASE_URL = BASE_URL + "/companies";
+
+/**
+ * Driver-related API paths.
+ */
 export const DRIVERS_BASE_URL = BASE_URL + "/drivers";
+
+/**
+ * Truck-related API paths.
+ */
 export const TRUCKS_BASE_URL = BASE_URL + "/trucks";
+
+/**
+ * Trailer-related API paths.
+ */
 export const TRAILERS_BASE_URL = BASE_URL + "/trailers";
-export const FETCH_COMPANIES = BASE_URL + "/companies";
 
-export const PAGINATION_DETAILS = "/pagination";
-export const DRIVERS_PAGINATION_DETAILS = DRIVERS_BASE_URL + PAGINATION_DETAILS;
-
+/**
+ * Drivers' Mileage-related API paths.
+ */
 export const DRIVERS_MILEAGE_BASE_URL = BASE_URL + "/drivers-mileage";
-
-export const TRUCKS_PAGINATION_DETAILS = TRUCKS_BASE_URL + PAGINATION_DETAILS;
