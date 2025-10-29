@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchCompanies } from "../../../../service/companyService.ts";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../../../constants/route/internal-route-constants.ts";
+import { LANDING } from "../../../../constants/route/internal-route-constants.ts";
 import {
   getNameInitials,
   getPropertySafe,
@@ -26,7 +26,7 @@ export const CompaniesPage = () => {
 
   return (
     <div className="w-screen flex flex-col items-center mt-10">
-      <BackButton url={HOME} />
+      <BackButton url={LANDING} />
       <div
         className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-open-sans font-regular rounded-[0.3rem] px-[3rem] mt-6`}
       >

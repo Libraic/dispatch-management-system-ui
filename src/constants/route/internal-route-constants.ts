@@ -1,4 +1,5 @@
-export const HOME = "/";
+export const LANDING = "/";
+export const HOME = "/home";
 export const DASHBOARD = "/dashboard";
 
 export const USER_REGISTRATION = "/user/registration";

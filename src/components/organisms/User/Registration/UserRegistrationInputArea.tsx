@@ -18,7 +18,7 @@ import {
   getSectionsWithErrors,
 } from "../../../../utils/user/user-registration-errors-utils.ts";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../../../constants/route/internal-route-constants.ts";
+import { LANDING } from "../../../../constants/route/internal-route-constants.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import type { RegistrationContextData } from "../../../../types/internal/context/context-types.ts";
 import { UserRegistrationContext } from "../../../../context/UserRegistrationContext.ts";
@@ -80,7 +80,7 @@ export const UserRegistrationInputArea: React.FC<{
       (key) => key === "workloads" || key === "notes",
     );
     if (apiErrors == null) {
-      navigate(HOME);
+      navigate(LANDING);
     } else if ("message" in apiErrors) {
       toastData.withErrorMessage(apiErrors.message);
     } else {
@@ -106,7 +106,7 @@ export const UserRegistrationInputArea: React.FC<{
         </UserRegistrationContext>
       </div>
       <div className="flex gap-x-3 mx-5 my-5">
-        <CancelButton actionText="Cancel" action={() => navigate(HOME)} />
+        <CancelButton actionText="Cancel" action={() => navigate(LANDING)} />
         <SubmitButton
           actionText={SUBMIT_BUTTON_TEXT}
           action={validateRegistrationData}
