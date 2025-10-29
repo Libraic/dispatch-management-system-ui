@@ -15,7 +15,7 @@ import { PageHeader } from "../../../organisms/Header/PageHeader.tsx";
 import { CancelButton } from "../../../atoms/Button/CancelButton.tsx";
 import { SubmitButton } from "../../../atoms/Button/SubmitButton.tsx";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "../../../../constants/route/internal-route-constants.ts";
+import { LANDING } from "../../../../constants/route/internal-route-constants.ts";
 import {
   getBlankCompanyRegistrationErrors,
   getCompanyRegistrationErrors,
@@ -58,7 +58,7 @@ export const CompanyRegistrationPage = () => {
     );
 
     if (apiErrors == null) {
-      navigate(HOME);
+      navigate(LANDING);
     } else if (!Array.isArray(apiErrors)) {
       const e = apiErrors as Error;
       toastData.withErrorMessage(e.message);
@@ -85,7 +85,7 @@ export const CompanyRegistrationPage = () => {
           <MandatoryFieldDisclaimer />
         </div>
         <div className="flex justify-center items-center gap-x-3 mx-5 my-5">
-          <CancelButton actionText="Cancel" action={() => navigate(HOME)} />
+          <CancelButton actionText="Cancel" action={() => navigate(LANDING)} />
           <SubmitButton actionText="Submit" action={createCompany} />
         </div>
       </div>

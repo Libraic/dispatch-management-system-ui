@@ -1,4 +1,3 @@
-import { HomePage } from "./components/pages/Home/HomePage.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserRegistrationPage } from "./components/pages/User/UserRegistrationPage.tsx";
 import { CompanyRegistrationPage } from "./components/pages/Company/Registration/CompanyRegistrationPage.tsx";
@@ -9,6 +8,7 @@ import {
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
   HOME,
+  LANDING,
   TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
@@ -25,11 +25,14 @@ import { TrailerRegistrationPage } from "./components/pages/Trailer/Registration
 import { TrucksPage } from "./components/pages/Truck/View/TrucksPage.tsx";
 import { TruckRegistrationPage } from "./components/pages/Truck/Registration/TruckRegistrationPage.tsx";
 import { TrailersPage } from "./components/pages/Trailer/View/TrailersPage.tsx";
+import { LandingPage } from "./components/pages/Landing/LandingPage.tsx";
+import { HomePage } from "./components/pages/Home/HomePage.tsx";
 
 export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={LANDING} element={<LandingPage />} />
         <Route path={HOME} element={<HomePage />} />
         <Route path={USER_REGISTRATION} element={<UserRegistrationPage />} />
         <Route
