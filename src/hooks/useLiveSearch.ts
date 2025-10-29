@@ -6,20 +6,32 @@ import {
   COLON,
   DEBOUNCING_TIME,
 } from "../constants/common/global-constants.ts";
-import { LIKE_CLAUSE } from "../constants/api/api-query-constants.ts";
+import {
+  DEFAULT_SIZE,
+  LIKE_CLAUSE,
+} from "../constants/api/api-query-constants.ts";
 import type { SearchCriteria } from "../types/api/common/api-query-types.ts";
 import type { LiveSearchResult } from "../types/api/common/api-response-types.ts";
+
+type StringRecord = {
+  [key: string]: string | number;
+};
 
 const constructSearchCriteria = (
   defaultKey: string,
   defaultValue: string,
+  size: number,
   customSearchCriteria?: SearchCriteria[],
-): any => {
-  if (defaultValue === BLANK_STRING) {
-    return {};
+): StringRecord => {
+  const params = {
+    page: 0,
+    size: size,
+  } as StringRecord;
+
+  if (defaultValue !== BLANK_STRING) {
+    params[defaultKey] = `${LIKE_CLAUSE}${COLON}${defaultValue}`;
   }
 
-  const params = { [defaultKey]: `${LIKE_CLAUSE}${COLON}${defaultValue}` };
   if (customSearchCriteria) {
     for (const searchCriteria of customSearchCriteria) {
       params[searchCriteria.field] = searchCriteria.operation;
@@ -33,6 +45,7 @@ export const useLiveSearch = <T>(
   searchField: string,
   query: string,
   isLiveSearchActive: boolean,
+  size: number = DEFAULT_SIZE,
   defaultSearchCriteria?: SearchCriteria[],
 ): LiveSearchResult<T> => {
   const [items, setItems] = useState<LiveSearchResult<T>>({
@@ -44,6 +57,7 @@ export const useLiveSearch = <T>(
       const searchCriteria = constructSearchCriteria(
         searchField,
         value,
+        size,
         defaultSearchCriteria,
       );
       getData<T[], Error>(endpoint, searchCriteria).then((result) => {
@@ -60,7 +74,14 @@ export const useLiveSearch = <T>(
     }
 
     return () => debounced.cancel();
-  }, [query, endpoint, searchField, defaultSearchCriteria, isLiveSearchActive]);
+  }, [
+    query,
+    endpoint,
+    searchField,
+    defaultSearchCriteria,
+    isLiveSearchActive,
+    size,
+  ]);
 
   return items;
 };

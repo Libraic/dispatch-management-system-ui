@@ -7,14 +7,18 @@ import axios from "axios";
 import { PAGINATION_DETAILS } from "../constants/api/api-paths.ts";
 
 export const getPaginationDetails = async (
-  joinableEntityId: string,
   entityType: PageableEntity,
+  joinableEntityId?: string,
 ): Promise<PaginationData> => {
   const params = {
     entity: entityType,
     pageSize: DEFAULT_SIZE,
     joinableEntityId: joinableEntityId,
   };
+  if (joinableEntityId) {
+    params.joinableEntityId = joinableEntityId;
+  }
+
   try {
     const response = await axios.get<PaginationData>(PAGINATION_DETAILS, {
       params: params,

@@ -16,15 +16,17 @@ import {
 import { ToastRenderer } from "../Toast/ToastRenderer.tsx";
 import { useBlur } from "../../../hooks/useBlur.ts";
 import {
-  type LiveSearchCellData,
   LIVE_SEARCH_ENDPOINTS,
+  type LiveSearchCellData,
 } from "../../../types/internal/live-search/live-search-data.ts";
 import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
+import { usePagination } from "../../../hooks/usePagination.ts";
 
 export const LiveSearchCell = <D, R>({
-  defaultSearchKey,
+  entityType,
   constructor,
   object,
+  joinableEntityId,
   saveObject,
   customSearchCriteria,
   errorMessage,
@@ -35,16 +37,18 @@ export const LiveSearchCell = <D, R>({
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
   const [isRendered, setIsRendered] = useState(false);
-  const endpoint = LIVE_SEARCH_ENDPOINTS[defaultSearchKey].endpoint;
-  const searchField = LIVE_SEARCH_ENDPOINTS[defaultSearchKey].searchField;
+  const endpoint = LIVE_SEARCH_ENDPOINTS[entityType].endpoint;
+  const searchField = LIVE_SEARCH_ENDPOINTS[entityType].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
   const toast = useToast();
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
+  const pagination = usePagination(entityType, joinableEntityId);
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
     query,
     isLiveSearchActive,
+    pagination.getSize(),
     customSearchCriteria,
   );
   const hoverData = useHoverPanel(!!errorMessage);
@@ -120,6 +124,10 @@ export const LiveSearchCell = <D, R>({
           <div style={dropdownStyle}>
             <LiveSearchResultList
               items={items}
+              areMoreBatchesAvailable={
+                pagination.getSize() < pagination.getNumberOfRecords()
+              }
+              nextBatch={pagination.increaseSize}
               onClick={(item: Renderable) => {
                 setQuery(BLANK_STRING);
                 setText(item.renderOnForm());

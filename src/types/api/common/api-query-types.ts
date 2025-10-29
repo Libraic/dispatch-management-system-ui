@@ -12,4 +12,6 @@ export enum PageableEntity {
   DRIVER = "Driver",
   TRUCK = "Truck",
   TRAILER = "Trailer",
+  USER = "User",
+  COMPANY = "Company",
 }

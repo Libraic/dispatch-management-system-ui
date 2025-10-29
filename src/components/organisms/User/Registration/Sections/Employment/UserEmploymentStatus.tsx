@@ -15,6 +15,7 @@ import { LiveSearchInputForm } from "../../../../LiveSearch/LiveSearchInputForm.
 import { BLANK_STRING } from "../../../../../../constants/common/global-constants.ts";
 import type { Renderable } from "../../../../../../types/internal/classes/Renderable.ts";
 import { User } from "../../../../../../types/internal/classes/User.ts";
+import { PageableEntity } from "../../../../../../types/api/common/api-query-types.ts";
 
 export const UserEmploymentStatus = () => {
   const context = React.useContext(UserRegistrationContext)!;
@@ -44,7 +45,7 @@ export const UserEmploymentStatus = () => {
           label="Supervisor"
           placeholder="John Doe"
           value={registrationData.supervisor?.name ?? BLANK_STRING}
-          searchKey="USER"
+          entityType={PageableEntity.USER}
           errorText={registrationDataError.supervisor}
           saveData={(userData: Renderable) =>
             alterSupervisor(setRegistrationData, userData)

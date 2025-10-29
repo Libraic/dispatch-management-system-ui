@@ -4,6 +4,8 @@ import type { LiveSearchResultData } from "../../../types/api/live-search/live-s
 
 export const LiveSearchResultList = ({
   items,
+  areMoreBatchesAvailable,
+  nextBatch,
   onClick,
 }: LiveSearchResultData) => {
   const [isListVisible, setIsListVisible] = useState(true);
@@ -11,7 +13,7 @@ export const LiveSearchResultList = ({
   return (
     isListVisible && (
       <div
-        className="border-1 border-light-grey rounded-[0.3rem] bg-white p-2 min-w-[8rem] absolute top-14 z-102 max-h-[12rem] overflow-y-auto"
+        className="flex flex-col items-center justify-center border-1 border-light-grey rounded-[0.3rem] bg-white p-2 min-w-[8rem] absolute top-14 z-102 max-h-[12rem] overflow-y-auto"
         ref={listRef}
       >
         {items.map((item) => (
@@ -23,6 +25,14 @@ export const LiveSearchResultList = ({
             {item.renderOnList()}
           </div>
         ))}
+        {areMoreBatchesAvailable && (
+          <div
+            className="hover:cursor-pointer hover:text-solid-blue text-standard-size font-lato font-normal"
+            onClick={nextBatch}
+          >
+            ...
+          </div>
+        )}
       </div>
     )
   );

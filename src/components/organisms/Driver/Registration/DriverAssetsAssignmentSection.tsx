@@ -5,12 +5,14 @@ import type { Renderable } from "../../../../types/internal/classes/Renderable.t
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { Truck } from "../../../../types/internal/classes/Truck.ts";
 import { Trailer } from "../../../../types/internal/classes/Trailer.ts";
-import { LiveSearchKey } from "../../../../types/internal/live-search/live-search-data.ts";
+import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
+import { joinByCompanyId } from "../../../../utils/api/api-query-utils.ts";
 
 export const DriverAssetsAssignmentSection = () => {
   const context = useContext(DriverRegistrationContext)!;
   const driverRegistrationData = context.registrationData;
   const setDriverRegistrationData = context.setRegistrationData;
+  const joinableEntityId = context.joinableEntityId!!;
   return (
     <div>
       <div className="flex flex-row items-center justify-center gap-x-20">
@@ -18,7 +20,8 @@ export const DriverAssetsAssignmentSection = () => {
           label="Truck"
           placeholder={"RK-2021"}
           value={driverRegistrationData.truckAssignmentData.truckNumber}
-          searchKey={LiveSearchKey.TRUCK}
+          entityType={PageableEntity.TRUCK}
+          joinableEntityId={joinableEntityId}
           saveData={(truckData: Renderable) =>
             setDriverRegistrationData((prev) => ({
               ...prev,
@@ -38,12 +41,14 @@ export const DriverAssetsAssignmentSection = () => {
             })
           }
           constructor={Truck}
+          customSearchCriteria={[joinByCompanyId(joinableEntityId)]}
         />
         <LiveSearchInputForm
           label="Trailer"
           placeholder={"TK-2013"}
           value={driverRegistrationData.trailerAssignmentData.trailerNumber}
-          searchKey={LiveSearchKey.TRAILER}
+          entityType={PageableEntity.TRAILER}
+          joinableEntityId={joinableEntityId}
           saveData={(trailerData: Renderable) =>
             setDriverRegistrationData((prev) => ({
               ...prev,
@@ -63,6 +68,7 @@ export const DriverAssetsAssignmentSection = () => {
             })
           }
           constructor={Trailer}
+          customSearchCriteria={[joinByCompanyId(joinableEntityId)]}
         />
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
   type DriverWeeklyMileage,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { queryDriversByCompanyId } from "../../../../utils/api/api-query-utils.ts";
+import { joinByCompanyId } from "../../../../utils/api/api-query-utils.ts";
 import { ViewableCell } from "../../../molecules/Cell/ViewableCell.tsx";
 import {
   BLANK_STRING,
@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
 import { TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS } from "../../../../constants/trucks-board/trucks-board-constants.ts";
 import { getStickyCellStyles } from "../../../../utils/trucks-board/trucks-board-styles-utils.ts";
-import { LiveSearchKey } from "../../../../types/internal/live-search/live-search-data.ts";
+import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
 
 export const DriverMileageMetadata: React.FC<{
   groupIdentifier: string;
@@ -55,7 +55,7 @@ export const DriverMileageMetadata: React.FC<{
     <>
       <div style={getStickyCellStyles(offsets[1], index)}>
         <LiveSearchCell
-          defaultSearchKey={LiveSearchKey.DRIVER}
+          entityType={PageableEntity.DRIVER}
           constructor={Driver}
           object={driverWeeklyMileage.driver}
           saveObject={(driver: Renderable) =>
@@ -67,7 +67,7 @@ export const DriverMileageMetadata: React.FC<{
             )
           }
           customSearchCriteria={[
-            queryDriversByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
+            joinByCompanyId(driverWeeklyMileageData.getCompanyUuid()),
           ]}
           errorMessage={error && (error[DRIVER_KEY] as string)}
         />

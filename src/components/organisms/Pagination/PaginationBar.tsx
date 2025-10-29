@@ -11,7 +11,7 @@ export const PaginationBar: React.FC<{
   entityType: PageableEntity;
   fetchFn: (pageNumber: number) => void;
 }> = ({ joinableEntityId, entityType, fetchFn }) => {
-  const pagination = usePagination(joinableEntityId, entityType);
+  const pagination = usePagination(entityType, joinableEntityId);
 
   return (
     <div className="flex items-center justify-between mx-[2.7rem]">

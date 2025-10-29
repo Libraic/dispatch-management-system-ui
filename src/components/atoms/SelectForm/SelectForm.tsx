@@ -23,19 +23,11 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
         onBlur={() => setBorderColor("border-light-grey")}
         onChange={(e) => {
           setElement(e.target.value);
-          // if (e.target.value === LOAD_MORE_ELEMENTS) {
-          //   pagination?.setLoadNext(true);
-          // }
         }}
       >
         {data.map((name, index) => (
           <option key={index}>{name}</option>
         ))}
-        {/*{nextUrl && nextUrl.length > 0 && (*/}
-        {/*  <option key={Date.now().toString()} value={LOAD_MORE_ELEMENTS}>*/}
-        {/*    {LOAD_MORE_ELEMENTS}*/}
-        {/*  </option>*/}
-        {/*)}*/}
       </select>
     </div>
   );

@@ -48,6 +48,7 @@ const sectionComponents: Record<string, React.ReactNode> = {
 
 export const DriverRegistrationPage = () => {
   const sectionsHandler = useSections(sections);
+  const { companyUuid } = useParams();
   const [driverRegistrationData, setDriverRegistrationData] =
     useState<DriverRegistrationData>(getBlankDriverRegistrationData());
   const [driverRegistrationErrors, setDriverRegistrationErrors] =
@@ -59,11 +60,12 @@ export const DriverRegistrationPage = () => {
     registrationData: driverRegistrationData,
     setRegistrationData: setDriverRegistrationData,
     registrationDataError: driverRegistrationErrors,
+    joinableEntityId: companyUuid!!,
   };
   const activeSectionComponent =
     sectionComponents[sectionsHandler.getActiveSection()];
   const toast = useToast();
-  const { companyUuid } = useParams();
+
   const baseRoute = `/dashboard/${companyUuid}${DRIVERS_VIEW}`;
   const navigate = useNavigate();
 

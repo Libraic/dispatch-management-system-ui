@@ -17,7 +17,7 @@ import {
   getDispatcherErrorMessage,
   getDriverMileageErrorsByGroupIdentifier,
 } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
-import { LiveSearchKey } from "../../../../types/internal/live-search/live-search-data.ts";
+import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
 
 export const DriversMileage: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
@@ -34,7 +34,7 @@ export const DriversMileage: React.FC<{
             className="min-w-fit grid rounded-[0.3rem] font-open-sans font-light text-[0.7rem] bg-white"
           >
             <LiveSearchCell
-              defaultSearchKey={LiveSearchKey.USER}
+              entityType={PageableEntity.USER}
               constructor={User}
               object={group.dispatcher}
               saveObject={(dispatcher: Renderable) =>

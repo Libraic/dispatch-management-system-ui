@@ -17,6 +17,7 @@ import {
   type LiveSearchInputFormProps,
 } from "../../../types/internal/live-search/live-search-data.ts";
 import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
+import { usePagination } from "../../../hooks/usePagination.ts";
 
 /**
  * An input form that uses live search to retrieve data from an endpoint.
@@ -41,26 +42,31 @@ export const LiveSearchInputForm = <D,>({
   label,
   placeholder,
   value,
-  searchKey,
+  entityType,
   isMandatory,
   errorText,
+  joinableEntityId,
   saveData,
   cleanData,
   constructor,
+  customSearchCriteria,
 }: LiveSearchInputFormProps<D>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [items, setItems] = useState<Renderable[]>([]);
   const [borderColor, setBorderColor] = useState("border-light-grey");
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const [placeholderText, setPlaceholderText] = useState(placeholder);
+  const pagination = usePagination(entityType, joinableEntityId);
   const toast = useToast();
-  const endpoint = LIVE_SEARCH_ENDPOINTS[searchKey].endpoint;
-  const searchField = LIVE_SEARCH_ENDPOINTS[searchKey].searchField;
+  const endpoint = LIVE_SEARCH_ENDPOINTS[entityType].endpoint;
+  const searchField = LIVE_SEARCH_ENDPOINTS[entityType].searchField;
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
     query,
     isLiveSearchActive,
+    pagination.getSize(),
+    customSearchCriteria,
   );
 
   useEffect(() => {
@@ -107,9 +113,13 @@ export const LiveSearchInputForm = <D,>({
             }
           }}
         />
-        {toast.getMessage().length === 0 && items.length > 0 && (
+        {toast.isOk() && items.length > 0 && (
           <LiveSearchResultList
             items={items}
+            areMoreBatchesAvailable={
+              pagination.getSize() < pagination.getNumberOfRecords()
+            }
+            nextBatch={pagination.increaseSize}
             onClick={(item: Renderable) => {
               setQuery(BLANK_STRING);
               saveData(item);

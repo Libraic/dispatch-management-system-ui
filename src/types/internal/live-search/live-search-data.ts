@@ -1,46 +1,46 @@
 import type { Renderable } from "../classes/Renderable.ts";
-import type { SearchCriteria } from "../../api/common/api-query-types.ts";
+import {
+  PageableEntity,
+  type SearchCriteria,
+} from "../../api/common/api-query-types.ts";
 
 export type LiveSearchEndpointConfig = {
   endpoint: string;
   searchField: string;
 };
 
-export enum LiveSearchKey {
-  USER = "USER",
-  COMPANY = "COMPANY",
-  DRIVER = "DRIVER",
-  TRUCK = "TRUCK",
-  TRAILER = "TRAILER",
-}
-
-export const LIVE_SEARCH_ENDPOINTS: Record<string, LiveSearchEndpointConfig> = {
-  USER: {
+export const LIVE_SEARCH_ENDPOINTS: Record<
+  PageableEntity,
+  LiveSearchEndpointConfig
+> = {
+  User: {
     endpoint: "http://localhost:8090/api/users",
     searchField: "fullName",
   },
-  COMPANY: {
+  Company: {
     endpoint: "http://localhost:8090/api/companies",
     searchField: "name",
   },
-  DRIVER: {
+  Driver: {
     endpoint: "http://localhost:8090/api/drivers",
     searchField: "fullName",
   },
-  TRUCK: {
+  Truck: {
     endpoint: "http://localhost:8090/api/trucks",
     searchField: "truckNumber",
   },
-  TRAILER: {
+  Trailer: {
     endpoint: "http://localhost:8090/api/trailers",
     searchField: "trailerNumber",
   },
 } as const;
 
 export type LiveSearchCellData<D, R> = {
-  defaultSearchKey: string;
+  entityType: PageableEntity;
   constructor: new (dto: D) => Renderable;
   object: Renderable | null;
+  joinableEntityId?: string;
+  joinableField?: string;
   saveObject?: (renderable: Renderable) => R;
   customSearchCriteria?: SearchCriteria[];
   errorMessage?: string;
@@ -62,13 +62,15 @@ export interface LiveSearchInputFormProps<D> {
   value: string;
 
   /** The value of the query parameter that will be used to filter data. */
-  searchKey: string;
+  entityType: PageableEntity;
 
   /** Indicates whether the input field is mandatory. Defaults to false if not specified. */
   isMandatory?: boolean;
 
   /** The error text displayed if an input validation error occurs. */
   errorText?: string;
+
+  joinableEntityId?: string;
 
   /** A callback function to save the currently entered data. */
   saveData: (value: Renderable) => void;
@@ -78,4 +80,6 @@ export interface LiveSearchInputFormProps<D> {
 
   /** A constructor function used to create a new Renderable object from the given data type. */
   constructor: new (dto: D) => Renderable;
+
+  customSearchCriteria?: SearchCriteria[];
 }
