@@ -1,13 +1,13 @@
 import axios from "axios";
 import { COMPANIES_BASE_URL } from "../constants/api/api-paths.ts";
-import type { CreateCompanyRequest } from "../types/internal/company/company-registration-data.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
+import type { CreateCompanyRequest } from "../types/internal/company/company-registration-types.ts";
 import type { ApiResponse } from "../types/api/common/api-response-types.ts";
 import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common/api-errors-types.ts";
 import type { CompanyData } from "../types/api/company/company-api-response-types.ts";
+import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 
 export const fetchCompanies = async (): Promise<CompanyData[] | undefined> => {
   try {
@@ -45,6 +45,6 @@ export const saveCompany = async (
     const response = await axios.post(COMPANIES_BASE_URL, createCompanyRequest);
     return response.data;
   } catch (error: any) {
-    return handleApiErrors();
+    return handleApiErrors(error);
   }
 };

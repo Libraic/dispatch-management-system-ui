@@ -9,7 +9,7 @@ import { useToast } from "../../../hooks/useToast.ts";
 import type { Renderable } from "../../../types/internal/classes/Renderable.ts";
 import { InputFormLabel } from "../../atoms/InputForm/InputFormLabel.tsx";
 import { useLiveSearch } from "../../../hooks/useLiveSearch.ts";
-import { ToastRenderer } from "../Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../atoms/Toast/ToastRenderer.tsx";
 import { LiveSearchResultList } from "./LiveSearchResultList.tsx";
 import { useBlur } from "../../../hooks/useBlur.ts";
 import {

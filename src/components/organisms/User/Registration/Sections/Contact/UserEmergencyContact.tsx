@@ -19,7 +19,6 @@ export const UserEmergencyContact = () => {
           label="Name"
           placeholder={EMERGENCY_CONTACT_NAME_PLACEHOLDER}
           type="text"
-          name="name"
           inputFieldValue={registrationData.emergencyContact.name}
           saveInputData={(value: string) =>
             setEmergencyContactField(setRegistrationData, "name", value)
@@ -29,7 +28,6 @@ export const UserEmergencyContact = () => {
           label="Relationship"
           placeholder={EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER}
           type="text"
-          name="relationship"
           inputFieldValue={registrationData.emergencyContact.relationship}
           information="The relationship between the employee and the person that was registered as the Emergency Contact."
           saveInputData={(value: string) =>
@@ -40,7 +38,6 @@ export const UserEmergencyContact = () => {
           label="Phone Number"
           placeholder={EMERGENCY_CONTACT_PHONE_PLACEHOLDER}
           type="text"
-          name="phone-number"
           inputFieldValue={registrationData.emergencyContact.phone}
           saveInputData={(value: string) =>
             setEmergencyContactField(setRegistrationData, "phone", value)

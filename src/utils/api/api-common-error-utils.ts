@@ -1,7 +1,4 @@
-import {
-  INTERNAL_SERVER_ERROR,
-  NETWORK_ERROR,
-} from "../../constants/error/error-message-constants.ts";
+import { NETWORK_ERROR } from "../../constants/error/error-message-constants.ts";
 import type {
   Error,
   GroupsErrorResponse,
@@ -57,19 +54,22 @@ export const handleErrors = <
 };
 
 export const handleApiErrors = <T>(error?: any): ApiResponse<T, Error> => {
-  if (error && error.status >= 400) {
-    const errorMessage =
-      error?.response?.data?.error?.message ?? INTERNAL_SERVER_ERROR;
+  if (!("response" in error)) {
     return {
       error: {
-        message: errorMessage,
+        message: NETWORK_ERROR,
       } as Error,
-    } as ApiResponse<T, Error>;
+    };
   }
 
-  return {
-    error: {
-      message: NETWORK_ERROR,
-    } as Error,
-  } as ApiResponse<T, Error>;
+  return error.response.data;
+};
+
+export const isInstanceOfError = (obj: unknown) => {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "message" in obj &&
+    typeof (obj as any).message === "string"
+  );
 };

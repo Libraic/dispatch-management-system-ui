@@ -13,7 +13,7 @@ import {
   ERRONEOUS_BACKGROUND_STYLE,
   NO_ERROR_BACKGROUND_STYLE,
 } from "../../../utils/matrix/cell-constants.ts";
-import { ToastRenderer } from "../Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../atoms/Toast/ToastRenderer.tsx";
 import { useBlur } from "../../../hooks/useBlur.ts";
 import {
   LIVE_SEARCH_ENDPOINTS,

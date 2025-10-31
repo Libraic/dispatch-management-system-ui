@@ -33,3 +33,23 @@ export const validateEmail = (value: string, isMandatory: boolean): string => {
 export const validateMandatoryField = (value: string, fieldName: string) => {
   return value === BLANK_STRING ? `The ${fieldName} is required.` : "";
 };
+
+export const validatePassword = (password: string, confirmPassword: string) => {
+  const passwordMandatoryFieldValidation = validateMandatoryField(
+    password,
+    "password",
+  );
+  if (passwordMandatoryFieldValidation !== BLANK_STRING) {
+    return passwordMandatoryFieldValidation;
+  }
+
+  if (password !== confirmPassword) {
+    return "The passwords do not match";
+  }
+
+  if (password.length < 8) {
+    return "The password has less than 8 characters";
+  }
+
+  return BLANK_STRING;
+};

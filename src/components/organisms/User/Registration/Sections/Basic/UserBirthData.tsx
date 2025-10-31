@@ -1,6 +1,6 @@
 import { usePrepopulateDate } from "../../../../../../hooks/usePrepopulateDate.ts";
 import * as React from "react";
-import { DateSelector } from "../../../../../molecules/Selector/DateSelector.tsx";
+import { DateSelector } from "../../../../../atoms/Selector/DateSelector.tsx";
 import { useDateObject } from "../../../../../../hooks/useDateObject.ts";
 import { UserRegistrationContext } from "../../../../../../context/UserRegistrationContext.ts";
 

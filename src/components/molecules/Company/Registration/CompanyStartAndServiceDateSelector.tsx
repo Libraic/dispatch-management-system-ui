@@ -1,15 +1,14 @@
-import { DateSelector } from "../../../molecules/Selector/DateSelector.tsx";
-import * as React from "react";
+import { DateSelector } from "../../../atoms/Selector/DateSelector.tsx";
+import { useContext } from "react";
 import { useDateObject } from "../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
 import { getCurrentYearData } from "../../../../utils/date/date-utils.ts";
-import type { CompanyRegistrationData } from "../../../../types/internal/company/company-registration-data.ts";
+import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
 
-export const CompanyStartAndServiceDates: React.FC<{
-  setCompanyRegistrationData: React.Dispatch<
-    React.SetStateAction<CompanyRegistrationData>
-  >;
-}> = ({ setCompanyRegistrationData }) => {
+export const CompanyStartAndServiceDateSelector = () => {
+  const setCompanyRegistrationData = useContext(
+    CompanyRegistrationContext,
+  )!.setRegistrationData;
   const currentYearData = getCurrentYearData();
   const currentDateObject = useDateObject(
     currentYearData.day,

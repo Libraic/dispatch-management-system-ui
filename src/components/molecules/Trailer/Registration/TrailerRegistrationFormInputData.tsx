@@ -22,7 +22,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Trailer Number"
           placeholder="R12-3456"
           type="text"
-          name="trailer-number"
           inputFieldValue={trailerData.trailerNumber}
           isMandatory={true}
           errorMessage={trailerErrorData.trailerNumber}
@@ -34,7 +33,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="VIN Number"
           placeholder="1FTFW1E50JKC12345"
           type="text"
-          name="vin-number"
           inputFieldValue={trailerData.vinNumber}
           isMandatory={true}
           errorMessage={trailerErrorData.vinNumber}
@@ -46,7 +44,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Trailer Year"
           placeholder="2020"
           type="number"
-          name="trailer-year"
           inputFieldValue={trailerData.trailerYear.toString()}
           isMandatory={false}
           errorMessage={trailerErrorData.trailerYear}
@@ -64,7 +61,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Trailer Make"
           placeholder="Great Dane"
           type="text"
-          name="trailer-make"
           inputFieldValue={trailerData.trailerMake}
           isMandatory={false}
           errorMessage={""}
@@ -76,7 +72,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Equipment Type"
           placeholder="Flatbed"
           type="text"
-          name="equipement-type"
           inputFieldValue={trailerData.equipmentType}
           isMandatory={true}
           errorMessage={""}
@@ -88,7 +83,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Equipment Size (ft)"
           placeholder="48"
           type="number"
-          name="equipment-size"
           inputFieldValue={trailerData.equipmentSize.toString()}
           isMandatory={true}
           errorMessage={trailerErrorData.equipmentSize}
@@ -106,7 +100,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Pallet Capacity"
           placeholder="24"
           type="number"
-          name="pallet-capacity"
           inputFieldValue={trailerData.palletCapacity.toString()}
           isMandatory={false}
           errorMessage={trailerErrorData.palletCapacity}
@@ -122,7 +115,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Max Weight (lbs)"
           placeholder="10000"
           type="number"
-          name="max-weight"
           inputFieldValue={trailerData.maxWeight.toString()}
           isMandatory={true}
           errorMessage={trailerErrorData.maxWeight}
@@ -138,7 +130,6 @@ export const TrailerRegistrationFormInputData: React.FC<{
           label="Tire Size"
           placeholder="295/75R22.5"
           type="text"
-          name="tire-size"
           inputFieldValue={trailerData.tireSize}
           isMandatory={false}
           errorMessage={""}

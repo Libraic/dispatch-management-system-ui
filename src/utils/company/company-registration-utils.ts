@@ -1,7 +1,7 @@
 import type {
-  CompanyRegistrationData,
+  CompanyRegistrationTypes,
   CreateCompanyRequest,
-} from "../../types/internal/company/company-registration-data.ts";
+} from "../../types/internal/company/company-registration-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import * as React from "react";
 import {
@@ -9,19 +9,22 @@ import {
   getCurrentYearData,
 } from "../date/date-utils.ts";
 
-export const getBlankCompanyRegistrationData = (): CompanyRegistrationData => {
+export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
   return {
     name: BLANK_STRING,
+    email: BLANK_STRING,
+    password: BLANK_STRING,
+    confirmPassword: BLANK_STRING,
     serviceDate: getCurrentYearData(),
     startDate: getCurrentYearData(),
   };
 };
 
-export const alterCompanySimpleField = (
+export const setCompanyStringField = (
   setCompanyRegistrationData: React.Dispatch<
-    React.SetStateAction<CompanyRegistrationData>
+    React.SetStateAction<CompanyRegistrationTypes>
   >,
-  fieldName: keyof CompanyRegistrationData,
+  fieldName: keyof CompanyRegistrationTypes,
   fieldValue: string,
 ) => {
   setCompanyRegistrationData((prev) => ({
@@ -31,10 +34,12 @@ export const alterCompanySimpleField = (
 };
 
 export const createCreateCompanyRequestFromCompanyRegistrationData = (
-  companyRegistrationData: CompanyRegistrationData,
+  companyRegistrationData: CompanyRegistrationTypes,
 ): CreateCompanyRequest => {
   return {
     name: companyRegistrationData.name,
+    password: companyRegistrationData.password,
+    email: companyRegistrationData.email,
     mcNumber: companyRegistrationData.mcNumber ?? null,
     address: companyRegistrationData.address ?? null,
     serviceDate: convertDateToLittleEndian(companyRegistrationData.serviceDate),

@@ -16,7 +16,7 @@ import { handleErrors } from "../../../../utils/api/api-common-error-utils.ts";
 import { validateTrailerRegistrationData } from "../../../../validator/trailer/trailer-validators.ts";
 import { saveTrailer } from "../../../../service/trailerService.ts";
 import { CancelButton } from "../../../atoms/Button/CancelButton.tsx";
-import { ToastRenderer } from "../../../organisms/Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../../atoms/Toast/ToastRenderer.tsx";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import { TRAILERS_VIEW } from "../../../../constants/route/internal-route-constants.ts";

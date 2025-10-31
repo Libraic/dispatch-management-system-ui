@@ -1,6 +1,6 @@
 import { UserRegistrationContext } from "../../../../../../context/UserRegistrationContext.ts";
 import * as React from "react";
-import { SelectForm } from "../../../../../atoms/SelectForm/SelectForm.tsx";
+import { SelectForm } from "../../../../../atoms/Selector/SelectForm.tsx";
 import {
   PositionEnum,
   RoleEnum,

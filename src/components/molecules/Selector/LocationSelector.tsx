@@ -1,7 +1,7 @@
 import { City, State } from "country-state-city";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SelectForm } from "../../atoms/SelectForm/SelectForm.tsx";
+import { SelectForm } from "../../atoms/Selector/SelectForm.tsx";
 import {
   getStateIsoCode,
   renderStateByNameAndIsoCode,

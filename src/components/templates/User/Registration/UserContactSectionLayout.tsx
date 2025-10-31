@@ -18,7 +18,6 @@ export const UserContactSectionLayout = () => {
         label="Personal E-mail"
         placeholder={EMAIL_PLACEHOLDER}
         type="email"
-        name="email"
         inputFieldValue={registrationData.personalEmail}
         errorMessage={registrationDataError.personalEmail}
         saveInputData={(value: string) =>

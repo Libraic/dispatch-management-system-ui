@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchCompanyByUuid } from "../../../../service/companyService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { INTERNAL_SERVER_ERROR } from "../../../../constants/error/error-message-constants.ts";
-import { ToastRenderer } from "../../../organisms/Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../../atoms/Toast/ToastRenderer.tsx";
 import { CompanySidebar } from "../../../organisms/Company/Sidebar/CompanySidebar.tsx";
 import type { CompanyData } from "../../../../types/api/company/company-api-response-types.ts";
 

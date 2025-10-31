@@ -9,7 +9,6 @@ export const InputForm: React.FC<{
   label: string;
   placeholder: string;
   type: string;
-  name: string;
   inputFieldValue: string;
   isMandatory?: boolean;
   errorMessage?: string;
@@ -19,7 +18,6 @@ export const InputForm: React.FC<{
   label,
   placeholder,
   type,
-  name,
   inputFieldValue,
   isMandatory,
   information,
@@ -42,6 +40,8 @@ export const InputForm: React.FC<{
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     saveInputData(e.target.value);
   };
+
+  const name = label.toLowerCase().replace(" ", "-");
 
   return (
     <div className="flex flex-col gap-y-2 min-h-[6.5rem]">
