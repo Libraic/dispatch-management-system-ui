@@ -23,7 +23,6 @@ export const UserBasicData = () => {
             label="First Name"
             placeholder={FIRST_NAME_PLACEHOLDER}
             type="text"
-            name="first-name"
             inputFieldValue={registrationData.firstName}
             isMandatory={true}
             errorMessage={registrationDataError.firstName}
@@ -39,7 +38,6 @@ export const UserBasicData = () => {
             label="Nickname"
             placeholder={NICKNAME_PLACEHOLDER}
             type="text"
-            name="nick-name"
             inputFieldValue={registrationData.nickname}
             saveInputData={(value: string) =>
               setRegistrationDataStringField(
@@ -53,7 +51,6 @@ export const UserBasicData = () => {
             label="Last Name"
             placeholder={LAST_NAME_PLACEHOLDER}
             type="text"
-            name="last-name"
             inputFieldValue={registrationData.lastName}
             isMandatory={true}
             errorMessage={registrationDataError.lastName}
@@ -71,7 +68,6 @@ export const UserBasicData = () => {
             label="E-mail"
             placeholder={EMAIL_PLACEHOLDER}
             type="email"
-            name="email"
             inputFieldValue={registrationData.email}
             isMandatory={true}
             errorMessage={registrationDataError.email}
@@ -87,7 +83,6 @@ export const UserBasicData = () => {
             label="Personal E-mail"
             placeholder={EMAIL_PLACEHOLDER}
             type="email"
-            name="email"
             inputFieldValue={registrationData.personalEmail}
             errorMessage={registrationDataError.personalEmail}
             saveInputData={(value: string) =>
@@ -104,7 +99,6 @@ export const UserBasicData = () => {
             label="Password"
             placeholder={PASSWORD_PLACEHOLDER}
             type="password"
-            name="password"
             inputFieldValue={registrationData.password}
             isMandatory={true}
             errorMessage={registrationDataError.password}
@@ -120,7 +114,6 @@ export const UserBasicData = () => {
             label="Confirm Password"
             placeholder={PASSWORD_PLACEHOLDER}
             type="password"
-            name="confirm-password"
             inputFieldValue={registrationData.confirmPassword}
             isMandatory={true}
             errorMessage=""

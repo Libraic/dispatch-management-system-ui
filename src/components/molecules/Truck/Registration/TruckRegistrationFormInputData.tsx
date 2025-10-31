@@ -23,7 +23,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Truck Number"
             placeholder="R12-3456"
             type="text"
-            name="truck-number"
             inputFieldValue={truckData.truckNumber}
             isMandatory={true}
             errorMessage={truckErrorData.truckNumber}
@@ -35,7 +34,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="VIN Number"
             placeholder="1FTFW1E50JKC12345"
             type="text"
-            name="vin-number"
             inputFieldValue={truckData.vinNumber}
             isMandatory={true}
             errorMessage={truckErrorData.vinNumber}
@@ -47,7 +45,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Model"
             placeholder="Ford"
             type="text"
-            name="model"
             inputFieldValue={truckData.model}
             isMandatory={false}
             errorMessage={""}
@@ -61,7 +58,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Truck Year"
             placeholder="2025"
             type="number"
-            name="truck-year"
             inputFieldValue={truckData.truckYear.toString()}
             isMandatory={false}
             errorMessage={truckErrorData.truckYear}
@@ -77,7 +73,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Truck Make"
             placeholder="F-150"
             type="text"
-            name="truck-make"
             inputFieldValue={truckData.truckMake}
             isMandatory={false}
             errorMessage={""}
@@ -91,7 +86,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Fuel Type"
             placeholder="Diesel"
             type="text"
-            name="fuel-type"
             inputFieldValue={truckData.fuelType}
             isMandatory={false}
             errorMessage={""}
@@ -103,7 +97,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Color"
             placeholder="White"
             type="text"
-            name="color"
             inputFieldValue={truckData.color}
             isMandatory={false}
             errorMessage={""}
@@ -115,7 +108,6 @@ export const TruckRegistrationFormInputData: React.FC<{
             label="Weight (lbs)"
             placeholder="10000"
             type="text"
-            name="weight"
             inputFieldValue={truckData.weight.toString()}
             isMandatory={false}
             errorMessage={truckErrorData.weight}

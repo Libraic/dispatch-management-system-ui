@@ -1,4 +1,4 @@
-import { SelectForm } from "../../../atoms/SelectForm/SelectForm.tsx";
+import { SelectForm } from "../../../atoms/Selector/SelectForm.tsx";
 import { useContext } from "react";
 import {
   documentsStatuses,

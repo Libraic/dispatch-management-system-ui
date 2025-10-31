@@ -42,7 +42,6 @@ export const UserWorkload: React.FC<{
         label="Commission (%)"
         placeholder="5.5"
         type="number"
-        name="Commission"
         inputFieldValue={workloadData.commission.toString()}
         errorMessage=""
         saveInputData={(value: string) =>

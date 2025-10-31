@@ -2,7 +2,7 @@ import * as React from "react";
 import { UserRegistrationContext } from "../../../../../../context/UserRegistrationContext.ts";
 import { useDateObject } from "../../../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../../../hooks/usePrepopulateDate.ts";
-import { DateSelector } from "../../../../../molecules/Selector/DateSelector.tsx";
+import { DateSelector } from "../../../../../atoms/Selector/DateSelector.tsx";
 
 export const UserEmploymentDate = () => {
   const context = React.useContext(UserRegistrationContext)!;

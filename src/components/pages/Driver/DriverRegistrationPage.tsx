@@ -27,7 +27,7 @@ import { PageHeader } from "../../organisms/Header/PageHeader.tsx";
 import { saveDriver } from "../../../service/driverService.ts";
 import { useToast } from "../../../hooks/useToast.ts";
 import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
-import { Toast } from "../../organisms/Toast/Toast.tsx";
+import { Toast } from "../../atoms/Toast/Toast.tsx";
 import { handleErrors } from "../../../utils/api/api-common-error-utils.ts";
 import { useSections } from "../../../hooks/useSections.ts";
 import { DRIVER_REGISTRATION_HEADER } from "../../../constants/common/header-constants.ts";

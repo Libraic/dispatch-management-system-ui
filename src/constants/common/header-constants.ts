@@ -4,8 +4,8 @@ export const TRUCKS_BOARD_HEADER = {
 };
 
 export const COMPANY_REGISTRATION_HEADER = {
-  header: "Company",
-  subheader: "Add a new Company to the system",
+  header: "Company Registration",
+  subheader: "Register your Company in the system",
 };
 
 export const DRIVER_REGISTRATION_HEADER = {

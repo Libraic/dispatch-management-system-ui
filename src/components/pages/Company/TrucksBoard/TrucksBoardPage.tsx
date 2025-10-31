@@ -11,7 +11,7 @@ import { OptionBar } from "../../../organisms/Company/TrucksBoard/OptionBar.tsx"
 import { useEffect, useState } from "react";
 import { saveDriversWeeklyMileage } from "../../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
-import { ToastRenderer } from "../../../organisms/Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../../atoms/Toast/ToastRenderer.tsx";
 import { BackButton } from "../../../atoms/Button/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../../utils/route/route-utils.ts";
 import { ConfirmationModal } from "../../../molecules/Modal/ConfirmationModal.tsx";

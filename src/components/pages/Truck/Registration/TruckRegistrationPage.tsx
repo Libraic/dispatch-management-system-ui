@@ -12,7 +12,7 @@ import { validateTruckRegistrationData } from "../../../../validator/truck/truck
 import { saveTruck } from "../../../../service/truckService.ts";
 import { handleErrors } from "../../../../utils/api/api-common-error-utils.ts";
 import { CancelButton } from "../../../atoms/Button/CancelButton.tsx";
-import { ToastRenderer } from "../../../organisms/Toast/ToastRenderer.tsx";
+import { ToastRenderer } from "../../../atoms/Toast/ToastRenderer.tsx";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import type {

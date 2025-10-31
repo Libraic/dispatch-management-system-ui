@@ -1,49 +1,34 @@
 import { InputForm } from "../../../atoms/InputForm/InputForm.tsx";
-import { alterCompanySimpleField } from "../../../../utils/company/company-registration-utils.ts";
+import { setCompanyStringField } from "../../../../utils/company/company-registration-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
-import * as React from "react";
-import type {
-  CompanyRegistrationData,
-  CompanyRegistrationError,
-} from "../../../../types/internal/company/company-registration-data.ts";
+import { useContext } from "react";
+import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
 
-export const CompanyBasicData: React.FC<{
-  companyRegistrationData: CompanyRegistrationData;
-  companyRegistrationErrors: CompanyRegistrationError;
-  setCompanyRegistrationData: React.Dispatch<
-    React.SetStateAction<CompanyRegistrationData>
-  >;
-}> = ({
-  companyRegistrationData,
-  companyRegistrationErrors,
-  setCompanyRegistrationData,
-}) => {
+export const CompanyRegistrationBasicDataForm = () => {
+  const context = useContext(CompanyRegistrationContext)!;
+  const companyRegistrationData = context.registrationData;
+  const companyRegistrationErrors = context.registrationDataError;
+  const setCompanyRegistrationData = context.setRegistrationData;
   return (
     <div className="flex flex-row gap-5.5 mb-10">
       <InputForm
         label="Name"
         placeholder="Alpha Expedition"
         type="text"
-        name="name"
         inputFieldValue={companyRegistrationData.name}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.name}
         saveInputData={(companyName: string) =>
-          alterCompanySimpleField(
-            setCompanyRegistrationData,
-            "name",
-            companyName,
-          )
+          setCompanyStringField(setCompanyRegistrationData, "name", companyName)
         }
       />
       <InputForm
         label="MC Number"
         placeholder="MC#02854"
         type="text"
-        name="mc-number"
         inputFieldValue={companyRegistrationData?.mcNumber ?? BLANK_STRING}
         saveInputData={(mcNumber: string) =>
-          alterCompanySimpleField(
+          setCompanyStringField(
             setCompanyRegistrationData,
             "mcNumber",
             mcNumber,
@@ -54,14 +39,9 @@ export const CompanyBasicData: React.FC<{
         label="Address"
         placeholder="601 Shiloh Rd"
         type="text"
-        name="address"
         inputFieldValue={companyRegistrationData?.address ?? BLANK_STRING}
         saveInputData={(address: string) =>
-          alterCompanySimpleField(
-            setCompanyRegistrationData,
-            "address",
-            address,
-          )
+          setCompanyStringField(setCompanyRegistrationData, "address", address)
         }
       />
     </div>

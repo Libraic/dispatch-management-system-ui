@@ -6,7 +6,7 @@ import {
   getBlankUserRegistrationData,
   getCreateUserRequestFromRegistrationData,
 } from "../../../../utils/user/user-registration-utils.ts";
-import { Toast } from "../../Toast/Toast.tsx";
+import { Toast } from "../../../atoms/Toast/Toast.tsx";
 import {
   BLANK_STRING,
   SUBMIT_BUTTON_TEXT,

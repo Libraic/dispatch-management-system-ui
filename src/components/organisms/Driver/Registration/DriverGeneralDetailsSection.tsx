@@ -15,7 +15,6 @@ export const DriverGeneralDetailsSection = () => {
           label="First Name"
           placeholder="John"
           type="text"
-          name="name"
           inputFieldValue={driverRegistrationData.firstName}
           isMandatory={true}
           errorMessage={driverRegistrationError.firstName}
@@ -32,7 +31,6 @@ export const DriverGeneralDetailsSection = () => {
           label="Last Name"
           placeholder="Doe"
           type="text"
-          name="name"
           inputFieldValue={driverRegistrationData.lastName}
           isMandatory={true}
           errorMessage={driverRegistrationError.lastName}
@@ -50,7 +48,6 @@ export const DriverGeneralDetailsSection = () => {
           label="E-mail"
           placeholder="john.doe@gmail.com"
           type="text"
-          name="name"
           inputFieldValue={driverRegistrationData.email}
           isMandatory={true}
           errorMessage={driverRegistrationError.email}
@@ -63,7 +60,6 @@ export const DriverGeneralDetailsSection = () => {
           label="Phone Number"
           placeholder="850-775-8717"
           type="text"
-          name="name"
           inputFieldValue={driverRegistrationData.phoneNumber}
           isMandatory={true}
           errorMessage={driverRegistrationError.phoneNumber}
