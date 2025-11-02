@@ -4,7 +4,7 @@ import { TableHeader } from "../../../molecules/Table/TableHeader.tsx";
 import trailerIcon from "../../../../assets/company-menu/trailers-list.svg";
 import { TRAILER_REGISTRATION } from "../../../../constants/route/internal-route-constants.ts";
 import { PaginationBar } from "../../../organisms/Pagination/PaginationBar.tsx";
-import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
+import { Entity } from "../../../../types/api/common/api-query-types.ts";
 import type { TrailerData } from "../../../../types/api/trailer/trailer-api-response-types.ts";
 import { getTrailers } from "../../../../service/trailerService.ts";
 import { TrailersTable } from "../../../organisms/Trailer/View/TrailersTable.tsx";
@@ -38,7 +38,7 @@ export const TrailersPage = () => {
       <TrailersTable trailers={trailers} />
       <PaginationBar
         joinableEntityId={companyUuid!!}
-        entityType={PageableEntity.TRAILER}
+        entityType={Entity.TRAILER}
         fetchFn={fetchTrailersBasedOnPage}
       />
     </div>

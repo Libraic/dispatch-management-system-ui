@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import type { Pagination } from "../types/internal/pagination/pagination-types.ts";
 import {
-  PageableEntity,
+  Entity,
   type PaginationData,
 } from "../types/api/common/api-query-types.ts";
 import { DEFAULT_SIZE } from "../constants/api/api-query-constants.ts";
 import { getPaginationDetails } from "../service/paginationService.ts";
 
 export const usePagination = (
-  entityType: PageableEntity,
+  entityType: Entity,
   joinableEntityId?: string,
+  joinableEntityName?: string,
 ): Pagination => {
   const [paginationDetails, setPaginationDetails] = useState<PaginationData>({
     pages: 0,
@@ -19,10 +20,12 @@ export const usePagination = (
   const [currentSize, setCurrentSize] = useState(DEFAULT_SIZE);
 
   useEffect(() => {
-    getPaginationDetails(entityType, joinableEntityId).then((data) => {
-      setPaginationDetails(data);
-    });
-  }, [joinableEntityId, entityType]);
+    getPaginationDetails(entityType, joinableEntityId, joinableEntityName).then(
+      (data) => {
+        setPaginationDetails(data);
+      },
+    );
+  }, [joinableEntityId, entityType, joinableEntityName]);
 
   const increaseSize = () => {
     setCurrentSize((prev) => {

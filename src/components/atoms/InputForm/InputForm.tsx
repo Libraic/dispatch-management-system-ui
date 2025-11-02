@@ -13,6 +13,7 @@ export const InputForm: React.FC<{
   isMandatory?: boolean;
   errorMessage?: string;
   information?: string;
+  onFocus?: () => void;
   saveInputData: (value: string) => void;
 }> = ({
   label,
@@ -21,15 +22,18 @@ export const InputForm: React.FC<{
   inputFieldValue,
   isMandatory,
   information,
+  onFocus,
   errorMessage,
   saveInputData,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [borderColor, setBorderColor] = useState("border-light-grey");
-
   const handleFocus = () => {
     setIsFocused(true);
     setBorderColor("border-solid-blue");
+    if (onFocus) {
+      onFocus();
+    }
   };
 
   const handleBlur = () => {

@@ -7,7 +7,7 @@ import { TableHeader } from "../../molecules/Table/TableHeader.tsx";
 import type { DriverData } from "../../../types/api/driver/driver-api-response-types.ts";
 import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
 import driverIcon from "../../../assets/company-menu/drivers-black.svg";
-import { PageableEntity } from "../../../types/api/common/api-query-types.ts";
+import { Entity } from "../../../types/api/common/api-query-types.ts";
 import { DRIVERS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
 
 export const DriversPage = () => {
@@ -38,7 +38,7 @@ export const DriversPage = () => {
       <DriversTable drivers={drivers} />
       <PaginationBar
         joinableEntityId={companyUuid!!}
-        entityType={PageableEntity.DRIVER}
+        entityType={Entity.DRIVER}
         fetchFn={fetchDriversBasedOnPage}
       />
     </div>

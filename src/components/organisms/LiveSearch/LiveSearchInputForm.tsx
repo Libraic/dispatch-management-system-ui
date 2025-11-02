@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { inputFormStyle } from "../../../tailwind/tailwind.ts";
 import {
   BLANK_STRING,
   EMPTY_ARRAY,
 } from "../../../constants/common/global-constants.ts";
 import { InputFormError } from "../../atoms/InputForm/InputFormError.tsx";
-import { useToast } from "../../../hooks/useToast.ts";
 import type { Renderable } from "../../../types/internal/classes/Renderable.ts";
-import { InputFormLabel } from "../../atoms/InputForm/InputFormLabel.tsx";
 import { useLiveSearch } from "../../../hooks/useLiveSearch.ts";
-import { ToastRenderer } from "../../atoms/Toast/ToastRenderer.tsx";
-import { LiveSearchResultList } from "./LiveSearchResultList.tsx";
-import { useBlur } from "../../../hooks/useBlur.ts";
+import { useUnfocus } from "../../../hooks/useUnfocus.ts";
 import {
   LIVE_SEARCH_ENDPOINTS,
   type LiveSearchInputFormProps,
 } from "../../../types/internal/live-search/live-search-data.ts";
-import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
 import { usePagination } from "../../../hooks/usePagination.ts";
+import { InputForm } from "../../atoms/InputForm/InputForm.tsx";
+import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
+import { InputFormSearchResult } from "../../atoms/LiveSearch/InputFormSearchResult.tsx";
 
 /**
  * An input form that uses live search to retrieve data from an endpoint.
@@ -43,9 +40,9 @@ export const LiveSearchInputForm = <D,>({
   placeholder,
   value,
   entityType,
-  isMandatory,
-  errorText,
+  errorMessage,
   joinableEntityId,
+  joinableEntityName,
   saveData,
   cleanData,
   constructor,
@@ -53,11 +50,13 @@ export const LiveSearchInputForm = <D,>({
 }: LiveSearchInputFormProps<D>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [items, setItems] = useState<Renderable[]>([]);
-  const [borderColor, setBorderColor] = useState("border-light-grey");
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const [placeholderText, setPlaceholderText] = useState(placeholder);
-  const pagination = usePagination(entityType, joinableEntityId);
-  const toast = useToast();
+  const pagination = usePagination(
+    entityType,
+    joinableEntityId,
+    joinableEntityName,
+  );
   const endpoint = LIVE_SEARCH_ENDPOINTS[entityType].endpoint;
   const searchField = LIVE_SEARCH_ENDPOINTS[entityType].searchField;
   const data: LiveSearchResult<D> = useLiveSearch(
@@ -70,19 +69,13 @@ export const LiveSearchInputForm = <D,>({
   );
 
   useEffect(() => {
-    if (data.error !== null) {
-      toast.withErrorMessage(data.error);
-    } else {
-      toast.reset();
-      setItems(data.items.map((item) => new constructor(item) as Renderable));
-    }
-  }, [data, constructor, toast]);
+    setItems(data.items.map((item) => new constructor(item) as Renderable));
+  }, [data, constructor]);
 
-  const liveSearchDivRef = useBlur(() => {
+  const liveSearchDivRef = useUnfocus(() => {
     setIsLiveSearchActive(false);
-    setBorderColor("border-light-grey");
     setPlaceholderText(placeholder);
-    setItems([]);
+    setItems(EMPTY_ARRAY);
   });
 
   return (
@@ -90,46 +83,36 @@ export const LiveSearchInputForm = <D,>({
       className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]"
       ref={liveSearchDivRef}
     >
-      <div
-        className={`flex flex-col px-5 py-2 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] relative`}
-      >
-        <InputFormLabel label={label} isMandatory={isMandatory} />
-        <input
-          className={`${inputFormStyle} w-[19rem]`}
-          placeholder={placeholderText}
-          value={value !== BLANK_STRING ? value : query}
-          onFocus={() => {
-            setIsLiveSearchActive(true);
-            setPlaceholderText(BLANK_STRING);
-            if (value !== BLANK_STRING) {
-              setQuery(value);
-            }
-            setBorderColor("border-solid-blue");
-          }}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            if (value !== BLANK_STRING) {
-              cleanData();
-            }
-          }}
-        />
-        {toast.isOk() && items.length > 0 && (
-          <LiveSearchResultList
-            items={items}
-            areMoreBatchesAvailable={
-              pagination.getSize() < pagination.getNumberOfRecords()
-            }
-            nextBatch={pagination.increaseSize}
-            onClick={(item: Renderable) => {
-              setQuery(BLANK_STRING);
-              saveData(item);
-              setItems(EMPTY_ARRAY);
-            }}
-          />
-        )}
-      </div>
-      {!!errorText?.length && <InputFormError errorMessage={errorText} />}
-      <ToastRenderer toast={toast} />
+      <InputForm
+        label={label}
+        placeholder={placeholderText}
+        type="text"
+        inputFieldValue={value !== BLANK_STRING ? value : query}
+        onFocus={() => {
+          setIsLiveSearchActive(true);
+          setPlaceholderText(BLANK_STRING);
+          if (value !== BLANK_STRING) {
+            setQuery(value);
+          }
+        }}
+        saveInputData={(value: string) => {
+          setQuery(value);
+          if (value !== BLANK_STRING) {
+            cleanData();
+          }
+        }}
+      />
+      <InputFormSearchResult
+        items={items}
+        pagination={pagination}
+        onItemSelected={(item: Renderable) => {
+          setQuery(BLANK_STRING);
+          saveData(item);
+          setItems(EMPTY_ARRAY);
+          setIsLiveSearchActive(false);
+        }}
+      />
+      {!!errorMessage?.length && <InputFormError errorMessage={errorMessage} />}
     </div>
   );
 };

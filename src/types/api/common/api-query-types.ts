@@ -8,7 +8,7 @@ export type PaginationData = {
   pages: number;
 };
 
-export enum PageableEntity {
+export enum Entity {
   DRIVER = "Driver",
   TRUCK = "Truck",
   TRAILER = "Trailer",

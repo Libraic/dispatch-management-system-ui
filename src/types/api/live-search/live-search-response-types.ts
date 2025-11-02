@@ -1,8 +1,8 @@
 import type { Renderable } from "../../internal/classes/Renderable.ts";
+import type { Pagination } from "../../internal/pagination/pagination-types.ts";
 
 export type LiveSearchResultData = {
   items: Renderable[];
-  areMoreBatchesAvailable: boolean;
-  nextBatch: () => void;
-  onClick: (item: Renderable) => void;
+  pagination: Pagination;
+  onItemSelected: (item: Renderable) => void;
 };

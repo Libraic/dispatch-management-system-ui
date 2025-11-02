@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { TruckData } from "../../../../types/api/truck/truck-api-response-types.ts";
 import { getTrucks } from "../../../../service/truckService.ts";
 import { PaginationBar } from "../../../organisms/Pagination/PaginationBar.tsx";
-import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
+import { Entity } from "../../../../types/api/common/api-query-types.ts";
 import { TRUCKS_PAGE_HEADER } from "../../../../constants/common/header-constants.ts";
 
 export const TrucksPage = () => {
@@ -38,7 +38,7 @@ export const TrucksPage = () => {
       <TrucksTable trucks={trucks} />
       <PaginationBar
         joinableEntityId={companyUuid!!}
-        entityType={PageableEntity.TRUCK}
+        entityType={Entity.TRUCK}
         fetchFn={fetchTrucksBasedOnPage}
       />
     </div>

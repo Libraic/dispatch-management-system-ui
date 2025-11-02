@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
 import { TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS } from "../../../../constants/trucks-board/trucks-board-constants.ts";
 import { getStickyCellStyles } from "../../../../utils/trucks-board/trucks-board-styles-utils.ts";
-import { PageableEntity } from "../../../../types/api/common/api-query-types.ts";
+import { Entity } from "../../../../types/api/common/api-query-types.ts";
 
 export const DriverMileageMetadata: React.FC<{
   groupIdentifier: string;
@@ -55,9 +55,11 @@ export const DriverMileageMetadata: React.FC<{
     <>
       <div style={getStickyCellStyles(offsets[1], index)}>
         <LiveSearchCell
-          entityType={PageableEntity.DRIVER}
+          entityType={Entity.DRIVER}
           constructor={Driver}
           object={driverWeeklyMileage.driver}
+          joinableEntityId={driverWeeklyMileageData.getCompanyUuid()}
+          joinableEntityName={"company"}
           saveObject={(driver: Renderable) =>
             setDriver(
               driverWeeklyMileageData.setDriversMileageGroups,

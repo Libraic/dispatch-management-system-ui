@@ -1,51 +1,26 @@
 import { useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { getData } from "../service/liveSearchService.ts";
-import {
-  BLANK_STRING,
-  COLON,
-  DEBOUNCING_TIME,
-} from "../constants/common/global-constants.ts";
-import {
-  DEFAULT_SIZE,
-  LIKE_CLAUSE,
-} from "../constants/api/api-query-constants.ts";
+import { DEBOUNCING_TIME } from "../constants/common/global-constants.ts";
 import type { SearchCriteria } from "../types/api/common/api-query-types.ts";
-import type { LiveSearchResult } from "../types/api/common/api-response-types.ts";
+import type {
+  ApiResponse,
+  LiveSearchResult,
+} from "../types/api/common/api-response-types.ts";
+import type { Error } from "../types/api/common/api-errors-types.ts";
 
-type StringRecord = {
-  [key: string]: string | number;
-};
-
-const constructSearchCriteria = (
-  defaultKey: string,
-  defaultValue: string,
-  size: number,
-  customSearchCriteria?: SearchCriteria[],
-): StringRecord => {
-  const params = {
-    page: 0,
-    size: size,
-  } as StringRecord;
-
-  if (defaultValue !== BLANK_STRING) {
-    params[defaultKey] = `${LIKE_CLAUSE}${COLON}${defaultValue}`;
-  }
-
-  if (customSearchCriteria) {
-    for (const searchCriteria of customSearchCriteria) {
-      params[searchCriteria.field] = searchCriteria.operation;
-    }
-  }
-  return params;
+const getItems = <T>(result: ApiResponse<T[], Error>) => {
+  return result.error !== null
+    ? { items: [], error: result.error!.message }
+    : { items: result.data ?? [], error: null };
 };
 
 export const useLiveSearch = <T>(
   endpoint: string,
   searchField: string,
-  query: string,
+  searchValue: string,
   isLiveSearchActive: boolean,
-  size: number = DEFAULT_SIZE,
+  size: number,
   defaultSearchCriteria?: SearchCriteria[],
 ): LiveSearchResult<T> => {
   const [items, setItems] = useState<LiveSearchResult<T>>({
@@ -54,28 +29,22 @@ export const useLiveSearch = <T>(
   });
   useEffect(() => {
     const debounced = debounce((value: string) => {
-      const searchCriteria = constructSearchCriteria(
+      getData<T[], Error>(
+        endpoint,
         searchField,
         value,
         size,
         defaultSearchCriteria,
-      );
-      getData<T[], Error>(endpoint, searchCriteria).then((result) => {
-        const localItems =
-          result.error !== null
-            ? { items: [], error: result.error!.message }
-            : { items: result.data ?? [], error: null };
-        setItems(localItems);
-      });
+      ).then((result) => setItems(getItems(result)));
     }, DEBOUNCING_TIME);
 
     if (isLiveSearchActive) {
-      debounced(query);
+      debounced(searchValue);
     }
 
     return () => debounced.cancel();
   }, [
-    query,
+    searchValue,
     endpoint,
     searchField,
     defaultSearchCriteria,

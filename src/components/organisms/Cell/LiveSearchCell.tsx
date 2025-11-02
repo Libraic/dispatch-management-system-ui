@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  EMPTY_ARRAY,
+} from "../../../constants/common/global-constants.ts";
 import { useLiveSearch } from "../../../hooks/useLiveSearch.ts";
 import type { Renderable } from "../../../types/internal/classes/Renderable.ts";
-import { useToast } from "../../../hooks/useToast.ts";
-import { LiveSearchResultList } from "../LiveSearch/LiveSearchResultList.tsx";
+import { InputFormSearchResult } from "../../atoms/LiveSearch/InputFormSearchResult.tsx";
 import errorIcon from "../../../assets/global/error.svg";
 import { useHoverPanel } from "../../../hooks/useHoverPanel.ts";
 import { HoverableInformation } from "../../atoms/Typography/HoverableInformation.tsx";
@@ -13,8 +15,7 @@ import {
   ERRONEOUS_BACKGROUND_STYLE,
   NO_ERROR_BACKGROUND_STYLE,
 } from "../../../utils/matrix/cell-constants.ts";
-import { ToastRenderer } from "../../atoms/Toast/ToastRenderer.tsx";
-import { useBlur } from "../../../hooks/useBlur.ts";
+import { useUnfocus } from "../../../hooks/useUnfocus.ts";
 import {
   LIVE_SEARCH_ENDPOINTS,
   type LiveSearchCellData,
@@ -27,6 +28,7 @@ export const LiveSearchCell = <D, R>({
   constructor,
   object,
   joinableEntityId,
+  joinableEntityName,
   saveObject,
   customSearchCriteria,
   errorMessage,
@@ -40,9 +42,12 @@ export const LiveSearchCell = <D, R>({
   const endpoint = LIVE_SEARCH_ENDPOINTS[entityType].endpoint;
   const searchField = LIVE_SEARCH_ENDPOINTS[entityType].searchField;
   const [items, setItems] = useState<Renderable[]>([]);
-  const toast = useToast();
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
-  const pagination = usePagination(entityType, joinableEntityId);
+  const pagination = usePagination(
+    entityType,
+    joinableEntityId,
+    joinableEntityName,
+  );
   const data: LiveSearchResult<D> = useLiveSearch(
     endpoint,
     searchField,
@@ -53,9 +58,12 @@ export const LiveSearchCell = <D, R>({
   );
   const hoverData = useHoverPanel(!!errorMessage);
   const isMounted = useRef(false);
-
-  const cellRef = useBlur(() => setIsLiveSearchActive(false));
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+  const cellRef = useUnfocus(() => {
+    setIsLiveSearchActive(false);
+    setItems(EMPTY_ARRAY);
+  }, [dropdownRef]);
 
   if (!isMounted.current) {
     if (object) {
@@ -66,13 +74,8 @@ export const LiveSearchCell = <D, R>({
   }
 
   useEffect(() => {
-    if (data.error !== null) {
-      toast.withErrorMessage(data.error);
-    } else {
-      toast.reset();
-      setItems(data.items.map((item) => new constructor(item) as Renderable));
-    }
-  }, [data, errorMessage, constructor, toast]);
+    setItems(data.items.map((item) => new constructor(item) as Renderable));
+  }, [data, constructor]);
 
   useEffect(() => {
     if (cellRef.current) {
@@ -118,31 +121,26 @@ export const LiveSearchCell = <D, R>({
         }}
       ></div>
 
-      {toast.getMessage().length === 0 &&
-        items.length > 0 &&
+      {items.length > 0 &&
         createPortal(
-          <div style={dropdownStyle}>
-            <LiveSearchResultList
+          <div style={dropdownStyle} ref={dropdownRef}>
+            <InputFormSearchResult
               items={items}
-              areMoreBatchesAvailable={
-                pagination.getSize() < pagination.getNumberOfRecords()
-              }
-              nextBatch={pagination.increaseSize}
-              onClick={(item: Renderable) => {
-                setQuery(BLANK_STRING);
-                setText(item.renderOnForm());
-                setItems([]);
-                setIsRendered(true);
+              pagination={pagination}
+              onItemSelected={(item: Renderable) => {
                 if (saveObject) {
                   saveObject(item);
                 }
+                setText(item.renderOnForm());
+                setQuery(BLANK_STRING);
+                setItems(EMPTY_ARRAY);
+                setIsRendered(true);
+                setIsLiveSearchActive(false);
               }}
             />
           </div>,
           document.body,
         )}
-
-      <ToastRenderer toast={toast} />
 
       {hoverData.shouldDisplayMessage() &&
         createPortal(

@@ -5,8 +5,8 @@ import {
 import * as React from "react";
 import { useState } from "react";
 import type {
-  CompanyRegistrationTypes,
   CompanyRegistrationError,
+  CompanyRegistrationTypes,
   CreateCompanyRequest,
 } from "../../../../types/internal/company/company-registration-types.ts";
 import { PageHeader } from "../../../organisms/Header/PageHeader.tsx";
@@ -18,7 +18,10 @@ import {
 } from "../../../../utils/company/company-registration-errors.ts";
 import { saveCompany } from "../../../../service/companyService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
-import { handleErrors, isInstanceOfError } from "../../../../utils/api/api-common-error-utils.ts";
+import {
+  handleErrors,
+  isInstanceOfError,
+} from "../../../../utils/api/api-common-error-utils.ts";
 import { COMPANY_REGISTRATION_HEADER } from "../../../../constants/common/header-constants.ts";
 import type { Error } from "../../../../types/api/common/api-errors-types.ts";
 import { validateCompanyRegistration } from "../../../../validator/company/company-validators.ts";
@@ -62,7 +65,6 @@ export const CompanyRegistrationPage = () => {
       getBlankCompanyRegistrationErrors,
       (_) => false,
     );
-    console.log(apiErrors);
     if (apiErrors == null) {
       navigate(LANDING);
     } else if (isInstanceOfError(apiErrors)) {

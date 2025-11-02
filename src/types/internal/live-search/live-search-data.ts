@@ -1,6 +1,6 @@
 import type { Renderable } from "../classes/Renderable.ts";
 import {
-  PageableEntity,
+  Entity,
   type SearchCriteria,
 } from "../../api/common/api-query-types.ts";
 
@@ -9,10 +9,7 @@ export type LiveSearchEndpointConfig = {
   searchField: string;
 };
 
-export const LIVE_SEARCH_ENDPOINTS: Record<
-  PageableEntity,
-  LiveSearchEndpointConfig
-> = {
+export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
   User: {
     endpoint: "http://localhost:8090/api/users",
     searchField: "fullName",
@@ -35,51 +32,49 @@ export const LIVE_SEARCH_ENDPOINTS: Record<
   },
 } as const;
 
-export type LiveSearchCellData<D, R> = {
-  entityType: PageableEntity;
+export interface LiveSearchBaseData<D> {
+  /** The type of entity being searched for, e.g., "Driver", "Truck", etc. */
+  entityType: Entity;
+
+  /** A constructor function used to create a new Renderable object from the given data type. */
   constructor: new (dto: D) => Renderable;
-  object: Renderable | null;
+
+  /** The ID of the joinable entity associated with the current entity type. */
   joinableEntityId?: string;
-  joinableField?: string;
-  saveObject?: (renderable: Renderable) => R;
-  customSearchCriteria?: SearchCriteria[];
+
+  /** The name of the joinable entity associated with the current entity type. */
+  joinableEntityName?: string;
+
+  /** The error text displayed if an input validation error occurs. */
   errorMessage?: string;
-};
+
+  /** Additional search criteria to be applied to the API request, e.g., joinable fields, additional filters, etc. */
+  customSearchCriteria?: SearchCriteria[];
+}
+
+export interface LiveSearchCellData<D, R> extends LiveSearchBaseData<D> {
+  object: Renderable | null;
+  saveObject?: (renderable: Renderable) => R;
+}
 
 /**
  * Represents the properties required for the LiveSearchInputForm component.
  *
  * @template D - The data type used for constructing a Renderable object.
  */
-export interface LiveSearchInputFormProps<D> {
-  /** The label used for the InputForm component. */
+export interface LiveSearchInputFormProps<D> extends LiveSearchBaseData<D> {
+  /** The label used for the <input> tag inside the live-search Input Form component. */
   label: string;
 
-  /** The placeholder text shown when the input field is empty. */
+  /** The placeholder text shown in the underlying <input> tag. */
   placeholder: string;
 
-  /** The current value of the input field. */
-  value: string;
-
   /** The value of the query parameter that will be used to filter data. */
-  entityType: PageableEntity;
-
-  /** Indicates whether the input field is mandatory. Defaults to false if not specified. */
-  isMandatory?: boolean;
-
-  /** The error text displayed if an input validation error occurs. */
-  errorText?: string;
-
-  joinableEntityId?: string;
+  value: string;
 
   /** A callback function to save the currently entered data. */
   saveData: (value: Renderable) => void;
 
   /** A callback function to clear the entered data in the input field. */
   cleanData: () => void;
-
-  /** A constructor function used to create a new Renderable object from the given data type. */
-  constructor: new (dto: D) => Renderable;
-
-  customSearchCriteria?: SearchCriteria[];
 }

@@ -13,7 +13,7 @@ import type { Renderable } from "../../../../../../types/internal/classes/Render
 import { InputForm } from "../../../../../atoms/InputForm/InputForm";
 import { DeleteButton } from "../../../../../atoms/Button/DeleteButton.tsx";
 import { Company } from "../../../../../../types/internal/classes/Company.ts";
-import { PageableEntity } from "../../../../../../types/api/common/api-query-types.ts";
+import { Entity } from "../../../../../../types/api/common/api-query-types.ts";
 
 export const UserWorkload: React.FC<{
   workloadData: WorkloadRegistrationData;
@@ -30,8 +30,8 @@ export const UserWorkload: React.FC<{
         label="Company"
         placeholder="Microsoft"
         value={workloadData.companyName}
-        entityType={PageableEntity.COMPANY}
-        errorText={errorMessage}
+        entityType={Entity.COMPANY}
+        errorMessage={errorMessage}
         saveData={(companyData: Renderable) =>
           alterWorkloads(setRegistrationData, companyData, workloadData)
         }
