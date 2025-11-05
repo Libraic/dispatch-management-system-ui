@@ -5,6 +5,10 @@ export const PageSelector: React.FC<{
   pagination: Pagination;
   fetchFn: (pageNumber: number) => void;
 }> = ({ pagination, fetchFn }) => {
+  if (pagination.getNumberOfPages() === 1) {
+    return null;
+  }
+
   return (
     <div className="flex flex-row items-center gap-x-3">
       {Array.from({ length: pagination.getNumberOfPages() }, (_, index) => (

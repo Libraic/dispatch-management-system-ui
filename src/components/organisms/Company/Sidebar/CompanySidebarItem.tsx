@@ -2,6 +2,12 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanySidebarItemData } from "./CompanySidebarItemData.tsx";
+import {
+  HOVER_BACKGROUND_NORMAL_COLOR,
+  HOVER_BACKGROUND_SOLID_COLOR,
+  BACKGROUND_NORMAL_COLOR,
+  BACKGROUND_SOLID_COLOR,
+} from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export type SubmenuData = {
   label: string;
@@ -16,10 +22,11 @@ export const CompanySidebarItem: React.FC<{
 }> = ({ label, icon, baseRoute, submenuData }) => {
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
+  console.log(HOVER_BACKGROUND_NORMAL_COLOR);
   return (
     <div className="mt-5 flex flex-col align-top gap-y-2">
       <div
-        className={`${isSubmenuActive ? "bg-solid-blue" : "bg-solid-black"} ${isSubmenuActive ? "hover:bg-solid-blue" : "hover:bg-light-blue"}`}
+        className={`${isSubmenuActive ? BACKGROUND_SOLID_COLOR : "bg-solid-black"} ${HOVER_BACKGROUND_SOLID_COLOR}`}
         onClick={() => {
           if (baseRoute) {
             navigate(baseRoute);
@@ -33,7 +40,7 @@ export const CompanySidebarItem: React.FC<{
 
       {isSubmenuActive && submenuData && (
         <div className="flex flex-row items-center pl-5">
-          <div className="w-[0.1rem] h-8 bg-light-blue"></div>
+          <div className={`w-[0.1rem] h-8 ${BACKGROUND_NORMAL_COLOR}`}></div>
           <div>
             {submenuData.map((submenu, index) => (
               <div className="flex flex-row items-center pl-2 py-[0.1rem]">

@@ -22,6 +22,7 @@ import {
 } from "../../../types/internal/live-search/live-search-data.ts";
 import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
 import { usePagination } from "../../../hooks/usePagination.ts";
+import { DEFAULT_SIZE } from "../../../constants/api/api-query-constants.ts";
 
 export const LiveSearchCell = <D, R>({
   entityType,
@@ -45,6 +46,7 @@ export const LiveSearchCell = <D, R>({
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const pagination = usePagination(
     entityType,
+    DEFAULT_SIZE,
     joinableEntityId,
     joinableEntityName,
   );
@@ -101,7 +103,7 @@ export const LiveSearchCell = <D, R>({
       <div
         className={`p-2 flex justify-center items-center ${
           errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE
-        } border-b-3 border-r-3 border-[#e6ebfa] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        } border-b-2 border-r-2 border-[#ab8fff] bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onFocus={() => setIsLiveSearchActive(true)}

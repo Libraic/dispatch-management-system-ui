@@ -8,11 +8,12 @@ import { PAGINATION_DETAILS } from "../constants/api/api-paths.ts";
 
 export const getPaginationDetails = async (
   entityType: Entity,
+  size: number = DEFAULT_SIZE,
   joinableEntityId?: string,
   joinableEntityName?: string,
 ): Promise<PaginationData> => {
   const params = {
-    pageSize: DEFAULT_SIZE,
+    pageSize: size,
     entity: entityType,
     joinableEntityId: joinableEntityId ?? null,
     joinableEntityName: joinableEntityName ?? null,

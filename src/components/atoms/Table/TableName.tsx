@@ -9,10 +9,10 @@ export const TableName: React.FC<{
     <div className="flex flex-row items-center gap-x-[0.25rem]">
       <img className="w-25 h-25" src={icon} alt="view-icon" />
       <div className="flex flex-col">
-        <p className="font-open-sans font-bold text-[1.5rem]">
+        <p className="font-roboto font-bold text-[1.5rem]">
           {headerData.header}
         </p>
-        <p className="font-open-sans font-thin text-[0.9rem] text-solid-black">
+        <p className="font-roboto font-light text-[0.9rem] text-solid-black">
           {headerData.subheader}
         </p>
       </div>

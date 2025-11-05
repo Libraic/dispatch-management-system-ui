@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { colorTransitionStyle } from "../../../tailwind/tailwind.ts";
+import { BORDER_NORMAL_COLOR } from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const Option: React.FC<{
   unhoveredIcon: string;
@@ -25,7 +26,7 @@ export const Option: React.FC<{
       className={`flex flex-row items-center gap-x-5 w-[25rem] border-2 ${borderColor} rounded-xl p-2 ${colorTransitionStyle} hover:cursor-pointer`}
       onMouseEnter={() => {
         setIcon(hoveredIcon);
-        setBorderColor("border-light-blue");
+        setBorderColor(BORDER_NORMAL_COLOR);
       }}
       onMouseLeave={() => {
         setIcon(unhoveredIcon);

@@ -9,6 +9,7 @@ import {
 } from "../../../../utils/company/companies-list-utils.ts";
 import { BackButton } from "../../../atoms/Button/BackButton.tsx";
 import type { CompanyData } from "../../../../types/api/company/company-api-response-types.ts";
+import { HOVER_BACKGROUND_NORMAL_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const CompaniesPage = () => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
@@ -42,9 +43,7 @@ export const CompaniesPage = () => {
 
       {companies.map((company, index) => (
         <div
-          className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white hover:bg-light-blue text-left font-lato font-light px-[3rem] rounded-[0.3rem] ${
-            index % 2 === 1 ? "bg-[#f6f6f6]" : "white"
-          }`}
+          className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white ${HOVER_BACKGROUND_NORMAL_COLOR} text-left font-lato font-light px-[3rem] rounded-[0.3rem] even:bg-[#f6f6f6]`}
           key={index}
           onClick={() =>
             navigate(`/dashboard/${encodeURIComponent(company.uuid)}`)
