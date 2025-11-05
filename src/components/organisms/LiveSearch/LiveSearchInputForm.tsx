@@ -15,6 +15,7 @@ import { usePagination } from "../../../hooks/usePagination.ts";
 import { InputForm } from "../../atoms/InputForm/InputForm.tsx";
 import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
 import { InputFormSearchResult } from "../../atoms/LiveSearch/InputFormSearchResult.tsx";
+import { DEFAULT_SIZE } from "../../../constants/api/api-query-constants.ts";
 
 /**
  * An input form that uses live search to retrieve data from an endpoint.
@@ -54,6 +55,7 @@ export const LiveSearchInputForm = <D,>({
   const [placeholderText, setPlaceholderText] = useState(placeholder);
   const pagination = usePagination(
     entityType,
+    DEFAULT_SIZE,
     joinableEntityId,
     joinableEntityName,
   );

@@ -4,6 +4,7 @@ import {
 } from "../../../tailwind/tailwind.ts";
 import { type ReactNode, useState } from "react";
 import type { SelectFormData } from "../../../types/internal/forms/select-form-types.ts";
+import { BORDER_SOLID_COLOR } from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const SelectForm = <T extends ReactNode, D extends string | number>({
   label,
@@ -19,7 +20,7 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
       <select
         className={`${selectFormStyle} ${borderColor} min-w-40 min-h-[2.2rem]`}
         value={initialValue}
-        onFocus={() => setBorderColor("border-solid-blue")}
+        onFocus={() => setBorderColor(BORDER_SOLID_COLOR)}
         onBlur={() => setBorderColor("border-light-grey")}
         onChange={(e) => {
           setElement(e.target.value);

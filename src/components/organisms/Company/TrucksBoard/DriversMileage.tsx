@@ -31,7 +31,7 @@ export const DriversMileage: React.FC<{
           <div
             key={groupIdentifier}
             style={TRUCKS_BOARD_LAYOUT_STYLES}
-            className="min-w-fit grid rounded-[0.3rem] font-open-sans font-light text-[0.7rem] bg-white"
+            className="min-w-fit grid rounded-[0.3rem] font-open-sans font-light text-[0.7rem]"
           >
             <LiveSearchCell
               entityType={Entity.USER}

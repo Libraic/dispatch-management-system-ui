@@ -5,14 +5,18 @@ import { usePagination } from "../../../hooks/usePagination.ts";
 import { PageSelector } from "../../atoms/Pagination/PageSelector.tsx";
 import { PagesRecordsCounter } from "../../atoms/Pagination/PagesRecordsCounter.tsx";
 import { PageNavigator } from "../../molecules/Pagination/PageNavigator.tsx";
+import { DRIVERS_PAGE_SIZE } from "../../../constants/driver/drivers-table-constants.ts";
 
 export const PaginationBar: React.FC<{
   joinableEntityId: string;
   entityType: Entity;
   fetchFn: (pageNumber: number) => void;
 }> = ({ joinableEntityId, entityType, fetchFn }) => {
-  const pagination = usePagination(entityType, joinableEntityId);
-
+  const pagination = usePagination(
+    entityType,
+    DRIVERS_PAGE_SIZE,
+    joinableEntityId,
+  );
   return (
     <div className="flex items-center justify-between mx-[2.7rem]">
       <PagesRecordsCounter records={pagination.getNumberOfRecords()} />

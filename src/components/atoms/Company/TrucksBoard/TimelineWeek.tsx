@@ -1,4 +1,5 @@
 import * as React from "react";
+import { TEXT_SOLID_GRAY } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const TimelineWeek: React.FC<{
   interval: string;
@@ -6,13 +7,13 @@ export const TimelineWeek: React.FC<{
   setWeek: () => void;
 }> = ({ interval, isActive, setWeek }) => {
   const backgroundStyle = isActive
-    ? "bg-[#b2c2f2] before:bg-[#b2c2f2] after:bg-[#b2c2f2]"
-    : "bg-[#d4ddf8] group-hover:bg-[#b2c2f2] before:bg-[#d4ddf8] group-hover:before:bg-[#b2c2f2] after:bg-[#d4ddf8] group-hover:after:bg-[#b2c2f2]";
+    ? "bg-[#ab8fff] before:bg-[#ab8fff] after:bg-[#ab8fff]"
+    : "group-hover:bg-[#ab8fff] group-hover:before:bg-[#ab8fff] group-hover:after:bg-[#ab8fff]";
   return (
     <div className="relative group" onClick={setWeek}>
       <div
         className={`
-          relative flex items-center justify-center font-open-sans font-medium hover:cursor-pointer
+          relative flex items-center justify-center font-roboto font-normal hover:cursor-pointer ${TEXT_SOLID_GRAY}
           overflow-hidden w-[200px] h-[40px] ${backgroundStyle}
           rounded-tl-[20px] rounded-tr-[30px]
           before:content-[''] before:absolute before:left-0 before:bottom-0

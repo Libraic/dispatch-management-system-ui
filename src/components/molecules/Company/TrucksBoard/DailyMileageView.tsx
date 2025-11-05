@@ -19,10 +19,7 @@ export const DailyMileageView: React.FC<{
   return (
     <>
       {driverWeeklyMileage.mileageData.map((mileage, index) => (
-        <div
-          className="flex items-center bg-[#f5f7fc] border-[#e6ebfa]"
-          key={index}
-        >
+        <div className="flex items-center bg-[#f5f7fc]" key={index}>
           <DailyMileage
             mileage={mileage}
             setDriverWeeklyMileage={setDriverWeeklyMileage}

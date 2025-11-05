@@ -2,6 +2,10 @@ import { DRIVERS_VIEW_COLUMNS_LAYOUT } from "../../../../constants/driver/driver
 import * as React from "react";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 import { TableCell } from "../../../atoms/Table/TableCell.tsx";
+import {
+  HOVER_BORDER_B_NORMAL_COLOR,
+  HOVER_BACKGROUND_NORMAL_COLOR,
+} from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const DriversTableContent: React.FC<{ drivers: DriverData[] }> = ({
   drivers,
@@ -11,7 +15,7 @@ export const DriversTableContent: React.FC<{ drivers: DriverData[] }> = ({
       {drivers.map((driver, index) => (
         <div
           key={index}
-          className={`grid items-center ${DRIVERS_VIEW_COLUMNS_LAYOUT} h-[2.75rem] w-[95%] font-plus-jakarta-sans font-normal text-[0.85rem] px-[2rem] hover:bg-light-blue hover:border-b-light-blue hover:text-white border-b-2 border-b-[#ebecf0]`}
+          className={`grid items-center ${DRIVERS_VIEW_COLUMNS_LAYOUT} odd:bg-[#f4f4fb] h-[2.75rem] w-[95%] font-plus-jakarta-sans font-normal text-[0.85rem] px-[2rem] ${HOVER_BACKGROUND_NORMAL_COLOR} ${HOVER_BORDER_B_NORMAL_COLOR} hover:text-white`}
         >
           <TableCell data={`${driver.firstName} ${driver.lastName}`} />
           <TableCell data={driver.truckNumber} />

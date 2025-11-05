@@ -5,7 +5,7 @@ export const GREATER_THAN_EQUAL_CLAUSE = "gte";
 export const SIZE = "size";
 export const PAGE = "page";
 
-export const DEFAULT_SIZE = 3;
+export const DEFAULT_SIZE = 10;
 
 // Companies
 export const COMPANY_ID_QUERY_PARAM = "companyId";

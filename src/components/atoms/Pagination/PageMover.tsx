@@ -14,7 +14,7 @@ export const PageMover: React.FC<{
       onMouseEnter={() => setIcon(activeIcon)}
       onMouseLeave={() => setIcon(inactiveIcon)}
       onClick={action}
-      className="flex flex-row items-center justify-center gap-x-1 border-[0.09rem] rounded-[0.2rem] border-[#cccccc] px-2 py-1 w-[6rem] text-[#808588] hover:cursor-pointer hover:border-solid-black hover:bg-solid-black hover:text-white"
+      className="flex flex-row items-center justify-center gap-x-1 border-[0.09rem] rounded-[0.2rem] border-[#cccccc] px-2 py-1 w-[6rem] text-[#808588] hover:cursor-pointer hover:border-normal-purple hover:bg-normal-purple hover:text-white"
     >
       <img className="w-4 h-4" src={icon} alt="previous-icon" />
       <p className="text-[0.8rem] font-lato">{label}</p>

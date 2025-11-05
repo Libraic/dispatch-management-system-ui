@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { HOME } from "../../../constants/route/internal-route-constants.ts";
 import { Gradient } from "../../atoms/Gradient/Gradient.tsx";
+import { BORDER_SOLID_COLOR } from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const LandingPage = () => {
           Get Started
         </div>
         <div
-          className="flex items-center justify-center font-roboto font-normal text-[0.9rem] text-white border-1 border-solid-blue bg-[#171517] rounded-[1.2rem] px-2 py-1 hover:cursor-pointer w-[8.75rem] h-[2.7rem]"
+          className={`flex items-center justify-center font-roboto font-normal text-[0.9rem] text-white border-1 ${BORDER_SOLID_COLOR} bg-[#171517] rounded-[1.2rem] px-2 py-1 hover:cursor-pointer w-[8.75rem] h-[2.7rem]`}
           onClick={() => navigate(HOME)}
         >
           Book a Demo

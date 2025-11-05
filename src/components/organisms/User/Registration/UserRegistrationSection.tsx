@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import errorIcon from "../../../../assets/registration/section-in-progress-error.svg";
+import { BACKGROUND_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 const getBackgroundColor = (
   isSectionActive: boolean,
@@ -20,7 +21,7 @@ const getBackgroundColor = (
     return "bg-solid-black";
   }
 
-  return "bg-solid-blue";
+  return BACKGROUND_SOLID_COLOR;
 };
 
 export const UserRegistrationSection: React.FC<{

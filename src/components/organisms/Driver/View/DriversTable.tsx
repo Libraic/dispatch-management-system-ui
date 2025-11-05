@@ -11,7 +11,7 @@ export const DriversTable: React.FC<{ drivers: DriverData[] }> = ({
   drivers,
 }) => {
   return (
-    <div className="h-[30rem]">
+    <div className="h-fit">
       <div className="flex flex-col items-center justify-center text-solid-black">
         <TableHead
           columnsLayout={DRIVERS_VIEW_COLUMNS_LAYOUT}

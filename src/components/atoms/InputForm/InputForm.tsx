@@ -4,6 +4,7 @@ import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
 import { inputFormStyle } from "../../../tailwind/tailwind.ts";
 import { InputFormError } from "./InputFormError.tsx";
 import { InputFormLabel } from "./InputFormLabel.tsx";
+import { BORDER_SOLID_COLOR } from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const InputForm: React.FC<{
   label: string;
@@ -30,7 +31,7 @@ export const InputForm: React.FC<{
   const [borderColor, setBorderColor] = useState("border-light-grey");
   const handleFocus = () => {
     setIsFocused(true);
-    setBorderColor("border-solid-blue");
+    setBorderColor(BORDER_SOLID_COLOR);
     if (onFocus) {
       onFocus();
     }

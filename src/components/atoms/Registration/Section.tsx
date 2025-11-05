@@ -1,4 +1,11 @@
 import * as React from "react";
+import {
+  BORDER_NORMAL_COLOR,
+  HOVER_BORDER_NORMAL_COLOR,
+  HOVER_BACKGROUND_NORMAL_COLOR,
+  BACKGROUND_NORMAL_COLOR,
+  TEXT_NORMAL_COLOR,
+} from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const Section: React.FC<{
   sectionTitle: string;
@@ -18,20 +25,20 @@ export const Section: React.FC<{
   const textColor = !isActive
     ? isWithErrors
       ? "text-error-red"
-      : "text-light-blue"
+      : TEXT_NORMAL_COLOR
     : "text-white";
   const backgroundColor = isActive
     ? isWithErrors
       ? "bg-error-red"
-      : "bg-light-blue"
+      : BACKGROUND_NORMAL_COLOR
     : "bg-white";
   const borderColorOnHover = isWithErrors
     ? "hover:border-error-red"
-    : "hover:border-light-blue";
+    : HOVER_BORDER_NORMAL_COLOR;
   const backgroundColorOnHover = isWithErrors
     ? "hover:bg-error-red"
-    : "hover:bg-light-blue";
-  const borderColor = isWithErrors ? "border-error-red" : "border-light-blue";
+    : HOVER_BACKGROUND_NORMAL_COLOR;
+  const borderColor = isWithErrors ? "border-error-red" : BORDER_NORMAL_COLOR;
   return (
     <>
       <div
@@ -41,13 +48,13 @@ export const Section: React.FC<{
         <p className="font-lato font-medium text-[1rem]">{sectionIndex}</p>
       </div>
       <p
-        className={`font-lato font-regular text-standard-size text-center ${isWithErrors ? "text-error-red" : "text-light-blue"}`}
+        className={`font-lato font-regular text-standard-size text-center ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}`}
       >
         {sectionTitle}
       </p>
       {isLast && (
         <div
-          className={`w-[8rem] border-[0.063rem]  ${isWithErrors ? "border-error-red" : "border-light-blue"}`}
+          className={`w-[8rem] border-[0.063rem]  ${isWithErrors ? "border-error-red" : BORDER_NORMAL_COLOR}`}
         ></div>
       )}
     </>

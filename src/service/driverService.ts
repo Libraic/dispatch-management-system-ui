@@ -4,7 +4,6 @@ import type { CreateDriverRequest } from "../types/api/driver/driver-api-request
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import {
   COMPANY_ID_QUERY_PARAM,
-  DEFAULT_SIZE,
   JOIN_CLAUSE,
   PAGE,
   SIZE,
@@ -16,6 +15,7 @@ import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common/api-errors-types.ts";
+import { DRIVERS_PAGE_SIZE } from "../constants/driver/drivers-table-constants.ts";
 
 export const saveDriver = async (
   createDriverRequest: CreateDriverRequest,
@@ -35,7 +35,7 @@ export const getDrivers = async (
   try {
     const params = {
       [COMPANY_ID_QUERY_PARAM]: `${JOIN_CLAUSE}${COLON}${companyUuid}`,
-      [SIZE]: DEFAULT_SIZE,
+      [SIZE]: DRIVERS_PAGE_SIZE,
       ...(page !== undefined && { [PAGE]: page }),
     };
     const response = await axios.get<ApiResponse<DriverData[], Error>>(
