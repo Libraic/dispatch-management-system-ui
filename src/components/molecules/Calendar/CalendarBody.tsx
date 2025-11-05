@@ -1,0 +1,44 @@
+import {
+  BACKGROUND_PALE_BLUE,
+  TEXT_SOLID_GRAY,
+} from "../../../tailwind/tailwind-colors-vars.ts";
+import * as React from "react";
+import type { WeekIndexer } from "../../../types/internal/calendar/calendar-types.ts";
+
+export const CalendarBody: React.FC<{
+  daysOfMonthGroupedByWeek: WeekIndexer;
+  activeWeek: number;
+  setActiveWeekByIndex: (weekIndex: number) => void;
+}> = ({ daysOfMonthGroupedByWeek, activeWeek, setActiveWeekByIndex }) => {
+  const today = new Date();
+  const dayOfMonth = today.getDate();
+  console.log(daysOfMonthGroupedByWeek);
+  console.log(dayOfMonth);
+  return (
+    <div className="flex flex-col items-center font-light text-[0.7rem] pt-4 gap-y-5">
+      {Array.from(
+        { length: Object.keys(daysOfMonthGroupedByWeek).length },
+        (_, i) => {
+          const week = daysOfMonthGroupedByWeek[i];
+          return (
+            <div
+              key={i}
+              className={`flex flex-row items-center gap-x-[0.85rem] hover:cursor-pointer font-normal ${activeWeek === i && BACKGROUND_PALE_BLUE} rounded-[0.2rem] h-[1.85rem]`}
+              onMouseEnter={() => setActiveWeekByIndex(i)}
+              onMouseLeave={() => setActiveWeekByIndex(-1)}
+            >
+              {week.map((weekday, index) => (
+                <div
+                  key={index}
+                  className={`flex items-center justify-center ${weekday !== undefined && !weekday.currentMonth ? "text-gray-400" : "text-black"} ${activeWeek === i && TEXT_SOLID_GRAY} ${weekday.day === dayOfMonth && "border-pale-blue border-[0.1rem]"} rounded-[0.6rem] w-6 h-6`}
+                >
+                  <p className="text-center">{weekday.day}</p>
+                </div>
+              ))}
+            </div>
+          );
+        },
+      )}
+    </div>
+  );
+};

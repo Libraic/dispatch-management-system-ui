@@ -5,6 +5,7 @@ import { TableCell } from "../../../atoms/Table/TableCell.tsx";
 import {
   HOVER_BORDER_B_NORMAL_COLOR,
   HOVER_BACKGROUND_NORMAL_COLOR,
+  ODD_BACKGROUND_LIGHT_GRAY,
 } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const DriversTableContent: React.FC<{ drivers: DriverData[] }> = ({
@@ -15,7 +16,7 @@ export const DriversTableContent: React.FC<{ drivers: DriverData[] }> = ({
       {drivers.map((driver, index) => (
         <div
           key={index}
-          className={`grid items-center ${DRIVERS_VIEW_COLUMNS_LAYOUT} odd:bg-[#f4f4fb] h-[2.75rem] w-[95%] font-plus-jakarta-sans font-normal text-[0.85rem] px-[2rem] ${HOVER_BACKGROUND_NORMAL_COLOR} ${HOVER_BORDER_B_NORMAL_COLOR} hover:text-white`}
+          className={`grid items-center ${DRIVERS_VIEW_COLUMNS_LAYOUT} ${ODD_BACKGROUND_LIGHT_GRAY} h-[2.75rem] w-[95%] font-plus-jakarta-sans font-normal text-[0.85rem] px-[2rem] ${HOVER_BACKGROUND_NORMAL_COLOR} ${HOVER_BORDER_B_NORMAL_COLOR} hover:text-white`}
         >
           <TableCell data={`${driver.firstName} ${driver.lastName}`} />
           <TableCell data={driver.truckNumber} />

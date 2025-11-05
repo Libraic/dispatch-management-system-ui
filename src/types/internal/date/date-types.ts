@@ -13,3 +13,8 @@ export type DateObject = {
   setMonth: (month: number) => void;
   setYear: (year: number) => void;
 };
+
+export type DayOfMonth = {
+  day: number;
+  currentMonth: boolean;
+};

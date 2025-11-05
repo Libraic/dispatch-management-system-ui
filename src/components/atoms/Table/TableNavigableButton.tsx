@@ -11,8 +11,6 @@ export const TableNavigableButton: React.FC<{
   icon: string;
 }> = ({ navigationAddress, label, icon }) => {
   const navigate = useNavigate();
-  console.log(BACKGROUND_NORMAL_COLOR);
-  console.log(HOVER_BACKGROUND_SOLID_COLOR);
   return (
     <div
       onClick={() => navigate(navigationAddress)}

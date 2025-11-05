@@ -8,38 +8,42 @@ import * as React from "react";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
 import { saveDriversWeeklyMileage } from "../../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import type { ToastData } from "../../../../hooks/useToast.ts";
+import { CalendarIconWrapper } from "../../../molecules/Calendar/CalendarIconWrapper.tsx";
 
 export const OptionBar: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
   toast: ToastData;
 }> = ({ driverWeeklyMileageData, toast }) => {
   return (
-    <div className="mb-3 sticky left-0 z-10 overflow-hidden">
-      <IconButton
-        unfocusedResource={addRecordUnfocused}
-        focusedResource={addRecordFocused}
-        action={() =>
-          addNewDriversMileageGroup(
-            driverWeeklyMileageData.setDriversMileageGroups,
-            driverWeeklyMileageData.getWeekDays(),
-          )
-        }
-        information="AddButton a new record"
-      />
-      <IconButton
-        unfocusedResource={saveRecordsUnfocused}
-        focusedResource={saveRecordsFocused}
-        action={async () => {
-          const response = await saveDriversWeeklyMileage(
-            driverWeeklyMileageData,
-          );
-          driverWeeklyMileageData.setErrors(response);
-          if (Object.keys(response).length === 0) {
-            toast.withSuccessMessage("The records were successfully saved.");
+    <div className="flex flex-row items-center justify-between mb-3 sticky left-0 z-10 overflow-hidden">
+      <div>
+        <IconButton
+          unfocusedResource={addRecordUnfocused}
+          focusedResource={addRecordFocused}
+          action={() =>
+            addNewDriversMileageGroup(
+              driverWeeklyMileageData.setDriversMileageGroups,
+              driverWeeklyMileageData.getWeekDays(),
+            )
           }
-        }}
-        information="Save records"
-      />
+          information="AddButton a new record"
+        />
+        <IconButton
+          unfocusedResource={saveRecordsUnfocused}
+          focusedResource={saveRecordsFocused}
+          action={async () => {
+            const response = await saveDriversWeeklyMileage(
+              driverWeeklyMileageData,
+            );
+            driverWeeklyMileageData.setErrors(response);
+            if (Object.keys(response).length === 0) {
+              toast.withSuccessMessage("The records were successfully saved.");
+            }
+          }}
+          information="Save records"
+        />
+      </div>
+      <CalendarIconWrapper />
     </div>
   );
 };

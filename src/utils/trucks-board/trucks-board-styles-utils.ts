@@ -18,7 +18,7 @@ export const getDispatcherLiveSearchCellStyles = (
     position: "sticky",
     left: 0,
     writingMode: "sideways-lr",
-    borderLeft: "0.2rem solid #d8ceff",
+    borderLeft: "0.15rem solid #c4d1f3",
   };
 };
 
