@@ -1,6 +1,9 @@
 import * as React from "react";
 import { Z_INDEX_TRUCKS_BOARD_TABLE } from "../../../constants/trucks-board/trucks-board-constants.ts";
-import { TEXT_SOLID_GRAY } from "../../../tailwind/tailwind-colors-vars.ts";
+import {
+  BACKGROUND_PALE_BLUE,
+  TEXT_SOLID_GRAY,
+} from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const MatrixHeader: React.FC<{
   stickyColumns: string[];
@@ -20,7 +23,7 @@ export const MatrixHeader: React.FC<{
     >
       <div
         style={{ gridTemplateColumns: stickyColumnsLayout }}
-        className={`grid bg-[#ab8fff] sticky left-0 z-20 h-[3rem]`}
+        className={`grid ${BACKGROUND_PALE_BLUE} sticky left-0 z-20 h-[3rem]`}
       >
         {stickyColumns.map((column, index) => (
           <div className="flex items-center px-4" key={index}>
@@ -32,7 +35,7 @@ export const MatrixHeader: React.FC<{
         <div className="overflow-x-auto hide-scrollbar">
           <div
             style={{ gridTemplateColumns: scrollableColumnsLayout }}
-            className={`grid bg-[#ab8fff] h-[3rem]`}
+            className={`grid ${BACKGROUND_PALE_BLUE} h-[3rem]`}
           >
             {scrollableColumns.map((day, index) => (
               <div className="flex items-center px-4" key={index}>

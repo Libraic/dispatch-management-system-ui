@@ -18,7 +18,6 @@ import { ConfirmationModal } from "../../../molecules/Modal/ConfirmationModal.ts
 import { DriversMileage } from "../../../organisms/Company/TrucksBoard/DriversMileage.tsx";
 import { getWeekWithNames } from "../../../../utils/date/date-utils.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
-import { TrucksBoardTimeline } from "../../../organisms/Company/TrucksBoard/TrucksBoardTimeline.tsx";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../../service/driverMileageService.ts";
 import { getWeekWithDayAndMonth } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../../constants/common/header-constants.ts";
@@ -27,8 +26,10 @@ const WEEKS = getWeekWithNames(new Date());
 
 export const TrucksBoardPage = () => {
   const { companyUuid } = useParams();
-  const [week, setWeek] = useState<string[]>(WEEKS[WEEKS.length - 2]);
-  const driverWeeklyMileageData = useDriverWeeklyMileage(companyUuid!!, week);
+  const driverWeeklyMileageData = useDriverWeeklyMileage(
+    companyUuid!!,
+    WEEKS[WEEKS.length - 2],
+  );
   const toastData = useToast();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const TrucksBoardPage = () => {
   useEffect(() => {
     fetchDriversMileageByCompanyUuidAndStartAndEndDate(
       companyUuid!!,
-      week,
+      WEEKS[WEEKS.length - 2],
     ).then((response) => {
       if (Array.isArray(response)) {
         driverWeeklyMileageData.setDriversMileageGroups(response);
@@ -45,7 +46,7 @@ export const TrucksBoardPage = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [week]);
+  }, []);
 
   return (
     <div className="overflow-hidden hide-scrollbar">
@@ -86,12 +87,11 @@ export const TrucksBoardPage = () => {
               /_/g,
               BLANK_SPACE,
             )}
-            scrollableColumns={getWeekWithDayAndMonth(week)}
+            scrollableColumns={getWeekWithDayAndMonth(WEEKS[WEEKS.length - 2])}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileage driverWeeklyMileageData={driverWeeklyMileageData} />
         </div>
-        <TrucksBoardTimeline weeks={WEEKS} setActiveWeek={setWeek} />
         <ToastRenderer toast={toastData} />
       </div>
     </div>

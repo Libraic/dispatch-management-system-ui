@@ -23,6 +23,7 @@ import {
 import type { LiveSearchResult } from "../../../types/api/common/api-response-types.ts";
 import { usePagination } from "../../../hooks/usePagination.ts";
 import { DEFAULT_SIZE } from "../../../constants/api/api-query-constants.ts";
+import { BORDER_PALE_BLUE } from "../../../tailwind/tailwind-colors-vars.ts";
 
 export const LiveSearchCell = <D, R>({
   entityType,
@@ -103,7 +104,7 @@ export const LiveSearchCell = <D, R>({
       <div
         className={`p-2 flex justify-center items-center ${
           errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE
-        } border-b-2 border-r-2 border-[#ab8fff] bg-[#f5f7fc] w-full h-full caret-transparent`}
+        } border-b-2 border-r-2 ${BORDER_PALE_BLUE} bg-[#f5f7fc] w-full h-full caret-transparent`}
         contentEditable
         suppressContentEditableWarning={true}
         onFocus={() => setIsLiveSearchActive(true)}

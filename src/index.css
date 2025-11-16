@@ -17,6 +17,7 @@
     --color-diluted-purple: #f1ecff;
 
     --color-solid-gray: #3b3b3b;
+    --color-light-gray: #f4f4fb;
 
     /* Matrix Board Colors */
     --color-standard-bg: #f4effa;
@@ -26,6 +27,8 @@
     --color-error-red: #BF3131;
     --color-light-grey: #f2f2f2;
     --color-solid-black: #212327;
+
+    --color-pale-blue: #c4d1f3;
 
     --text-standard-size: 0.9rem;
 }
@@ -65,5 +68,5 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #9370ff;
+    background: #c4d1f3;
 }

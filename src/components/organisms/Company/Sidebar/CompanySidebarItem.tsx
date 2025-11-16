@@ -3,10 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanySidebarItemData } from "./CompanySidebarItemData.tsx";
 import {
-  HOVER_BACKGROUND_NORMAL_COLOR,
-  HOVER_BACKGROUND_SOLID_COLOR,
   BACKGROUND_NORMAL_COLOR,
   BACKGROUND_SOLID_COLOR,
+  HOVER_BACKGROUND_SOLID_COLOR,
 } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export type SubmenuData = {
@@ -22,7 +21,6 @@ export const CompanySidebarItem: React.FC<{
 }> = ({ label, icon, baseRoute, submenuData }) => {
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
-  console.log(HOVER_BACKGROUND_NORMAL_COLOR);
   return (
     <div className="mt-5 flex flex-col align-top gap-y-2">
       <div
