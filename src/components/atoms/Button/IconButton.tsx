@@ -29,7 +29,7 @@ export const IconButton: React.FC<{
       {hoverPanelData.shouldDisplayMessage() && (
         <HoverableInformation
           message={information!!}
-          leftPosition="left-[4.2rem]"
+          leftPosition="left-[1rem]"
           minWidth="min-w-[8rem]"
         />
       )}

@@ -16,7 +16,7 @@ export const TrucksBoardMenuBar: React.FC<{
   extractWeekFromCalendar: (date: Date[]) => void;
 }> = ({ driverWeeklyMileageData, toast, extractWeekFromCalendar }) => {
   return (
-    <div className="flex flex-row items-center justify-between mb-3 sticky left-0 z-10 overflow-hidden">
+    <div className="flex flex-row items-center justify-between mb-3 sticky left-0 z-10000">
       <div>
         <IconButton
           unfocusedResource={addRecordUnfocused}
@@ -27,7 +27,7 @@ export const TrucksBoardMenuBar: React.FC<{
               driverWeeklyMileageData.getWeekDays(),
             )
           }
-          information="AddButton a new record"
+          information="Add a new record"
         />
         <IconButton
           unfocusedResource={saveRecordsUnfocused}
