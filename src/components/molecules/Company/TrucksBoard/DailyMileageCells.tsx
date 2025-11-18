@@ -1,4 +1,4 @@
-import { EditableCell } from "../../Cell/EditableCell.tsx";
+import { EditableCell } from "../../../atoms/Matrix/Cell/EditableCell.tsx";
 import { CellType } from "../../../../types/internal/matrix/matrix-types.ts";
 import type {
   Mileage,
@@ -6,7 +6,7 @@ import type {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import * as React from "react";
 
-export const DailyMileage: React.FC<{
+export const DailyMileageCells: React.FC<{
   mileage: Mileage;
   setDriverWeeklyMileage: (
     mileageIndex: number,

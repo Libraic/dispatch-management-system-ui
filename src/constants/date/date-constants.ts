@@ -31,3 +31,5 @@ export const MONTHS: Record<string, number> = {
   November: 11,
   December: 12,
 };
+
+export const DEFAULT_DATE_LOCALE = "en-CA";

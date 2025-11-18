@@ -3,13 +3,19 @@ import {
   type DriverWeeklyMileage,
   type Mileage,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  HYPHEN,
+} from "../../constants/common/global-constants.ts";
 import { type Dispatch, type SetStateAction } from "react";
 import type { User } from "../../types/internal/classes/User.ts";
 import { v4 as uuidv4 } from "uuid";
 import type { Driver } from "../../types/internal/classes/Driver.ts";
 import type { Renderable } from "../../types/internal/classes/Renderable.ts";
-import { WEEKDAYS } from "../../constants/date/date-constants.ts";
+import {
+  DEFAULT_DATE_LOCALE,
+  WEEKDAYS,
+} from "../../constants/date/date-constants.ts";
 
 export const addNewDriversMileageGroup = (
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
@@ -139,14 +145,14 @@ export const mileagesMapperFunction = (
 export const getWeekWithDayAndMonth = (week: string[]) => {
   const biweeklyTimeline = [...week];
   for (const weekDay of week) {
-    const [y, m, d] = weekDay.split("-").map(Number);
+    const [y, m, d] = weekDay.split(HYPHEN).map(Number);
     const date = new Date(y, m - 1, d);
     date.setDate(date.getDate() + 7);
-    biweeklyTimeline.push(date.toLocaleDateString("en-CA"));
+    biweeklyTimeline.push(date.toLocaleDateString(DEFAULT_DATE_LOCALE));
   }
 
   return biweeklyTimeline.map((day, index) => {
-    const dateParts = day.split("-");
+    const dateParts = day.split(HYPHEN);
     return `${WEEKDAYS[index % 7]} ${dateParts[2]}.${dateParts[1]}`;
   });
 };

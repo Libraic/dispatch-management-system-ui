@@ -1,11 +1,11 @@
 import * as React from "react";
-import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
-import { CellType } from "../../../types/internal/matrix/matrix-types.ts";
-import { sanitizeInput } from "../../../utils/matrix/cell-utils.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { CellType } from "../../../../types/internal/matrix/matrix-types.ts";
+import { sanitizeInput } from "../../../../utils/matrix/cell-utils.ts";
 import {
   ERRONEOUS_BACKGROUND_STYLE,
   NO_ERROR_BACKGROUND_STYLE,
-} from "../../../utils/matrix/cell-constants.ts";
+} from "../../../../utils/matrix/cell-constants.ts";
 
 export const EditableCell: React.FC<{
   content: string | null;

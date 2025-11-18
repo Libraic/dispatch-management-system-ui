@@ -1,6 +1,9 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
-import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  HYPHEN,
+} from "../../../constants/common/global-constants.ts";
 import { inputFormStyle } from "../../../tailwind/tailwind.ts";
 import { InputFormError } from "./InputFormError.tsx";
 import { InputFormLabel } from "./InputFormLabel.tsx";
@@ -46,7 +49,7 @@ export const InputForm: React.FC<{
     saveInputData(e.target.value);
   };
 
-  const name = label.toLowerCase().replace(" ", "-");
+  const name = label.toLowerCase().replace(" ", HYPHEN);
 
   return (
     <div className="flex flex-col gap-y-2 min-h-[6.5rem]">

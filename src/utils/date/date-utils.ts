@@ -4,6 +4,7 @@ import type {
   YearData,
 } from "../../types/internal/date/date-types.ts";
 import type { WeekIndexer } from "../../types/internal/calendar/calendar-types.ts";
+import { DEFAULT_DATE_LOCALE } from "../../constants/date/date-constants.ts";
 
 export const getCurrentWeekDays = (): string[] => {
   const date = new Date();
@@ -15,7 +16,7 @@ export const getCurrentWeekDays = (): string[] => {
   for (let i = 0; i < 7; i++) {
     const currentDay = new Date(monday);
     currentDay.setDate(monday.getDate() + i);
-    weekDays.push(currentDay.toLocaleDateString("en-CA"));
+    weekDays.push(currentDay.toLocaleDateString(DEFAULT_DATE_LOCALE));
   }
 
   return weekDays;

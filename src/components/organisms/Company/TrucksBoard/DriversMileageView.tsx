@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
-import { DriverMileageMetadata } from "./DriverMileageMetadata.tsx";
-import { DailyMileageView } from "../../../molecules/Company/TrucksBoard/DailyMileageView.tsx";
+import { DriverMileageMetadataCells } from "./DriverMileageMetadataCells.tsx";
+import { BiweeklyMileageCells } from "../../../molecules/Company/TrucksBoard/BiweeklyMileageCells.tsx";
 import {
   setDispatcher,
   setDriverWeeklyMileage,
@@ -19,7 +19,7 @@ import {
 } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
 import { Entity } from "../../../../types/api/common/api-query-types.ts";
 
-export const DriversMileage: React.FC<{
+export const DriversMileageView: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
 }> = ({ driverWeeklyMileageData }) => {
   const errors = driverWeeklyMileageData.errors;
@@ -57,14 +57,14 @@ export const DriversMileage: React.FC<{
               const itemIdentifier = driverWeeklyMileage.itemIdentifier;
               return (
                 <div key={itemIdentifier} className="contents">
-                  <DriverMileageMetadata
+                  <DriverMileageMetadataCells
                     groupIdentifier={groupIdentifier}
                     driverWeeklyMileage={driverWeeklyMileage}
                     driverWeeklyMileageData={driverWeeklyMileageData}
                     index={idx}
                     error={itemErrors}
                   />
-                  <DailyMileageView
+                  <BiweeklyMileageCells
                     driverWeeklyMileage={driverWeeklyMileage}
                     setDriverWeeklyMileage={(mileageIndex, field, value) =>
                       setDriverWeeklyMileage(

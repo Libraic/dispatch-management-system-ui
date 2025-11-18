@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NO_ERROR_BACKGROUND_STYLE } from "../../../utils/matrix/cell-constants.ts";
+import { NO_ERROR_BACKGROUND_STYLE } from "../../../../utils/matrix/cell-constants.ts";
 
 export const ViewableCell: React.FC<{ data: string; font?: string }> = ({
   data,

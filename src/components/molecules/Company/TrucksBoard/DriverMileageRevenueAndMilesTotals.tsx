@@ -1,4 +1,4 @@
-import { ViewableCell } from "../../Cell/ViewableCell.tsx";
+import { ViewableCell } from "../../../atoms/Matrix/Cell/ViewableCell.tsx";
 import * as React from "react";
 import type { Mileage } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import {
@@ -9,7 +9,7 @@ import {
 import { formatNumericValue } from "../../../../utils/matrix/cell-utils.ts";
 import { getTotalRevenueAndMiles } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 
-export const DriverMileageTotalRevenueAndMiles: React.FC<{
+export const DriverMileageRevenueAndMilesTotals: React.FC<{
   mileages: Mileage[];
 }> = ({ mileages }) => {
   const [totalRevenue, totalMiles] = getTotalRevenueAndMiles(mileages);

@@ -1,4 +1,4 @@
-import { IconButton } from "./IconButton.tsx";
+import { IconButton } from "../../../atoms/Button/IconButton.tsx";
 import addRecordUnfocused from "../../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../../assets/trucks-board/add-focused.svg";
 import { addNewDriversMileageGroup } from "../../../../utils/trucks-board/trucks-board-utils.ts";
@@ -10,7 +10,7 @@ import { saveDriversWeeklyMileage } from "../../../../utils/api/trucks-board/tru
 import type { ToastData } from "../../../../hooks/useToast.ts";
 import { CalendarIconWrapper } from "../../../molecules/Calendar/CalendarIconWrapper.tsx";
 
-export const OptionBar: React.FC<{
+export const TrucksBoardMenuBar: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
   toast: ToastData;
   extractWeekFromCalendar: (date: Date[]) => void;

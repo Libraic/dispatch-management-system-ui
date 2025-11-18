@@ -8,14 +8,14 @@ import {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { joinByCompanyId } from "../../../../utils/api/api-query-utils.ts";
-import { ViewableCell } from "../../../molecules/Cell/ViewableCell.tsx";
+import { ViewableCell } from "../../../atoms/Matrix/Cell/ViewableCell.tsx";
 import {
   BLANK_STRING,
   REM_UNIT,
   TRAILING_ZERO,
   UNDERSCORE,
 } from "../../../../constants/common/global-constants.ts";
-import { DriverMileageTotalRevenueAndMiles } from "../../../molecules/Company/TrucksBoard/DriverMileageTotalRevenueAndMiles.tsx";
+import { DriverMileageRevenueAndMilesTotals } from "../../../molecules/Company/TrucksBoard/DriverMileageRevenueAndMilesTotals.tsx";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
@@ -23,7 +23,7 @@ import { TRUCKS_BOARD_PRIMARY_COLUMNS_WIDTHS } from "../../../../constants/truck
 import { getStickyCellStyles } from "../../../../utils/trucks-board/trucks-board-styles-utils.ts";
 import { Entity } from "../../../../types/api/common/api-query-types.ts";
 
-export const DriverMileageMetadata: React.FC<{
+export const DriverMileageMetadataCells: React.FC<{
   groupIdentifier: string;
   driverWeeklyMileage: DriverWeeklyMileage;
   driverWeeklyMileageData: DriverWeeklyMileageData;
@@ -80,7 +80,7 @@ export const DriverMileageMetadata: React.FC<{
         />
       </div>
       <div style={getStickyCellStyles(offsets[3], index)}>
-        <DriverMileageTotalRevenueAndMiles
+        <DriverMileageRevenueAndMilesTotals
           mileages={driverWeeklyMileage.mileageData}
         />
       </div>

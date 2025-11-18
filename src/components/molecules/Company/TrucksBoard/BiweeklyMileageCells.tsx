@@ -1,4 +1,4 @@
-import { DailyMileage } from "./DailyMileage.tsx";
+import { DailyMileageCells } from "./DailyMileageCells.tsx";
 import type {
   DriverMileageErrors,
   DriverWeeklyMileage,
@@ -7,7 +7,7 @@ import type {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import * as React from "react";
 
-export const DailyMileageView: React.FC<{
+export const BiweeklyMileageCells: React.FC<{
   driverWeeklyMileage: DriverWeeklyMileage;
   setDriverWeeklyMileage: (
     mileageIndex: number,
@@ -20,7 +20,7 @@ export const DailyMileageView: React.FC<{
     <>
       {driverWeeklyMileage.mileageData.map((mileage, index) => (
         <div className="flex items-center bg-[#f5f7fc]" key={index}>
-          <DailyMileage
+          <DailyMileageCells
             mileage={mileage}
             setDriverWeeklyMileage={setDriverWeeklyMileage}
             index={index}
