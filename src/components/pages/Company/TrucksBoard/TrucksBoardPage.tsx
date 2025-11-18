@@ -16,28 +16,31 @@ import { BackButton } from "../../../atoms/Button/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../../utils/route/route-utils.ts";
 import { ConfirmationModal } from "../../../molecules/Modal/ConfirmationModal.tsx";
 import { DriversMileage } from "../../../organisms/Company/TrucksBoard/DriversMileage.tsx";
-import { getWeekWithNames } from "../../../../utils/date/date-utils.ts";
+import { getCurrentWeekDays } from "../../../../utils/date/date-utils.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../../service/driverMileageService.ts";
 import { getWeekWithDayAndMonth } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../../constants/common/header-constants.ts";
 
-const WEEKS = getWeekWithNames(new Date());
-
 export const TrucksBoardPage = () => {
   const { companyUuid } = useParams();
+  const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const driverWeeklyMileageData = useDriverWeeklyMileage(
     companyUuid!!,
-    WEEKS[WEEKS.length - 2],
+    activeWeek,
   );
   const toastData = useToast();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const extractWeekFromCalendar = (dates: Date[]) => {
+    const vals = dates.map((date) => date.toLocaleDateString("en-CA"));
+    setActiveWeek(vals);
+  };
 
   useEffect(() => {
     fetchDriversMileageByCompanyUuidAndStartAndEndDate(
       companyUuid!!,
-      WEEKS[WEEKS.length - 2],
+      activeWeek,
     ).then((response) => {
       if (Array.isArray(response)) {
         driverWeeklyMileageData.setDriversMileageGroups(response);
@@ -46,7 +49,7 @@ export const TrucksBoardPage = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeWeek]);
 
   return (
     <div className="overflow-hidden hide-scrollbar">
@@ -78,6 +81,7 @@ export const TrucksBoardPage = () => {
           <OptionBar
             driverWeeklyMileageData={driverWeeklyMileageData}
             toast={toastData}
+            extractWeekFromCalendar={extractWeekFromCalendar}
           />
         </div>
         <div className="flex-1 w-[95%] mx-auto overflow-x-auto">
@@ -87,7 +91,7 @@ export const TrucksBoardPage = () => {
               /_/g,
               BLANK_SPACE,
             )}
-            scrollableColumns={getWeekWithDayAndMonth(WEEKS[WEEKS.length - 2])}
+            scrollableColumns={getWeekWithDayAndMonth(activeWeek)}
             scrollableColumnsLayout={TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT}
           />
           <DriversMileage driverWeeklyMileageData={driverWeeklyMileageData} />

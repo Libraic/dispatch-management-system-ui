@@ -6,7 +6,9 @@ import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { WeekCalendar } from "../../organisms/Calendar/WeekCalendar.tsx";
 
-export const CalendarIconWrapper = () => {
+export const CalendarIconWrapper: React.FC<{
+  extractWeekFromCalendar: (date: Date[]) => void;
+}> = ({ extractWeekFromCalendar }) => {
   const [isCalendarActive, setIsCalendarActive] = React.useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
   return (
@@ -23,6 +25,7 @@ export const CalendarIconWrapper = () => {
             parentRef={calendarRef}
             isCalendarActive={isCalendarActive}
             setIsCalendarActive={setIsCalendarActive}
+            extractWeekFromCalendar={extractWeekFromCalendar}
           />,
           document.body,
         )}

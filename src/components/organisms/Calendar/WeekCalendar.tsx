@@ -9,12 +9,23 @@ import { CalendarFieldSelector } from "../../molecules/Calendar/CalendarFieldSel
 import { CalendarBody } from "../../molecules/Calendar/CalendarBody.tsx";
 import { useOnClickOutside } from "../../../hooks/useClickOutside.ts";
 import type { CalendarTimeline } from "../../../types/internal/calendar/calendar-types.ts";
+import type { DayOfMonth } from "../../../types/internal/date/date-types.ts";
+import {
+  getFallbackMonth,
+  getFallbackYear,
+} from "../../../utils/calendar/calendar-utils.ts";
 
 export const WeekCalendar: React.FC<{
   parentRef: RefObject<HTMLDivElement | null>;
   isCalendarActive: boolean;
   setIsCalendarActive: (value: boolean) => void;
-}> = ({ parentRef, isCalendarActive, setIsCalendarActive }) => {
+  extractWeekFromCalendar: (date: Date[]) => void;
+}> = ({
+  parentRef,
+  isCalendarActive,
+  setIsCalendarActive,
+  extractWeekFromCalendar,
+}) => {
   const now = new Date();
   const [timeline, setTimeline] = useState<CalendarTimeline>({
     year: now.getFullYear().toString(),
@@ -39,6 +50,22 @@ export const WeekCalendar: React.FC<{
     yearExpanderRef,
     monthExpanderRef,
   ]);
+
+  const weekExtractorTemplateFunction = (days: DayOfMonth[]) => {
+    const currentYear = parseInt(timeline.year);
+    const currentMonth = new Date(`${timeline.month} 1, 2000`).getMonth();
+    const fallbackMonth = getFallbackMonth(days, currentMonth);
+    const fallbackYear = getFallbackYear(days, currentYear, fallbackMonth);
+    const dates = [];
+    for (const day of days) {
+      const date = day.currentMonth
+        ? new Date(currentYear, currentMonth, day.day)
+        : new Date(fallbackYear, fallbackMonth, day.day);
+      dates.push(date);
+    }
+    console.log(dates);
+    extractWeekFromCalendar(dates);
+  };
 
   return (
     isCalendarActive && (
@@ -87,6 +114,7 @@ export const WeekCalendar: React.FC<{
           setActiveWeekByIndex={(activeWeek: number) =>
             setTimeline((prev) => ({ ...prev, activeWeek: activeWeek }))
           }
+          weekExtractorTemplateFunction={weekExtractorTemplateFunction}
         />
       </div>
     )

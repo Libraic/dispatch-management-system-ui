@@ -139,9 +139,10 @@ export const mileagesMapperFunction = (
 export const getWeekWithDayAndMonth = (week: string[]) => {
   const biweeklyTimeline = [...week];
   for (const weekDay of week) {
-    const date = new Date(weekDay);
+    const [y, m, d] = weekDay.split("-").map(Number);
+    const date = new Date(y, m - 1, d);
     date.setDate(date.getDate() + 7);
-    biweeklyTimeline.push(date.toISOString().split("T")[0]);
+    biweeklyTimeline.push(date.toLocaleDateString("en-CA"));
   }
 
   return biweeklyTimeline.map((day, index) => {

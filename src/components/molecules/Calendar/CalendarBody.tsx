@@ -4,16 +4,21 @@ import {
 } from "../../../tailwind/tailwind-colors-vars.ts";
 import * as React from "react";
 import type { WeekIndexer } from "../../../types/internal/calendar/calendar-types.ts";
+import type { DayOfMonth } from "../../../types/internal/date/date-types.ts";
 
 export const CalendarBody: React.FC<{
   daysOfMonthGroupedByWeek: WeekIndexer;
   activeWeek: number;
   setActiveWeekByIndex: (weekIndex: number) => void;
-}> = ({ daysOfMonthGroupedByWeek, activeWeek, setActiveWeekByIndex }) => {
+  weekExtractorTemplateFunction: (days: DayOfMonth[]) => void;
+}> = ({
+  daysOfMonthGroupedByWeek,
+  activeWeek,
+  setActiveWeekByIndex,
+  weekExtractorTemplateFunction,
+}) => {
   const today = new Date();
   const dayOfMonth = today.getDate();
-  console.log(daysOfMonthGroupedByWeek);
-  console.log(dayOfMonth);
   return (
     <div className="flex flex-col items-center font-light text-[0.7rem] pt-4 gap-y-5">
       {Array.from(
@@ -24,6 +29,7 @@ export const CalendarBody: React.FC<{
             <div
               key={i}
               className={`flex flex-row items-center gap-x-[0.85rem] hover:cursor-pointer font-normal ${activeWeek === i && BACKGROUND_PALE_BLUE} rounded-[0.2rem] h-[1.85rem]`}
+              onClick={() => weekExtractorTemplateFunction(week)}
               onMouseEnter={() => setActiveWeekByIndex(i)}
               onMouseLeave={() => setActiveWeekByIndex(-1)}
             >

@@ -5,34 +5,20 @@ import type {
 } from "../../types/internal/date/date-types.ts";
 import type { WeekIndexer } from "../../types/internal/calendar/calendar-types.ts";
 
-/**
- * Generates a two-dimensional array representing dates for a week, along with adjacent weeks,
- * formatted as ISO strings. It includes the current week, the two preceding weeks, and the next week.
- *
- * @param {Date} date - The reference date from which the week is calculated.
- * @returns {string[][]} A 2D array of ISO-formatted date strings. Each subarray represents a week,
- * starting with the week following the reference week, the current week, and the two preceding weeks.
- */
-export const getWeekWithNames = (date: Date): string[][] => {
+export const getCurrentWeekDays = (): string[] => {
+  const date = new Date();
   const dayOfWeek = date.getDay() === 0 ? 6 : date.getDay() - 1;
   const monday = new Date(date);
   monday.setDate(monday.getDate() - dayOfWeek);
-  const results: string[][] = [];
+  const weekDays = [];
 
-  for (let j = 2; j >= 0; --j) {
-    const result: string[] = [];
-    for (let i = 0; i < 7; i++) {
-      result.push(getDateInIsoFormat(monday, -j, i));
-    }
-    results.push(result);
-  }
-
-  const result: string[] = [];
   for (let i = 0; i < 7; i++) {
-    result.push(getDateInIsoFormat(monday, 1, i));
+    const currentDay = new Date(monday);
+    currentDay.setDate(monday.getDate() + i);
+    weekDays.push(currentDay.toLocaleDateString("en-CA"));
   }
 
-  return [...results, result];
+  return weekDays;
 };
 
 export const convertDateToLittleEndian = (date: YearData) => {
@@ -171,26 +157,4 @@ const getFirstUndefinedDayUpwards = (days: DayOfMonth[]) => {
   }
 
   return -1;
-};
-
-/**
- * Calculates a date in ISO 8601 format (YYYY-MM-DD) based on a specified start date, week offset, and day offset.
- *
- * @param {Date} monday - The starting date, typically representing the first day of a week (e.g., Monday).
- * @param {number} weekIndex - The number of weeks to offset from the starting date. Can be positive or negative, depending on
- * if you want it to be a future week (+) or a previous week (-).
- * @param {number} dayIndex - The number of days to offset from the start of the calculated week. Typically ranges from 0 to 6.
- * @returns {string} The calculated date in ISO 8601 format (YYYY-MM-DD).
- */
-const getDateInIsoFormat = (
-  monday: Date,
-  weekIndex: number,
-  dayIndex: number,
-): string => {
-  const currentDay = new Date(monday);
-  currentDay.setDate(monday.getDate() + 7 * weekIndex + dayIndex);
-  const month = String(currentDay.getMonth() + 1).padStart(2, TRAILING_ZERO);
-  const day = String(currentDay.getDate()).padStart(2, TRAILING_ZERO);
-  const year = String(currentDay.getFullYear());
-  return `${year}-${month}-${day}`;
 };

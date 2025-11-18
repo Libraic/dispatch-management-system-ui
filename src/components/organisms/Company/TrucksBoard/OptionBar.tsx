@@ -13,7 +13,8 @@ import { CalendarIconWrapper } from "../../../molecules/Calendar/CalendarIconWra
 export const OptionBar: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
   toast: ToastData;
-}> = ({ driverWeeklyMileageData, toast }) => {
+  extractWeekFromCalendar: (date: Date[]) => void;
+}> = ({ driverWeeklyMileageData, toast, extractWeekFromCalendar }) => {
   return (
     <div className="flex flex-row items-center justify-between mb-3 sticky left-0 z-10 overflow-hidden">
       <div>
@@ -43,7 +44,7 @@ export const OptionBar: React.FC<{
           information="Save records"
         />
       </div>
-      <CalendarIconWrapper />
+      <CalendarIconWrapper extractWeekFromCalendar={extractWeekFromCalendar} />
     </div>
   );
 };
