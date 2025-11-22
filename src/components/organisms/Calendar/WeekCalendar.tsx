@@ -63,7 +63,6 @@ export const WeekCalendar: React.FC<{
         : new Date(fallbackYear, fallbackMonth, day.day);
       dates.push(date);
     }
-    console.log(dates);
     extractWeekFromCalendar(dates);
   };
 
