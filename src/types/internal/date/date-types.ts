@@ -17,4 +17,5 @@ export type DateObject = {
 export type DayOfMonth = {
   day: number;
   currentMonth: boolean;
+  weekNumber?: number;
 };

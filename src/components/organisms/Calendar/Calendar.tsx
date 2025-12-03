@@ -5,33 +5,23 @@ import {
   getDaysOfMonthGroupedByWeek,
   getListOfNYears,
 } from "../../../utils/date/date-utils.ts";
-import { CalendarFieldSelector } from "../../molecules/Calendar/CalendarFieldSelector.tsx";
+import { CalendarTimeUnitSelector } from "../../molecules/Calendar/CalendarTimeUnitSelector.tsx";
 import { CalendarBody } from "../../molecules/Calendar/CalendarBody.tsx";
 import { useOnClickOutside } from "../../../hooks/useClickOutside.ts";
 import {
   type CalendarTimeline,
   type CalendarUnitType,
-  CalendarUnitTypes,
 } from "../../../types/internal/calendar/calendar-types.ts";
 import type { DayOfMonth } from "../../../types/internal/date/date-types.ts";
-import {
-  getFallbackMonth,
-  getFallbackYear,
-} from "../../../utils/calendar/calendar-utils.ts";
+import { getDatesForTheTimeline } from "../../../utils/calendar/calendar-utils.ts";
+import type { Activator } from "../../../hooks/useActivator.ts";
 
 export const Calendar: React.FC<{
   unitType: CalendarUnitType;
   parentRef: RefObject<HTMLDivElement | null>;
-  isCalendarActive: boolean;
-  setIsCalendarActive: (value: boolean) => void;
+  calendarActivator: Activator;
   timePeriodExtractor: (date: Date[]) => void;
-}> = ({
-  unitType,
-  parentRef,
-  isCalendarActive,
-  setIsCalendarActive,
-  timePeriodExtractor,
-}) => {
+}> = ({ unitType, parentRef, calendarActivator, timePeriodExtractor }) => {
   const now = new Date();
   const [timeline, setTimeline] = useState<CalendarTimeline>({
     year: now.getFullYear().toString(),
@@ -51,32 +41,19 @@ export const Calendar: React.FC<{
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const yearExpanderRef = useRef<HTMLDivElement | null>(null);
   const monthExpanderRef = useRef<HTMLDivElement | null>(null);
-  useOnClickOutside(wrapperRef, () => setIsCalendarActive(false), [
+  useOnClickOutside(wrapperRef, () => calendarActivator.deactivate(), [
     parentRef,
     yearExpanderRef,
     monthExpanderRef,
   ]);
 
   const timePeriodExtractorTemplateFunction = (days: DayOfMonth[]) => {
-    if (unitType === CalendarUnitTypes.WEEK) {
-      const currentYear = parseInt(timeline.year);
-      const currentMonth = new Date(`${timeline.month} 1, 2000`).getMonth();
-      const fallbackMonth = getFallbackMonth(days, currentMonth);
-      const fallbackYear = getFallbackYear(days, currentYear, fallbackMonth);
-      const dates = [];
-      for (const day of days) {
-        const date = day.currentMonth
-          ? new Date(currentYear, currentMonth, day.day)
-          : new Date(fallbackYear, fallbackMonth, day.day);
-        dates.push(date);
-      }
-      timePeriodExtractor(dates);
-    } else if (unitType === CalendarUnitTypes.DAY) {
-      console.log(days);
-    }
+    const dates = getDatesForTheTimeline(timeline, days, unitType);
+    timePeriodExtractor(dates);
+    calendarActivator.deactivate();
   };
 
-  if (!isCalendarActive) {
+  if (!calendarActivator.isActive()) {
     return null;
   }
 
@@ -87,10 +64,11 @@ export const Calendar: React.FC<{
         top: `${top}px`,
         left: `${left}px`,
       }}
+      onClick={(e) => e.stopPropagation()}
       className={`absolute z-9999 bg-white/20 backdrop-blur-lg w-[17.25rem] h-fit border-[0.08rem] border-gray-300 rounded-[0.35rem] px-2 py-1 font-open-sans`}
     >
       <div className="flex flex-row items-center gap-x-10 text-[0.9rem]">
-        <CalendarFieldSelector
+        <CalendarTimeUnitSelector
           label={timeline.month.slice(0, 3)}
           selectedValue={timeline.month}
           values={Object.keys(MONTHS)}
@@ -101,7 +79,7 @@ export const Calendar: React.FC<{
             setTimeline((prev) => ({ ...prev, month: month }))
           }
         />
-        <CalendarFieldSelector
+        <CalendarTimeUnitSelector
           selectedValue={timeline.year}
           values={getListOfNYears(12)}
           top={top + 2}
@@ -127,9 +105,7 @@ export const Calendar: React.FC<{
         setActiveWeekByIndex={(activeWeek: number) =>
           setTimeline((prev) => ({ ...prev, activeWeek: activeWeek }))
         }
-        timePeriodExtractorTemplateFunction={
-          timePeriodExtractorTemplateFunction
-        }
+        timePeriodExtractorFunction={timePeriodExtractorTemplateFunction}
       />
     </div>
   );

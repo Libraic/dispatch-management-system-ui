@@ -17,16 +17,17 @@ export const CalendarBody: React.FC<{
   daysOfMonthGroupedByWeek: WeekIndexer;
   activeWeek: number;
   setActiveWeekByIndex: (weekIndex: number) => void;
-  timePeriodExtractorTemplateFunction: (days: DayOfMonth[]) => void;
+  timePeriodExtractorFunction: (days: DayOfMonth[]) => void;
 }> = ({
   unitType,
   daysOfMonthGroupedByWeek,
   activeWeek,
   setActiveWeekByIndex,
-  timePeriodExtractorTemplateFunction,
+  timePeriodExtractorFunction,
 }) => {
   const today = new Date();
   const dayOfMonth = today.getDate();
+
   return (
     <div className="flex flex-col items-center font-light text-[0.7rem] pt-4 gap-y-5">
       {Array.from(
@@ -39,7 +40,7 @@ export const CalendarBody: React.FC<{
               className={`flex flex-row items-center gap-x-[0.85rem] hover:cursor-pointer font-normal ${activeWeek === i && unitType === CalendarUnitTypes.WEEK && BACKGROUND_PALE_BLUE} rounded-[0.2rem] h-[1.85rem]`}
               onClick={() => {
                 if (unitType === CalendarUnitTypes.WEEK) {
-                  timePeriodExtractorTemplateFunction(week);
+                  timePeriodExtractorFunction(week);
                 }
               }}
               onMouseEnter={() => setActiveWeekByIndex(i)}
@@ -50,7 +51,12 @@ export const CalendarBody: React.FC<{
                   key={index}
                   onClick={() => {
                     if (unitType === CalendarUnitTypes.DAY) {
-                      timePeriodExtractorTemplateFunction([weekday]);
+                      timePeriodExtractorFunction([
+                        {
+                          ...weekday,
+                          weekNumber: i,
+                        },
+                      ]);
                     }
                   }}
                   className={`flex items-center justify-center ${unitType === CalendarUnitTypes.DAY && HOVER_BACKGROUND_PALE_BLUE} ${activeWeek === i && unitType === CalendarUnitTypes.WEEK && BACKGROUND_PALE_BLUE} ${weekday !== undefined && !weekday.currentMonth ? "text-gray-400" : "text-black"} ${activeWeek === i && TEXT_SOLID_GRAY} ${weekday.day === dayOfMonth && weekday.currentMonth && `${BORDER_PALE_BLUE} border-[0.1rem]`} rounded-[0.6rem] w-6 h-6`}

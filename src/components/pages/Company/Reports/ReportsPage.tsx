@@ -8,21 +8,36 @@ import {
   BLANK_STRING,
   DOLLAR_SIGN,
 } from "../../../../constants/common/global-constants.ts";
+import { IntervalPicker } from "../../../timeline/IntervalPicker.tsx";
+import { TimeFramePicker } from "../../../timeline/TimeFramePicker.tsx";
+import {
+  TimeFrame,
+  type TimeFrameUnit,
+} from "../../../../types/internal/reports/timeline-types.ts";
+import { useInterval } from "../../../../hooks/useInterval.ts";
 
 export const ReportsPage = () => {
   const gridTemplate = "grid grid-cols-[9rem_5rem_5rem]";
   const companyUuid = useParams().companyUuid!!;
   const [kpiModels, setKpiModels] = useState<KpiModel[]>([]);
+  const [timeFrame, setTimeFrame] = useState<TimeFrameUnit>(TimeFrame.MONTH);
+  const intervalData = useInterval();
+  const startDate = intervalData.getStartDate();
+  const endDate = intervalData.getEndDate();
 
   useEffect(() => {
-    fetchKpis(companyUuid).then((kpiData) => {
+    fetchKpis(companyUuid, startDate, endDate, timeFrame).then((kpiData) => {
       const kpiModels: KpiModel[] = fromKpiDataToKpiModels(kpiData);
       setKpiModels(kpiModels);
     });
-  }, [companyUuid]);
+  }, [companyUuid, startDate, endDate, timeFrame]);
 
   return (
-    <div className="w-screen h-screen flex justify-center p-6">
+    <div className="w-screen h-screen flex flex-col justify-center items-center p-6">
+      <div className="flex justify-end items-center w-[90%] overflow-x-auto pt-10 gap-x-[10rem]">
+        <TimeFramePicker option={timeFrame} setOption={setTimeFrame} />
+        <IntervalPicker intervalData={intervalData} />
+      </div>
       <div className="w-[90%] overflow-x-auto pt-10">
         <table className="min-w-max border-collapse">
           <thead>
@@ -32,10 +47,10 @@ export const ReportsPage = () => {
                 kpiModels[0].kpisData.map((kpiModelData, index) => (
                   <th
                     key={index}
-                    className={`w-[12rem] text-center p-2 bg-pale-blue font-open-sans font-thin ${TEXT_SOLID_GRAY}`}
+                    className={`w-[12rem] text-center p-2 bg-pale-blue font-plus-jakarta-sans font-thin ${TEXT_SOLID_GRAY}`}
                   >
                     <p className="text-[1rem] pb-1">{kpiModelData.label}</p>
-                    <p className="text-[0.8rem]">{`[${kpiModelData.start === kpiModelData.end ? kpiModelData.start : `${kpiModelData.start} - ${kpiModelData.end}]`}`}</p>
+                    <p className="text-[0.8rem]">{`${kpiModelData.start === kpiModelData.end ? kpiModelData.start : `${kpiModelData.start} - ${kpiModelData.end}`}`}</p>
                   </th>
                 ))}
             </tr>
@@ -46,7 +61,10 @@ export const ReportsPage = () => {
                   <th key={index} className="bg-pale-blue font-roboto">
                     <div className={`${gridTemplate} text-center`}>
                       {kpiModelData.kpis.map((kpiValue, dIndex) => (
-                        <p className="pl-3" key={`${index}-${dIndex}`}>
+                        <p
+                          className="pl-3 font-plus-jakarta-sans"
+                          key={`${index}-${dIndex}`}
+                        >
                           {kpiValue.type}
                         </p>
                       ))}
