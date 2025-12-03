@@ -4,7 +4,8 @@ import calendarFocusedIcon from "../../../assets/trucks-board/calendar-focused.s
 import * as React from "react";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
-import { WeekCalendar } from "../../organisms/Calendar/WeekCalendar.tsx";
+import { Calendar } from "../../organisms/Calendar/Calendar.tsx";
+import { CalendarUnitTypes } from "../../../types/internal/calendar/calendar-types.ts";
 
 export const CalendarIconWrapper: React.FC<{
   extractWeekFromCalendar: (date: Date[]) => void;
@@ -21,11 +22,12 @@ export const CalendarIconWrapper: React.FC<{
       />
       {isCalendarActive &&
         createPortal(
-          <WeekCalendar
+          <Calendar
+            unitType={CalendarUnitTypes.WEEK}
             parentRef={calendarRef}
             isCalendarActive={isCalendarActive}
             setIsCalendarActive={setIsCalendarActive}
-            extractWeekFromCalendar={extractWeekFromCalendar}
+            timePeriodExtractor={extractWeekFromCalendar}
           />,
           document.body,
         )}
