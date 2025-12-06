@@ -25,7 +25,7 @@ export const getCompanyRegistrationErrors = (
 
   errors.name = validateMandatoryField(
     companyRegistrationData.name,
-    "company name",
+    "Company name",
   );
   errors.email = validateEmail(companyRegistrationData.email, true);
   errors.password = validatePassword(

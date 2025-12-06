@@ -1,0 +1,27 @@
+import * as React from "react";
+
+import { Entity } from "../../../../types/api/common/api-query-types.ts";
+import { usePagination } from "../../../../hooks/usePagination.ts";
+import { PageSelector } from "../internal/PageSelector.tsx";
+import { PagesRecordsCounter } from "../internal/PagesRecordsCounter.tsx";
+import { PageNavigator } from "../internal/PageNavigator.tsx";
+import { DRIVERS_PAGE_SIZE } from "../../../../constants/driver/drivers-table-constants.ts";
+
+export const PaginationBar: React.FC<{
+  joinableEntityId: string;
+  entityType: Entity;
+  fetchFn: (pageNumber: number) => void;
+}> = ({ joinableEntityId, entityType, fetchFn }) => {
+  const pagination = usePagination(
+    entityType,
+    DRIVERS_PAGE_SIZE,
+    joinableEntityId,
+  );
+  return (
+    <div className="flex items-center justify-between mx-[2.7rem]">
+      <PagesRecordsCounter records={pagination.getNumberOfRecords()} />
+      <PageSelector pagination={pagination} fetchFn={fetchFn} />
+      <PageNavigator pagination={pagination} fetchFn={fetchFn} />
+    </div>
+  );
+};

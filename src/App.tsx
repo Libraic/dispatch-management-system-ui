@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserRegistrationPage } from "./components/pages/User/UserRegistrationPage.tsx";
-import { CompanyRegistrationPage } from "./components/pages/Company/Registration/CompanyRegistrationPage.tsx";
+import { UserRegistrationPage } from "./components/Pages/User/UserRegistrationPage.tsx";
+import { CompanyRegistrationPage } from "./components/Pages/Company/CompanyRegistrationPage.tsx";
 import {
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
@@ -17,18 +17,18 @@ import {
   TRUCKS_VIEW,
   USER_REGISTRATION,
 } from "./constants/route/internal-route-constants.ts";
-import { CompaniesPage } from "./components/pages/Company/View/CompaniesPage.tsx";
-import { CompanyDashboardPage } from "./components/pages/Company/Dashboard/CompanyDashboardPage.tsx";
-import { TrucksBoardPage } from "./components/pages/Company/TrucksBoard/TrucksBoardPage.tsx";
-import { DriverRegistrationPage } from "./components/pages/Driver/DriverRegistrationPage.tsx";
-import { DriversPage } from "./components/pages/Driver/DriversPage.tsx";
-import { TrailerRegistrationPage } from "./components/pages/Trailer/Registration/TrailerRegistrationPage.tsx";
-import { TrucksPage } from "./components/pages/Truck/View/TrucksPage.tsx";
-import { TruckRegistrationPage } from "./components/pages/Truck/Registration/TruckRegistrationPage.tsx";
-import { TrailersPage } from "./components/pages/Trailer/View/TrailersPage.tsx";
-import { LandingPage } from "./components/pages/Landing/LandingPage.tsx";
-import { HomePage } from "./components/pages/Home/HomePage.tsx";
-import { ReportsPage } from "./components/pages/Company/Reports/ReportsPage.tsx";
+import { CompaniesPage } from "./components/Pages/Company/CompaniesPage.tsx";
+import { CompanyDashboardPage } from "./components/Pages/Company/CompanyDashboardPage.tsx";
+import { TrucksBoardPage } from "./components/Pages/Company/TrucksBoardPage.tsx";
+import { DriverRegistrationPage } from "./components/Pages/Driver/DriverRegistrationPage.tsx";
+import { DriversPage } from "./components/Pages/Driver/DriversPage.tsx";
+import { TrailerRegistrationPage } from "./components/Pages/Trailer/TrailerRegistrationPage.tsx";
+import { TrucksPage } from "./components/Pages/Truck/TrucksPage.tsx";
+import { TruckRegistrationPage } from "./components/Pages/Truck/TruckRegistrationPage.tsx";
+import { TrailersPage } from "./components/Pages/Trailer/TrailersPage.tsx";
+import { LandingPage } from "./components/Pages/Landing/LandingPage.tsx";
+import { HomePage } from "./components/Pages/Home/HomePage.tsx";
+import { ReportsPage } from "./components/Pages/Company/ReportsPage.tsx";
 
 export const App = () => {
   return (
