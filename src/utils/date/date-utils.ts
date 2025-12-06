@@ -38,7 +38,7 @@ export const getCurrentYearData = (): YearData => {
 };
 
 export const getListOfNYears = (n: number): string[] => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear() + 1;
   return Array.from({ length: n }, (_, i) => (currentYear - i).toString());
 };
 
@@ -55,6 +55,8 @@ export const getDaysOfMonthGroupedByWeek = (
   for (let day = 1; day <= daysInMonth; day++) {
     const index = currentDayOfWeek == 0 ? 6 : currentDayOfWeek - 1;
     result[currentWeek][index] = { day: day, currentMonth: true };
+
+    // If we reached the end of the week (0 -> Sunday), start a new one.
     if (currentDayOfWeek === 0 && day !== daysInMonth) {
       // If the first day is undefined, then it means we have days in the current week
       // that belong to the previous month. We need to fill the last week with days from the previous month.
@@ -90,7 +92,7 @@ export const getDaysOfMonthGroupedByWeek = (
  */
 const backfillDates = (days: DayOfMonth[], month: number, year: number) => {
   let backfillStartIndex = getFirstUndefinedDayDownwards(days);
-  let dayOfMonth = getDateByMonthAndYear(month, year, 0).getDate();
+  let dayOfMonth = getDateByMonthAndYear(month, year, 0, true).getDate();
   while (backfillStartIndex >= 0) {
     days[backfillStartIndex] = {
       day: dayOfMonth,
@@ -114,7 +116,7 @@ const frontFillDates = (days: DayOfMonth[], month: number, year: number) => {
   let frontFillStartIndex = getFirstUndefinedDayUpwards(days);
   let idx = 1;
   while (frontFillStartIndex < 7) {
-    const date = getDateByMonthAndYear(month, year, idx);
+    const date = getDateByMonthAndYear(month, year, idx, false);
     days[frontFillStartIndex] = {
       day: date.getDate(),
       currentMonth: false,
@@ -128,16 +130,17 @@ const getDateByMonthAndYear = (
   currentMonth: number,
   currentYear: number,
   day: number,
+  backfill: boolean,
 ) => {
-  if (currentMonth === 1) {
-    return new Date(currentYear - 1, 11, day);
+  if (backfill) {
+    const month = currentMonth === 1 ? 12 : currentMonth - 1;
+    const year = currentMonth === 1 ? currentYear - 1 : currentYear;
+    return new Date(year, month, day);
   }
 
-  if (currentMonth === 12) {
-    return new Date(currentYear + 1, 0, day);
-  }
-
-  return new Date(currentYear, currentMonth - 1, day);
+  const month = currentMonth === 12 ? 1 : currentMonth + 1;
+  const year = currentMonth === 12 ? currentYear + 1 : currentYear;
+  return new Date(year, month, day);
 };
 
 const getFirstUndefinedDayDownwards = (days: DayOfMonth[]) => {

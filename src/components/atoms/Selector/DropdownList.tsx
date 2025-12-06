@@ -12,7 +12,7 @@ export const DropdownList: React.FC<{
 }> = ({ isExpanded, selectedValue, data, onClick }) => {
   return (
     isExpanded && (
-      <div className="absolute bg-white/20 backdrop-blur-lg z-10000 left-0 top-full mt-1 pt-29 flex flex-col items-center justify-center w-[5.8rem] overflow-y-auto max-h-30 border-1 rounded-[0.25rem] border-gray-200 text-[0.8rem] gap-y-[0.3rem]">
+      <div className="absolute bg-white/20 backdrop-blur-lg z-10000 left-0 top-full mt-1 pt-29 flex flex-col items-center justify-center w-[5.8rem] overflow-y-auto max-h-43 border-1 rounded-[0.25rem] border-gray-200 text-[0.8rem] gap-y-[0.3rem]">
         {data.map((value, index) => (
           <div
             key={index}

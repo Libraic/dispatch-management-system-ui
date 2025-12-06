@@ -4,28 +4,30 @@ import calendarFocusedIcon from "../../../assets/trucks-board/calendar-focused.s
 import * as React from "react";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
-import { WeekCalendar } from "../../organisms/Calendar/WeekCalendar.tsx";
+import { Calendar } from "../../organisms/Calendar/Calendar.tsx";
+import { CalendarUnitTypes } from "../../../types/internal/calendar/calendar-types.ts";
+import { useActivator } from "../../../hooks/useActivator.ts";
 
 export const CalendarIconWrapper: React.FC<{
   extractWeekFromCalendar: (date: Date[]) => void;
 }> = ({ extractWeekFromCalendar }) => {
-  const [isCalendarActive, setIsCalendarActive] = React.useState(false);
+  const calendarActivator = useActivator();
   const calendarRef = useRef<HTMLDivElement>(null);
   return (
     <div className="relative" ref={calendarRef}>
       <IconButton
         unfocusedResource={calendarUnfocusedIcon}
         focusedResource={calendarFocusedIcon}
-        action={async () => setIsCalendarActive((prev) => !prev)}
+        action={async () => calendarActivator.change()}
         information="Select timeline"
       />
-      {isCalendarActive &&
+      {calendarActivator.isActive() &&
         createPortal(
-          <WeekCalendar
+          <Calendar
+            unitType={CalendarUnitTypes.WEEK}
             parentRef={calendarRef}
-            isCalendarActive={isCalendarActive}
-            setIsCalendarActive={setIsCalendarActive}
-            extractWeekFromCalendar={extractWeekFromCalendar}
+            calendarActivator={calendarActivator}
+            timePeriodExtractor={extractWeekFromCalendar}
           />,
           document.body,
         )}

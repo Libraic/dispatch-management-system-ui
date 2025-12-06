@@ -9,6 +9,7 @@ import {
   DRIVERS_VIEW,
   HOME,
   LANDING,
+  REPORTS,
   TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
@@ -27,6 +28,7 @@ import { TruckRegistrationPage } from "./components/pages/Truck/Registration/Tru
 import { TrailersPage } from "./components/pages/Trailer/View/TrailersPage.tsx";
 import { LandingPage } from "./components/pages/Landing/LandingPage.tsx";
 import { HomePage } from "./components/pages/Home/HomePage.tsx";
+import { ReportsPage } from "./components/pages/Company/Reports/ReportsPage.tsx";
 
 export const App = () => {
   return (
@@ -52,6 +54,10 @@ export const App = () => {
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}
           element={<DriverRegistrationPage />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${REPORTS}`}
+          element={<ReportsPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}

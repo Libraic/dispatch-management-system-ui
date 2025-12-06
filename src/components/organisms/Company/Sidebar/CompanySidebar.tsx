@@ -4,12 +4,14 @@ import { CompanySidebarItem } from "./CompanySidebarItem.tsx";
 import trucksBoardUnhoveredIcon from "../../../../assets/company-menu/trucks-board-unhovered.svg";
 import {
   DRIVERS_VIEW,
+  REPORTS,
   TRAILERS_VIEW,
   TRUCKS_BOARD,
   TRUCKS_VIEW,
 } from "../../../../constants/route/internal-route-constants.ts";
 import addDriverIcon from "../../../../assets/company-menu/add-driver.svg";
 import addAssetIcon from "../../../../assets/company-menu/add-asset-icon.svg";
+import reportsIcon from "../../../../assets/reports/reports.svg";
 import { useParams } from "react-router-dom";
 import * as React from "react";
 import type { CompanyData } from "../../../../types/api/company/company-api-response-types.ts";
@@ -47,6 +49,11 @@ export const CompanySidebar: React.FC<{ company: CompanyData }> = ({
             route: `${baseRoute}${TRAILERS_VIEW}`,
           },
         ]}
+      />
+      <CompanySidebarItem
+        label="Reports"
+        icon={reportsIcon}
+        baseRoute={`${baseRoute}${REPORTS}`}
       />
     </div>
   );

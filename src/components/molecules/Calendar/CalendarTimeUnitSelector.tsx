@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { Expander } from "../../atoms/Calendar/Expander.tsx";
 import * as React from "react";
 
-export const CalendarFieldSelector: React.FC<{
+export const CalendarTimeUnitSelector: React.FC<{
   selectedValue: string;
   values: string[];
   top: number;
