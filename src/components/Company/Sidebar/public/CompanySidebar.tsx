@@ -4,7 +4,8 @@ import { CompanySidebarItem } from "../internal/CompanySidebarItem.tsx";
 import trucksBoardUnhoveredIcon from "../../../../assets/company-menu/trucks-board-unhovered.svg";
 import {
   DRIVERS_VIEW,
-  REPORTS,
+  FINANCIAL_REPORTS,
+  LOAD_BY_LOAD_REPORTS,
   TRAILERS_VIEW,
   TRUCKS_BOARD,
   TRUCKS_VIEW,
@@ -53,7 +54,16 @@ export const CompanySidebar: React.FC<{ company: CompanyData }> = ({
       <CompanySidebarItem
         label="Reports"
         icon={reportsIcon}
-        baseRoute={`${baseRoute}${REPORTS}`}
+        submenuData={[
+          {
+            label: "Financial",
+            route: `${baseRoute}${FINANCIAL_REPORTS}`,
+          },
+          {
+            label: "Load-by-Load",
+            route: `${baseRoute}${LOAD_BY_LOAD_REPORTS}`,
+          },
+        ]}
       />
     </div>
   );

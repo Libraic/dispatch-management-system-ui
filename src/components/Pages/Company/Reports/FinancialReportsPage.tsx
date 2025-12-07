@@ -3,25 +3,25 @@ import {
   BORDER_PALE_BLUE,
   OUTLINE_PALE_BLUE,
   TEXT_SOLID_GRAY,
-} from "../../../tailwind/tailwind-colors-vars.ts";
+} from "../../../../tailwind/tailwind-colors-vars.ts";
 import { useEffect, useState } from "react";
-import { fetchKpis } from "../../../service/kpiService.ts";
+import { fetchKpis } from "../../../../service/kpiService.ts";
 import { useParams } from "react-router-dom";
-import type { KpiModel } from "../../../types/internal/kpi/kpi-internal-types.ts";
-import { fromKpiDataToKpiModels } from "../../../utils/kpi/kpi-mappers.ts";
+import type { KpiModel } from "../../../../types/internal/kpi/kpi-internal-types.ts";
+import { fromKpiDataToKpiModels } from "../../../../utils/kpi/kpi-mappers.ts";
 import {
   BLANK_STRING,
   DOLLAR_SIGN,
-} from "../../../constants/common/global-constants.ts";
-import { IntervalPicker } from "../../Common/Timeline/IntervalPicker.tsx";
-import { TimeFramePicker } from "../../Common/Timeline/TimeFramePicker.tsx";
+} from "../../../../constants/common/global-constants.ts";
+import { IntervalPicker } from "../../../Common/Timeline/IntervalPicker.tsx";
+import { TimeFramePicker } from "../../../Common/Timeline/TimeFramePicker.tsx";
 import {
   TimeFrame,
   type TimeFrameUnit,
-} from "../../../types/internal/reports/timeline-types.ts";
-import { useInterval } from "../../../hooks/useInterval.ts";
+} from "../../../../types/internal/reports/timeline-types.ts";
+import { useInterval } from "../../../../hooks/useInterval.ts";
 
-export const ReportsPage = () => {
+export const FinancialReportsPage = () => {
   const gridTemplate = "grid grid-cols-[9rem_5rem_5rem]";
   const companyUuid = useParams().companyUuid!!;
   const [kpiModels, setKpiModels] = useState<KpiModel[]>([]);

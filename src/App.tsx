@@ -7,9 +7,10 @@ import {
   COMPANY_REGISTRATION,
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
+  FINANCIAL_REPORTS,
   HOME,
   LANDING,
-  REPORTS,
+  LOAD_BY_LOAD_REPORTS,
   TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
@@ -28,7 +29,8 @@ import { TruckRegistrationPage } from "./components/Pages/Truck/TruckRegistratio
 import { TrailersPage } from "./components/Pages/Trailer/TrailersPage.tsx";
 import { LandingPage } from "./components/Pages/Landing/LandingPage.tsx";
 import { HomePage } from "./components/Pages/Home/HomePage.tsx";
-import { ReportsPage } from "./components/Pages/Company/ReportsPage.tsx";
+import { FinancialReportsPage } from "./components/Pages/Company/Reports/FinancialReportsPage.tsx";
+import { LoadByLoadReportsPage } from "./components/Pages/Company/Reports/LoadByLoadReportsPage.tsx";
 
 export const App = () => {
   return (
@@ -56,8 +58,12 @@ export const App = () => {
           element={<DriverRegistrationPage />}
         />
         <Route
-          path={`${COMPANY_DASHBOARD}${REPORTS}`}
-          element={<ReportsPage />}
+          path={`${COMPANY_DASHBOARD}${FINANCIAL_REPORTS}`}
+          element={<FinancialReportsPage />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${LOAD_BY_LOAD_REPORTS}`}
+          element={<LoadByLoadReportsPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}
