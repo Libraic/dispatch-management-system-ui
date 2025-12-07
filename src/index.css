@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
+
 @theme {
     --font-inter: "Inter", sans-serif;
     --font-roboto: "Roboto", sans-serif;
@@ -29,6 +30,7 @@
     --color-solid-black: #212327;
 
     --color-pale-blue: #c4d1f3;
+    --color-blue-grey: #f5f7fc;
 
     --text-standard-size: 0.9rem;
 }

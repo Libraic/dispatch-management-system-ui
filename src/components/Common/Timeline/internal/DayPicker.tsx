@@ -3,8 +3,8 @@ import { Calendar } from "../../Calendar/public/Calendar.tsx";
 import { CalendarUnitTypes } from "../../../../types/internal/calendar/calendar-types.ts";
 import * as React from "react";
 import { useRef } from "react";
-import { TRAILING_ZERO } from "../../../../constants/common/global-constants.ts";
 import { useActivator } from "../../../../hooks/useActivator.ts";
+import { formatDate } from "../../../../utils/date/date-utils.ts";
 
 export const DayPicker: React.FC<{
   date: Date;
@@ -12,13 +12,6 @@ export const DayPicker: React.FC<{
 }> = ({ date, setDate }) => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const calendarActivator = useActivator();
-
-  const formatDate = (date: Date): string => {
-    const day = String(date.getDate()).padStart(2, TRAILING_ZERO);
-    const month = String(date.getMonth() + 1).padStart(2, TRAILING_ZERO);
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
 
   return (
     <div

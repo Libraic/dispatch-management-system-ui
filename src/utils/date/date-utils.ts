@@ -81,6 +81,13 @@ export const getDaysOfMonthGroupedByWeek = (
   return result;
 };
 
+export const formatDate = (date: Date): string => {
+  const day = String(date.getDate()).padStart(2, TRAILING_ZERO);
+  const month = String(date.getMonth() + 1).padStart(2, TRAILING_ZERO);
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
 /**
  * Populates the undefined days in the provided array with dates from the previous month.
  * The "backfill" process assigns day numbers starting from the last day of the previous month.

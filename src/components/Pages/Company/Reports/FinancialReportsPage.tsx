@@ -1,4 +1,5 @@
 import {
+  BACKGROUND_BLUE_GREY_COLOR,
   BACKGROUND_PALE_BLUE,
   BORDER_PALE_BLUE,
   OUTLINE_PALE_BLUE,
@@ -20,6 +21,10 @@ import {
   type TimeFrameUnit,
 } from "../../../../types/internal/reports/timeline-types.ts";
 import { useInterval } from "../../../../hooks/useInterval.ts";
+import { ReportContainer } from "../../../Common/Reports/ReportContainer.tsx";
+import { ReportTableContainer } from "../../../Common/Reports/ReportTableContainer.tsx";
+import { ReportTable } from "../../../Common/Reports/ReportTable.tsx";
+import { ReportTableMenu } from "../../../Common/Reports/ReportTableMenu.tsx";
 
 export const FinancialReportsPage = () => {
   const gridTemplate = "grid grid-cols-[9rem_5rem_5rem]";
@@ -38,13 +43,14 @@ export const FinancialReportsPage = () => {
   }, [companyUuid, startDate, endDate, timeFrame]);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center p-6">
-      <div className="flex justify-end items-center w-[90%] overflow-x-auto pt-10 gap-x-[10rem]">
+    <ReportContainer>
+      <ReportTableMenu>
         <TimeFramePicker option={timeFrame} setOption={setTimeFrame} />
         <IntervalPicker intervalData={intervalData} />
-      </div>
-      <div className="w-[90%] overflow-x-auto pt-10">
-        <table className="min-w-max border-collapse">
+      </ReportTableMenu>
+
+      <ReportTableContainer>
+        <ReportTable>
           <thead>
             <tr>
               <th className="w-fit p-3"></th>
@@ -82,11 +88,13 @@ export const FinancialReportsPage = () => {
             </tr>
           </thead>
 
-          <tbody className="font-roboto font-light bg-[#f5f7fc]">
+          <tbody
+            className={`font-roboto font-light ${BACKGROUND_BLUE_GREY_COLOR}`}
+          >
             {kpiModels.map((kpiModel) => (
               <tr key={kpiModel.uuid}>
                 <td
-                  className={`w-[12rem] p-3 sticky left-0 z-100 outline-2 -outline-offset-1 ${OUTLINE_PALE_BLUE} bg-[#f5f7fc]`}
+                  className={`w-[12rem] p-3 sticky left-0 z-100 outline-2 -outline-offset-1 ${OUTLINE_PALE_BLUE} ${BACKGROUND_BLUE_GREY_COLOR}`}
                 >
                   {kpiModel.subjectName}
                 </td>
@@ -111,8 +119,8 @@ export const FinancialReportsPage = () => {
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
-    </div>
+        </ReportTable>
+      </ReportTableContainer>
+    </ReportContainer>
   );
 };
