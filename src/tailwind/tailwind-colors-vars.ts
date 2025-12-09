@@ -12,6 +12,7 @@ export const BACKGROUND_PALE_BLUE = "bg-pale-blue";
 export const OUTLINE_PALE_BLUE = "outline-pale-blue";
 export const BACKGROUND_NORMAL_COLOR = "bg-normal-purple";
 export const BACKGROUND_SOLID_COLOR = "bg-solid-purple";
+export const BACKGROUND_BLUE_GREY_COLOR = "bg-blue-grey";
 export const BORDER_NORMAL_COLOR = "border-normal-purple";
 export const BORDER_SOLID_COLOR = "border-solid-purple";
 export const BORDER_PALE_BLUE = "border-pale-blue";
