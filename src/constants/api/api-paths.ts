@@ -37,6 +37,8 @@ export const TRAILERS_BASE_URL = BASE_URL + "/trailers";
 export const DRIVERS_MILEAGE_BASE_URL = BASE_URL + "/drivers-mileage";
 
 /**
- * The API paths related to KPIs.
+ * The API paths related to Reports.
  */
-export const KPI_BASE_URL = BASE_URL + "/kpis";
+export const REPORTS_BASE_URL = BASE_URL + "/reports";
+export const FINANCIAL_REPORTS_BASE_URL = REPORTS_BASE_URL + "/financial";
+export const LOAD_BY_LOAD_REPORTS_URL = REPORTS_BASE_URL + "/load-by-load";

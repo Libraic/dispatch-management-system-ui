@@ -4,7 +4,7 @@ import type {
   UserRegistrationData,
 } from "../../../../../types/internal/user/user-registration-types.ts";
 import { NOTE_PLACEHOLDER } from "../../../../../constants/common/placeholder-constants.ts";
-import { textAreaStyle } from "../../../../../tailwind/tailwind.ts";
+import { TEXT_AREA_STYLE } from "../../../../../tailwind/tailwind.ts";
 import {
   alterNote,
   deleteNote,
@@ -29,7 +29,7 @@ export const UserNote: React.FC<{
       >{`${noteData.note.length}/200`}</p>
       <div className="flex flex-row items-center gap-x-10">
         <textarea
-          className={`${textAreaStyle} w-[30rem] h-[5rem] resize-none`}
+          className={`${TEXT_AREA_STYLE} w-[30rem] h-[5rem] resize-none`}
           placeholder={placeholder}
           value={noteData.note}
           onFocus={() => setPlaceholder("")}

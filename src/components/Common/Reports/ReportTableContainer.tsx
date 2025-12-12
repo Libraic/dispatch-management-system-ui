@@ -5,5 +5,9 @@ export const ReportTableContainer = ({
 }: {
   children: React.ReactNode;
 }) => {
-  return <div className="w-[90%] overflow-x-auto pt-10">{children}</div>;
+  return (
+    <div className="w-[90%] overflow-x-auto overflow-y-scroll hide-scrollbar">
+      {children}
+    </div>
+  );
 };

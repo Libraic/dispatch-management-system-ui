@@ -1,6 +1,6 @@
 import {
-  inputFormLabelStyle,
-  selectFormStyle,
+  INPUT_FORM_LABEL_STYLE,
+  SELECT_FORM_STYLE,
 } from "../../../tailwind/tailwind.ts";
 import { type ReactNode, useState } from "react";
 import type { SelectFormData } from "../../../types/internal/forms/select-form-types.ts";
@@ -16,9 +16,9 @@ export const SelectForm = <T extends ReactNode, D extends string | number>({
 
   return (
     <div className={`${borderColor}`}>
-      {label && <p className={`${inputFormLabelStyle} ml-2`}>{label}</p>}
+      {label && <p className={`${INPUT_FORM_LABEL_STYLE} ml-2`}>{label}</p>}
       <select
-        className={`${selectFormStyle} ${borderColor} min-w-40 min-h-[2.2rem]`}
+        className={`${SELECT_FORM_STYLE} ${borderColor} min-w-[8rem] min-h-[2.5rem]`}
         value={initialValue}
         onFocus={() => setBorderColor(BORDER_SOLID_COLOR)}
         onBlur={() => setBorderColor("border-light-grey")}

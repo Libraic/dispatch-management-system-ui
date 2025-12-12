@@ -41,7 +41,10 @@ export const CompanySidebarItem: React.FC<{
           <div className={`w-[0.1rem] h-8 ${BACKGROUND_NORMAL_COLOR}`}></div>
           <div>
             {submenuData.map((submenu, index) => (
-              <div className="flex flex-row items-center pl-2 py-[0.1rem]">
+              <div
+                className="flex flex-row items-center pl-2 py-[0.1rem]"
+                key={submenu.label}
+              >
                 <CompanySidebarItemData
                   label={submenu.label}
                   route={submenu.route}

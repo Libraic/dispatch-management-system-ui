@@ -1,10 +1,10 @@
-export type KpiSubject = {
+export type Subject = {
   uuid: string;
   name: string;
 };
 
 export type KpiResponse = {
-  subject: KpiSubject;
+  subject: Subject;
   kpis: KpiDetails[];
 };
 
