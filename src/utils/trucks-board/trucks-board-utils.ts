@@ -199,5 +199,6 @@ const getWeekMileages = (weekDays: string[]): Mileage[] => {
     miles: null,
     note: null,
     destinationNote: null,
+    broker: null,
   }));
 };

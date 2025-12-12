@@ -12,6 +12,7 @@ export type Mileage = {
   miles: string | null;
   destinationNote: string | null;
   note: string | null;
+  broker: string | null;
 };
 
 export type MileageData = {
@@ -20,6 +21,7 @@ export type MileageData = {
   miles: number | null;
   destinationNote: string | null;
   note: string | null;
+  broker: string | null;
 };
 
 export type DriverWeeklyMileage = {
