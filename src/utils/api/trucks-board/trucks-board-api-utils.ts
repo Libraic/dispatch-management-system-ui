@@ -44,6 +44,7 @@ export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
         note: mileage.note,
         destinationNote: mileage.destinationNote,
         date: mileage.date,
+        broker: mileage.broker,
       } as Mileage;
     }),
   } as DriverWeeklyMileage;
@@ -205,5 +206,6 @@ const mapMileageDataToMileageRequest = (mileageData: Mileage[]) => {
       ? parseFloat(mileage.miles.replace(/,/g, BLANK_STRING))
       : null,
     note: mileage.note,
+    broker: mileage.broker,
   }));
 };

@@ -42,12 +42,20 @@ export const DailyMileageCells: React.FC<{
           errorMessage={error?.miles}
         />
       </div>
-      <EditableCell
-        content={mileage.note}
-        setContent={(content: string) =>
-          setDriverWeeklyMileage(index, "note", content)
-        }
-      />
+      <div className="grid grid-rows-2 w-[100%]">
+        <EditableCell
+          content={mileage.note}
+          setContent={(content: string) =>
+            setDriverWeeklyMileage(index, "note", content)
+          }
+        />
+        <EditableCell
+          content={mileage.broker}
+          setContent={(content: string) =>
+            setDriverWeeklyMileage(index, "broker", content)
+          }
+        />
+      </div>
     </div>
   );
 };
