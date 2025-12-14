@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { fetchKpis } from "../../../../service/kpiService.ts";
 import { useParams } from "react-router-dom";
 import type { KpiModel } from "../../../../types/internal/kpi/kpi-internal-types.ts";
-import { fromKpiDataToKpiModels } from "../../../../utils/kpi/kpi-mappers.ts";
+import { fromKpiDataToKpiModels } from "../../../../utils/reports/financial-reports-mappers.ts";
 import {
   BLANK_STRING,
   DOLLAR_SIGN,

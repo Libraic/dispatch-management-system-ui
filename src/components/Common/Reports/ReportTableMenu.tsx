@@ -6,7 +6,7 @@ export const ReportTableMenu = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="flex justify-end items-center w-[90%] overflow-x-auto pt-10 gap-x-[10rem]">
+    <div className="flex justify-end items-center w-[90%] gap-x-[10rem] mb-10">
       {children}
     </div>
   );

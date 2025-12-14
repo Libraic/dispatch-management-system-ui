@@ -1,4 +1,4 @@
-import type { KpiResponse } from "../../types/api/kpi/kpi-api-response-types.ts";
+import type { KpiResponse } from "../../types/api/reports/kpi-api-response-types.ts";
 import type {
   KpiData,
   KpiModel,

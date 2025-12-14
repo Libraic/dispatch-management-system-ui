@@ -1,5 +1,5 @@
 import mandatoryFieldIcon from "../../../../assets/global/mandatory-field.svg";
-import { inputFormLabelStyle } from "../../../../tailwind/tailwind.ts";
+import { INPUT_FORM_LABEL_STYLE } from "../../../../tailwind/tailwind.ts";
 import { InputFormDescription } from "./InputFormDescription.tsx";
 import * as React from "react";
 
@@ -17,7 +17,7 @@ export const InputFormLabel: React.FC<{
           alt="mandatory-icon"
         />
       )}
-      <p className={inputFormLabelStyle}>{label}</p>
+      <p className={INPUT_FORM_LABEL_STYLE}>{label}</p>
       {information && <InputFormDescription information={information} />}
     </div>
   );

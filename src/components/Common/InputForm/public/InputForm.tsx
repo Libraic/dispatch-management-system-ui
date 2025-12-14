@@ -4,7 +4,7 @@ import {
   BLANK_STRING,
   HYPHEN,
 } from "../../../../constants/common/global-constants.ts";
-import { inputFormStyle } from "../../../../tailwind/tailwind.ts";
+import { INPUT_FORM_STYLE } from "../../../../tailwind/tailwind.ts";
 import { InputFormError } from "./InputFormError.tsx";
 import { InputFormLabel } from "../internal/InputFormLabel.tsx";
 import { BORDER_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
@@ -63,7 +63,7 @@ export const InputForm: React.FC<{
         />
 
         <input
-          className={`${inputFormStyle} w-[19rem]`}
+          className={`${INPUT_FORM_STYLE} w-[19rem]`}
           type={type}
           name={name}
           placeholder={
