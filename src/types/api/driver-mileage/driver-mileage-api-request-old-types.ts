@@ -16,7 +16,7 @@ export type DriverMileage = {
   mileage: Mileage[];
 };
 
-export type UpsertDriversMileageRequest = {
+export type UpsertDriversMileageRequestOld = {
   companyUuid: string;
   driverMileageData: DriverMileage[];
 };

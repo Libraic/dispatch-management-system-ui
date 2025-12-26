@@ -18,7 +18,7 @@ export const InputFormDescription: React.FC<{
         onMouseLeave={hoverPanelData.handleMouseLeave}
       />
       {hoverPanelData.shouldDisplayMessage() && (
-        <HoverableDescription message={information} minWidth="min-w-[12rem]" />
+        <HoverableDescription message={information} />
       )}
     </div>
   );

@@ -1,4 +1,8 @@
-import { TRAILING_ZERO } from "../../constants/common/global-constants.ts";
+import {
+  BLANK_SPACE,
+  DOT,
+  TRAILING_ZERO,
+} from "../../constants/common/global-constants.ts";
 import type {
   DayOfMonth,
   YearData,
@@ -26,6 +30,12 @@ export const convertDateToLittleEndian = (date: YearData) => {
   const day = date.day < 10 ? `${TRAILING_ZERO}${date.day}` : date.day;
   const month = date.month < 10 ? `${TRAILING_ZERO}${date.month}` : date.month;
   return `${day}-${month}-${date.year}`;
+};
+
+export const convertTrucksBoardFormatToIso = (date: string) => {
+  const datePart = date.split(BLANK_SPACE)[1];
+  const dateParts = datePart.split(DOT);
+  return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 };
 
 export const getCurrentYearData = (): YearData => {

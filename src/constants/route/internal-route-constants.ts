@@ -9,6 +9,7 @@ export const COMPANY_DASHBOARD = `${DASHBOARD}/:companyUuid`;
 export const TRUCKS_BOARD = "/trucks-board";
 export const DRIVER_REGISTRATION = "/driver/registration";
 export const DRIVERS_VIEW = "/drivers";
+export const DISPATCHERS_VIEW = "/dispatchers";
 export const FINANCIAL_REPORTS = "/reports/financial";
 export const LOAD_BY_LOAD_REPORTS = "/reports/load-by-load";
 

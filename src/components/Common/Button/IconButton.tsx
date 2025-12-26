@@ -27,11 +27,7 @@ export const IconButton: React.FC<{
         onClick={action}
       />
       {hoverPanelData.shouldDisplayMessage() && (
-        <HoverableDescription
-          message={information!!}
-          leftPosition="left-[1rem]"
-          minWidth="min-w-[8rem]"
-        />
+        <HoverableDescription message={information!!} />
       )}
     </div>
   );

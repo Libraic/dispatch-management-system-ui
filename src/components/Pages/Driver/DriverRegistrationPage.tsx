@@ -7,7 +7,7 @@ import { DriverRegistrationSection } from "../../Driver/Registration/public/Driv
 import { DriverGeneralDetailsSection } from "../../Driver/Registration/public/DriverGeneralDetailsSection.tsx";
 import * as React from "react";
 import { useState } from "react";
-import { DriverAssetsAssignmentSection } from "../../Driver/Registration/public/DriverAssetsAssignmentSection.tsx";
+import { DriverAssignmentSection } from "../../Driver/Registration/public/DriverAssignmentSection.tsx";
 import {
   createCreateDriverRequestFromDriverRegistrationData,
   getBlankDriverRegistrationData,
@@ -42,7 +42,7 @@ import type { ApiResponse } from "../../../types/api/common/api-response-types.t
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
   [sections[0]]: <DriverGeneralDetailsSection />,
-  [sections[1]]: <DriverAssetsAssignmentSection />,
+  [sections[1]]: <DriverAssignmentSection />,
   [sections[2]]: <DriverEmploymentDetailsSection />,
 };
 
@@ -97,7 +97,6 @@ export const DriverRegistrationPage = () => {
     );
     setDriverRegistrationErrors(registrationErrors);
     const erroneousSections = getErroneousSection(sections, registrationErrors);
-
     if (erroneousSections.hasErroneousSection()) {
       sectionsHandler.setErrors(erroneousSections.getErroneousSections());
     } else {

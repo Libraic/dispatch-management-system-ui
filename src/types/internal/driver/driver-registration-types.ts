@@ -1,6 +1,6 @@
 export const DRIVER_REGISTRATION_SECTIONS = {
   GENERAL_DETAILS: "General Details",
-  TRUCK_DETAILS: "Assets Assignment",
+  TRUCK_DETAILS: "Assignments",
   EMPLOYMENT_DATA: "Employment Data",
 } as const;
 
@@ -14,6 +14,11 @@ export type TrailerAssignmentData = {
   trailerNumber: string;
 };
 
+export type DispatcherAssignmentData = {
+  uuid: string;
+  name: string;
+};
+
 export type DriverRegistrationData = {
   firstName: string;
   lastName: string;
@@ -25,6 +30,7 @@ export type DriverRegistrationData = {
   city: string;
   truckAssignmentData: TruckAssignmentData;
   trailerAssignmentData: TrailerAssignmentData;
+  dispatcherAssignmentData: DispatcherAssignmentData;
 };
 
 export type DriverRegistrationError = {

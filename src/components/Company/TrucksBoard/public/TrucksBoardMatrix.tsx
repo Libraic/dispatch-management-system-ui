@@ -5,7 +5,7 @@ import {
   TRUCKS_BOARD_WEEK_DAYS_COLUMNS_LAYOUT,
 } from "../../../../constants/trucks-board/trucks-board-constants.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
-import { getWeekWithDayAndMonth } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { getWeekWithDayAndMonth } from "../../../../utils/trucks-board/trucks-board-old-utils.ts";
 import { DriversMileageView } from "../internal/DriversMileageView.tsx";
 import type { DriverWeeklyMileageData } from "../../../../hooks/useDriverWeeklyMileage.ts";
 import * as React from "react";

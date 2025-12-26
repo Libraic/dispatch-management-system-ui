@@ -1,204 +1,173 @@
-import {
-  type DriversMileageGroup,
-  type DriverWeeklyMileage,
-  type Mileage,
+import type { Renderable } from "../../types/internal/classes/Renderable.ts";
+import type {
+  DispatcherMileageData,
+  DriverMileageData,
+  MileageData,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
+
+import type { Driver } from "../../types/internal/classes/Driver.ts";
 import {
   BLANK_STRING,
-  HYPHEN,
+  NEW_LINE,
 } from "../../constants/common/global-constants.ts";
-import { type Dispatch, type SetStateAction } from "react";
-import type { User } from "../../types/internal/classes/User.ts";
-import { v4 as uuidv4 } from "uuid";
-import type { Driver } from "../../types/internal/classes/Driver.ts";
-import type { Renderable } from "../../types/internal/classes/Renderable.ts";
-import {
-  DEFAULT_DATE_LOCALE,
-  WEEKDAYS,
-} from "../../constants/date/date-constants.ts";
 
-export const addNewDriversMileageGroup = (
-  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
-  weekDays: string[],
+// TODO: Revise edge-cases and update the function accordingly
+export const upsertDriverMileageCallbackFunction = (
+  prevDispatcherMileageDataList: DispatcherMileageData[],
+  dispatcherMileageDataIdentifier: string,
+  mileageData: MileageData,
+  driver: Driver,
+  driverMileageUuid: string,
+  driverMileageDataIdentifier?: string,
 ) => {
-  setDriversMileageGroups((prev) => [
-    ...prev,
-    getBlankDriversMileageGroup(weekDays),
-  ]);
-};
+  const newDispatcherMileageDataList: DispatcherMileageData[] = [];
+  for (const prevDispatcherMileageData of prevDispatcherMileageDataList) {
+    if (
+      prevDispatcherMileageData.identifier !== dispatcherMileageDataIdentifier
+    ) {
+      newDispatcherMileageDataList.push(prevDispatcherMileageData);
+    } else {
+      // We check if there is already a Driver with the same UUID in the array.
+      // If there is, we will have to replace the data for that Driver later on.
+      const existsDriver =
+        prevDispatcherMileageData.driverMileageDataList.find(
+          (driverMileageData) =>
+            driverMileageData.driver!!.getUuid() === driver.getUuid(),
+        ) !== undefined;
+      const newDriverMileageDataList: DriverMileageData[] = [];
 
-export const getTotalRevenueAndMiles = (mileages: Mileage[]): number[] => {
-  let totalRevenue = 0.0;
-  let totalMiles = 0.0;
-  for (const mileage of mileages) {
-    if (mileage.revenue) {
-      totalRevenue += parseFloat(
-        mileage.revenue.substring(2).replace(/,/g, BLANK_STRING),
-      );
-    }
-    if (mileage.miles) {
-      totalMiles += parseFloat(mileage.miles.replace(/,/g, BLANK_STRING));
-    }
-  }
+      // If no occurrence of the current record was found, we add it in the array.
+      // Basically, if there is no record that has the same ID as the one passed
+      // as argument (if passed) and no Driver was found, we conclude that the
+      // Driver's data we are adding is new.
+      if (!driverMileageDataIdentifier && !existsDriver) {
+        newDriverMileageDataList.push(
+          ...prevDispatcherMileageData.driverMileageDataList,
+        );
+        newDriverMileageDataList.push({
+          identifier: driverMileageUuid,
+          driver: driver,
+          totalMiles: mileageData.miles,
+          totalRevenue: mileageData.revenue,
+          mileage: [mileageData],
+        });
+      } else {
+        for (const currentDriverMileageData of prevDispatcherMileageData.driverMileageDataList) {
+          if (
+            currentDriverMileageData.identifier ===
+              driverMileageDataIdentifier ||
+            currentDriverMileageData.driver!!.getUuid() === driver.getUuid()
+          ) {
+            const newMileage: MileageData[] = [];
+            let wasDateFound = false;
 
-  return [totalRevenue, totalMiles];
-};
+            // This is for update logic.
+            // If we find something for the same date, we just consider the new Mileage Data.
+            for (const currentMileageData of currentDriverMileageData.mileage) {
+              let newMileageData;
+              if (currentMileageData.date === mileageData.date) {
+                wasDateFound = true;
+                newMileageData = mileageData;
+              } else {
+                newMileageData = currentMileageData;
+              }
+              newMileage.push(newMileageData);
+            }
 
-export const setDispatcher = (
-  dispatcher: Renderable,
-  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
-  groupIdentifier: string,
-  weekDays: string[],
-) => {
-  setDriversMileageGroups((groups) => {
-    let found = false;
-    const updatedGroups = groups.map((group) => {
-      if (group.dispatcher?.getUuid() === dispatcher.getUuid()) {
-        found = true;
-        return {
-          ...group,
-          items: [...group.items, getBlankDriverWeeklyMileage(weekDays)],
-        };
+            // This is for insert logic.
+            // If the wasDateFound flag is false, it means the date of the new Mileage Data was not found in the array.
+            // This means that we have a new record.
+            if (!wasDateFound) {
+              newMileage.push(mileageData);
+            }
+
+            const newDriver =
+              driver?.getUuid() === currentDriverMileageData.driver!!.getUuid()
+                ? currentDriverMileageData.driver
+                : driver;
+            let driverTotalMiles = 0;
+            let driverTotalRevenue = 0;
+            for (const mileageDatum of newMileage) {
+              driverTotalMiles += mileageDatum.miles;
+              driverTotalRevenue += mileageDatum.revenue;
+            }
+            newDriverMileageDataList.push({
+              ...currentDriverMileageData,
+              totalRevenue: driverTotalRevenue,
+              totalMiles: driverTotalMiles,
+              driver: newDriver,
+              mileage: newMileage,
+            });
+          } else {
+            newDriverMileageDataList.push(currentDriverMileageData);
+          }
+        }
       }
 
-      if (group.groupIdentifier === groupIdentifier && !found) {
-        return { ...group, dispatcher: dispatcher as User };
+      let dispatcherTotalMiles = 0;
+      let dispatcherTotalRevenue = 0;
+      for (const driverMileageDatum of newDriverMileageDataList) {
+        dispatcherTotalMiles += driverMileageDatum.totalMiles;
+        dispatcherTotalRevenue += driverMileageDatum.totalRevenue;
+      }
+      newDispatcherMileageDataList.push({
+        ...prevDispatcherMileageData,
+        totalMiles: dispatcherTotalMiles,
+        totalRevenue: dispatcherTotalRevenue,
+        driverMileageDataList: newDriverMileageDataList,
+      });
+    }
+  }
+
+  return newDispatcherMileageDataList;
+};
+
+export const updateDriverCallbackFunction = (
+  newDriver: Renderable,
+  prev: DispatcherMileageData[],
+  driverMileageDataIdentifier: string,
+  dispatcherMileageDataIdentifier: string,
+) => {
+  const newDispatcherMileageDataList: DispatcherMileageData[] = [];
+  for (const prevDispatcherMileageData of prev) {
+    if (
+      prevDispatcherMileageData.identifier !== dispatcherMileageDataIdentifier
+    ) {
+      newDispatcherMileageDataList.push(prevDispatcherMileageData);
+    } else {
+      const newDriverMileageDataList: DriverMileageData[] = [];
+      for (const driverMileageData of prevDispatcherMileageData.driverMileageDataList) {
+        const newDriverMileageData =
+          driverMileageData.identifier !== driverMileageDataIdentifier
+            ? driverMileageData
+            : {
+                ...driverMileageData,
+                driver: newDriver as Driver,
+              };
+        newDriverMileageDataList.push(newDriverMileageData);
       }
 
-      return group;
-    });
-    return updatedGroups.filter((group) => group.dispatcher !== null);
-  });
-};
-
-export const setDriver = (
-  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
-  driver: Renderable,
-  groupIdentifier: string,
-  itemIdentifier: string,
-) => {
-  setDriversMileageGroups((groups) =>
-    groups.map((group) =>
-      group.groupIdentifier === groupIdentifier
-        ? {
-            ...group,
-            items: group.items.map((item) =>
-              item.itemIdentifier === itemIdentifier
-                ? { ...item, driver: driver as Driver }
-                : item,
-            ),
-          }
-        : group,
-    ),
-  );
-};
-
-export const setDriverWeeklyMileage = (
-  setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>,
-  groupIdentifier: string,
-  driversMileageIdentifier: string,
-  mileageIndex: number,
-  field: keyof Mileage,
-  value: string,
-) => {
-  setDriversMileageGroups((groups) =>
-    groups.map((group) =>
-      group.groupIdentifier === groupIdentifier
-        ? {
-            ...group,
-            items: group.items.map((item) =>
-              item.itemIdentifier === driversMileageIdentifier
-                ? {
-                    ...item,
-                    mileageData: mileagesMapperFunction(
-                      item.mileageData,
-                      mileageIndex,
-                      field,
-                      value,
-                    ),
-                  }
-                : item,
-            ),
-          }
-        : group,
-    ),
-  );
-};
-
-export const mileagesMapperFunction = (
-  mileages: Mileage[],
-  index: number,
-  field: keyof Mileage,
-  value: string,
-) => {
-  return mileages.map((mileage, j) => {
-    if (j === index) {
-      return {
-        ...mileage,
-        [field]: value,
-      };
+      newDispatcherMileageDataList.push({
+        ...prevDispatcherMileageData,
+        driverMileageDataList: newDriverMileageDataList,
+      });
     }
-    return mileage;
-  });
-};
-
-export const getWeekWithDayAndMonth = (week: string[]) => {
-  const biweeklyTimeline = [...week];
-  for (const weekDay of week) {
-    const [y, m, d] = weekDay.split(HYPHEN).map(Number);
-    const date = new Date(y, m - 1, d);
-    date.setDate(date.getDate() + 7);
-    biweeklyTimeline.push(date.toLocaleDateString(DEFAULT_DATE_LOCALE));
   }
 
-  return biweeklyTimeline.map((day, index) => {
-    const dateParts = day.split(HYPHEN);
-    return `${WEEKDAYS[index % 7]} ${dateParts[2]}.${dateParts[1]}`;
-  });
+  return newDispatcherMileageDataList;
 };
 
-const getBlankDriversMileageGroup = (
-  weekDays: string[],
-): DriversMileageGroup => {
-  return {
-    dispatcher: null,
-    groupIdentifier: uuidv4(),
-    startDate: weekDays[0],
-    endDate: weekDays[weekDays.length - 1],
-    items: [
-      {
-        uuid: null,
-        driver: null,
-        itemIdentifier: uuidv4(),
-        mileageData: getWeekMileages(weekDays),
-      },
-    ],
-  };
-};
-
-const getBlankDriverWeeklyMileage = (weekDays: string[]) => {
-  return {
-    uuid: null,
-    driver: null,
-    itemIdentifier: uuidv4(),
-    mileageData: getWeekMileages(weekDays),
-  } as DriverWeeklyMileage;
-};
-
-const getWeekMileages = (weekDays: string[]): Mileage[] => {
-  const biweeklyTimeline = [...weekDays];
-  for (const weekDay of weekDays) {
-    const date = new Date(weekDay);
-    date.setDate(date.getDate() + 7);
-    biweeklyTimeline.push(date.toISOString().split("T")[0]);
+export const extractMileageDataFromDriverMileageDataByDay = (
+  day: string,
+  driverMileageData?: DriverMileageData,
+): string => {
+  if (!driverMileageData) {
+    return BLANK_STRING;
+  }
+  const mileageData = driverMileageData.mileage.find((x) => x.date === day);
+  if (!mileageData) {
+    return BLANK_STRING;
   }
 
-  return biweeklyTimeline.map((value, _) => ({
-    date: value,
-    revenue: null,
-    miles: null,
-    note: null,
-    destinationNote: null,
-    broker: null,
-  }));
+  return `${!mileageData.broker || mileageData.broker === BLANK_STRING ? BLANK_STRING : mileageData.broker + NEW_LINE} ${mileageData.revenue} | ${mileageData.miles}`;
 };

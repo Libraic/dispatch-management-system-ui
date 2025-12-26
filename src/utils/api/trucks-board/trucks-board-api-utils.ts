@@ -7,7 +7,7 @@ import {
   type DriverWeeklyMileage,
   type DriverWeeklyMileageResponse,
   type Mileage,
-} from "../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import { Driver } from "../../../types/internal/classes/Driver.ts";
 import { User } from "../../../types/internal/classes/User.ts";
 import {
@@ -16,16 +16,75 @@ import {
   DOLLAR_SIGN,
 } from "../../../constants/common/global-constants.ts";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import { saveDriversMileage } from "../../../service/driverMileageService.ts";
+import { saveDriversMileageOld } from "../../../service/driverMileageService.ts";
 import {
   MISSING_DISPATCHER,
   MISSING_DRIVER,
 } from "../../../constants/error/error-message-constants.ts";
 import type {
   DriverMileage,
-  UpsertDriversMileageRequest,
-} from "../../../types/api/driver-mileage/driver-mileage-api-request-types.ts";
+  UpsertDriversMileageRequestOld,
+} from "../../../types/api/driver-mileage/driver-mileage-api-request-old-types.ts";
 import { v4 as uuidv4 } from "uuid";
+import type {
+  DispatcherMileageData,
+  DriverMileageData,
+  MileageData,
+} from "../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { GetDriverMileageResponse } from "../../../types/api/driver-mileage/driver-mileage-api-types.ts";
+import { Dispatcher } from "../../../types/internal/classes/Dispatcher.ts";
+
+export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
+  getDriverMileageResponseList: GetDriverMileageResponse[],
+  startDate: string,
+  endDate: string,
+) => {
+  const dispatcherMileageDataList: DispatcherMileageData[] = [];
+  for (const getDriverMileageResponse of getDriverMileageResponseList) {
+    const driverMileageDataList: DriverMileageData[] = [];
+    let totalRevenue = 0.0;
+    let totalMiles = 0.0;
+    for (const driverMileageData of getDriverMileageResponse.driverMileageDataList) {
+      const mileageData: MileageData[] = [];
+      let driverTotalRevenue = 0.0;
+      let driverTotalMiles = 0.0;
+      for (const mileageDatum of driverMileageData.mileage) {
+        mileageData.push({
+          date: mileageDatum.date,
+          miles: mileageDatum.miles,
+          revenue: mileageDatum.revenue,
+          broker: mileageDatum.broker ?? undefined,
+        });
+        driverTotalRevenue += mileageDatum.revenue;
+        driverTotalMiles += mileageDatum.miles;
+      }
+      totalRevenue += driverTotalRevenue;
+      totalMiles += driverTotalMiles;
+      driverMileageDataList.push({
+        identifier: driverMileageData.driverMileageUuid,
+        driver: new Driver(driverMileageData.driver),
+        totalRevenue: driverTotalRevenue,
+        totalMiles: driverTotalMiles,
+        mileage: mileageData,
+      });
+    }
+
+    dispatcherMileageDataList.push({
+      identifier: uuidv4(),
+      dispatcher:
+        getDriverMileageResponse.dispatcher === null
+          ? null
+          : new Dispatcher(getDriverMileageResponse.dispatcher),
+      totalMiles: totalMiles,
+      totalRevenue: totalRevenue,
+      startDate: startDate,
+      endDate: endDate,
+      driverMileageDataList: driverMileageDataList,
+    });
+  }
+
+  return dispatcherMileageDataList;
+};
 
 export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   item: DriverWeeklyMileageResponse,
@@ -71,7 +130,7 @@ export const saveDriversWeeklyMileage = async (
     );
 
   // Make the API call to the Upsert endpoint.
-  const response = await saveDriversMileage(upsertDriversMileageRequest);
+  const response = await saveDriversMileageOld(upsertDriversMileageRequest);
 
   // TODO: Take start and end date as parameters, since they are the same for each group
   if (response.data) {
@@ -112,37 +171,6 @@ export const groupDriverWeeklyMileageByDispatcher = (
   }, {});
 };
 
-// TODO: Most probably, we will throw one error at a time and do all the validation on UI
-// const handleApiErrors = (
-//   response: ApiResponse<
-//     DriverWeeklyMileageResponse[],
-//     Error | GroupsErrorResponse
-//   >,
-// ): DriversMileageGroupsErrors => {
-//   const errors = {} as DriversMileageGroupsErrors;
-//   if (response.error) {
-//     if ("errors" in response.error) {
-//       Object.entries(response.error.errors).forEach(([key, value]) => {
-//         const driverMileageError = {} as DriverMileageError;
-//         for (const err of value as Error[]) {
-//           if (err.identifier) {
-//             if (!driverMileageError[err.identifier]) {
-//               driverMileageError[err.identifier] = {} as MileageError;
-//             }
-//             (driverMileageError[err.identifier] as MileageError)[err.field!!] =
-//               err.message;
-//           } else {
-//             driverMileageError[err.field!!] = err.message;
-//           }
-//         }
-//         errors[key] = driverMileageError;
-//       });
-//     }
-//   }
-//
-//   return errors;
-// };
-
 const getErrorsPriorUpsertion = (
   driversMileageGroups: DriversMileageGroup[],
 ): DriversMileageGroupsErrors => {
@@ -170,7 +198,7 @@ const getErrorsPriorUpsertion = (
 const getUpsertDriversMileageRequestFromDriversMileageGroups = (
   driversMileageGroups: DriversMileageGroup[],
   companyUuid: string,
-): UpsertDriversMileageRequest => {
+): UpsertDriversMileageRequestOld => {
   const currentDriverWeeklyMileage: DriverMileage[] = [];
   for (const group of driversMileageGroups) {
     const dispatcherUuid = group.dispatcher!!.uuid;

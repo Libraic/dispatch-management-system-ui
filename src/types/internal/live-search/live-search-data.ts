@@ -30,6 +30,10 @@ export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
     endpoint: "http://localhost:8090/api/trailers",
     searchField: "trailerNumber",
   },
+  Dispatcher: {
+    endpoint: "http://localhost:8090/api/dispatchers",
+    searchField: "name",
+  },
 } as const;
 
 export interface LiveSearchBaseData<D> {
@@ -50,11 +54,14 @@ export interface LiveSearchBaseData<D> {
 
   /** Additional search criteria to be applied to the API request, e.g., joinable fields, additional filters, etc. */
   customSearchCriteria?: SearchCriteria[];
+
+  isMandatory?: boolean;
 }
 
 export interface LiveSearchCellData<D, R> extends LiveSearchBaseData<D> {
   object: Renderable | null;
   saveObject?: (renderable: Renderable) => R;
+  style?: string;
 }
 
 /**

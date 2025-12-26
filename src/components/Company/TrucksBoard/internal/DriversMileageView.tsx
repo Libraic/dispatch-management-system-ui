@@ -5,14 +5,11 @@ import { BiweeklyMileageCells } from "./BiweeklyMileageCells.tsx";
 import {
   setDispatcher,
   setDriverWeeklyMileage,
-} from "../../../../utils/trucks-board/trucks-board-utils.ts";
+} from "../../../../utils/trucks-board/trucks-board-old-utils.ts";
 import { User } from "../../../../types/internal/classes/User.ts";
 import { LiveSearchCell } from "../../../Common/Matrix/Cell/LiveSearchCell.tsx";
 import type { Renderable } from "../../../../types/internal/classes/Renderable.ts";
-import {
-  getDispatcherLiveSearchCellStyles,
-  TRUCKS_BOARD_LAYOUT_STYLES,
-} from "../../../../utils/trucks-board/trucks-board-styles-utils.ts";
+import { TRUCKS_BOARD_LAYOUT_STYLES } from "../../../../utils/trucks-board/trucks-board-styles-utils.ts";
 import {
   getDispatcherErrorMessage,
   getDriverMileageErrorsByGroupIdentifier,
@@ -46,7 +43,6 @@ export const DriversMileageView: React.FC<{
                 )
               }
               errorMessage={getDispatcherErrorMessage(errors, groupIdentifier)}
-              style={getDispatcherLiveSearchCellStyles(group.items.length)}
             />
 
             {group.items.map((driverWeeklyMileage, idx) => {

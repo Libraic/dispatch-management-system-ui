@@ -11,10 +11,6 @@ import { InputFormSearchResult } from "../../LiveSearch/public/InputFormSearchRe
 import errorIcon from "../../../../assets/global/error.svg";
 import { useHoverPanel } from "../../../../hooks/useHoverPanel.ts";
 import { HoverableDescription } from "../../Typography/HoverableDescription.tsx";
-import {
-  ERRONEOUS_BACKGROUND_STYLE,
-  NO_ERROR_BACKGROUND_STYLE,
-} from "../../../../utils/matrix/cell-constants.ts";
 import { useUnfocus } from "../../../../hooks/useUnfocus.ts";
 import {
   LIVE_SEARCH_ENDPOINTS,
@@ -23,7 +19,6 @@ import {
 import type { LiveSearchResult } from "../../../../types/api/common/api-response-types.ts";
 import { usePagination } from "../../../../hooks/usePagination.ts";
 import { DEFAULT_SIZE } from "../../../../constants/api/api-query-constants.ts";
-import { BORDER_PALE_BLUE } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const LiveSearchCell = <D, R>({
   entityType,
@@ -35,9 +30,7 @@ export const LiveSearchCell = <D, R>({
   customSearchCriteria,
   errorMessage,
   style,
-}: LiveSearchCellData<D, R> & {
-  style?: React.CSSProperties;
-}) => {
+}: LiveSearchCellData<D, R>) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [text, setText] = useState(BLANK_STRING);
   const [isRendered, setIsRendered] = useState(false);
@@ -60,7 +53,6 @@ export const LiveSearchCell = <D, R>({
     customSearchCriteria,
   );
   const hoverData = useHoverPanel(!!errorMessage);
-  const isMounted = useRef(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
   const cellRef = useUnfocus(() => {
@@ -68,13 +60,12 @@ export const LiveSearchCell = <D, R>({
     setItems(EMPTY_ARRAY);
   }, [dropdownRef]);
 
-  if (!isMounted.current) {
+  useEffect(() => {
     if (object) {
       setText(object.renderOnForm());
       setIsRendered(true);
     }
-    isMounted.current = true;
-  }
+  }, [object]);
 
   useEffect(() => {
     setItems(data.items.map((item) => new constructor(item) as Renderable));
@@ -91,20 +82,17 @@ export const LiveSearchCell = <D, R>({
         zIndex: 9999,
       });
     }
-  }, [items.length]);
+  }, [cellRef, items.length]);
 
   return (
     <div
       ref={cellRef}
       className="relative w-full h-full"
-      style={style}
       onMouseEnter={hoverData.handleMouseEnter}
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`p-2 flex justify-center items-center ${
-          errorMessage ? ERRONEOUS_BACKGROUND_STYLE : NO_ERROR_BACKGROUND_STYLE
-        } border-b-2 border-r-2 ${BORDER_PALE_BLUE} bg-[#f5f7fc] w-full h-full caret-transparent`}
+        className={`font-plus-jakarta-sans text-[0.9rem] p-2 flex items-center bg-[#f5f7fc] w-full h-full caret-transparent ${style ?? BLANK_STRING}`}
         contentEditable
         suppressContentEditableWarning={true}
         onFocus={() => setIsLiveSearchActive(true)}
@@ -148,12 +136,7 @@ export const LiveSearchCell = <D, R>({
       {hoverData.shouldDisplayMessage() &&
         createPortal(
           <div style={dropdownStyle}>
-            <HoverableDescription
-              message={errorMessage!!}
-              icon={errorIcon}
-              topPosition="top-[2rem]"
-              leftPosition="left-[4.2rem]"
-            />
+            <HoverableDescription message={errorMessage!!} icon={errorIcon} />
           </div>,
           document.body,
         )}

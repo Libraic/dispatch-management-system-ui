@@ -9,6 +9,7 @@ export type PaginationData = {
 };
 
 export enum Entity {
+  DISPATCHER = "Dispatcher",
   DRIVER = "Driver",
   TRUCK = "Truck",
   TRAILER = "Trailer",
