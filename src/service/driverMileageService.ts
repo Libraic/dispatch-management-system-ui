@@ -1,11 +1,11 @@
 import axios from "axios";
 import { DRIVERS_MILEAGE_BASE_URL } from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
-import type { UpsertDriversMileageRequest } from "../types/api/driver-mileage/driver-mileage-api-request-types.ts";
+import type { UpsertDriversMileageRequestOld } from "../types/api/driver-mileage/driver-mileage-api-request-old-types.ts";
 import type {
   DriversMileageGroup,
   DriverWeeklyMileageResponse,
-} from "../types/internal/trucks-board/trucks-board-types.ts";
+} from "../types/internal/trucks-board/trucks-board-old-types.ts";
 import {
   COMPANY_ID_QUERY_PARAM,
   END_DATE_QUERY_PARAM,
@@ -22,9 +22,28 @@ import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common/api-errors-types.ts";
+import type {
+  GetDriverMileageResponse,
+  UpsertDriverMileageRequest,
+  UpsertDriverMileageResponse,
+} from "../types/api/driver-mileage/driver-mileage-api-types.ts";
 
-export const saveDriversMileage = async (
-  upsertDriversMileageRequest: UpsertDriversMileageRequest,
+export const upsertDriverMileage = async (
+  upsertDriversMileageRequest: UpsertDriverMileageRequest,
+): Promise<ApiResponse<UpsertDriverMileageResponse, Error>> => {
+  try {
+    const response = await axios.put(
+      DRIVERS_MILEAGE_BASE_URL,
+      upsertDriversMileageRequest,
+    );
+    return response.data;
+  } catch (error: any) {
+    return handleApiErrors(error);
+  }
+};
+
+export const saveDriversMileageOld = async (
+  upsertDriversMileageRequest: UpsertDriversMileageRequestOld,
 ): Promise<
   ApiResponse<DriverWeeklyMileageResponse[], Error | GroupsErrorResponse>
 > => {
@@ -53,6 +72,28 @@ export const fetchDriversMileageByCompanyUuidAndStartAndEndDate = async (
     return Object.values(groups);
   } else {
     return INTERNAL_SERVER_ERROR;
+  }
+};
+
+export const getDriversMileageByCompanyUuidAndStartAndEndDate = async (
+  companyUuid: string,
+  week: string[],
+): Promise<ApiResponse<GetDriverMileageResponse[], Error>> => {
+  const startDate = week[0];
+  const endDate = week[week.length - 1];
+  try {
+    const response = await axios.get<
+      ApiResponse<GetDriverMileageResponse[], Error>
+    >(DRIVERS_MILEAGE_BASE_URL, {
+      params: {
+        [COMPANY_ID_QUERY_PARAM]: companyUuid,
+        [START_DATE_QUERY_PARAM]: startDate,
+        [END_DATE_QUERY_PARAM]: endDate,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiErrors(error);
   }
 };
 

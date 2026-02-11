@@ -1,30 +1,35 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { TrucksBoardHeader } from "../../Company/TrucksBoard/new/TrucksBoardHeader.tsx";
 import { PageHeader } from "../../Common/Page/PageHeader.tsx";
-import { useDriverWeeklyMileage } from "../../../hooks/useDriverWeeklyMileage.ts";
-import { TrucksBoardMenuBar } from "../../Company/TrucksBoard/public/TrucksBoardMenuBar.tsx";
-import { useEffect, useState } from "react";
-import { saveDriversWeeklyMileage } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
-import { useToast } from "../../../hooks/useToast.ts";
-import { ToastRenderer } from "../../Common/Toast/ToastRenderer.tsx";
-import { BackButton } from "../../Common/Button/BackButton.tsx";
-import { formatCompanyDashboardRoute } from "../../../utils/route/route-utils.ts";
-import { ConfirmationModal } from "../../Common/Modal/ConfirmationModal.tsx";
-import { getCurrentWeekDays } from "../../../utils/date/date-utils.ts";
-import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
-import { TrucksBoardMatrix } from "../../Company/TrucksBoard/public/TrucksBoardMatrix.tsx";
+import { getCurrentWeekDays } from "../../../utils/date/date-utils.ts";
+import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-old-utils.ts";
+import { useParams } from "react-router-dom";
+import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/new/TrucksBoardRowContainer.tsx";
+import { useEffect, useState } from "react";
+import type { DispatcherMileageData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
+import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
+import { createEmptyDispatcherMileageData } from "../../../utils/trucks-board/trucks-board-utils-old.ts";
+import { TrucksBoardMenu } from "../../Company/TrucksBoard/new/TrucksBoardMenu.tsx";
+import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
+import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import { DEFAULT_DATE_LOCALE } from "../../../constants/date/date-constants.ts";
 
 export const TrucksBoardPage = () => {
-  const { companyUuid } = useParams();
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
-  const driverWeeklyMileageData = useDriverWeeklyMileage(
-    companyUuid!!,
-    activeWeek,
-  );
-  const toastData = useToast();
-  const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
+  const days = getWeekWithDayAndMonth(activeWeek);
+  const companyId = useParams().companyUuid!!;
+  const [dispatcherMileageDataList, setDispatcherMileageDataList] =
+    useState<DispatcherMileageData[]>(EMPTY_ARRAY);
+
+  const addAction = () => {
+    const startDate = activeWeek[0];
+    const endDate = activeWeek[activeWeek.length - 1];
+    setDispatcherMileageDataList((prev) => [
+      ...prev,
+      createEmptyDispatcherMileageData(startDate, endDate),
+    ]);
+  };
+
   const extractWeekFromCalendar = (dates: Date[]) => {
     const vals = dates.map((date) =>
       date.toLocaleDateString(DEFAULT_DATE_LOCALE),
@@ -33,57 +38,43 @@ export const TrucksBoardPage = () => {
   };
 
   useEffect(() => {
-    fetchDriversMileageByCompanyUuidAndStartAndEndDate(
-      companyUuid!!,
+    getDriversMileageByCompanyUuidAndStartAndEndDate(
+      companyId,
       activeWeek,
-    ).then((response) => {
-      if (Array.isArray(response)) {
-        driverWeeklyMileageData.setDriversMileageGroups(response);
-      } else {
-        toastData.withErrorMessage(response);
-      }
+    ).then((data) => {
+      const getDriverMileageResponseList = data.data ?? EMPTY_ARRAY;
+      const startDate = activeWeek[0];
+      const endDate = activeWeek[activeWeek.length - 1];
+      const _dispatcherMileageDataList =
+        convertGetDriverMileageResponseListToDispatcherMileageDataList(
+          getDriverMileageResponseList,
+          startDate,
+          endDate,
+        );
+      setDispatcherMileageDataList(_dispatcherMileageDataList);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeWeek]);
+  }, [companyId, activeWeek]);
 
   return (
-    <div className="overflow-hidden hide-scrollbar">
-      <div className="w-screen h-screen flex flex-col mt-2 text-[0.8rem]">
-        <ConfirmationModal
-          showModal={showModal}
-          positiveAction={async () => {
-            const response = await saveDriversWeeklyMileage(
-              driverWeeklyMileageData,
-            );
-            driverWeeklyMileageData.setErrors(response);
-            if (Object.keys(response).length !== 0) {
-              setShowModal(false);
-            } else {
-              navigate(formatCompanyDashboardRoute(companyUuid!!));
-            }
-          }}
-          intermediaryAction={() => setShowModal(false)}
-          negativeAction={() =>
-            navigate(formatCompanyDashboardRoute(companyUuid!!))
-          }
+    <div className="h-screen w-screen flex flex-col gap-y-1">
+      <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
+      <div className="flex flex-col mx-[3rem] my-[2rem]">
+        <TrucksBoardMenu
+          addAction={addAction}
+          extractWeekFromCalendar={extractWeekFromCalendar}
         />
-        <BackButton
-          url={formatCompanyDashboardRoute(companyUuid!!)}
-          action={() => setShowModal(true)}
-        />
-        <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
-        <div className="w-[95%] mx-auto">
-          <TrucksBoardMenuBar
-            driverWeeklyMileageData={driverWeeklyMileageData}
-            toast={toastData}
-            extractWeekFromCalendar={extractWeekFromCalendar}
-          />
+        <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
+          <TrucksBoardHeader days={days} />
+          {dispatcherMileageDataList.map((dispatcherMileageData) => (
+            <TrucksBoardRowContainer
+              key={dispatcherMileageData.identifier}
+              companyId={companyId}
+              days={days}
+              dispatcherMileageData={dispatcherMileageData}
+              setDispatcherMileageData={setDispatcherMileageDataList}
+            />
+          ))}
         </div>
-        <TrucksBoardMatrix
-          driverWeeklyMileageData={driverWeeklyMileageData}
-          activeWeek={activeWeek}
-        />
-        <ToastRenderer toast={toastData} />
       </div>
     </div>
   );

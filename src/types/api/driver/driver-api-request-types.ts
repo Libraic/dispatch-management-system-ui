@@ -10,4 +10,5 @@ export type CreateDriverRequest = {
   companyUuid: string;
   truckUuid: string | null;
   trailerUuid: string | null;
+  dispatcherUuid: string | null;
 };

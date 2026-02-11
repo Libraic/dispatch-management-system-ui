@@ -1,13 +1,13 @@
 import { ViewableCell } from "../../../Common/Matrix/Cell/ViewableCell.tsx";
 import * as React from "react";
-import type { Mileage } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { Mileage } from "../../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
   DOLLAR_SIGN,
 } from "../../../../constants/common/global-constants.ts";
 import { formatNumericValue } from "../../../../utils/matrix/cell-utils.ts";
-import { getTotalRevenueAndMiles } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { getTotalRevenueAndMiles } from "../../../../utils/trucks-board/trucks-board-old-utils.ts";
 
 export const DriverMileageRevenueAndMilesTotals: React.FC<{
   mileages: Mileage[];

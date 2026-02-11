@@ -5,6 +5,7 @@ import {
   COMPANIES_LIST,
   COMPANY_DASHBOARD,
   COMPANY_REGISTRATION,
+  DISPATCHERS_VIEW,
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
   FINANCIAL_REPORTS,
@@ -20,7 +21,6 @@ import {
 } from "./constants/route/internal-route-constants.ts";
 import { CompaniesPage } from "./components/Pages/Company/CompaniesPage.tsx";
 import { CompanyDashboardPage } from "./components/Pages/Company/CompanyDashboardPage.tsx";
-import { TrucksBoardPage } from "./components/Pages/Company/TrucksBoardPage.tsx";
 import { DriverRegistrationPage } from "./components/Pages/Driver/DriverRegistrationPage.tsx";
 import { DriversPage } from "./components/Pages/Driver/DriversPage.tsx";
 import { TrailerRegistrationPage } from "./components/Pages/Trailer/TrailerRegistrationPage.tsx";
@@ -31,6 +31,8 @@ import { LandingPage } from "./components/Pages/Landing/LandingPage.tsx";
 import { HomePage } from "./components/Pages/Home/HomePage.tsx";
 import { FinancialReportsPage } from "./components/Pages/Company/Reports/FinancialReportsPage.tsx";
 import { LoadByLoadReportsPage } from "./components/Pages/Company/Reports/LoadByLoadReportsPage.tsx";
+import { TrucksBoardPage } from "./components/Pages/Company/TrucksBoardPage.tsx";
+import { DispatcherRegistrationPage } from "./components/Dispatcher/Registration/DispatcherRegistrationPage.tsx";
 
 export const App = () => {
   return (
@@ -52,6 +54,10 @@ export const App = () => {
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVERS_VIEW}`}
           element={<DriversPage />}
+        />
+        <Route
+          path={`${COMPANY_DASHBOARD}${DISPATCHERS_VIEW}`}
+          element={<DispatcherRegistrationPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}

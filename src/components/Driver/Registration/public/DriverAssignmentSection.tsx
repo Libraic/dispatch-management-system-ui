@@ -7,8 +7,9 @@ import { Truck } from "../../../../types/internal/classes/Truck.ts";
 import { Trailer } from "../../../../types/internal/classes/Trailer.ts";
 import { Entity } from "../../../../types/api/common/api-query-types.ts";
 import { joinByCompanyId } from "../../../../utils/api/api-query-utils.ts";
+import { Dispatcher } from "../../../../types/internal/classes/Dispatcher.ts";
 
-export const DriverAssetsAssignmentSection = () => {
+export const DriverAssignmentSection = () => {
   const context = useContext(DriverRegistrationContext)!;
   const driverRegistrationData = context.registrationData;
   const setDriverRegistrationData = context.setRegistrationData;
@@ -16,6 +17,34 @@ export const DriverAssetsAssignmentSection = () => {
   return (
     <div>
       <div className="flex flex-row items-center justify-center gap-x-20">
+        <LiveSearchInputForm
+          label="Dispatcher"
+          placeholder={"John Doe"}
+          value={driverRegistrationData.dispatcherAssignmentData.name}
+          entityType={Entity.DISPATCHER}
+          joinableEntityId={joinableEntityId}
+          joinableEntityName="company"
+          saveData={(dispatcherData: Renderable) =>
+            setDriverRegistrationData((prev) => ({
+              ...prev,
+              dispatcherAssignmentData: {
+                uuid: dispatcherData.getUuid(),
+                name: dispatcherData.renderOnForm(),
+              },
+            }))
+          }
+          cleanData={() =>
+            setDriverRegistrationData({
+              ...driverRegistrationData,
+              dispatcherAssignmentData: {
+                uuid: BLANK_STRING,
+                name: BLANK_STRING,
+              },
+            })
+          }
+          constructor={Dispatcher}
+          customSearchCriteria={[joinByCompanyId(joinableEntityId)]}
+        />
         <LiveSearchInputForm
           label="Truck"
           placeholder={"RK-2021"}

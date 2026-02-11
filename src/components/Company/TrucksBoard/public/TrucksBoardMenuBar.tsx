@@ -1,7 +1,7 @@
 import { IconButton } from "../../../Common/Button/IconButton.tsx";
 import addRecordUnfocused from "../../../../assets/trucks-board/add-unfocused.svg";
 import addRecordFocused from "../../../../assets/trucks-board/add-focused.svg";
-import { addNewDriversMileageGroup } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { addNewDriversMileageGroup } from "../../../../utils/trucks-board/trucks-board-old-utils.ts";
 import saveRecordsUnfocused from "../../../../assets/trucks-board/save-records-unfocused.svg";
 import saveRecordsFocused from "../../../../assets/trucks-board/save-records-focused.svg";
 import * as React from "react";

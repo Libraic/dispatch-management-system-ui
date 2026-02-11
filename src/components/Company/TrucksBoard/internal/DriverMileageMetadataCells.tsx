@@ -1,11 +1,11 @@
 import { LiveSearchCell } from "../../../Common/Matrix/Cell/LiveSearchCell.tsx";
 import type { Renderable } from "../../../../types/internal/classes/Renderable.ts";
-import { setDriver } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { setDriver } from "../../../../utils/trucks-board/trucks-board-old-utils.ts";
 import {
   DRIVER_KEY,
   type DriverMileageErrors,
   type DriverWeeklyMileage,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { joinByCompanyId } from "../../../../utils/api/api-query-utils.ts";
 import { ViewableCell } from "../../../Common/Matrix/Cell/ViewableCell.tsx";

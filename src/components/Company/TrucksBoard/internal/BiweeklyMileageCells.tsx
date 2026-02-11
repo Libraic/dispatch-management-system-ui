@@ -4,7 +4,7 @@ import type {
   DriverWeeklyMileage,
   Mileage,
   MileageError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import * as React from "react";
 
 export const BiweeklyMileageCells: React.FC<{

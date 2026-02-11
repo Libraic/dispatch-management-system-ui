@@ -3,6 +3,7 @@ import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { CompanySidebarItem } from "../internal/CompanySidebarItem.tsx";
 import trucksBoardUnhoveredIcon from "../../../../assets/company-menu/trucks-board-unhovered.svg";
 import {
+  DISPATCHERS_VIEW,
   DRIVERS_VIEW,
   FINANCIAL_REPORTS,
   LOAD_BY_LOAD_REPORTS,
@@ -12,6 +13,7 @@ import {
 } from "../../../../constants/route/internal-route-constants.ts";
 import addDriverIcon from "../../../../assets/company-menu/add-driver.svg";
 import addAssetIcon from "../../../../assets/company-menu/add-asset-icon.svg";
+import addDispatcherIcon from "../../../../assets/company-menu/add-dispatcher-icon.svg";
 import reportsIcon from "../../../../assets/reports/reports.svg";
 import { useParams } from "react-router-dom";
 import * as React from "react";
@@ -36,6 +38,11 @@ export const CompanySidebar: React.FC<{ company: CompanyData }> = ({
         label="Drivers"
         icon={addDriverIcon}
         baseRoute={`${baseRoute}${DRIVERS_VIEW}`}
+      />
+      <CompanySidebarItem
+        label="Dispatchers"
+        icon={addDispatcherIcon}
+        baseRoute={`${baseRoute}${DISPATCHERS_VIEW}`}
       />
       <CompanySidebarItem
         label="Assets"

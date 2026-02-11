@@ -42,6 +42,7 @@ export const LiveSearchInputForm = <D,>({
   value,
   entityType,
   errorMessage,
+  isMandatory,
   joinableEntityId,
   joinableEntityName,
   saveData,
@@ -103,6 +104,7 @@ export const LiveSearchInputForm = <D,>({
             cleanData();
           }
         }}
+        isMandatory={isMandatory}
       />
       <InputFormSearchResult
         items={items}

@@ -3,7 +3,7 @@ import { CellType } from "../../../../types/internal/matrix/matrix-types.ts";
 import type {
   Mileage,
   MileageError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import * as React from "react";
 
 export const DailyMileageCells: React.FC<{

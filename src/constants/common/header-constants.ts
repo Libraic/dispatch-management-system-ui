@@ -62,3 +62,8 @@ export const TRAILERS_PAGE_HEADER = {
   header: "Trailers List",
   subheader: "Manage your trailers",
 };
+
+export const DISPATCHER_REGISTRATION_HEADER = {
+  header: "Add Dispatcher",
+  subheader: "Complete the required information from the sections",
+};

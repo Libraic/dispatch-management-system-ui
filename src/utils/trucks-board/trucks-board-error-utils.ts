@@ -2,7 +2,7 @@ import {
   DISPATCHER_KEY,
   type DriverMileageErrors,
   type DriversMileageGroupsErrors,
-} from "../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../types/internal/trucks-board/trucks-board-old-types.ts";
 
 export const getDispatcherErrorMessage = (
   errors: DriversMileageGroupsErrors,

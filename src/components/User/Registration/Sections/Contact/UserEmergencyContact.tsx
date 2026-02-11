@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserRegistrationContext } from "../../../../../context/UserRegistrationContext.ts";
 import {
   EMERGENCY_CONTACT_NAME_PLACEHOLDER,
-  EMERGENCY_CONTACT_PHONE_PLACEHOLDER,
+  PHONE_NUMBER_PLACEHOLDER,
   EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER,
 } from "../../../../../constants/common/placeholder-constants.ts";
 import { InputForm } from "../../../../Common/InputForm/public/InputForm.tsx";
@@ -36,7 +36,7 @@ export const UserEmergencyContact = () => {
         />
         <InputForm
           label="Phone Number"
-          placeholder={EMERGENCY_CONTACT_PHONE_PLACEHOLDER}
+          placeholder={PHONE_NUMBER_PLACEHOLDER}
           type="text"
           inputFieldValue={registrationData.emergencyContact.phone}
           saveInputData={(value: string) =>

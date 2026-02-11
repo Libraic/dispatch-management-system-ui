@@ -31,6 +31,10 @@ export const getBlankDriverRegistrationData = (): DriverRegistrationData => {
       trailerNumber: BLANK_STRING,
       trailerUuid: BLANK_STRING,
     },
+    dispatcherAssignmentData: {
+      uuid: BLANK_STRING,
+      name: BLANK_STRING,
+    },
   };
 };
 
@@ -66,6 +70,10 @@ export const createCreateDriverRequestFromDriverRegistrationData = (
     truckUuid:
       driverRegistrationData.truckAssignmentData.truckUuid !== BLANK_STRING
         ? driverRegistrationData.truckAssignmentData.truckUuid
+        : null,
+    dispatcherUuid:
+      driverRegistrationData.dispatcherAssignmentData.uuid !== BLANK_STRING
+        ? driverRegistrationData.dispatcherAssignmentData.uuid
         : null,
   };
 };

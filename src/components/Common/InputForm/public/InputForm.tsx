@@ -54,7 +54,7 @@ export const InputForm: React.FC<{
   return (
     <div className="flex flex-col gap-y-2 min-h-[6.5rem]">
       <div
-        className={`flex flex-col px-5 py-2 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] max-w-[20rem]`}
+        className={`flex flex-col px-5 py-1 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] max-w-[20rem]`}
       >
         <InputFormLabel
           label={label}
@@ -63,7 +63,7 @@ export const InputForm: React.FC<{
         />
 
         <input
-          className={`${INPUT_FORM_STYLE} w-[19rem]`}
+          className={`${INPUT_FORM_STYLE} w-[15rem]`}
           type={type}
           name={name}
           placeholder={

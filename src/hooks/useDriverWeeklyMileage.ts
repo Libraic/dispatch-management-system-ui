@@ -2,7 +2,7 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import type {
   DriversMileageGroup,
   DriversMileageGroupsErrors,
-} from "../types/internal/trucks-board/trucks-board-types.ts";
+} from "../types/internal/trucks-board/trucks-board-old-types.ts";
 
 export type DriverWeeklyMileageData = {
   setDriversMileageGroups: Dispatch<SetStateAction<DriversMileageGroup[]>>;
