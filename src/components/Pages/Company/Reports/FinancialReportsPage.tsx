@@ -25,6 +25,10 @@ import { ReportContainer } from "../../../Common/Reports/ReportContainer.tsx";
 import { ReportTableContainer } from "../../../Common/Reports/ReportTableContainer.tsx";
 import { ReportTable } from "../../../Common/Reports/ReportTable.tsx";
 import { ReportTableMenu } from "../../../Common/Reports/ReportTableMenu.tsx";
+import {
+  SYSTEM_FONT_NORMAL,
+  SYSTEM_FONT_THIN,
+} from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const FinancialReportsPage = () => {
   const gridTemplate = "grid grid-cols-[9rem_5rem_5rem]";
@@ -58,7 +62,7 @@ export const FinancialReportsPage = () => {
                 kpiModels[0].kpisData.map((kpiModelData, index) => (
                   <th
                     key={index}
-                    className={`w-[12rem] text-center p-2 ${BACKGROUND_PALE_BLUE} font-plus-jakarta-sans font-thin ${TEXT_SOLID_GRAY}`}
+                    className={`w-[12rem] text-center p-2 ${BACKGROUND_PALE_BLUE} ${SYSTEM_FONT_THIN} ${TEXT_SOLID_GRAY}`}
                   >
                     <p className="text-[1rem] pb-1">{kpiModelData.label}</p>
                     <p className="text-[0.8rem]">{`${kpiModelData.start === kpiModelData.end ? kpiModelData.start : `${kpiModelData.start} - ${kpiModelData.end}`}`}</p>
@@ -76,7 +80,7 @@ export const FinancialReportsPage = () => {
                     <div className={`${gridTemplate} text-center`}>
                       {kpiModelData.kpis.map((kpiValue, dIndex) => (
                         <p
-                          className="pl-3 font-plus-jakarta-sans"
+                          className={`pl-3 ${SYSTEM_FONT_NORMAL}`}
                           key={`${index}-${dIndex}`}
                         >
                           {kpiValue.type}

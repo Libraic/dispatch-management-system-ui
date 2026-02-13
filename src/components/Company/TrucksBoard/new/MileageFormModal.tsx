@@ -9,6 +9,10 @@ import type {
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import {
+  SYSTEM_FONT_NORMAL,
+  SYSTEM_FONT_THIN,
+} from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const MileageFormModal: React.FC<{
   day: string;
@@ -49,8 +53,8 @@ export const MileageFormModal: React.FC<{
           animate-[var(--animate-modal-enter)] ${closing ? "animate-[var(--animate-modal-exit)]" : ""}
         `}
       >
-        <p className="font-plus-jakarta-sans">Mileage Form</p>
-        <p className="pb-[3rem] font-plus-jakarta-sans font-thin">
+        <p className={`${SYSTEM_FONT_NORMAL}`}>Mileage Form</p>
+        <p className={`pb-[3rem] ${SYSTEM_FONT_THIN}`}>
           Complete the required data for Mileage
         </p>
         <div className="flex flex-row gap-x-5">

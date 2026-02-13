@@ -5,6 +5,7 @@ import chevronRightIcon from "../../../../assets/trucks-board/chevron-right.svg"
 import chevronDownIcon from "../../../../assets/trucks-board/chevron-down.svg";
 import type { DispatcherMileageData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
+import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
   days: string[];
@@ -42,17 +43,23 @@ export const TrucksBoardDispatcherRow: React.FC<{
       <div
         className={`grid grid-cols-[15rem_15rem_9rem_17.04rem_repeat(14,5rem)] items-center h-[4rem] bg-blue-grey border-l-1 border-b-1 border-gray-400 w-[55%] flex-shrink-0`}
       >
-        <div className="flex items-center px-10 font-plus-jakarta-sans font-light text-[0.95rem] h-full border-r-1 border-b-1 border-gray-400">
+        <div
+          className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} text-[0.95rem] h-full border-r-1 border-b-1 border-gray-400`}
+        >
           {dispatcherMileageData.dispatcher &&
             dispatcherMileageData.dispatcher.renderOnForm()}
         </div>
         <div className="h-full border-r-1 border-gray-400"></div>
-        <div className="flex items-center px-5 font-plus-jakarta-sans font-light h-full border-r-1 border-gray-400">
+        <div
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
+        >
           {dispatcherMileageData.totalRevenue === 0
             ? BLANK_STRING
             : dispatcherMileageData.totalRevenue}
         </div>
-        <div className="flex items-center px-5 font-plus-jakarta-sans font-light h-full border-gray-400">
+        <div
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-gray-400`}
+        >
           {dispatcherMileageData.totalMiles === 0
             ? BLANK_STRING
             : dispatcherMileageData.totalMiles}

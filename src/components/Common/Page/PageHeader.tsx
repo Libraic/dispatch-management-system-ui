@@ -6,10 +6,10 @@ export const PageHeader: React.FC<{
 }> = ({ headerInfo }) => {
   return (
     <div className="flex items-center justify-center mb-[2rem] mt-[1rem] flex-col">
-      <p className="font-plus-jakarta-sans font-bold text-[2rem]">
+      <p className="font-inter-tight font-bold text-[2rem]">
         {headerInfo.header}
       </p>
-      <p className="font-plus-jakarta-sans font-light text-[1rem]">
+      <p className="font-inter-tight font-light text-[1rem]">
         {headerInfo.subheader}
       </p>
     </div>

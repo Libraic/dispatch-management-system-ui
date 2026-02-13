@@ -5,6 +5,7 @@ import type {
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
+import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];
@@ -24,14 +25,18 @@ export const TrucksBoardDriverRow: React.FC<{
           className={`h-full w-[15rem] ${hasDispatcher && " border-r-1 border-b-1 border-gray-400"} bg-white`}
         ></div>
         <div
-          className={`flex items-center px-10 font-plus-jakarta-sans font-light text-[0.95rem] h-full border-r-1 border-b-1 ${!hasDispatcher && "border-l-1"} border-gray-400`}
+          className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} text-[0.95rem] h-full border-r-1 border-b-1 ${!hasDispatcher && "border-l-1"} border-gray-400`}
         >
           {driverMileageData.driver && driverMileageData.driver.renderOnForm()}
         </div>
-        <div className="flex items-center px-5 font-plus-jakarta-sans font-light h-full w-[9rem] border-r-1 border-gray-400">
+        <div
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full w-[9rem] border-r-1 border-gray-400`}
+        >
           {driverMileageData.totalRevenue}
         </div>
-        <div className="flex items-center px-5 font-plus-jakarta-sans font-light h-full w-[17.05rem] border-gray-400">
+        <div
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full w-[17.05rem] border-gray-400`}
+        >
           {driverMileageData.totalMiles}
         </div>
         {Array.from({ length: 14 }).map((_, index) => (

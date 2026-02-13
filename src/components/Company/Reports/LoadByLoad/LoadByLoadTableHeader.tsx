@@ -9,6 +9,7 @@ import {
 } from "../../../../constants/date/date-constants.ts";
 import { formatDate } from "../../../../utils/date/date-utils.ts";
 import { DOT } from "../../../../constants/common/global-constants.ts";
+import { SYSTEM_FONT_THIN } from "../../../../tailwind/tailwind-font-vars.ts";
 
 const getDisplayDate = (date: Date) => {
   const formattedDate = formatDate(date);
@@ -39,7 +40,7 @@ export const LoadByLoadTableHeader: React.FC<{ currentMonth: string }> = ({
         {days.map((day, index) => (
           <th
             key={`${index}-${day}`}
-            className={`w-[8rem] text-center p-2 ${BACKGROUND_PALE_BLUE} font-plus-jakarta-sans font-thin ${TEXT_SOLID_GRAY} text-[0.85rem]`}
+            className={`w-[8rem] text-center p-2 ${BACKGROUND_PALE_BLUE} ${SYSTEM_FONT_THIN} ${TEXT_SOLID_GRAY} text-[0.85rem]`}
           >
             <p>{day}</p>
           </th>

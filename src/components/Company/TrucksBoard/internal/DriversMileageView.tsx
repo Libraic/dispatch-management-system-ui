@@ -15,6 +15,7 @@ import {
   getDriverMileageErrorsByGroupIdentifier,
 } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
 import { Entity } from "../../../../types/api/common/api-query-types.ts";
+import { SYSTEM_FONT_THIN } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const DriversMileageView: React.FC<{
   driverWeeklyMileageData: DriverWeeklyMileageData;
@@ -28,7 +29,7 @@ export const DriversMileageView: React.FC<{
           <div
             key={groupIdentifier}
             style={TRUCKS_BOARD_LAYOUT_STYLES}
-            className="min-w-fit grid rounded-[0.3rem] font-plus-jakarta-sans font-thin text-[0.7rem]"
+            className={`min-w-fit grid rounded-[0.3rem] ${SYSTEM_FONT_THIN} text-[0.7rem]`}
           >
             <LiveSearchCell
               entityType={Entity.USER}

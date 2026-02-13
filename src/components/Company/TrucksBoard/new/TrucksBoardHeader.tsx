@@ -1,4 +1,5 @@
 import React from "react";
+import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const TrucksBoardHeader: React.FC<{
   days: string[];
@@ -9,7 +10,7 @@ export const TrucksBoardHeader: React.FC<{
     "grid grid-cols-[15rem_15rem_9rem_17.1rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_4.88rem]";
   return (
     <div
-      className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue ${gridLayout} items-center w-fit h-[4rem] border-1 font-plus-jakarta-sans font-bold text-[0.9rem] border-gray-400`}
+      className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue ${gridLayout} items-center w-fit h-[4rem] border-1 ${SYSTEM_FONT_BOLD} text-[0.9rem] border-gray-400`}
     >
       {columns.map((column) => (
         <div

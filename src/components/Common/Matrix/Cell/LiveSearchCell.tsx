@@ -19,6 +19,7 @@ import {
 import type { LiveSearchResult } from "../../../../types/api/common/api-response-types.ts";
 import { usePagination } from "../../../../hooks/usePagination.ts";
 import { DEFAULT_SIZE } from "../../../../constants/api/api-query-constants.ts";
+import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const LiveSearchCell = <D, R>({
   entityType,
@@ -92,7 +93,7 @@ export const LiveSearchCell = <D, R>({
       onMouseLeave={hoverData.handleMouseLeave}
     >
       <div
-        className={`font-plus-jakarta-sans text-[0.9rem] p-2 flex items-center bg-[#f5f7fc] w-full h-full caret-transparent ${style ?? BLANK_STRING}`}
+        className={`${SYSTEM_FONT_NORMAL} text-[0.9rem] p-2 flex items-center bg-[#f5f7fc] w-full h-full caret-transparent ${style ?? BLANK_STRING}`}
         contentEditable
         suppressContentEditableWarning={true}
         onFocus={() => setIsLiveSearchActive(true)}

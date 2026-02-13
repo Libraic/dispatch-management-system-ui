@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
+import * as React from "react";
 import { useState } from "react";
 import {
   TimeFrame,
   type TimeFrameUnit,
 } from "../../../types/internal/reports/timeline-types.ts";
 import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
-import * as React from "react";
+import { SYSTEM_FONT_THIN } from "../../../tailwind/tailwind-font-vars.ts";
 
 export const TimeFramePicker: React.FC<{
   option: TimeFrameUnit;
@@ -33,7 +34,7 @@ export const TimeFramePicker: React.FC<{
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.15 }}
-            className="flex items-center justify-center w-[6.5rem] h-[2.6rem] first:rounded-l-[0.4rem] last:rounded-r-[0.4rem] bg-gray-50 border-1 border-pale-blue font-plus-jakarta-sans font-thin text-[0.85rem] hover:bg-light-blue hover:cursor-pointer hover:text-white hover:border-light-blue border-collapse"
+            className={`flex items-center justify-center w-[6.5rem] h-[2.6rem] first:rounded-l-[0.4rem] last:rounded-r-[0.4rem] bg-gray-50 border-1 border-pale-blue ${SYSTEM_FONT_THIN} text-[0.85rem] hover:bg-light-blue hover:cursor-pointer hover:text-white hover:border-light-blue border-collapse`}
             onClick={() => {
               setOption(option);
               setOptions([option]);
