@@ -8,7 +8,6 @@ import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/new/TrucksBoa
 import { useEffect, useState } from "react";
 import type { DispatcherMileageData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
-import { createEmptyDispatcherMileageData } from "../../../utils/trucks-board/trucks-board-utils-old.ts";
 import { TrucksBoardMenu } from "../../Company/TrucksBoard/new/TrucksBoardMenu.tsx";
 import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
@@ -20,15 +19,6 @@ export const TrucksBoardPage = () => {
   const companyId = useParams().companyUuid!!;
   const [dispatcherMileageDataList, setDispatcherMileageDataList] =
     useState<DispatcherMileageData[]>(EMPTY_ARRAY);
-
-  const addAction = () => {
-    const startDate = activeWeek[0];
-    const endDate = activeWeek[activeWeek.length - 1];
-    setDispatcherMileageDataList((prev) => [
-      ...prev,
-      createEmptyDispatcherMileageData(startDate, endDate),
-    ]);
-  };
 
   const extractWeekFromCalendar = (dates: Date[]) => {
     const vals = dates.map((date) =>
@@ -59,10 +49,7 @@ export const TrucksBoardPage = () => {
     <div className="h-screen w-screen flex flex-col gap-y-1">
       <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
       <div className="flex flex-col mx-[3rem] my-[2rem]">
-        <TrucksBoardMenu
-          addAction={addAction}
-          extractWeekFromCalendar={extractWeekFromCalendar}
-        />
+        <TrucksBoardMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <TrucksBoardHeader days={days} />
           {dispatcherMileageDataList.map((dispatcherMileageData) => (
