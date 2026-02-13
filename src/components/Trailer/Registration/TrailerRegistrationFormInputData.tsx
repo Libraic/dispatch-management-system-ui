@@ -1,4 +1,4 @@
-import { InputForm } from "../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm.tsx";
 import { setTrailerDataField } from "../../../utils/trailer/trailer-utils.ts";
 import {
   BLANK_STRING,
@@ -18,10 +18,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
   return (
     <div className="flex items-center flex-col h-fit mt-[10rem]">
       <div className="flex flex-row gap-[3rem]">
-        <InputForm
+        <TextualInputForm
           label="Trailer Number"
           placeholder="R12-3456"
-          type="text"
           inputFieldValue={trailerData.trailerNumber}
           isMandatory={true}
           errorMessage={trailerErrorData.trailerNumber}
@@ -29,10 +28,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "trailerNumber", trailerNumber)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="VIN Number"
           placeholder="1FTFW1E50JKC12345"
-          type="text"
           inputFieldValue={trailerData.vinNumber}
           isMandatory={true}
           errorMessage={trailerErrorData.vinNumber}
@@ -40,10 +38,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "vinNumber", vinNumber)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Trailer Year"
           placeholder="2020"
-          type="number"
           inputFieldValue={trailerData.trailerYear.toString()}
           isMandatory={false}
           errorMessage={trailerErrorData.trailerYear}
@@ -57,10 +54,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
         />
       </div>
       <div className="flex flex-row gap-[3rem] items-center justify-center">
-        <InputForm
+        <TextualInputForm
           label="Trailer Make"
           placeholder="Great Dane"
-          type="text"
           inputFieldValue={trailerData.trailerMake}
           isMandatory={false}
           errorMessage={""}
@@ -68,10 +64,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "trailerMake", trailerMake)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Equipment Type"
           placeholder="Flatbed"
-          type="text"
           inputFieldValue={trailerData.equipmentType}
           isMandatory={true}
           errorMessage={""}
@@ -79,10 +74,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "equipmentType", equipmentType)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Equipment Size (ft)"
           placeholder="48"
-          type="number"
           inputFieldValue={trailerData.equipmentSize.toString()}
           isMandatory={true}
           errorMessage={trailerErrorData.equipmentSize}
@@ -96,10 +90,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
         />
       </div>
       <div className="flex flex-row gap-[3rem] items-center justify-center">
-        <InputForm
+        <TextualInputForm
           label="Pallet Capacity"
           placeholder="24"
-          type="number"
           inputFieldValue={trailerData.palletCapacity.toString()}
           isMandatory={false}
           errorMessage={trailerErrorData.palletCapacity}
@@ -111,10 +104,9 @@ export const TrailerRegistrationFormInputData: React.FC<{
             )
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Max Weight (lbs)"
           placeholder="10000"
-          type="number"
           inputFieldValue={trailerData.maxWeight.toString()}
           isMandatory={true}
           errorMessage={trailerErrorData.maxWeight}
@@ -126,13 +118,11 @@ export const TrailerRegistrationFormInputData: React.FC<{
             )
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Tire Size"
           placeholder="295/75R22.5"
-          type="text"
           inputFieldValue={trailerData.tireSize}
           isMandatory={false}
-          errorMessage={""}
           saveInputData={(tireSize: string) =>
             setTrailerDataField(setTrailerData, "tireSize", tireSize)
           }

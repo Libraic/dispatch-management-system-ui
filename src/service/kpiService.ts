@@ -4,7 +4,7 @@ import {
   LOAD_BY_LOAD_REPORTS_URL,
 } from "../constants/api/api-paths.ts";
 import type { KpiResponse } from "../types/api/reports/kpi-api-response-types.ts";
-import { DEFAULT_DATE_LOCALE } from "../constants/date/date-constants.ts";
+import { DEFAULT_LOCALE } from "../constants/date/date-constants.ts";
 import type { TimeFrameUnit } from "../types/internal/reports/timeline-types.ts";
 import type { LoadByLoadResponse } from "../types/api/reports/load-by-load-types.ts";
 
@@ -14,10 +14,8 @@ export const fetchKpis = async (
   endDate: Date,
   timeFrame: TimeFrameUnit,
 ) => {
-  const startIso = new Intl.DateTimeFormat(DEFAULT_DATE_LOCALE).format(
-    startDate,
-  );
-  const endIso = new Intl.DateTimeFormat(DEFAULT_DATE_LOCALE).format(endDate);
+  const startIso = new Intl.DateTimeFormat(DEFAULT_LOCALE).format(startDate);
+  const endIso = new Intl.DateTimeFormat(DEFAULT_LOCALE).format(endDate);
   try {
     const response = await axios.get<KpiResponse[]>(
       FINANCIAL_REPORTS_BASE_URL,

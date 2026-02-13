@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { Driver } from "../../types/internal/classes/Driver.ts";
 import type { Renderable } from "../../types/internal/classes/Renderable.ts";
 import {
-  DEFAULT_DATE_LOCALE,
+  DEFAULT_LOCALE,
   WEEKDAYS,
 } from "../../constants/date/date-constants.ts";
 
@@ -148,7 +148,7 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
     const [y, m, d] = weekDay.split(HYPHEN).map(Number);
     const date = new Date(y, m - 1, d);
     date.setDate(date.getDate() + 7);
-    biweeklyTimeline.push(date.toLocaleDateString(DEFAULT_DATE_LOCALE));
+    biweeklyTimeline.push(date.toLocaleDateString(DEFAULT_LOCALE));
   }
 
   return biweeklyTimeline.map((day, index) => {

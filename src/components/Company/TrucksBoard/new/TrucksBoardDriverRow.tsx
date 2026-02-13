@@ -6,7 +6,7 @@ import type {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import { divide } from "../../../../utils/global/number-utils.ts";
+import { divide, formatNumber } from "../../../../utils/global/number-utils.ts";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];
@@ -33,17 +33,22 @@ export const TrucksBoardDriverRow: React.FC<{
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {driverMileageData.totalRevenue}
+          {formatNumber(driverMileageData.totalRevenue)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {driverMileageData.totalMiles}
+          {formatNumber(driverMileageData.totalMiles)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-gray-400`}
         >
-          {divide(driverMileageData.totalRevenue, driverMileageData.totalMiles)}
+          {formatNumber(
+            divide(
+              driverMileageData.totalRevenue,
+              driverMileageData.totalMiles,
+            ),
+          )}
         </div>
         {Array.from({ length: 14 }).map((_, index) => (
           <DriverCalendarCell

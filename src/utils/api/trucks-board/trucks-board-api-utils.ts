@@ -53,8 +53,8 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
       for (const mileageDatum of driverMileageData.mileage) {
         mileageData.set(mileageDatum.date, {
           date: mileageDatum.date,
-          miles: mileageDatum.miles,
-          revenue: mileageDatum.revenue,
+          miles: mileageDatum.miles.toString(),
+          revenue: mileageDatum.revenue.toString(),
           broker: mileageDatum.broker ?? undefined,
         });
         const dateObject = new Date(mileageDatum.date);

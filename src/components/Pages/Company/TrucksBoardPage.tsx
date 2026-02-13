@@ -11,7 +11,7 @@ import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
 import { TrucksBoardMenu } from "../../Company/TrucksBoard/new/TrucksBoardMenu.tsx";
 import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
-import { DEFAULT_DATE_LOCALE } from "../../../constants/date/date-constants.ts";
+import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 
 export const TrucksBoardPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
@@ -21,9 +21,7 @@ export const TrucksBoardPage = () => {
     useState<DispatcherMileageData[]>(EMPTY_ARRAY);
 
   const extractWeekFromCalendar = (dates: Date[]) => {
-    const vals = dates.map((date) =>
-      date.toLocaleDateString(DEFAULT_DATE_LOCALE),
-    );
+    const vals = dates.map((date) => date.toLocaleDateString(DEFAULT_LOCALE));
     setActiveWeek(vals);
   };
 

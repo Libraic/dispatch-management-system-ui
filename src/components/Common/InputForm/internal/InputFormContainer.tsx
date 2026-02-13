@@ -1,34 +1,44 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
-import {
-  BLANK_STRING,
-  HYPHEN,
-} from "../../../../constants/common/global-constants.ts";
-import { INPUT_FORM_STYLE } from "../../../../tailwind/tailwind.ts";
-import { InputFormError } from "./InputFormError.tsx";
-import { InputFormLabel } from "../internal/InputFormLabel.tsx";
 import { BORDER_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import { InputFormLabel } from "./InputFormLabel.tsx";
+import { INPUT_FORM_STYLE } from "../../../../tailwind/tailwind.ts";
+import { getInputTagNameFromLabel } from "../../../../utils/global/input-form-utils.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { InputFormError } from "../public/InputFormError.tsx";
 
-export const InputForm: React.FC<{
+export const InputFormContainer: React.FC<{
   label: string;
   placeholder: string;
-  type: string;
   inputFieldValue: string;
+  inputMode:
+    | "none"
+    | "text"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal"
+    | "search";
+  type: string;
+  saveInputData: (value: string) => void;
   isMandatory?: boolean;
   errorMessage?: string;
   information?: string;
+  inputPreprocessor?: (value: string) => string;
   onFocus?: () => void;
-  saveInputData: (value: string) => void;
 }> = ({
   label,
   placeholder,
-  type,
   inputFieldValue,
+  inputMode,
+  type,
+  saveInputData,
   isMandatory,
   information,
   onFocus,
   errorMessage,
-  saveInputData,
+  inputPreprocessor,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [borderColor, setBorderColor] = useState("border-light-grey");
@@ -46,10 +56,11 @@ export const InputForm: React.FC<{
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    saveInputData(e.target.value);
+    const input = inputPreprocessor
+      ? inputPreprocessor(e.target.value)
+      : e.target.value;
+    saveInputData(input);
   };
-
-  const name = label.toLowerCase().replace(" ", HYPHEN);
 
   return (
     <div className="flex flex-col gap-y-2 min-h-[6.5rem]">
@@ -64,8 +75,9 @@ export const InputForm: React.FC<{
 
         <input
           className={`${INPUT_FORM_STYLE} w-[15rem]`}
+          inputMode={inputMode}
           type={type}
-          name={name}
+          name={getInputTagNameFromLabel(label)}
           placeholder={
             !isFocused && (inputFieldValue === BLANK_STRING || !inputFieldValue)
               ? placeholder

@@ -5,7 +5,7 @@ import {
   PHONE_NUMBER_PLACEHOLDER,
   EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER,
 } from "../../../../../constants/common/placeholder-constants.ts";
-import { InputForm } from "../../../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../../../Common/InputForm/public/TextualInputForm.tsx";
 import { setEmergencyContactField } from "../../../../../utils/user/user-registration-utils.ts";
 
 export const UserEmergencyContact = () => {
@@ -15,29 +15,26 @@ export const UserEmergencyContact = () => {
   return (
     <>
       <div className="flex gap-5.5 mb-10">
-        <InputForm
+        <TextualInputForm
           label="Name"
           placeholder={EMERGENCY_CONTACT_NAME_PLACEHOLDER}
-          type="text"
           inputFieldValue={registrationData.emergencyContact.name}
           saveInputData={(value: string) =>
             setEmergencyContactField(setRegistrationData, "name", value)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Relationship"
           placeholder={EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER}
-          type="text"
           inputFieldValue={registrationData.emergencyContact.relationship}
           information="The relationship between the employee and the person that was registered as the Emergency Contact."
           saveInputData={(value: string) =>
             setEmergencyContactField(setRegistrationData, "relationship", value)
           }
         />
-        <InputForm
+        <TextualInputForm
           label="Phone Number"
           placeholder={PHONE_NUMBER_PLACEHOLDER}
-          type="text"
           inputFieldValue={registrationData.emergencyContact.phone}
           saveInputData={(value: string) =>
             setEmergencyContactField(setRegistrationData, "phone", value)

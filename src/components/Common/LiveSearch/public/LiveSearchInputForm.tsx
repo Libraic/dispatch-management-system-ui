@@ -12,7 +12,7 @@ import {
   type LiveSearchInputFormProps,
 } from "../../../../types/internal/live-search/live-search-data.ts";
 import { usePagination } from "../../../../hooks/usePagination.ts";
-import { InputForm } from "../../InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../InputForm/public/TextualInputForm.tsx";
 import type { LiveSearchResult } from "../../../../types/api/common/api-response-types.ts";
 import { InputFormSearchResult } from "./InputFormSearchResult.tsx";
 import { DEFAULT_SIZE } from "../../../../constants/api/api-query-constants.ts";
@@ -86,10 +86,9 @@ export const LiveSearchInputForm = <D,>({
       className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]"
       ref={liveSearchDivRef}
     >
-      <InputForm
+      <TextualInputForm
         label={label}
         placeholder={placeholderText}
-        type="text"
         inputFieldValue={value !== BLANK_STRING ? value : query}
         onFocus={() => {
           setIsLiveSearchActive(true);

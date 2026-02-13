@@ -13,7 +13,7 @@ import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
 import { TrucksBoardMatrix } from "../../Company/TrucksBoard/public/TrucksBoardMatrix.tsx";
-import { DEFAULT_DATE_LOCALE } from "../../../constants/date/date-constants.ts";
+import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 
 export const TrucksBoardOldPage = () => {
   const { companyUuid } = useParams();
@@ -26,9 +26,7 @@ export const TrucksBoardOldPage = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const extractWeekFromCalendar = (dates: Date[]) => {
-    const vals = dates.map((date) =>
-      date.toLocaleDateString(DEFAULT_DATE_LOCALE),
-    );
+    const vals = dates.map((date) => date.toLocaleDateString(DEFAULT_LOCALE));
     setActiveWeek(vals);
   };
 

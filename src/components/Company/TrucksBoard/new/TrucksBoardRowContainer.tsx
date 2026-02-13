@@ -47,8 +47,8 @@ export const TrucksBoardRowContainer: React.FC<{
       startDate: dispatcherMileageData.startDate,
       endDate: dispatcherMileageData.endDate,
       mileageDate: mileageData.date,
-      revenue: mileageData.revenue,
-      miles: mileageData.miles,
+      revenue: parseFloat(mileageData.revenue),
+      miles: parseFloat(mileageData.miles),
       broker: mileageData.broker,
     };
     const upsertResponse = await upsertDriverMileage(upsertRequest);

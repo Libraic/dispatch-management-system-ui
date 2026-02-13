@@ -10,7 +10,7 @@ import {
   deleteWorkload,
 } from "../../../../../utils/user/user-registration-utils.ts";
 import type { Renderable } from "../../../../../types/internal/classes/Renderable.ts";
-import { InputForm } from "../../../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../../../Common/InputForm/public/TextualInputForm.tsx";
 import { DeleteButton } from "../../../../Common/Button/DeleteButton.tsx";
 import { Company } from "../../../../../types/internal/classes/Company.ts";
 import { Entity } from "../../../../../types/api/common/api-query-types.ts";
@@ -38,10 +38,9 @@ export const UserWorkload: React.FC<{
         cleanData={() => cleanWorkload(setRegistrationData, workloadData)}
         constructor={Company}
       />
-      <InputForm
+      <TextualInputForm
         label="Commission (%)"
         placeholder="5.5"
-        type="number"
         inputFieldValue={workloadData.commission.toString()}
         errorMessage=""
         saveInputData={(value: string) =>

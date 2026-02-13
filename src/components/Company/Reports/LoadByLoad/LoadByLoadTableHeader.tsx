@@ -4,7 +4,7 @@ import {
 } from "../../../../tailwind/tailwind-colors-vars.ts";
 import React from "react";
 import {
-  DEFAULT_DATE_LOCALE,
+  DEFAULT_LOCALE,
   MONTHS,
 } from "../../../../constants/date/date-constants.ts";
 import { formatDate } from "../../../../utils/global/date-utils.ts";
@@ -15,7 +15,7 @@ const getDisplayDate = (date: Date) => {
   const formattedDate = formatDate(date);
   const tokens = formattedDate.replace(/-/g, DOT).split(DOT);
   const dayAndMonth = tokens[0] + DOT + tokens[1];
-  const weekday = date.toLocaleString(DEFAULT_DATE_LOCALE, { weekday: "long" });
+  const weekday = date.toLocaleString(DEFAULT_LOCALE, { weekday: "long" });
   return `${dayAndMonth} ${weekday.substring(0, 3)}`;
 };
 

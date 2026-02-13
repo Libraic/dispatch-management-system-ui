@@ -1,4 +1,4 @@
-import { InputForm } from "../../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
 import {
   COMPANY_EMAIL_PLACEHOLDER,
   PASSWORD_PLACEHOLDER,
@@ -15,10 +15,9 @@ export const CompanyRegistrationAuthDataForm = () => {
 
   return (
     <div className="flex flex-row gap-5.5 mb-10">
-      <InputForm
+      <TextualInputForm
         label="E-mail"
         placeholder={COMPANY_EMAIL_PLACEHOLDER}
-        type="email"
         inputFieldValue={companyRegistrationData.email}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.email}
@@ -26,10 +25,9 @@ export const CompanyRegistrationAuthDataForm = () => {
           setCompanyStringField(setCompanyRegistrationData, "email", value)
         }
       />
-      <InputForm
+      <TextualInputForm
         label="Password"
         placeholder={PASSWORD_PLACEHOLDER}
-        type="password"
         inputFieldValue={companyRegistrationData.password}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.password}
@@ -37,10 +35,9 @@ export const CompanyRegistrationAuthDataForm = () => {
           setCompanyStringField(setCompanyRegistrationData, "password", value)
         }
       />
-      <InputForm
+      <TextualInputForm
         label="Confirm Password"
         placeholder={PASSWORD_PLACEHOLDER}
-        type="password"
         inputFieldValue={companyRegistrationData.confirmPassword}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.confirmPassword}

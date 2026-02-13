@@ -4,7 +4,7 @@ import { ReportTable } from "../../../Common/Reports/ReportTable.tsx";
 import { ReportTableMenu } from "../../../Common/Reports/ReportTableMenu.tsx";
 import { useEffect, useState } from "react";
 import {
-  DEFAULT_DATE_LOCALE,
+  DEFAULT_LOCALE,
   MONTHS,
 } from "../../../../constants/date/date-constants.ts";
 import { SelectForm } from "../../../Common/Selector/SelectForm.tsx";
@@ -18,7 +18,7 @@ import { LoadByLoadTableBody } from "../../../Company/Reports/LoadByLoad/LoadByL
 export const LoadByLoadReportsPage = () => {
   const companyUuid = useParams().companyUuid!!;
   const [currentMonth, setCurrentMonth] = useState<string>(
-    new Date().toLocaleString(DEFAULT_DATE_LOCALE, { month: "long" }),
+    new Date().toLocaleString(DEFAULT_LOCALE, { month: "long" }),
   );
 
   const [loadByLoadModels, setLoadByLoadModels] = useState<LoadByLoadModel[]>(

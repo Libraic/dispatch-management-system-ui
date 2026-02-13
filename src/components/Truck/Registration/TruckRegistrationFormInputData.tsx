@@ -1,4 +1,4 @@
-import { InputForm } from "../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm.tsx";
 import { setTruckDataField } from "../../../utils/truck/truck-utils.ts";
 import {
   BLANK_STRING,
@@ -19,10 +19,9 @@ export const TruckRegistrationFormInputData: React.FC<{
     <div className="flex items-center flex-col h-fit mt-[10rem]">
       <div className="flex flex-col gap-y-5">
         <div className="flex flex-row gap-[3rem]">
-          <InputForm
+          <TextualInputForm
             label="Truck Number"
             placeholder="R12-3456"
-            type="text"
             inputFieldValue={truckData.truckNumber}
             isMandatory={true}
             errorMessage={truckErrorData.truckNumber}
@@ -30,10 +29,9 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "truckNumber", truckNumber)
             }
           />
-          <InputForm
+          <TextualInputForm
             label="VIN Number"
             placeholder="1FTFW1E50JKC12345"
-            type="text"
             inputFieldValue={truckData.vinNumber}
             isMandatory={true}
             errorMessage={truckErrorData.vinNumber}
@@ -41,10 +39,9 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "vinNumber", vinNumber)
             }
           />
-          <InputForm
+          <TextualInputForm
             label="Model"
             placeholder="Ford"
-            type="text"
             inputFieldValue={truckData.model}
             isMandatory={false}
             errorMessage={""}
@@ -54,10 +51,9 @@ export const TruckRegistrationFormInputData: React.FC<{
           />
         </div>
         <div className="flex flex-row gap-[3rem] items-center justify-center">
-          <InputForm
+          <TextualInputForm
             label="Truck Year"
             placeholder="2025"
-            type="number"
             inputFieldValue={truckData.truckYear.toString()}
             isMandatory={false}
             errorMessage={truckErrorData.truckYear}
@@ -69,45 +65,38 @@ export const TruckRegistrationFormInputData: React.FC<{
               )
             }
           />
-          <InputForm
+          <TextualInputForm
             label="Truck Make"
             placeholder="F-150"
-            type="text"
             inputFieldValue={truckData.truckMake}
             isMandatory={false}
-            errorMessage={""}
             saveInputData={(truckMake: string) =>
               setTruckDataField(setTruckData, "truckMake", truckMake)
             }
           />
         </div>
         <div className="flex flex-row gap-[3rem] items-center justify-center">
-          <InputForm
+          <TextualInputForm
             label="Fuel Type"
             placeholder="Diesel"
-            type="text"
             inputFieldValue={truckData.fuelType}
             isMandatory={false}
-            errorMessage={""}
             saveInputData={(fuelType: string) =>
               setTruckDataField(setTruckData, "fuelType", fuelType)
             }
           />
-          <InputForm
+          <TextualInputForm
             label="Color"
             placeholder="White"
-            type="text"
             inputFieldValue={truckData.color}
             isMandatory={false}
-            errorMessage={""}
             saveInputData={(color: string) =>
               setTruckDataField(setTruckData, "color", color)
             }
           />
-          <InputForm
+          <TextualInputForm
             label="Weight (lbs)"
             placeholder="10000"
-            type="text"
             inputFieldValue={truckData.weight.toString()}
             isMandatory={false}
             errorMessage={truckErrorData.weight}

@@ -2,10 +2,15 @@ import type { Driver } from "../classes/Driver.ts";
 import type { Dispatcher } from "../classes/Dispatcher.ts";
 
 export type MileageData = {
-  revenue: number;
-  miles: number;
+  revenue: string;
+  miles: string;
   date: string;
   broker?: string;
+};
+
+export type MileageDataError = {
+  revenueError: string;
+  milesError: string;
 };
 
 export type DriverMileageData = {

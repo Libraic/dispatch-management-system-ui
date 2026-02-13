@@ -32,4 +32,4 @@ export const MONTHS: Record<string, number> = {
   December: 12,
 };
 
-export const DEFAULT_DATE_LOCALE = "en-CA";
+export const DEFAULT_LOCALE = "en-CA";

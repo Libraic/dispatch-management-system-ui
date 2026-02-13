@@ -1,5 +1,5 @@
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { InputForm } from "../../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
 import { SubmitButton } from "../../../Common/Button/SubmitButton.tsx";
 import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
 import React, { useEffect, useState } from "react";
@@ -7,12 +7,14 @@ import { createPortal } from "react-dom";
 import type {
   DriverMileageData,
   MileageData,
+  MileageDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import {
   SYSTEM_FONT_NORMAL,
   SYSTEM_FONT_THIN,
 } from "../../../../tailwind/tailwind-font-vars.ts";
+import { NumericInputForm } from "../../../Common/InputForm/public/NumericInputForm.tsx";
 
 export const MileageFormModal: React.FC<{
   day: string;
@@ -25,12 +27,16 @@ export const MileageFormModal: React.FC<{
   ) => void;
 }> = ({ day, deactivate, driverMileageData, upsertDriverMileageData }) => {
   const [closing, setClosing] = useState(false);
+  const [mileageDataError, setMileageDataError] = useState<MileageDataError>({
+    revenueError: BLANK_STRING,
+    milesError: BLANK_STRING,
+  });
   const [mileageData, setMileageData] = useState(
     driverMileageData.mileage.get(day) ?? {
       broker: undefined,
       date: day,
-      revenue: 0,
-      miles: 0,
+      revenue: BLANK_STRING,
+      miles: BLANK_STRING,
     },
   );
 
@@ -58,10 +64,9 @@ export const MileageFormModal: React.FC<{
           Complete the required data for Mileage
         </p>
         <div className="flex flex-row gap-x-5">
-          <InputForm
+          <TextualInputForm
             label="Broker"
             placeholder="C. H. Robinson"
-            type="text"
             inputFieldValue={mileageData.broker ?? BLANK_STRING}
             saveInputData={(broker: string) =>
               setMileageData((prev) => ({
@@ -72,39 +77,50 @@ export const MileageFormModal: React.FC<{
           />
         </div>
         <div className="flex flex-row gap-x-5">
-          <InputForm
+          <NumericInputForm
             label="Revenue"
             placeholder="100.25"
-            type="number"
-            inputFieldValue={
-              mileageData.revenue === 0
-                ? BLANK_STRING
-                : mileageData.revenue.toString()
-            }
-            saveInputData={(revenue: string) =>
-              setMileageData({ ...mileageData, revenue: parseFloat(revenue) })
-            }
+            inputFieldValue={mileageData.revenue}
+            saveInputData={(revenue: string) => {
+              setMileageData({ ...mileageData, revenue: revenue });
+            }}
             isMandatory={true}
+            errorMessage={mileageDataError.revenueError}
           />
-          <InputForm
+          <NumericInputForm
             label="Miles"
-            placeholder="3000"
-            type="number"
-            inputFieldValue={
-              mileageData.miles === 0
-                ? BLANK_STRING
-                : mileageData.miles.toString()
-            }
+            placeholder="300"
+            inputFieldValue={mileageData.miles}
             saveInputData={(miles: string) =>
-              setMileageData({ ...mileageData, miles: parseInt(miles) })
+              setMileageData({ ...mileageData, miles: miles })
             }
             isMandatory={true}
+            errorMessage={mileageDataError.milesError}
           />
         </div>
         <div className="flex flex-row items-center justify-center mb-[1.3rem] gap-x-10">
           <SubmitButton
             actionText="Submit"
             action={() => {
+              let isError = false;
+              const mileageErrors: MileageDataError = {
+                revenueError: BLANK_STRING,
+                milesError: BLANK_STRING,
+              };
+              if (mileageData.revenue === BLANK_STRING) {
+                isError = true;
+                mileageErrors.revenueError = "Revenue is required.";
+              }
+              if (mileageData.miles === BLANK_STRING) {
+                isError = true;
+                mileageErrors.milesError = "Miles is required.";
+              }
+
+              if (isError) {
+                setMileageDataError(mileageErrors);
+                return;
+              }
+
               upsertDriverMileageData(
                 driverMileageData.driver!!,
                 mileageData,

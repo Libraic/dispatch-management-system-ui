@@ -9,6 +9,7 @@ import {
   BLANK_STRING,
   NEW_LINE,
 } from "../../constants/common/global-constants.ts";
+import { removeTrailingDotIfNecessary } from "../global/number-utils.ts";
 
 export const upsertDriverMileageCallbackFunction = (
   prevDispatcherMileageDataList: DispatcherMileageData[],
@@ -45,8 +46,8 @@ export const upsertDriverMileageCallbackFunction = (
           let driverTotalRevenue = 0;
           for (const mileageDatum of newMileageData.values()) {
             if (currentWeek.includes(mileageDatum.date)) {
-              driverTotalMiles += mileageDatum.miles;
-              driverTotalRevenue += mileageDatum.revenue;
+              driverTotalMiles += parseFloat(mileageDatum.miles);
+              driverTotalRevenue += parseFloat(mileageDatum.revenue);
             }
           }
 
@@ -91,5 +92,7 @@ export const extractMileageDataFromDriverMileageDataByDay = (
     return BLANK_STRING;
   }
 
-  return `${!mileageData.broker || mileageData.broker === BLANK_STRING ? BLANK_STRING : mileageData.broker + NEW_LINE} ${mileageData.revenue} | ${mileageData.miles}`;
+  const miles = removeTrailingDotIfNecessary(mileageData.miles);
+  const revenue = removeTrailingDotIfNecessary(mileageData.revenue);
+  return `${!mileageData.broker || mileageData.broker === BLANK_STRING ? BLANK_STRING : mileageData.broker + NEW_LINE} ${revenue} | ${miles}`;
 };

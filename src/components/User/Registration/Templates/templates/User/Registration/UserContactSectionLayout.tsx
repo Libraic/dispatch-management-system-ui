@@ -3,7 +3,7 @@ import { UserRegistrationContext } from "../../../../../../../context/UserRegist
 import { PageHeader } from "../../../../../../Common/Page/PageHeader.tsx";
 import { CONTACT_INFORMATION_HEADER } from "../../../../../../../constants/common/header-constants.ts";
 import { EMAIL_PLACEHOLDER } from "../../../../../../../constants/common/placeholder-constants.ts";
-import { InputForm } from "../../../../../../Common/InputForm/public/InputForm.tsx";
+import { TextualInputForm } from "../../../../../../Common/InputForm/public/TextualInputForm.tsx";
 import { setRegistrationDataStringField } from "../../../../../../../utils/user/user-registration-utils.ts";
 import { UserEmergencyContact } from "../../../../Sections/Contact/UserEmergencyContact.tsx";
 
@@ -14,10 +14,9 @@ export const UserContactSectionLayout = () => {
   return (
     <>
       <PageHeader headerInfo={CONTACT_INFORMATION_HEADER} />
-      <InputForm
+      <TextualInputForm
         label="Personal E-mail"
         placeholder={EMAIL_PLACEHOLDER}
-        type="email"
         inputFieldValue={registrationData.personalEmail}
         errorMessage={registrationDataError.personalEmail}
         saveInputData={(value: string) =>

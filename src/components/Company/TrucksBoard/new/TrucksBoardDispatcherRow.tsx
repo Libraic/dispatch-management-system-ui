@@ -6,7 +6,7 @@ import chevronDownIcon from "../../../../assets/trucks-board/chevron-down.svg";
 import type { DispatcherMileageData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import { divide } from "../../../../utils/global/number-utils.ts";
+import { divide, formatNumber } from "../../../../utils/global/number-utils.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
   days: string[];
@@ -54,19 +54,21 @@ export const TrucksBoardDispatcherRow: React.FC<{
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {dispatcherMileageData.totalRevenue}
+          {formatNumber(dispatcherMileageData.totalRevenue)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {dispatcherMileageData.totalMiles}
+          {formatNumber(dispatcherMileageData.totalMiles)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-gray-400`}
         >
-          {divide(
-            dispatcherMileageData.totalRevenue,
-            dispatcherMileageData.totalMiles,
+          {formatNumber(
+            divide(
+              dispatcherMileageData.totalRevenue,
+              dispatcherMileageData.totalMiles,
+            ),
           )}
         </div>
         {days.map((day) => (
