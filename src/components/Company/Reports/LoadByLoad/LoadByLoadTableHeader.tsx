@@ -7,7 +7,7 @@ import {
   DEFAULT_DATE_LOCALE,
   MONTHS,
 } from "../../../../constants/date/date-constants.ts";
-import { formatDate } from "../../../../utils/date/date-utils.ts";
+import { formatDate } from "../../../../utils/global/date-utils.ts";
 import { DOT } from "../../../../constants/common/global-constants.ts";
 import { SYSTEM_FONT_THIN } from "../../../../tailwind/tailwind-font-vars.ts";
 

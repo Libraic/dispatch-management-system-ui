@@ -23,7 +23,7 @@ export const DriverCalendarCell: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`flex items-center justify-center whitespace-pre-line text-center w-[5rem] border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${mileageDataString !== BLANK_STRING ? "bg-pale-blue" : "bg-red"}`}
+        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${mileageDataString !== BLANK_STRING ? "bg-pale-blue" : "bg-red"}`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();

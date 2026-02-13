@@ -2,7 +2,7 @@ import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import {
   convertDateToLittleEndian,
   getCurrentYearData,
-} from "../date/date-utils.ts";
+} from "../global/date-utils.ts";
 import {
   type EmergencyContactRegistrationData,
   type NoteRegistrationData,

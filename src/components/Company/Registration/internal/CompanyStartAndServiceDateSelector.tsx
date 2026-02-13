@@ -2,7 +2,7 @@ import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
 import { useContext } from "react";
 import { useDateObject } from "../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
-import { getCurrentYearData } from "../../../../utils/date/date-utils.ts";
+import { getCurrentYearData } from "../../../../utils/global/date-utils.ts";
 import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
 
 export const CompanyStartAndServiceDateSelector = () => {

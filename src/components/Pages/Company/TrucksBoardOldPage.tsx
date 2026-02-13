@@ -9,7 +9,7 @@ import { ToastRenderer } from "../../Common/Toast/ToastRenderer.tsx";
 import { BackButton } from "../../Common/Button/BackButton.tsx";
 import { formatCompanyDashboardRoute } from "../../../utils/route/route-utils.ts";
 import { ConfirmationModal } from "../../Common/Modal/ConfirmationModal.tsx";
-import { getCurrentWeekDays } from "../../../utils/date/date-utils.ts";
+import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { fetchDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
 import { TrucksBoardMatrix } from "../../Company/TrucksBoard/public/TrucksBoardMatrix.tsx";

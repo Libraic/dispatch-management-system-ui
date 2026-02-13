@@ -4,7 +4,7 @@ import { type RefObject, useEffect, useRef, useState } from "react";
 import {
   getDaysOfMonthGroupedByWeek,
   getListOfNYears,
-} from "../../../../utils/date/date-utils.ts";
+} from "../../../../utils/global/date-utils.ts";
 import { CalendarTimeUnitSelector } from "../internal/CalendarTimeUnitSelector.tsx";
 import { CalendarBody } from "../internal/CalendarBody.tsx";
 import { useOnClickOutside } from "../../../../hooks/useClickOutside.ts";

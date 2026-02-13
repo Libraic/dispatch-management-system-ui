@@ -5,9 +5,16 @@ export const TrucksBoardHeader: React.FC<{
   days: string[];
 }> = ({ days }) => {
   const updatedDays = days.map((day) => day.substring(0, day.length - 5));
-  const columns = ["Dispatcher", "Driver", "Revenue", "Miles", ...updatedDays];
+  const columns = [
+    "Dispatcher",
+    "Driver",
+    "Revenue",
+    "Miles",
+    "RPM",
+    ...updatedDays,
+  ];
   const gridLayout =
-    "grid grid-cols-[15rem_15rem_9rem_17.1rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_4.88rem]";
+    "grid grid-cols-[12rem_12rem_6rem_6rem_6rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_4.88rem]";
   return (
     <div
       className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue ${gridLayout} items-center w-fit h-[4rem] border-1 ${SYSTEM_FONT_BOLD} text-[0.9rem] border-gray-400`}

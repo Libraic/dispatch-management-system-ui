@@ -1,7 +1,7 @@
 import { TrucksBoardHeader } from "../../Company/TrucksBoard/new/TrucksBoardHeader.tsx";
 import { PageHeader } from "../../Common/Page/PageHeader.tsx";
 import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
-import { getCurrentWeekDays } from "../../../utils/date/date-utils.ts";
+import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-old-utils.ts";
 import { useParams } from "react-router-dom";
 import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/new/TrucksBoardRowContainer.tsx";

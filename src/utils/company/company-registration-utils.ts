@@ -7,7 +7,7 @@ import * as React from "react";
 import {
   convertDateToLittleEndian,
   getCurrentYearData,
-} from "../date/date-utils.ts";
+} from "../global/date-utils.ts";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
   return {
