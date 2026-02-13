@@ -66,7 +66,6 @@ export const TrucksBoardRowContainer: React.FC<{
         mileageData,
         driver,
         driverMileageUuid,
-        driverMileageDataIdentifier,
       );
     });
     activator.activate();

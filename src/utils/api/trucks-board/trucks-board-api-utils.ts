@@ -45,11 +45,11 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
     let totalRevenue = 0.0;
     let totalMiles = 0.0;
     for (const driverMileageData of getDriverMileageResponse.driverMileageDataList) {
-      const mileageData: MileageData[] = [];
+      const mileageData = new Map<string, MileageData>();
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
       for (const mileageDatum of driverMileageData.mileage) {
-        mileageData.push({
+        mileageData.set(mileageDatum.date, {
           date: mileageDatum.date,
           miles: mileageDatum.miles,
           revenue: mileageDatum.revenue,

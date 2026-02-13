@@ -13,7 +13,7 @@ export type DriverMileageData = {
   driver: Driver | null;
   totalRevenue: number;
   totalMiles: number;
-  mileage: MileageData[];
+  mileage: Map<string, MileageData>;
 };
 
 export type DispatcherMileageData = {

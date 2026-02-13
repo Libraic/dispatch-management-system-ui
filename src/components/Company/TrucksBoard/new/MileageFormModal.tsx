@@ -8,7 +8,6 @@ import type {
   DriverMileageData,
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
-import { createMileageData } from "../../../../utils/trucks-board/trucks-board-utils-old.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 
 export const MileageFormModal: React.FC<{
@@ -23,7 +22,12 @@ export const MileageFormModal: React.FC<{
 }> = ({ day, deactivate, driverMileageData, upsertDriverMileageData }) => {
   const [closing, setClosing] = useState(false);
   const [mileageData, setMileageData] = useState(
-    createMileageData(day, driverMileageData ? driverMileageData.mileage : []),
+    driverMileageData.mileage.get(day) ?? {
+      broker: undefined,
+      date: day,
+      revenue: 0,
+      miles: 0,
+    },
   );
 
   useEffect(() => {
