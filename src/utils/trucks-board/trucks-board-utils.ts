@@ -16,6 +16,7 @@ export const upsertDriverMileageCallbackFunction = (
   mileageData: MileageData,
   driver: Driver,
   driverMileageUuid: string,
+  currentWeek: string[],
 ) => {
   const newDispatcherMileageDataList: DispatcherMileageData[] = [];
   for (const prevDispatcherMileageData of prevDispatcherMileageDataList) {
@@ -43,8 +44,10 @@ export const upsertDriverMileageCallbackFunction = (
           let driverTotalMiles = 0;
           let driverTotalRevenue = 0;
           for (const mileageDatum of newMileageData.values()) {
-            driverTotalMiles += mileageDatum.miles;
-            driverTotalRevenue += mileageDatum.revenue;
+            if (currentWeek.includes(mileageDatum.date)) {
+              driverTotalMiles += mileageDatum.miles;
+              driverTotalRevenue += mileageDatum.revenue;
+            }
           }
 
           newDriverMileageDataList.push({

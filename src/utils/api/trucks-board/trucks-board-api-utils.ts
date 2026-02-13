@@ -40,6 +40,8 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
   endDate: string,
 ) => {
   const dispatcherMileageDataList: DispatcherMileageData[] = [];
+  const startDateObject = new Date(startDate);
+  const endDateObject = new Date(endDate);
   for (const getDriverMileageResponse of getDriverMileageResponseList) {
     const driverMileageDataList: DriverMileageData[] = [];
     let totalRevenue = 0.0;
@@ -55,8 +57,11 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
           revenue: mileageDatum.revenue,
           broker: mileageDatum.broker ?? undefined,
         });
-        driverTotalRevenue += mileageDatum.revenue;
-        driverTotalMiles += mileageDatum.miles;
+        const dateObject = new Date(mileageDatum.date);
+        if (dateObject >= startDateObject && dateObject <= endDateObject) {
+          driverTotalRevenue += mileageDatum.revenue;
+          driverTotalMiles += mileageDatum.miles;
+        }
       }
       totalRevenue += driverTotalRevenue;
       totalMiles += driverTotalMiles;

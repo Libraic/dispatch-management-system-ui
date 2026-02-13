@@ -58,6 +58,7 @@ export const TrucksBoardRowContainer: React.FC<{
       return;
     }
 
+    const currentWeek = updatedDays.slice(0, 7);
     const driverMileageUuid = upsertResponse.data!!.driverMileageUuid;
     setDispatcherMileageData((prevDispatcherMileageDataList) => {
       return upsertDriverMileageCallbackFunction(
@@ -66,6 +67,7 @@ export const TrucksBoardRowContainer: React.FC<{
         mileageData,
         driver,
         driverMileageUuid,
+        currentWeek,
       );
     });
     activator.activate();
