@@ -1,5 +1,6 @@
 import {
   BLANK_STRING,
+  DOLLAR_SIGN,
   DOT,
   ZERO,
 } from "../../constants/common/global-constants.ts";
@@ -16,6 +17,10 @@ export const divide = (
 
   const places = decimalPlaces ?? 2;
   return parseFloat((a / b).toFixed(places));
+};
+
+export const formatCurrency = (number: number) => {
+  return `${DOLLAR_SIGN} ${formatNumber(number)}`;
 };
 
 export const formatNumber = (number: number) => {

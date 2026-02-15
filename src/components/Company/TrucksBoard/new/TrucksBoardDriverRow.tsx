@@ -6,7 +6,11 @@ import type {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import { divide, formatNumber } from "../../../../utils/global/number-utils.ts";
+import {
+  divide,
+  formatCurrency,
+  formatNumber,
+} from "../../../../utils/global/number-utils.ts";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];
@@ -15,8 +19,8 @@ export const TrucksBoardDriverRow: React.FC<{
   hasDispatcher: boolean;
 }> = ({ days, driverMileageData, upsertDriverMileageData, hasDispatcher }) => {
   const gridCols = hasDispatcher
-    ? "grid-cols-[12rem_12rem_6rem_6rem_5.93rem_repeat(14,5rem)]"
-    : "grid-cols-[12rem_12.05rem_6rem_6rem_5.94rem_repeat(14,5rem)]";
+    ? "grid-cols-[12rem_12rem_8rem_6rem_5.93rem_repeat(14,5rem)]"
+    : "grid-cols-[12rem_12.05rem_8rem_6rem_5.94rem_repeat(14,5rem)]";
   return (
     <div className="flex flex-row">
       <div
@@ -33,7 +37,7 @@ export const TrucksBoardDriverRow: React.FC<{
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {formatNumber(driverMileageData.totalRevenue)}
+          {formatCurrency(driverMileageData.totalRevenue)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}

@@ -14,7 +14,7 @@ export const TrucksBoardHeader: React.FC<{
     ...updatedDays,
   ];
   const gridLayout =
-    "grid grid-cols-[12rem_12rem_6rem_6rem_6rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_4.88rem]";
+    "grid grid-cols-[12rem_12rem_8rem_6rem_6rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_5rem_4.88rem]";
   return (
     <div
       className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue ${gridLayout} items-center w-fit h-[4rem] border-1 ${SYSTEM_FONT_BOLD} text-[0.9rem] border-gray-400`}

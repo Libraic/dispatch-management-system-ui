@@ -6,7 +6,11 @@ import chevronDownIcon from "../../../../assets/trucks-board/chevron-down.svg";
 import type { DispatcherMileageData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import { divide, formatNumber } from "../../../../utils/global/number-utils.ts";
+import {
+  divide,
+  formatCurrency,
+  formatNumber,
+} from "../../../../utils/global/number-utils.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
   days: string[];
@@ -42,7 +46,7 @@ export const TrucksBoardDispatcherRow: React.FC<{
         />
       )}
       <div
-        className={`grid grid-cols-[12rem_12rem_6rem_6rem_5.93rem_repeat(14,5rem)] text-[0.9rem] items-center h-[4rem] bg-blue-grey border-l-1 border-b-1 border-gray-400 flex-shrink-0`}
+        className={`grid grid-cols-[12rem_12rem_8rem_6rem_5.93rem_repeat(14,5rem)] text-[0.9rem] items-center h-[4rem] bg-blue-grey border-l-1 border-b-1 border-gray-400 flex-shrink-0`}
       >
         <div
           className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-b-1 border-gray-400`}
@@ -54,7 +58,7 @@ export const TrucksBoardDispatcherRow: React.FC<{
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
         >
-          {formatNumber(dispatcherMileageData.totalRevenue)}
+          {formatCurrency(dispatcherMileageData.totalRevenue)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}

@@ -15,6 +15,7 @@ import {
   SYSTEM_FONT_THIN,
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import { NumericInputForm } from "../../../Common/InputForm/public/NumericInputForm.tsx";
+import { CurrencyInputForm } from "../../../Common/InputForm/public/CurrencyInputForm.tsx";
 
 export const MileageFormModal: React.FC<{
   day: string;
@@ -77,7 +78,7 @@ export const MileageFormModal: React.FC<{
           />
         </div>
         <div className="flex flex-row gap-x-5">
-          <NumericInputForm
+          <CurrencyInputForm
             label="Revenue"
             placeholder="100.25"
             inputFieldValue={mileageData.revenue}
