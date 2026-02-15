@@ -5,6 +5,7 @@ import {
 } from "../../../../constants/common/global-constants.ts";
 import { InputFormContainer } from "../internal/InputFormContainer.tsx";
 import { formatStringNumber } from "../../../../utils/global/number-utils.ts";
+import type { TailwindProperties } from "../../../../types/internal/style.ts";
 
 export const CurrencyInputForm: React.FC<{
   label: string;
@@ -15,6 +16,7 @@ export const CurrencyInputForm: React.FC<{
   information?: string;
   onFocus?: () => void;
   saveInputData: (value: string) => void;
+  tailwindProperties?: TailwindProperties;
 }> = ({
   label,
   placeholder,
@@ -48,6 +50,7 @@ export const CurrencyInputForm: React.FC<{
       information={information}
       onFocus={onFocus}
       inputPreprocessor={sanitizeNumber}
+      tailwindProperties={{ maxWeight: "max-w-[10rem]" }}
     />
   );
 };

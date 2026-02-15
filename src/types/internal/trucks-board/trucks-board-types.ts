@@ -11,6 +11,7 @@ export type MileageData = {
 export type MileageDataError = {
   revenueError: string;
   milesError: string;
+  brokerError: string;
 };
 
 export type DriverMileageData = {

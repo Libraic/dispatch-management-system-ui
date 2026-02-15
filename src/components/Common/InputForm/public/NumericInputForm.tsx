@@ -45,6 +45,7 @@ export const NumericInputForm: React.FC<{
       information={information}
       onFocus={onFocus}
       inputPreprocessor={sanitizeNumber}
+      tailwindProperties={{ maxWeight: "max-w-[10rem]" }}
     />
   );
 };

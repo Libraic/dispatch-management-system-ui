@@ -1,5 +1,6 @@
 import * as React from "react";
 import { InputFormContainer } from "../internal/InputFormContainer.tsx";
+import type { TailwindProperties } from "../../../../types/internal/style.ts";
 
 export const TextualInputForm: React.FC<{
   label: string;
@@ -10,6 +11,7 @@ export const TextualInputForm: React.FC<{
   errorMessage?: string;
   information?: string;
   onFocus?: () => void;
+  tailwindProperties?: TailwindProperties;
 }> = ({
   label,
   placeholder,
@@ -19,6 +21,7 @@ export const TextualInputForm: React.FC<{
   onFocus,
   errorMessage,
   saveInputData,
+  tailwindProperties,
 }) => {
   return (
     <InputFormContainer
@@ -32,6 +35,7 @@ export const TextualInputForm: React.FC<{
       errorMessage={errorMessage}
       information={information}
       onFocus={onFocus}
+      tailwindProperties={tailwindProperties}
     />
   );
 };

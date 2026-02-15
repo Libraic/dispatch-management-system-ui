@@ -6,6 +6,7 @@ import { INPUT_FORM_STYLE } from "../../../../tailwind/tailwind.ts";
 import { getInputTagNameFromLabel } from "../../../../utils/global/input-form-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { InputFormError } from "../public/InputFormError.tsx";
+import type { TailwindProperties } from "../../../../types/internal/style.ts";
 
 export const InputFormContainer: React.FC<{
   label: string;
@@ -27,6 +28,7 @@ export const InputFormContainer: React.FC<{
   information?: string;
   inputPreprocessor?: (value: string) => string;
   onFocus?: () => void;
+  tailwindProperties?: TailwindProperties;
 }> = ({
   label,
   placeholder,
@@ -39,6 +41,7 @@ export const InputFormContainer: React.FC<{
   onFocus,
   errorMessage,
   inputPreprocessor,
+  tailwindProperties,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [borderColor, setBorderColor] = useState("border-light-grey");
@@ -62,10 +65,14 @@ export const InputFormContainer: React.FC<{
     saveInputData(input);
   };
 
+  const maxWeight = tailwindProperties
+    ? tailwindProperties.maxWeight
+    : "max-w-[20rem]";
+
   return (
-    <div className="flex flex-col gap-y-2 min-h-[6.5rem]">
+    <div className="flex flex-col min-h-[6.5rem]">
       <div
-        className={`flex flex-col px-5 py-1 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] max-w-[20rem]`}
+        className={`flex flex-col px-5 py-1 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] ${maxWeight}`}
       >
         <InputFormLabel
           label={label}

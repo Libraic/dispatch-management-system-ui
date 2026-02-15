@@ -16,6 +16,7 @@ import {
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import { NumericInputForm } from "../../../Common/InputForm/public/NumericInputForm.tsx";
 import { CurrencyInputForm } from "../../../Common/InputForm/public/CurrencyInputForm.tsx";
+import { getBlankMileageDataError } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
 
 export const MileageFormModal: React.FC<{
   day: string;
@@ -28,13 +29,12 @@ export const MileageFormModal: React.FC<{
   ) => void;
 }> = ({ day, deactivate, driverMileageData, upsertDriverMileageData }) => {
   const [closing, setClosing] = useState(false);
-  const [mileageDataError, setMileageDataError] = useState<MileageDataError>({
-    revenueError: BLANK_STRING,
-    milesError: BLANK_STRING,
-  });
+  const [mileageDataError, setMileageDataError] = useState<MileageDataError>(
+    getBlankMileageDataError(),
+  );
   const [mileageData, setMileageData] = useState(
     driverMileageData.mileage.get(day) ?? {
-      broker: undefined,
+      broker: BLANK_STRING,
       date: day,
       revenue: BLANK_STRING,
       miles: BLANK_STRING,
@@ -64,7 +64,7 @@ export const MileageFormModal: React.FC<{
         <p className={`pb-[3rem] ${SYSTEM_FONT_THIN}`}>
           Complete the required data for Mileage
         </p>
-        <div className="flex flex-row gap-x-5">
+        <div className="flex flex-row gap-x-5 mb-[2rem]">
           <TextualInputForm
             label="Broker"
             placeholder="C. H. Robinson"
@@ -75,6 +75,29 @@ export const MileageFormModal: React.FC<{
                 broker: broker === BLANK_STRING ? undefined : broker,
               }))
             }
+            isMandatory={true}
+            errorMessage={mileageDataError.brokerError}
+            tailwindProperties={{ maxWeight: "max-w-[15rem]" }}
+          />
+          <CurrencyInputForm
+            label="Revenue"
+            placeholder="100.25"
+            inputFieldValue={mileageData.revenue}
+            saveInputData={(revenue: string) => {
+              setMileageData({ ...mileageData, revenue: revenue });
+            }}
+            isMandatory={true}
+            errorMessage={mileageDataError.revenueError}
+          />
+          <NumericInputForm
+            label="Miles"
+            placeholder="300"
+            inputFieldValue={mileageData.miles}
+            saveInputData={(miles: string) =>
+              setMileageData({ ...mileageData, miles: miles })
+            }
+            isMandatory={true}
+            errorMessage={mileageDataError.milesError}
           />
         </div>
         <div className="flex flex-row gap-x-5">
@@ -104,10 +127,8 @@ export const MileageFormModal: React.FC<{
             actionText="Submit"
             action={() => {
               let isError = false;
-              const mileageErrors: MileageDataError = {
-                revenueError: BLANK_STRING,
-                milesError: BLANK_STRING,
-              };
+              const mileageErrors: MileageDataError =
+                getBlankMileageDataError();
               if (mileageData.revenue === BLANK_STRING) {
                 isError = true;
                 mileageErrors.revenueError = "Revenue is required.";
@@ -115,6 +136,10 @@ export const MileageFormModal: React.FC<{
               if (mileageData.miles === BLANK_STRING) {
                 isError = true;
                 mileageErrors.milesError = "Miles is required.";
+              }
+              if (mileageData.broker === BLANK_STRING) {
+                isError = true;
+                mileageErrors.brokerError = "Broker is required.";
               }
 
               if (isError) {
