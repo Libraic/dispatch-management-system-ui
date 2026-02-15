@@ -1,12 +1,12 @@
 import * as React from "react";
 import { type ChangeEvent, useState } from "react";
-import { BORDER_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
-import { InputFormLabel } from "./InputFormLabel.tsx";
-import { INPUT_FORM_STYLE } from "../../../../tailwind/tailwind.ts";
 import { getInputTagNameFromLabel } from "../../../../utils/global/input-form-utils.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { InputFormError } from "../public/InputFormError.tsx";
 import type { TailwindProperties } from "../../../../types/internal/style.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
+import { InputFormLabel } from "./InputFormLabel.tsx";
+import { BORDER_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 
 export const InputFormContainer: React.FC<{
   label: string;
@@ -28,6 +28,7 @@ export const InputFormContainer: React.FC<{
   information?: string;
   inputPreprocessor?: (value: string) => string;
   onFocus?: () => void;
+  isReadOnly?: boolean;
   tailwindProperties?: TailwindProperties;
 }> = ({
   label,
@@ -42,6 +43,7 @@ export const InputFormContainer: React.FC<{
   errorMessage,
   inputPreprocessor,
   tailwindProperties,
+  isReadOnly,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [borderColor, setBorderColor] = useState("border-light-grey");
@@ -65,23 +67,23 @@ export const InputFormContainer: React.FC<{
     saveInputData(input);
   };
 
-  const maxWeight = tailwindProperties
-    ? tailwindProperties.maxWeight
-    : "max-w-[20rem]";
+  const maxWidth = tailwindProperties?.maxWeight || "max-w-[20rem]";
 
   return (
-    <div className="flex flex-col min-h-[6.5rem]">
+    <div className={`flex flex-col min-h-[6.5rem]`}>
       <div
-        className={`flex flex-col px-5 py-1 justify-start items-start border-2 bg-white ${borderColor} rounded-[2rem] ${maxWeight}`}
+        className={`relative px-5 border-2 bg-white ${borderColor} rounded-[2rem] ${maxWidth}`}
       >
         <InputFormLabel
           label={label}
-          information={information}
+          isFocused={isFocused}
           isMandatory={isMandatory}
+          information={information}
         />
 
         <input
-          className={`${INPUT_FORM_STYLE} w-[15rem]`}
+          disabled={isReadOnly}
+          className={`py-[1.15rem] leading-none ${SYSTEM_FONT_LIGHT} text-[0.85rem] bg-transparent rounded-sm border-none focus:outline-none w-[15rem] ${isReadOnly && "cursor-not-allowed text-[#9ca3af]"}`}
           inputMode={inputMode}
           type={type}
           name={getInputTagNameFromLabel(label)}
@@ -96,7 +98,8 @@ export const InputFormContainer: React.FC<{
           onChange={handleChange}
         />
       </div>
-      {!!errorMessage?.length && <InputFormError errorMessage={errorMessage} />}
+
+      {errorMessage && <InputFormError errorMessage={errorMessage} />}
     </div>
   );
 };

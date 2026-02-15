@@ -2,7 +2,7 @@ import * as React from "react";
 import { UserRegistrationContext } from "../../../../../context/UserRegistrationContext.ts";
 import { useDateObject } from "../../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../../hooks/usePrepopulateDate.ts";
-import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
+import { DateSelectorOld } from "../../../../Common/Selector/DateSelectorOld.tsx";
 
 export const UserEmploymentDate = () => {
   const context = React.useContext(UserRegistrationContext)!;
@@ -16,7 +16,7 @@ export const UserEmploymentDate = () => {
 
   return (
     <div className="w-fit">
-      <DateSelector label="Employment Date" date={dateObject} />
+      <DateSelectorOld label="Employment Date" date={dateObject} />
     </div>
   );
 };

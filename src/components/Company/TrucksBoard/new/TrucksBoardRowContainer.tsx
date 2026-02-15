@@ -50,6 +50,11 @@ export const TrucksBoardRowContainer: React.FC<{
       revenue: parseFloat(mileageData.revenue),
       miles: parseFloat(mileageData.miles),
       broker: mileageData.broker,
+      representative: mileageData.representative,
+      pickUpLocation: mileageData.pickUpLocation,
+      deliveryLocation: mileageData.deliveryLocation,
+      pickUpDate: mileageData.pickUpDate.toISOString().split("T")[0],
+      deliveryDate: mileageData.deliveryDate.toISOString().split("T")[0],
     };
     const upsertResponse = await upsertDriverMileage(upsertRequest);
 

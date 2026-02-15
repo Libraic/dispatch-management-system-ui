@@ -39,6 +39,7 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
   startDate: string,
   endDate: string,
 ) => {
+  console.log(getDriverMileageResponseList);
   const dispatcherMileageDataList: DispatcherMileageData[] = [];
   const startDateObject = new Date(startDate);
   const endDateObject = new Date(endDate);
@@ -55,7 +56,12 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
           date: mileageDatum.date,
           miles: mileageDatum.miles.toString(),
           revenue: mileageDatum.revenue.toString(),
-          broker: mileageDatum.broker ?? undefined,
+          broker: mileageDatum.broker,
+          representative: mileageDatum.representative ?? undefined,
+          pickUpDate: new Date(mileageDatum.pickUpDate),
+          deliveryDate: new Date(mileageDatum.deliveryDate),
+          pickUpLocation: mileageDatum.pickUpLocation,
+          deliveryLocation: mileageDatum.deliveryLocation,
         });
         const dateObject = new Date(mileageDatum.date);
         if (dateObject >= startDateObject && dateObject <= endDateObject) {

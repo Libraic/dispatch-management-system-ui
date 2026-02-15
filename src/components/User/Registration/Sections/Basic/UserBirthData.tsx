@@ -1,6 +1,6 @@
 import { usePrepopulateDate } from "../../../../../hooks/usePrepopulateDate.ts";
 import * as React from "react";
-import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
+import { DateSelectorOld } from "../../../../Common/Selector/DateSelectorOld.tsx";
 import { useDateObject } from "../../../../../hooks/useDateObject.ts";
 import { UserRegistrationContext } from "../../../../../context/UserRegistrationContext.ts";
 
@@ -14,5 +14,5 @@ export const UserBirthData = () => {
   );
   usePrepopulateDate(setRegistrationData, dateObject, "birthDate");
 
-  return <DateSelector label="Birth Date" date={dateObject} />;
+  return <DateSelectorOld label="Birth Date" date={dateObject} />;
 };

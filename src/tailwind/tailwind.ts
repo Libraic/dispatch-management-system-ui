@@ -1,13 +1,3 @@
-export const INPUT_FORM_STYLE =
-  "py-0.5 " +
-  "font-open-sans " +
-  "font-light " +
-  "text-standard-size " +
-  "bg-transparent " +
-  "rounded-sm " +
-  "border-none " +
-  "focus:outline-none ";
-
 export const SELECT_FORM_STYLE =
   "flex " +
   "items-center " +

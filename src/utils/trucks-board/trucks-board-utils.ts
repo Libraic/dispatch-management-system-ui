@@ -96,3 +96,16 @@ export const extractMileageDataFromDriverMileageDataByDay = (
   const revenue = removeTrailingDotIfNecessary(mileageData.revenue);
   return `${!mileageData.broker || mileageData.broker === BLANK_STRING ? BLANK_STRING : mileageData.broker + NEW_LINE} ${revenue} | ${miles}`;
 };
+
+export const getBlankMileageData = (day: string): MileageData => {
+  return {
+    broker: BLANK_STRING,
+    date: day,
+    revenue: BLANK_STRING,
+    miles: BLANK_STRING,
+    pickUpLocation: BLANK_STRING,
+    pickUpDate: new Date(),
+    deliveryLocation: BLANK_STRING,
+    deliveryDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  };
+};

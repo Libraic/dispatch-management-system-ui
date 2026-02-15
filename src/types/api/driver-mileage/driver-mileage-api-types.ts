@@ -12,6 +12,11 @@ export type UpsertDriverMileageRequest = {
   revenue?: number;
   miles?: number;
   broker?: string;
+  pickUpLocation?: string;
+  deliveryLocation?: string;
+  pickUpDate?: string;
+  deliveryDate?: string;
+  representative?: string;
 };
 
 export type UpsertDriverMileageResponse = {
@@ -22,7 +27,12 @@ export type MileageResponse = {
   date: string;
   revenue: number;
   miles: number;
-  broker: string | null;
+  broker: string;
+  representative: string;
+  pickUpLocation: string;
+  pickUpDate: Date;
+  deliveryLocation: string;
+  deliveryDate: Date;
 };
 
 export type DriverMileageData = {

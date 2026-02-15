@@ -6,6 +6,16 @@ import {
 } from "../../constants/common/global-constants.ts";
 import { DEFAULT_LOCALE } from "../../constants/date/date-constants.ts";
 
+export const divideNumbersAsStrings = (a: string, b: string): string => {
+  if (a === BLANK_STRING || b === BLANK_STRING) {
+    return "0";
+  }
+
+  const num1 = parseFloat(a);
+  const num2 = parseFloat(b);
+  return divide(num1, num2).toString();
+};
+
 export const divide = (
   a: number,
   b: number,

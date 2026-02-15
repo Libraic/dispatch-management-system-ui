@@ -3,24 +3,26 @@ import { TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
+import type { DateObject } from "../../../types/internal/date/date-types.ts";
 
-export const DateSelector: React.FC<{ label: string; date: Date }> = ({
+// TODO: Replace all occurrences of `DateSelectorOld` with `DateSelector`.
+export const DateSelectorOld: React.FC<{ label: string; date: DateObject }> = ({
   label,
   date,
 }) => {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs()
-      .set("date", date.getDate())
-      .set("month", date.getMonth())
-      .set("year", date.getFullYear()),
+      .set("date", date.day)
+      .set("month", date.month - 1)
+      .set("year", date.year),
   );
 
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
     if (newValue) {
-      date.setDate(newValue.date());
-      date.setMonth(newValue.month());
-      date.setFullYear(newValue.year());
+      date.setDay(newValue.date());
+      date.setMonth(newValue.month() + 1);
+      date.setYear(newValue.year());
     }
   };
 
@@ -36,35 +38,10 @@ export const DateSelector: React.FC<{ label: string; date: Date }> = ({
           textField: {
             variant: "outlined",
             sx: {
-              width: 280,
-              marginBottom: "50px",
               "& .MuiOutlinedInput-root": {
-                borderRadius: "25px",
-                "& fieldset": {
-                  borderColor: "#f2f2f2",
-                  borderWidth: "2px",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#f2f2f2",
-                },
                 "&.Mui-focused fieldset": {
                   borderColor: "#3a59d1",
                 },
-                "& .MuiOutlinedInput-input": {
-                  padding: "1.15rem 1.2rem",
-                  fontFamily: "'Inter Tight', sans-serif",
-                  fontSize: "0.85rem",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                fontFamily: "'Inter Tight', sans-serif",
-                fontSize: "0.95rem",
-                fontWeight: 300,
-                color: "black",
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#3a59d1",
-                fontWeight: 400,
               },
             },
           },
@@ -74,6 +51,10 @@ export const DateSelector: React.FC<{ label: string; date: Date }> = ({
               "&.Mui-selected": {
                 backgroundColor: "#3a59d1",
                 color: "white",
+              },
+              // Hover on the selected day
+              "&.Mui-selected:hover": {
+                backgroundColor: "#f2f2f2",
               },
             },
           },

@@ -1,5 +1,4 @@
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
 import { SubmitButton } from "../../../Common/Button/SubmitButton.tsx";
 import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
 import React, { useEffect, useState } from "react";
@@ -9,14 +8,20 @@ import type {
   MileageData,
   MileageDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import {
   SYSTEM_FONT_NORMAL,
   SYSTEM_FONT_THIN,
 } from "../../../../tailwind/tailwind-font-vars.ts";
-import { NumericInputForm } from "../../../Common/InputForm/public/NumericInputForm.tsx";
-import { CurrencyInputForm } from "../../../Common/InputForm/public/CurrencyInputForm.tsx";
-import { getBlankMileageDataError } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
+import {
+  getBlankMileageDataError,
+  getErrorsIfPresent,
+} from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
+import { MileageFormLoadLocations } from "./MileageFormLoadLocations.tsx";
+import { MileageFormDeliverablesDates } from "./MileageFormDeliverablesDates.tsx";
+import { MileageFormRevenue } from "./MileageFormRevenue.tsx";
+import { MileageFormBrokerData } from "./MileageFormBrokerData.tsx";
+import { createStateData } from "../../../../utils/global/props-utils.ts";
+import { getBlankMileageData } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 
 export const MileageFormModal: React.FC<{
   day: string;
@@ -32,13 +37,13 @@ export const MileageFormModal: React.FC<{
   const [mileageDataError, setMileageDataError] = useState<MileageDataError>(
     getBlankMileageDataError(),
   );
-  const [mileageData, setMileageData] = useState(
-    driverMileageData.mileage.get(day) ?? {
-      broker: BLANK_STRING,
-      date: day,
-      revenue: BLANK_STRING,
-      miles: BLANK_STRING,
-    },
+  const [mileageData, setMileageData] = useState<MileageData>(
+    driverMileageData.mileage.get(day) ?? getBlankMileageData(day),
+  );
+  const mileageStateData = createStateData(
+    mileageData,
+    mileageDataError,
+    setMileageData,
   );
 
   useEffect(() => {
@@ -64,84 +69,18 @@ export const MileageFormModal: React.FC<{
         <p className={`pb-[3rem] ${SYSTEM_FONT_THIN}`}>
           Complete the required data for Mileage
         </p>
-        <div className="flex flex-row gap-x-5 mb-[2rem]">
-          <TextualInputForm
-            label="Broker"
-            placeholder="C. H. Robinson"
-            inputFieldValue={mileageData.broker ?? BLANK_STRING}
-            saveInputData={(broker: string) =>
-              setMileageData((prev) => ({
-                ...prev,
-                broker: broker === BLANK_STRING ? undefined : broker,
-              }))
-            }
-            isMandatory={true}
-            errorMessage={mileageDataError.brokerError}
-            tailwindProperties={{ maxWeight: "max-w-[15rem]" }}
-          />
-          <CurrencyInputForm
-            label="Revenue"
-            placeholder="100.25"
-            inputFieldValue={mileageData.revenue}
-            saveInputData={(revenue: string) => {
-              setMileageData({ ...mileageData, revenue: revenue });
-            }}
-            isMandatory={true}
-            errorMessage={mileageDataError.revenueError}
-          />
-          <NumericInputForm
-            label="Miles"
-            placeholder="300"
-            inputFieldValue={mileageData.miles}
-            saveInputData={(miles: string) =>
-              setMileageData({ ...mileageData, miles: miles })
-            }
-            isMandatory={true}
-            errorMessage={mileageDataError.milesError}
-          />
-        </div>
-        <div className="flex flex-row gap-x-5">
-          <CurrencyInputForm
-            label="Revenue"
-            placeholder="100.25"
-            inputFieldValue={mileageData.revenue}
-            saveInputData={(revenue: string) => {
-              setMileageData({ ...mileageData, revenue: revenue });
-            }}
-            isMandatory={true}
-            errorMessage={mileageDataError.revenueError}
-          />
-          <NumericInputForm
-            label="Miles"
-            placeholder="300"
-            inputFieldValue={mileageData.miles}
-            saveInputData={(miles: string) =>
-              setMileageData({ ...mileageData, miles: miles })
-            }
-            isMandatory={true}
-            errorMessage={mileageDataError.milesError}
-          />
+        <div className="flex flex-col gap-y-[1.15rem]">
+          <MileageFormLoadLocations mileageStateData={mileageStateData} />
+          <MileageFormDeliverablesDates mileageData={mileageData} />
+          <MileageFormRevenue mileageStateData={mileageStateData} />
+          <MileageFormBrokerData mileageStateData={mileageStateData} />
         </div>
         <div className="flex flex-row items-center justify-center mb-[1.3rem] gap-x-10">
           <SubmitButton
             actionText="Submit"
             action={() => {
-              let isError = false;
-              const mileageErrors: MileageDataError =
-                getBlankMileageDataError();
-              if (mileageData.revenue === BLANK_STRING) {
-                isError = true;
-                mileageErrors.revenueError = "Revenue is required.";
-              }
-              if (mileageData.miles === BLANK_STRING) {
-                isError = true;
-                mileageErrors.milesError = "Miles is required.";
-              }
-              if (mileageData.broker === BLANK_STRING) {
-                isError = true;
-                mileageErrors.brokerError = "Broker is required.";
-              }
-
+              const { isError, mileageErrors } =
+                getErrorsIfPresent(mileageData);
               if (isError) {
                 setMileageDataError(mileageErrors);
                 return;

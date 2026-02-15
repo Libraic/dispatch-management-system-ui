@@ -4,8 +4,8 @@ import {
   DOLLAR_SIGN,
 } from "../../../../constants/common/global-constants.ts";
 import { InputFormContainer } from "../internal/InputFormContainer.tsx";
-import { formatStringNumber } from "../../../../utils/global/number-utils.ts";
 import type { TailwindProperties } from "../../../../types/internal/style.ts";
+import { formatStringNumber } from "../../../../utils/global/number-utils.ts";
 
 export const CurrencyInputForm: React.FC<{
   label: string;
@@ -26,6 +26,7 @@ export const CurrencyInputForm: React.FC<{
   onFocus,
   errorMessage,
   saveInputData,
+  tailwindProperties,
 }) => {
   const sanitizeNumber = (input: string) => {
     const commasOmittedInput = input.replace(/[,$\s]/g, BLANK_STRING);
@@ -41,7 +42,11 @@ export const CurrencyInputForm: React.FC<{
     <InputFormContainer
       label={label}
       placeholder={placeholder}
-      inputFieldValue={`${DOLLAR_SIGN} ${formatStringNumber(inputFieldValue)}`}
+      inputFieldValue={
+        inputFieldValue !== BLANK_STRING
+          ? `${DOLLAR_SIGN} ${formatStringNumber(inputFieldValue)}`
+          : `${formatStringNumber(inputFieldValue)}`
+      }
       inputMode="decimal"
       type="text"
       saveInputData={saveInputData}
@@ -50,7 +55,7 @@ export const CurrencyInputForm: React.FC<{
       information={information}
       onFocus={onFocus}
       inputPreprocessor={sanitizeNumber}
-      tailwindProperties={{ maxWeight: "max-w-[10rem]" }}
+      tailwindProperties={tailwindProperties}
     />
   );
 };

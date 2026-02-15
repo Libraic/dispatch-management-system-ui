@@ -2,16 +2,19 @@ import * as React from "react";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { InputFormContainer } from "../internal/InputFormContainer.tsx";
 import { formatStringNumber } from "../../../../utils/global/number-utils.ts";
+import type { TailwindProperties } from "../../../../types/internal/style.ts";
 
 export const NumericInputForm: React.FC<{
   label: string;
   placeholder: string;
   inputFieldValue: string;
+  saveInputData: (value: string) => void;
   isMandatory?: boolean;
   errorMessage?: string;
   information?: string;
   onFocus?: () => void;
-  saveInputData: (value: string) => void;
+  tailwindProperties?: TailwindProperties;
+  isReadOnly?: boolean;
 }> = ({
   label,
   placeholder,
@@ -21,6 +24,8 @@ export const NumericInputForm: React.FC<{
   onFocus,
   errorMessage,
   saveInputData,
+  tailwindProperties,
+  isReadOnly,
 }) => {
   const sanitizeNumber = (input: string) => {
     const commasOmittedInput = input.replace(/,/g, BLANK_STRING);
@@ -45,7 +50,8 @@ export const NumericInputForm: React.FC<{
       information={information}
       onFocus={onFocus}
       inputPreprocessor={sanitizeNumber}
-      tailwindProperties={{ maxWeight: "max-w-[10rem]" }}
+      tailwindProperties={tailwindProperties}
+      isReadOnly={isReadOnly}
     />
   );
 };

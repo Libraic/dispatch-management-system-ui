@@ -5,13 +5,20 @@ export type MileageData = {
   revenue: string;
   miles: string;
   date: string;
-  broker?: string;
+  broker: string;
+  pickUpLocation: string;
+  pickUpDate: Date;
+  deliveryLocation: string;
+  deliveryDate: Date;
+  representative?: string;
 };
 
 export type MileageDataError = {
   revenueError: string;
   milesError: string;
   brokerError: string;
+  pickUpLocationError: string;
+  deliveryLocationError: string;
 };
 
 export type DriverMileageData = {

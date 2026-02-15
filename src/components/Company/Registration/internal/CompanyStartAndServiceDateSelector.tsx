@@ -1,4 +1,4 @@
-import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
+import { DateSelectorOld } from "../../../Common/Selector/DateSelectorOld.tsx";
 import { useContext } from "react";
 import { useDateObject } from "../../../../hooks/useDateObject.ts";
 import { usePrepopulateDate } from "../../../../hooks/usePrepopulateDate.ts";
@@ -28,8 +28,8 @@ export const CompanyStartAndServiceDateSelector = () => {
 
   return (
     <div className="flex flex-row gap-x-10 items-center">
-      <DateSelector label="Service Date" date={currentDateObject} />
-      <DateSelector label="Start Date" date={currentDateObject} />
+      <DateSelectorOld label="Service Date" date={currentDateObject} />
+      <DateSelectorOld label="Start Date" date={currentDateObject} />
     </div>
   );
 };

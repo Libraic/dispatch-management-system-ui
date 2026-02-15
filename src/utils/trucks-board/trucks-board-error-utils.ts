@@ -3,7 +3,10 @@ import {
   type DriverMileageErrors,
   type DriversMileageGroupsErrors,
 } from "../../types/internal/trucks-board/trucks-board-old-types.ts";
-import type { MileageDataError } from "../../types/internal/trucks-board/trucks-board-types.ts";
+import type {
+  MileageData,
+  MileageDataError,
+} from "../../types/internal/trucks-board/trucks-board-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 
 export const getDispatcherErrorMessage = (
@@ -29,5 +32,34 @@ export const getBlankMileageDataError = (): MileageDataError => {
     revenueError: BLANK_STRING,
     milesError: BLANK_STRING,
     brokerError: BLANK_STRING,
+    pickUpLocationError: BLANK_STRING,
+    deliveryLocationError: BLANK_STRING,
   };
+};
+
+export const getErrorsIfPresent = (mileageData: MileageData) => {
+  let isError = false;
+  const mileageErrors: MileageDataError = getBlankMileageDataError();
+  if (mileageData.revenue === BLANK_STRING) {
+    isError = true;
+    mileageErrors.revenueError = "Revenue is required.";
+  }
+  if (mileageData.miles === BLANK_STRING) {
+    isError = true;
+    mileageErrors.milesError = "Miles are required.";
+  }
+  if (mileageData.broker === BLANK_STRING) {
+    isError = true;
+    mileageErrors.brokerError = "Broker is required.";
+  }
+  if (mileageData.pickUpLocation === BLANK_STRING) {
+    isError = true;
+    mileageErrors.pickUpLocationError = "Pick up location is required.";
+  }
+  if (mileageData.deliveryLocation === BLANK_STRING) {
+    isError = true;
+    mileageErrors.deliveryLocationError = "Delivery location is required.";
+  }
+
+  return { isError, mileageErrors };
 };
