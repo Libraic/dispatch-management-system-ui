@@ -14,6 +14,7 @@ import {
   BLANK_SPACE,
   BLANK_STRING,
   DOLLAR_SIGN,
+  ZERO,
 } from "../../../constants/common/global-constants.ts";
 import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
 import { saveDriversMileageOld } from "../../../service/driverMileageService.ts";
@@ -39,7 +40,6 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
   startDate: string,
   endDate: string,
 ) => {
-  console.log(getDriverMileageResponseList);
   const dispatcherMileageDataList: DispatcherMileageData[] = [];
   const startDateObject = new Date(startDate);
   const endDateObject = new Date(endDate);
@@ -54,19 +54,24 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
       for (const mileageDatum of driverMileageData.mileage) {
         mileageData.set(mileageDatum.date, {
           date: mileageDatum.date,
-          miles: mileageDatum.miles.toString(),
-          revenue: mileageDatum.revenue.toString(),
+          miles: mileageDatum.miles
+            ? mileageDatum.miles.toString()
+            : BLANK_STRING,
+          revenue: mileageDatum.revenue
+            ? mileageDatum.revenue.toString()
+            : BLANK_STRING,
           broker: mileageDatum.broker,
           representative: mileageDatum.representative ?? undefined,
           pickUpDate: new Date(mileageDatum.pickUpDate),
           deliveryDate: new Date(mileageDatum.deliveryDate),
           pickUpLocation: mileageDatum.pickUpLocation,
           deliveryLocation: mileageDatum.deliveryLocation,
+          loadStatus: mileageDatum.loadStatus,
         });
         const dateObject = new Date(mileageDatum.date);
         if (dateObject >= startDateObject && dateObject <= endDateObject) {
-          driverTotalRevenue += mileageDatum.revenue;
-          driverTotalMiles += mileageDatum.miles;
+          driverTotalRevenue += mileageDatum.revenue ?? ZERO;
+          driverTotalMiles += mileageDatum.miles ?? ZERO;
         }
       }
       totalRevenue += driverTotalRevenue;

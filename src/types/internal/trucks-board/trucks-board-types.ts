@@ -2,14 +2,16 @@ import type { Driver } from "../classes/Driver.ts";
 import type { Dispatcher } from "../classes/Dispatcher.ts";
 
 export type MileageData = {
-  revenue: string;
-  miles: string;
+  revenue?: string;
+  miles?: string;
+  // TODO: Consider removing this in favor of pickUpDate
   date: string;
   broker: string;
-  pickUpLocation: string;
+  pickUpLocation?: string;
   pickUpDate: Date;
-  deliveryLocation: string;
+  deliveryLocation?: string;
   deliveryDate: Date;
+  loadStatus: string;
   representative?: string;
 };
 

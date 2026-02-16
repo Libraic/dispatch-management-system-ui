@@ -6,6 +6,7 @@ import type {
   MileageDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 
 export const MileageFormLoadLocations: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
@@ -15,7 +16,7 @@ export const MileageFormLoadLocations: React.FC<{
       <TextualInputForm
         label="Pick Up"
         placeholder="Los Angeles, CA"
-        inputFieldValue={mileageStateData.data.pickUpLocation}
+        inputFieldValue={mileageStateData.data.pickUpLocation ?? BLANK_STRING}
         saveInputData={(pickUpLocation: string) =>
           setObjectStringField(
             mileageStateData.setData,
@@ -29,7 +30,7 @@ export const MileageFormLoadLocations: React.FC<{
       <TextualInputForm
         label="Delivery"
         placeholder="Chicago, IL"
-        inputFieldValue={mileageStateData.data.deliveryLocation}
+        inputFieldValue={mileageStateData.data.deliveryLocation ?? BLANK_STRING}
         saveInputData={(deliveryLocation: string) =>
           setObjectStringField(
             mileageStateData.setData,

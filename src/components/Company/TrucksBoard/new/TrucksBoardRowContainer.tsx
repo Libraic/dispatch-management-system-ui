@@ -11,6 +11,7 @@ import { upsertDriverMileageCallbackFunction } from "../../../../utils/trucks-bo
 import {
   BLANK_SPACE,
   DOT,
+  ZERO,
 } from "../../../../constants/common/global-constants.ts";
 import type { UpsertDriverMileageRequest } from "../../../../types/api/driver-mileage/driver-mileage-api-types.ts";
 import { upsertDriverMileage } from "../../../../service/driverMileageService.ts";
@@ -46,9 +47,9 @@ export const TrucksBoardRowContainer: React.FC<{
       driverUuid: driver.getUuid(),
       startDate: dispatcherMileageData.startDate,
       endDate: dispatcherMileageData.endDate,
-      mileageDate: mileageData.date,
-      revenue: parseFloat(mileageData.revenue),
-      miles: parseFloat(mileageData.miles),
+      mileageDate: mileageData.pickUpDate.toISOString().split("T")[0],
+      revenue: mileageData.revenue ? parseFloat(mileageData.revenue) : ZERO,
+      miles: mileageData.miles ? parseFloat(mileageData.miles) : ZERO,
       broker: mileageData.broker,
       representative: mileageData.representative,
       pickUpLocation: mileageData.pickUpLocation,
@@ -63,13 +64,29 @@ export const TrucksBoardRowContainer: React.FC<{
       return;
     }
 
+    const mileageResponses = upsertResponse.data!!.mileage;
+    const mileageDataList = mileageResponses.map((mileageResponse) => {
+      return {
+        revenue: mileageResponse.revenue,
+        miles: mileageResponse.miles,
+        broker: mileageResponse.broker,
+        representative: mileageResponse.representative,
+        pickUpLocation: mileageResponse.pickUpLocation,
+        deliveryLocation: mileageResponse.deliveryLocation,
+        pickUpDate: new Date(mileageResponse.pickUpDate),
+        deliveryDate: new Date(mileageResponse.deliveryDate),
+        loadStatus: mileageResponse.loadStatus,
+        date: mileageResponse.date,
+      } as MileageData;
+    });
+
     const currentWeek = updatedDays.slice(0, 7);
     const driverMileageUuid = upsertResponse.data!!.driverMileageUuid;
     setDispatcherMileageData((prevDispatcherMileageDataList) => {
       return upsertDriverMileageCallbackFunction(
         prevDispatcherMileageDataList,
         dispatcherMileageDataIdentifier,
-        mileageData,
+        mileageDataList,
         driver,
         driverMileageUuid,
         currentWeek,

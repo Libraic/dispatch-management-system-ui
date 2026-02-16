@@ -13,12 +13,15 @@ import type { StateData } from "../../../../types/internal/common/props-types.ts
 export const MileageFormRevenue: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
 }> = ({ mileageStateData }) => {
+  const revenue = mileageStateData.data.revenue ?? BLANK_STRING;
+  const miles = mileageStateData.data.miles ?? BLANK_STRING;
+  const rpm = divideNumbersAsStrings(revenue, miles);
   return (
     <div className="flex flex-row gap-x-5">
       <CurrencyInputForm
         label="Revenue"
         placeholder="100.25"
-        inputFieldValue={mileageStateData.data.revenue}
+        inputFieldValue={revenue}
         saveInputData={(revenue: string) =>
           setObjectStringField(mileageStateData.setData, "revenue", revenue)
         }
@@ -29,7 +32,7 @@ export const MileageFormRevenue: React.FC<{
       <NumericInputForm
         label="Miles"
         placeholder="300"
-        inputFieldValue={mileageStateData.data.miles}
+        inputFieldValue={miles}
         saveInputData={(miles: string) =>
           setObjectStringField(mileageStateData.setData, "miles", miles)
         }
@@ -40,10 +43,7 @@ export const MileageFormRevenue: React.FC<{
       <NumericInputForm
         label="RPM"
         placeholder={BLANK_STRING}
-        inputFieldValue={divideNumbersAsStrings(
-          mileageStateData.data.revenue,
-          mileageStateData.data.miles,
-        )}
+        inputFieldValue={rpm}
         saveInputData={() => {}}
         tailwindProperties={{ maxWeight: "max-w-[11rem]" }}
         isReadOnly={true}

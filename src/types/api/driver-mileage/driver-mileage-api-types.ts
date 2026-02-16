@@ -21,18 +21,20 @@ export type UpsertDriverMileageRequest = {
 
 export type UpsertDriverMileageResponse = {
   driverMileageUuid: string;
+  mileage: MileageResponse[];
 };
 
 export type MileageResponse = {
   date: string;
-  revenue: number;
-  miles: number;
+  revenue?: number;
+  miles?: number;
   broker: string;
   representative: string;
   pickUpLocation: string;
   pickUpDate: Date;
   deliveryLocation: string;
   deliveryDate: Date;
+  loadStatus: string;
 };
 
 export type DriverMileageData = {

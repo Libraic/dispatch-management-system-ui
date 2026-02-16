@@ -5,7 +5,7 @@ import type {
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { extractMileageDataFromDriverMileageDataByDay } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { extractUnfocusedCellInformation } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { MileageFormModal } from "./MileageFormModal.tsx";
 
@@ -16,21 +16,21 @@ export const DriverCalendarCell: React.FC<{
   isEditable: boolean;
 }> = ({ day, upsertDriverMileageData, driverMileageData, isEditable }) => {
   const mileageFormActivator = useActivator();
-  const mileageDataString = extractMileageDataFromDriverMileageDataByDay(
+  const unfocusedCellInformation = extractUnfocusedCellInformation(
     day,
     driverMileageData,
   );
   return (
     <React.Fragment>
       <div
-        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${mileageDataString !== BLANK_STRING ? "bg-pale-blue" : "bg-red"}`}
+        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? "bg-pale-blue" : "bg-red"}`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();
           }
         }}
       >
-        {mileageDataString}
+        {unfocusedCellInformation}
       </div>
       {mileageFormActivator.isActive() && (
         <MileageFormModal
