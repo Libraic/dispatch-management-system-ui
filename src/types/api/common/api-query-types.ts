@@ -15,4 +15,5 @@ export enum Entity {
   TRAILER = "Trailer",
   USER = "User",
   COMPANY = "Company",
+  CITY = "City",
 }

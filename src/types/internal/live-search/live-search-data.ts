@@ -34,6 +34,10 @@ export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
     endpoint: "http://localhost:8090/api/dispatchers",
     searchField: "name",
   },
+  City: {
+    endpoint: "http://localhost:8090/api/cities",
+    searchField: "prefix",
+  },
 } as const;
 
 export interface LiveSearchBaseData<D> {

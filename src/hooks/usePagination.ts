@@ -21,14 +21,18 @@ export const usePagination = (
   const [currentSize, setCurrentSize] = useState(size);
 
   useEffect(() => {
-    getPaginationDetails(
-      entityType,
-      size,
-      joinableEntityId,
-      joinableEntityName,
-    ).then((data) => {
-      setPaginationDetails(data);
-    });
+    if (entityType === Entity.CITY) {
+      setPaginationDetails({ pages: 0, size: DEFAULT_SIZE });
+    } else {
+      getPaginationDetails(
+        entityType,
+        size,
+        joinableEntityId,
+        joinableEntityName,
+      ).then((data) => {
+        setPaginationDetails(data);
+      });
+    }
   }, [joinableEntityId, entityType, joinableEntityName, size]);
 
   const increaseSize = () => {

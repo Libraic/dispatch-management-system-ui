@@ -1,5 +1,4 @@
 import React from "react";
-import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
 import { setObjectStringField } from "../../../../utils/registration/registration-utils.ts";
 import type {
   MileageData,
@@ -7,39 +6,57 @@ import type {
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { LiveSearchInputForm } from "../../../Common/LiveSearch/public/LiveSearchInputForm.tsx";
+import { Entity } from "../../../../types/api/common/api-query-types.ts";
+import { City } from "../../../../types/internal/classes/City.ts";
+import type { Renderable } from "../../../../types/internal/classes/Renderable.ts";
 
 export const MileageFormLoadLocations: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
 }> = ({ mileageStateData }) => {
   return (
     <div className="flex flex-row gap-x-5">
-      <TextualInputForm
+      <LiveSearchInputForm
         label="Pick Up"
         placeholder="Los Angeles, CA"
-        inputFieldValue={mileageStateData.data.pickUpLocation ?? BLANK_STRING}
-        saveInputData={(pickUpLocation: string) =>
+        value={mileageStateData.data.pickUpLocation ?? BLANK_STRING}
+        saveData={(city: Renderable) =>
           setObjectStringField(
             mileageStateData.setData,
             "pickUpLocation",
-            pickUpLocation,
+            city.renderOnForm(),
           )
         }
-        isMandatory={true}
-        errorMessage={mileageStateData.error.pickUpLocationError}
+        cleanData={() =>
+          setObjectStringField(
+            mileageStateData.setData,
+            "pickUpLocation",
+            BLANK_STRING,
+          )
+        }
+        entityType={Entity.CITY}
+        constructor={City}
       />
-      <TextualInputForm
+      <LiveSearchInputForm
         label="Delivery"
         placeholder="Chicago, IL"
-        inputFieldValue={mileageStateData.data.deliveryLocation ?? BLANK_STRING}
-        saveInputData={(deliveryLocation: string) =>
+        value={mileageStateData.data.deliveryLocation ?? BLANK_STRING}
+        saveData={(city: Renderable) =>
           setObjectStringField(
             mileageStateData.setData,
             "deliveryLocation",
-            deliveryLocation,
+            city.renderOnForm(),
           )
         }
-        isMandatory={true}
-        errorMessage={mileageStateData.error.deliveryLocationError}
+        cleanData={() =>
+          setObjectStringField(
+            mileageStateData.setData,
+            "deliveryLocation",
+            BLANK_STRING,
+          )
+        }
+        entityType={Entity.CITY}
+        constructor={City}
       />
     </div>
   );

@@ -20,7 +20,7 @@ export const InputFormLabel: React.FC<{
         flex items-center gap-x-1
       `}
     >
-      <div className="flex flex-row items-center justify-center gap-x-[0.1rem] bg-white z-10000 w-fit px-[0.5rem]">
+      <div className="flex flex-row items-center justify-center gap-x-[0.1rem] bg-white z-1 w-fit px-[0.5rem]">
         {isMandatory && (
           <img
             className="w-[0.6rem]"
