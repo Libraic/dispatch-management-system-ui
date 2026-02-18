@@ -86,6 +86,7 @@ export const InputFormContainer: React.FC<{
           className={`py-[1.15rem] leading-none ${SYSTEM_FONT_LIGHT} text-[0.85rem] bg-transparent rounded-sm border-none focus:outline-none w-[15rem] ${isReadOnly && "cursor-not-allowed text-[#9ca3af]"}`}
           inputMode={inputMode}
           type={type}
+          autoComplete="off"
           name={getInputTagNameFromLabel(label)}
           placeholder={
             !isFocused && (inputFieldValue === BLANK_STRING || !inputFieldValue)
