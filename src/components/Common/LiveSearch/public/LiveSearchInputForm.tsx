@@ -82,10 +82,7 @@ export const LiveSearchInputForm = <D,>({
   });
 
   return (
-    <div
-      className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]"
-      ref={liveSearchDivRef}
-    >
+    <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">
       <TextualInputForm
         label={label}
         placeholder={placeholderText}
@@ -114,6 +111,7 @@ export const LiveSearchInputForm = <D,>({
           setItems(EMPTY_ARRAY);
           setIsLiveSearchActive(false);
         }}
+        ref={liveSearchDivRef}
       />
       {!!errorMessage?.length && <InputFormError errorMessage={errorMessage} />}
     </div>

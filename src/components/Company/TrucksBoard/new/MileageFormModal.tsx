@@ -1,7 +1,7 @@
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { SubmitButton } from "../../../Common/Button/SubmitButton.tsx";
 import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type {
   DriverMileageData,
@@ -46,10 +46,55 @@ export const MileageFormModal: React.FC<{
     setMileageData,
   );
 
+  const quitFn = useCallback(() => {
+    setClosing(true);
+    setTimeout(deactivate, 220);
+  }, [deactivate]);
+
+  const submitFn = useCallback(() => {
+    const { isError, mileageErrors } = getErrorsIfPresent(mileageData);
+    if (isError) {
+      setMileageDataError(mileageErrors);
+      return;
+    }
+
+    upsertDriverMileageData(
+      driverMileageData.driver!!,
+      mileageData,
+      driverMileageData.identifier ?? undefined,
+    );
+    setClosing(true);
+    setTimeout(deactivate, 220);
+  }, [
+    deactivate,
+    driverMileageData.driver,
+    driverMileageData.identifier,
+    mileageData,
+    upsertDriverMileageData,
+  ]);
+
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
-    return () => document.body.classList.remove("overflow-hidden");
-  }, []);
+    const handleEscKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        quitFn();
+      }
+    };
+
+    const handleEnterKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        submitFn();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscKeyDown);
+    window.addEventListener("keydown", handleEnterKeyDown);
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      window.removeEventListener("keydown", handleEscKeyDown);
+      window.removeEventListener("keydown", handleEnterKeyDown);
+    };
+  }, [quitFn, submitFn]);
 
   return createPortal(
     <div className="flex w-screen h-screen items-center justify-center z-1000 inset-0 fixed backdrop-blur-lg">
@@ -76,32 +121,8 @@ export const MileageFormModal: React.FC<{
           <MileageFormBrokerData mileageStateData={mileageStateData} />
         </div>
         <div className="flex flex-row items-center justify-center mb-[1.3rem] gap-x-10">
-          <SubmitButton
-            actionText="Submit"
-            action={() => {
-              const { isError, mileageErrors } =
-                getErrorsIfPresent(mileageData);
-              if (isError) {
-                setMileageDataError(mileageErrors);
-                return;
-              }
-
-              upsertDriverMileageData(
-                driverMileageData.driver!!,
-                mileageData,
-                driverMileageData.identifier ?? undefined,
-              );
-              setClosing(true);
-              setTimeout(deactivate, 220);
-            }}
-          />
-          <CancelButton
-            actionText="Quit"
-            action={() => {
-              setClosing(true);
-              setTimeout(deactivate, 220);
-            }}
-          />
+          <SubmitButton actionText="Submit" action={submitFn} />
+          <CancelButton actionText="Quit" action={quitFn} />
         </div>
       </div>
     </div>,

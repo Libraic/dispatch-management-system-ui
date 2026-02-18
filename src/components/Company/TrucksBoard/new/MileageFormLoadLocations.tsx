@@ -36,6 +36,8 @@ export const MileageFormLoadLocations: React.FC<{
         }
         entityType={Entity.CITY}
         constructor={City}
+        isMandatory={true}
+        errorMessage={mileageStateData.error.pickUpLocationError}
       />
       <LiveSearchInputForm
         label="Delivery"
@@ -57,6 +59,8 @@ export const MileageFormLoadLocations: React.FC<{
         }
         entityType={Entity.CITY}
         constructor={City}
+        isMandatory={true}
+        errorMessage={mileageStateData.error.deliveryLocationError}
       />
     </div>
   );

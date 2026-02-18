@@ -54,11 +54,11 @@ export const getErrorsIfPresent = (mileageData: MileageData) => {
   }
   if (mileageData.pickUpLocation === BLANK_STRING) {
     isError = true;
-    mileageErrors.pickUpLocationError = "Pick up location is required.";
+    mileageErrors.pickUpLocationError = "Select a pick-up location.";
   }
   if (mileageData.deliveryLocation === BLANK_STRING) {
     isError = true;
-    mileageErrors.deliveryLocationError = "Delivery location is required.";
+    mileageErrors.deliveryLocationError = "Select a delivery location.";
   }
 
   return { isError, mileageErrors };
