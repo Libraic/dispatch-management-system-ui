@@ -7,20 +7,13 @@ import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import { InputFormLabel } from "./InputFormLabel.tsx";
 import { BORDER_SOLID_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import type { InputMode } from "../../../../types/internal/common/props-types.ts";
 
 export const InputFormContainer: React.FC<{
   label: string;
   placeholder: string;
   inputFieldValue: string;
-  inputMode:
-    | "none"
-    | "text"
-    | "tel"
-    | "url"
-    | "email"
-    | "numeric"
-    | "decimal"
-    | "search";
+  inputMode: InputMode;
   type: string;
   saveInputData: (value: string) => void;
   isMandatory?: boolean;
