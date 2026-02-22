@@ -1,8 +1,9 @@
 import React from "react";
 import { useActivator } from "../../../../hooks/useActivator.ts";
-import type {
-  DriverMileageData,
-  MileageData,
+import {
+  type DriverMileageData,
+  LoadStatusColor,
+  type MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { extractUnfocusedCellInformation } from "../../../../utils/trucks-board/trucks-board-utils.ts";
@@ -20,10 +21,13 @@ export const DriverCalendarCell: React.FC<{
     day,
     driverMileageData,
   );
+  const loadStatus =
+    driverMileageData.mileage.get(day)?.loadStatus ?? "Unknown";
+  const bgColor = LoadStatusColor[loadStatus];
   return (
     <React.Fragment>
       <div
-        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? "bg-pale-blue" : "bg-red"}`}
+        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"}`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();

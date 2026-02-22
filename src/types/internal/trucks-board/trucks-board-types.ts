@@ -1,6 +1,8 @@
 import type { Driver } from "../classes/Driver.ts";
 import type { Dispatcher } from "../classes/Dispatcher.ts";
 
+export type LoadStatus = "Covered" | "Transit" | "Empty" | "Unknown";
+
 export type MileageData = {
   revenue?: string;
   miles?: string;
@@ -11,7 +13,7 @@ export type MileageData = {
   pickUpDate: Date;
   deliveryLocation?: string;
   deliveryDate: Date;
-  loadStatus: string;
+  loadStatus: LoadStatus;
   representative?: string;
 };
 
@@ -39,4 +41,11 @@ export type DispatcherMileageData = {
   totalRevenue: number;
   totalMiles: number;
   driverMileageDataList: DriverMileageData[];
+};
+
+export const LoadStatusColor: Record<LoadStatus, string> = {
+  Covered: "bg-[#5dbb63]",
+  Transit: "bg-[#b2d3c2]",
+  Empty: "bg-[#bd2734]",
+  Unknown: "bg-pale-blue",
 };
