@@ -50,13 +50,14 @@ export const TrucksBoardPage = () => {
         <TrucksBoardMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <TrucksBoardHeader days={days} />
-          {dispatcherMileageDataList.map((dispatcherMileageData) => (
+          {dispatcherMileageDataList.map((dispatcherMileageData, index) => (
             <TrucksBoardRowContainer
               key={dispatcherMileageData.identifier}
               companyId={companyId}
               days={days}
               dispatcherMileageData={dispatcherMileageData}
               setDispatcherMileageData={setDispatcherMileageDataList}
+              isLastDispatcher={index === dispatcherMileageDataList.length - 1}
             />
           ))}
         </div>

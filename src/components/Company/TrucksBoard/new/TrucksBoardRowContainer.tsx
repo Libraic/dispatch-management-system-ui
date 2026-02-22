@@ -10,6 +10,7 @@ import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { upsertDriverMileageCallbackFunction } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import {
   BLANK_SPACE,
+  BLANK_STRING,
   DOT,
   ZERO,
 } from "../../../../constants/common/global-constants.ts";
@@ -17,6 +18,8 @@ import type { UpsertDriverMileageRequest } from "../../../../types/api/driver-mi
 import { upsertDriverMileage } from "../../../../service/driverMileageService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
+import { TABLE_DELIMITER_BOTTOM_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import { TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER } from "../../../../tailwind/tailwind-border-vars.ts";
 
 export const TrucksBoardRowContainer: React.FC<{
   companyId: string;
@@ -25,7 +28,14 @@ export const TrucksBoardRowContainer: React.FC<{
   setDispatcherMileageData: React.Dispatch<
     React.SetStateAction<DispatcherMileageData[]>
   >;
-}> = ({ companyId, days, dispatcherMileageData, setDispatcherMileageData }) => {
+  isLastDispatcher: boolean;
+}> = ({
+  companyId,
+  days,
+  dispatcherMileageData,
+  setDispatcherMileageData,
+  isLastDispatcher,
+}) => {
   const updatedDays = days.map((day) => {
     const datePart = day.split(BLANK_SPACE)[1];
     const dateParts = datePart.split(DOT);
@@ -95,38 +105,71 @@ export const TrucksBoardRowContainer: React.FC<{
     activator.activate();
   };
 
+  const prepareStylesForDispatcher = () => {
+    if (
+      isLastDispatcher &&
+      !activator.isActive() &&
+      dispatcherMileageData.dispatcher !== null
+    ) {
+      return `${TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER} ${TABLE_DELIMITER_BOTTOM_COLOR}`;
+    }
+
+    return BLANK_STRING;
+  };
+
   return dispatcherMileageData.dispatcher !== null ? (
     <div>
       <TrucksBoardDispatcherRow
         days={updatedDays}
         dispatcherMileageData={dispatcherMileageData}
         expander={activator}
+        styles={prepareStylesForDispatcher()}
       />
       {activator.isActive() &&
-        dispatcherMileageData.driverMileageDataList.map((driverMileageData) => (
+        dispatcherMileageData.driverMileageDataList.map(
+          (driverMileageData, index) => (
+            <div key={driverMileageData.identifier}>
+              <TrucksBoardDriverRow
+                days={updatedDays}
+                driverMileageData={driverMileageData}
+                upsertDriverMileageData={upsertDriverMileageFn}
+                hasDispatcher={true}
+                isLastDriverForDispatcher={
+                  index ===
+                  dispatcherMileageData.driverMileageDataList.length - 1
+                }
+                isLastDriver={
+                  isLastDispatcher &&
+                  index ===
+                    dispatcherMileageData.driverMileageDataList.length - 1
+                }
+              />
+            </div>
+          ),
+        )}
+      <ToastRenderer toast={toast} />
+    </div>
+  ) : (
+    <div>
+      {dispatcherMileageData.driverMileageDataList.map(
+        (driverMileageData, index) => (
           <div key={driverMileageData.identifier}>
             <TrucksBoardDriverRow
               days={updatedDays}
               driverMileageData={driverMileageData}
               upsertDriverMileageData={upsertDriverMileageFn}
-              hasDispatcher={true}
+              hasDispatcher={false}
+              isLastDriverForDispatcher={
+                index === dispatcherMileageData.driverMileageDataList.length - 1
+              }
+              isLastDriver={
+                isLastDispatcher &&
+                index === dispatcherMileageData.driverMileageDataList.length - 1
+              }
             />
           </div>
-        ))}
-      <ToastRenderer toast={toast} />
-    </div>
-  ) : (
-    <div>
-      {dispatcherMileageData.driverMileageDataList.map((driverMileageData) => (
-        <div key={driverMileageData.identifier}>
-          <TrucksBoardDriverRow
-            days={updatedDays}
-            driverMileageData={driverMileageData}
-            upsertDriverMileageData={upsertDriverMileageFn}
-            hasDispatcher={false}
-          />
-        </div>
-      ))}
+        ),
+      )}
       <ToastRenderer toast={toast} />
     </div>
   );

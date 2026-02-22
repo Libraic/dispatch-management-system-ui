@@ -99,6 +99,43 @@ export const formatDate = (date: Date): string => {
 };
 
 /**
+ * Determines whether a given date string corresponds to a date that falls within the current week.
+ *
+ * The week starts on Monday and ends on Sunday. The function calculates the start and end of the current
+ * week based on the current date and compares the provided date string to this range.
+ *
+ * @param {string} dateString - The date string to evaluate, expected in a format that can be parsed by the `Date` constructor.
+ * @returns {boolean} - Returns `true` if the date falls within the current week, otherwise `false`.
+ */
+export const isDateInCurrentWeek = (dateString: string): boolean => {
+  const inputDate = new Date(dateString);
+
+  const startOfWeek = new Date();
+  const day = startOfWeek.getDay();
+  const diff = (day === 0 ? -6 : 1) - day;
+  startOfWeek.setDate(startOfWeek.getDate() + diff);
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+  return inputDate >= startOfWeek && inputDate <= endOfWeek;
+};
+
+export const isDateTheFirstDayOfCurrentWeek = (dateString: string): boolean => {
+  const inputDate = new Date(dateString);
+
+  const startOfWeek = new Date();
+  const day = startOfWeek.getDay();
+  const diff = (day === 0 ? -6 : 1) - day;
+  startOfWeek.setDate(startOfWeek.getDate() + diff);
+  return (
+    inputDate.getDay() === startOfWeek.getDay() &&
+    inputDate.getMonth() === inputDate.getMonth() &&
+    inputDate.getFullYear() === inputDate.getFullYear()
+  );
+};
+
+/**
  * Populates the undefined days in the provided array with dates from the previous month.
  * The "backfill" process assigns day numbers starting from the last day of the previous month.
  * These backfilled days are marked as not belonging to the current month.

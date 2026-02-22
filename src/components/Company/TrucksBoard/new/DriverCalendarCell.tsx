@@ -15,7 +15,14 @@ export const DriverCalendarCell: React.FC<{
   upsertDriverMileageData: (driver: Driver, mileage: MileageData) => void;
   driverMileageData: DriverMileageData;
   isEditable: boolean;
-}> = ({ day, upsertDriverMileageData, driverMileageData, isEditable }) => {
+  styles?: string;
+}> = ({
+  day,
+  upsertDriverMileageData,
+  driverMileageData,
+  isEditable,
+  styles,
+}) => {
   const mileageFormActivator = useActivator();
   const unfocusedCellInformation = extractUnfocusedCellInformation(
     day,
@@ -27,7 +34,7 @@ export const DriverCalendarCell: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`flex items-center justify-center whitespace-pre-line text-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 border-r-0 border-t-0 last:border-r-1 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"}`}
+        className={`${styles ?? BLANK_STRING} flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"}`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();

@@ -13,7 +13,7 @@ export const DispatchCalendarCell: React.FC<{
   return (
     <>
       <div
-        className={`flex items-center justify-center border-1 border-gray-400 text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${styles ?? BLANK_STRING}`}
+        className={`flex items-center justify-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${styles ?? BLANK_STRING}`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();

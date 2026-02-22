@@ -11,12 +11,29 @@ import {
   formatCurrency,
   formatNumber,
 } from "../../../../utils/global/number-utils.ts";
+import {
+  TABLE_BORDER_BASE_COLOR,
+  TABLE_BOTTOM_BORDER_BASE_COLOR,
+  TABLE_DELIMITER_BOTTOM_COLOR,
+  TABLE_DELIMITER_LEFT_COLOR,
+  TABLE_DELIMITER_RIGHT_COLOR,
+  TABLE_RIGHT_BORDER_BASE_COLOR,
+} from "../../../../tailwind/tailwind-colors-vars.ts";
+import {
+  TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER,
+  TABLE_DELIMITER_THICKNESS_LEFT_BORDER,
+  TABLE_DELIMITER_THICKNESS_RIGHT_BORDER,
+  TABLE_NORMAL_THICKNESS_BOTTOM_BORDER,
+  TABLE_NORMAL_THICKNESS_RIGHT_BORDER,
+  TABLE_NORMAL_THICKNESS_X_BORDER,
+} from "../../../../tailwind/tailwind-border-vars.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
   days: string[];
   dispatcherMileageData: DispatcherMileageData;
   expander: Activator;
-}> = ({ days, dispatcherMileageData, expander }) => {
+  styles?: string;
+}> = ({ days, dispatcherMileageData, expander, styles }) => {
   const [activeIcon, setActiveIcon] = useState(BLANK_STRING);
 
   useEffect(() => {
@@ -27,6 +44,10 @@ export const TrucksBoardDispatcherRow: React.FC<{
       setActiveIcon(icon);
     }
   }, [expander, dispatcherMileageData.driverMileageDataList.length]);
+
+  const bottom = !expander.isActive()
+    ? `${TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER} ${TABLE_DELIMITER_BOTTOM_COLOR}`
+    : BLANK_STRING;
 
   return (
     <div className="relative flex flex-row">
@@ -46,27 +67,34 @@ export const TrucksBoardDispatcherRow: React.FC<{
         />
       )}
       <div
-        className={`grid grid-cols-[12rem_12rem_8rem_6rem_5.93rem_repeat(14,5rem)] text-[0.9rem] items-center h-[4rem] bg-blue-grey border-l-1 border-b-1 border-gray-400 flex-shrink-0`}
+        className={`grid grid-cols-[12.05rem_12rem_8rem_6rem_5.95rem_repeat(14,5rem)] text-[0.9rem] items-center h-[4rem] bg-blue-grey ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR} flex-shrink-0`}
       >
         <div
-          className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-b-1 border-gray-400`}
+          className={`
+              flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full 
+              ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_NORMAL_THICKNESS_X_BORDER} ${TABLE_BORDER_BASE_COLOR}
+              ${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR}
+              ${bottom}
+            `}
         >
           {dispatcherMileageData.dispatcher &&
             dispatcherMileageData.dispatcher.renderOnForm()}
         </div>
-        <div className="h-full border-r-1 border-gray-400"></div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
+          className={`h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR} ${bottom}`}
+        ></div>
+        <div
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_BORDER_BASE_COLOR} ${bottom}`}
         >
           {formatCurrency(dispatcherMileageData.totalRevenue)}
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 border-gray-400`}
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_BORDER_BASE_COLOR} ${bottom}`}
         >
           {formatNumber(dispatcherMileageData.totalMiles)}
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-gray-400`}
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_BORDER_BASE_COLOR} ${bottom}`}
         >
           {formatNumber(
             divide(
@@ -75,12 +103,12 @@ export const TrucksBoardDispatcherRow: React.FC<{
             ),
           )}
         </div>
-        {days.map((day) => (
+        {days.map((day, index) => (
           <DispatchCalendarCell
             key={day}
             day={day}
             isEditable={false}
-            styles={`border-r-0 border-t-0 last:border-r-1 h-[4rem] bg-blue-grey`}
+            styles={`${index <= 6 && (styles ?? BLANK_STRING)} ${index === 0 && `${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR}`} ${index === 6 ? `${TABLE_DELIMITER_THICKNESS_RIGHT_BORDER} ${TABLE_DELIMITER_RIGHT_COLOR}` : `${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR}`} border-t-0 ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BOTTOM_BORDER_BASE_COLOR} h-[4rem] bg-blue-grey`}
           />
         ))}
       </div>
