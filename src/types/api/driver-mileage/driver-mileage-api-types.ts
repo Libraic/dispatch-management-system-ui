@@ -1,5 +1,6 @@
 import type { DriverData } from "../driver/driver-api-response-types.ts";
 import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
+import type { LoadStatus } from "../../internal/trucks-board/trucks-board-types.ts";
 
 export type UpsertDriverMileageRequest = {
   companyUuid: string;
@@ -34,7 +35,7 @@ export type MileageResponse = {
   pickUpDate: Date;
   deliveryLocation: string;
   deliveryDate: Date;
-  loadStatus: string;
+  loadStatus: LoadStatus;
 };
 
 export type DriverMileageData = {
