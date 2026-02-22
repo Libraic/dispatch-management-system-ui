@@ -5,12 +5,7 @@ import type {
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 
 import type { Driver } from "../../types/internal/classes/Driver.ts";
-import {
-  BLANK_STRING,
-  NEW_LINE,
-  ZERO,
-} from "../../constants/common/global-constants.ts";
-import { removeTrailingDotIfNecessary } from "../global/number-utils.ts";
+import { BLANK_STRING, ZERO } from "../../constants/common/global-constants.ts";
 
 export const upsertDriverMileageCallbackFunction = (
   prevDispatcherMileageDataList: DispatcherMileageData[],
@@ -93,28 +88,8 @@ export const extractUnfocusedCellInformation = (
     return BLANK_STRING;
   }
 
-  return mileageData.pickUpLocation
-    ? `${mileageData.pickUpLocation} \n ${mileageData.loadStatus}`
-    : `${mileageData.loadStatus}`;
-};
-
-export const extractMileageDataFromDriverMileageDataByDay = (
-  day: string,
-  driverMileageData?: DriverMileageData,
-): string => {
-  if (!driverMileageData) {
-    return BLANK_STRING;
-  }
-  const mileageData = driverMileageData.mileage.get(day);
-  if (!mileageData) {
-    return BLANK_STRING;
-  }
-
-  const miles = removeTrailingDotIfNecessary(mileageData.miles ?? BLANK_STRING);
-  const revenue = removeTrailingDotIfNecessary(
-    mileageData.revenue ?? BLANK_STRING,
-  );
-  return `${!mileageData.broker || mileageData.broker === BLANK_STRING ? BLANK_STRING : mileageData.broker + NEW_LINE} ${revenue} | ${miles}`;
+  const pickUpLocation = mileageData.pickUpLocation;
+  return pickUpLocation ? pickUpLocation : mileageData.loadStatus;
 };
 
 export const getBlankMileageData = (day: string): MileageData => {
