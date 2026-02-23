@@ -3,7 +3,6 @@ import {
   BLANK_STRING,
   EMPTY_ARRAY,
 } from "../../../../constants/common/global-constants.ts";
-import { InputFormError } from "../../InputForm/public/InputFormError.tsx";
 import type { Renderable } from "../../../../types/internal/classes/Renderable.ts";
 import { useLiveSearch } from "../../../../hooks/useLiveSearch.ts";
 import { useUnfocus } from "../../../../hooks/useUnfocus.ts";
@@ -101,6 +100,7 @@ export const LiveSearchInputForm = <D,>({
           }
         }}
         isMandatory={isMandatory}
+        errorMessage={errorMessage}
       />
       <InputFormSearchResult
         items={items}
@@ -113,7 +113,6 @@ export const LiveSearchInputForm = <D,>({
         }}
         ref={liveSearchDivRef}
       />
-      {!!errorMessage?.length && <InputFormError errorMessage={errorMessage} />}
     </div>
   );
 };
