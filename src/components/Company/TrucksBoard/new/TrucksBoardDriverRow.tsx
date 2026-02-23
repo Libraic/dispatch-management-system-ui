@@ -37,6 +37,11 @@ export const TrucksBoardDriverRow: React.FC<{
   hasDispatcher: boolean;
   isLastDriver: boolean;
   isLastDriverForDispatcher: boolean;
+  postDeleteUpdateFn: (
+    driverMileageUuid: string,
+    driver: Driver,
+    mileageData: MileageData[],
+  ) => void;
 }> = ({
   days,
   driverMileageData,
@@ -44,6 +49,7 @@ export const TrucksBoardDriverRow: React.FC<{
   hasDispatcher,
   isLastDriver,
   isLastDriverForDispatcher,
+  postDeleteUpdateFn,
 }) => {
   const gridCols = hasDispatcher
     ? "grid-cols-[11.95rem_12rem_8rem_6rem_5.93rem_repeat(14,5rem)]"
@@ -136,6 +142,7 @@ export const TrucksBoardDriverRow: React.FC<{
             upsertDriverMileageData={upsertDriverMileageData}
             driverMileageData={driverMileageData}
             isEditable={hasDispatcher}
+            postDeleteUpdateFn={postDeleteUpdateFn}
             styles={prepareStyles(index)}
           />
         ))}

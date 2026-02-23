@@ -108,6 +108,24 @@ export const TrucksBoardRowContainer: React.FC<{
     activator.activate();
   };
 
+  const postDeleteUpdateFn = (
+    driverMileageUuid: string,
+    driver: Driver,
+    mileageData: MileageData[],
+  ) => {
+    const currentWeek = updatedDays.slice(0, 7);
+    setDispatcherMileageData((prevDispatcherMileageDataList) => {
+      return upsertDriverMileageCallbackFunction(
+        prevDispatcherMileageDataList,
+        dispatcherMileageDataIdentifier,
+        mileageData,
+        driver,
+        driverMileageUuid,
+        currentWeek,
+      );
+    });
+  };
+
   const prepareStylesForDispatcher = () => {
     if (
       isLastDispatcher &&
@@ -137,6 +155,7 @@ export const TrucksBoardRowContainer: React.FC<{
                 driverMileageData={driverMileageData}
                 upsertDriverMileageData={upsertDriverMileageFn}
                 hasDispatcher={true}
+                postDeleteUpdateFn={postDeleteUpdateFn}
                 isLastDriverForDispatcher={
                   index ===
                   dispatcherMileageData.driverMileageDataList.length - 1
@@ -162,6 +181,7 @@ export const TrucksBoardRowContainer: React.FC<{
               driverMileageData={driverMileageData}
               upsertDriverMileageData={upsertDriverMileageFn}
               hasDispatcher={false}
+              postDeleteUpdateFn={postDeleteUpdateFn}
               isLastDriverForDispatcher={
                 index === dispatcherMileageData.driverMileageDataList.length - 1
               }

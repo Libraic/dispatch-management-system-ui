@@ -17,13 +17,17 @@ import {
 import { COLON } from "../constants/common/global-constants.ts";
 import { INTERNAL_SERVER_ERROR } from "../constants/error/error-message-constants.ts";
 import { groupDriverWeeklyMileageByDispatcher } from "../utils/api/trucks-board/trucks-board-api-utils.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
+import type {
+  ApiResponse,
+  NoContentResponse,
+} from "../types/api/common/api-response-types.ts";
 import type {
   Error,
   GroupsErrorResponse,
 } from "../types/api/common/api-errors-types.ts";
 import type {
   GetDriverMileageResponse,
+  MileageResponse,
   UpsertDriverMileageRequest,
   UpsertDriverMileageResponse,
 } from "../types/api/driver-mileage/driver-mileage-api-types.ts";
@@ -90,6 +94,40 @@ export const getDriversMileageByCompanyUuidAndStartAndEndDate = async (
         [START_DATE_QUERY_PARAM]: startDate,
         [END_DATE_QUERY_PARAM]: endDate,
       },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiErrors(error);
+  }
+};
+
+export const getMileageData = async (
+  driverMileageUuid: string,
+): Promise<ApiResponse<MileageResponse[], Error>> => {
+  const url = DRIVERS_MILEAGE_BASE_URL + `/${driverMileageUuid}`;
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    return handleApiErrors(error);
+  }
+};
+
+export const deleteDriveMileageDataBetweenDates = async (
+  driverMileageUuid: string,
+  startDate: string,
+  endDate: string,
+): Promise<ApiResponse<NoContentResponse, Error>> => {
+  const params = {
+    mileage: driverMileageUuid,
+    start: startDate,
+    end: endDate,
+  };
+  try {
+    const response = await axios.delete<
+      ApiResponse<GetDriverMileageResponse[], Error>
+    >(DRIVERS_MILEAGE_BASE_URL, {
+      params: params,
     });
     return response.data;
   } catch (error) {

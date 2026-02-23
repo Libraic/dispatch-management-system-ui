@@ -9,3 +9,5 @@ export type ApiResponse<T, E extends Error | GroupsErrorResponse> = {
   data?: T;
   error?: E;
 };
+
+export type NoContentResponse = {};

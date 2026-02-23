@@ -135,6 +135,10 @@ export const isDateTheFirstDayOfCurrentWeek = (dateString: string): boolean => {
   );
 };
 
+export const toIsoDate = (date: Date): string => {
+  return date.toISOString().split("T")[0];
+};
+
 /**
  * Populates the undefined days in the provided array with dates from the previous month.
  * The "backfill" process assigns day numbers starting from the last day of the previous month.
