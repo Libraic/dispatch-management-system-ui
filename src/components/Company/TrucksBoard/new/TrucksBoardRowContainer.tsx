@@ -66,6 +66,7 @@ export const TrucksBoardRowContainer: React.FC<{
       deliveryLocation: mileageData.deliveryLocation,
       pickUpDate: mileageData.pickUpDate.toISOString().split("T")[0],
       deliveryDate: mileageData.deliveryDate.toISOString().split("T")[0],
+      representativeContactNumber: mileageData.representativeContactNumber,
     };
     const upsertResponse = await upsertDriverMileage(upsertRequest);
 
@@ -81,6 +82,8 @@ export const TrucksBoardRowContainer: React.FC<{
         miles: mileageResponse.miles,
         broker: mileageResponse.broker,
         representative: mileageResponse.representative,
+        representativeContactNumber:
+          mileageResponse.representativeContactNumber,
         pickUpLocation: mileageResponse.pickUpLocation,
         deliveryLocation: mileageResponse.deliveryLocation,
         pickUpDate: new Date(mileageResponse.pickUpDate),

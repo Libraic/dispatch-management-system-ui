@@ -7,6 +7,7 @@ import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputF
 import { setObjectStringField } from "../../../../utils/registration/registration-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
+import { PHONE_NUMBER_PLACEHOLDER } from "../../../../constants/common/placeholder-constants.ts";
 
 export const MileageFormBrokerData: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
@@ -22,6 +23,7 @@ export const MileageFormBrokerData: React.FC<{
         }
         isMandatory={true}
         errorMessage={mileageStateData.error.brokerError}
+        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
       <TextualInputForm
         label="Representative"
@@ -34,6 +36,22 @@ export const MileageFormBrokerData: React.FC<{
             representative,
           )
         }
+        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+      />
+      <TextualInputForm
+        label="Contact Number"
+        placeholder={PHONE_NUMBER_PLACEHOLDER}
+        inputFieldValue={
+          mileageStateData.data.representativeContactNumber ?? BLANK_STRING
+        }
+        saveInputData={(representativeContactNumber: string) =>
+          setObjectStringField(
+            mileageStateData.setData,
+            "representativeContactNumber",
+            representativeContactNumber,
+          )
+        }
+        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
     </div>
   );

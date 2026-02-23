@@ -15,6 +15,7 @@ export type MileageData = {
   deliveryDate: Date;
   loadStatus: LoadStatus;
   representative?: string;
+  representativeContactNumber?: string;
 };
 
 export type MileageDataError = {

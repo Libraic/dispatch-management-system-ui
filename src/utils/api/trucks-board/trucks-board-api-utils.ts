@@ -67,6 +67,7 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
           pickUpLocation: mileageDatum.pickUpLocation,
           deliveryLocation: mileageDatum.deliveryLocation,
           loadStatus: mileageDatum.loadStatus,
+          representativeContactNumber: mileageDatum.representativeContactNumber,
         });
         const dateObject = new Date(mileageDatum.date);
         if (dateObject >= startDateObject && dateObject <= endDateObject) {
