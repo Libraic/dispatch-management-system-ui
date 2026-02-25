@@ -12,6 +12,7 @@ import { TrucksBoardMenu } from "../../Company/TrucksBoard/new/TrucksBoardMenu.t
 import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
+import { TRUCKS_BOARD_VERTICAL_MARGIN } from "../../../constants/trucks-board/trucks-board-constants.ts";
 
 export const TrucksBoardPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
@@ -46,7 +47,9 @@ export const TrucksBoardPage = () => {
   return (
     <div className="h-screen w-screen flex flex-col gap-y-1">
       <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
-      <div className="flex flex-col mx-[3rem] my-[2rem]">
+      <div
+        className={`flex flex-col mx-[3rem] ${TRUCKS_BOARD_VERTICAL_MARGIN}`}
+      >
         <TrucksBoardMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <TrucksBoardHeader days={days} />

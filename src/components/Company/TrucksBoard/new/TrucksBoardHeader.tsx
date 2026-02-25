@@ -19,6 +19,7 @@ import {
   TABLE_NORMAL_THICKNESS_TOP_BORDER,
 } from "../../../../tailwind/tailwind-border-vars.ts";
 import clsx from "clsx";
+import { TRUCKS_BOARD_GRID_LAYOUT } from "../../../../constants/trucks-board/trucks-board-constants.ts";
 
 export const TrucksBoardHeader: React.FC<{
   days: string[];
@@ -33,11 +34,9 @@ export const TrucksBoardHeader: React.FC<{
     "RPM",
     ...updatedDays,
   ];
-  const gridLayout =
-    "grid grid-cols-[12.05rem_12rem_8rem_6rem_5.95rem_repeat(14,5rem)]";
   return (
     <div
-      className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue ${gridLayout} items-center w-fit h-[4rem] ${SYSTEM_FONT_BOLD} text-[0.9rem]`}
+      className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue grid ${TRUCKS_BOARD_GRID_LAYOUT} items-center w-fit h-[3.5rem] ${SYSTEM_FONT_BOLD} text-[0.85rem]`}
     >
       {columns.map((column, index) => (
         <div
@@ -57,7 +56,7 @@ export const TrucksBoardHeader: React.FC<{
                 ? `${TABLE_DELIMITER_THICKNESS_TOP_BORDER} ${TABLE_DELIMITER_TOP_COLOR}`
                 : `${TABLE_NORMAL_THICKNESS_TOP_BORDER} ${TABLE_BORDER_BASE_COLOR}`
             } ${index <= 4 ? `${TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER} ${TABLE_DELIMITER_BOTTOM_COLOR}` : `${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BOTTOM_BORDER_BASE_COLOR}`} 
-            px-5 flex items-center h-full ${TABLE_BORDER_BASE_COLOR}
+            px-3 flex items-center h-full ${TABLE_BORDER_BASE_COLOR}
           `,
           )}
         >

@@ -29,6 +29,11 @@ import {
 } from "../../../../tailwind/tailwind-border-vars.ts";
 import clsx from "clsx";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import {
+  TRUCKS_BOARD_GRID_LAYOUT,
+  TRUCKS_BOARD_ROW_HEIGHT,
+  TRUCKS_BOARD_TEXT_SIZE,
+} from "../../../../constants/trucks-board/trucks-board-constants.ts";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];
@@ -51,10 +56,6 @@ export const TrucksBoardDriverRow: React.FC<{
   isLastDriverForDispatcher,
   postDeleteUpdateFn,
 }) => {
-  const gridCols = hasDispatcher
-    ? "grid-cols-[11.95rem_12rem_8rem_6rem_5.93rem_repeat(14,5rem)]"
-    : "grid-cols-[11.95rem_12.05rem_8rem_6rem_5.94rem_repeat(14,5rem)]";
-
   const prepareStyles = (dayIndex: number) => {
     const xBorder =
       dayIndex === 0
@@ -78,16 +79,15 @@ export const TrucksBoardDriverRow: React.FC<{
     <div className="flex flex-row">
       <div
         className={clsx(`
-          grid ${gridCols} items-center h-[4rem] bg-gray-50 
-          ${hasDispatcher && TABLE_NORMAL_THICKNESS_LEFT_BORDER} 
+          grid ${TRUCKS_BOARD_GRID_LAYOUT} items-center ${TRUCKS_BOARD_ROW_HEIGHT} bg-gray-50 
           ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR}
-          ${TABLE_DELIMITER_LEFT_COLOR} ${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} 
-          flex-shrink-0 text-[0.9rem]
+          flex-shrink-0 ${TRUCKS_BOARD_TEXT_SIZE}
         `)}
       >
         <div
           className={clsx(`
             h-full 
+            ${TABLE_DELIMITER_LEFT_COLOR} ${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} 
             ${hasDispatcher && `${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR}`} 
             bg-white
             ${bottom}

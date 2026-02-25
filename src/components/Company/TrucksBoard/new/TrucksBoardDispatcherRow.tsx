@@ -13,7 +13,6 @@ import {
 } from "../../../../utils/global/number-utils.ts";
 import {
   TABLE_BORDER_BASE_COLOR,
-  TABLE_BOTTOM_BORDER_BASE_COLOR,
   TABLE_DELIMITER_BOTTOM_COLOR,
   TABLE_DELIMITER_LEFT_COLOR,
   TABLE_DELIMITER_RIGHT_COLOR,
@@ -27,6 +26,11 @@ import {
   TABLE_NORMAL_THICKNESS_RIGHT_BORDER,
   TABLE_NORMAL_THICKNESS_X_BORDER,
 } from "../../../../tailwind/tailwind-border-vars.ts";
+import {
+  TRUCKS_BOARD_GRID_LAYOUT,
+  TRUCKS_BOARD_ROW_HEIGHT,
+  TRUCKS_BOARD_TEXT_SIZE,
+} from "../../../../constants/trucks-board/trucks-board-constants.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
   days: string[];
@@ -55,7 +59,7 @@ export const TrucksBoardDispatcherRow: React.FC<{
         <img
           src={activeIcon}
           alt="chevron-right"
-          className="absolute w-7 h-7 z-[999] mt-[1.08rem] left-[0.5rem] hover:cursor-pointer"
+          className="absolute w-7 h-7 z-[999] mt-[1.3rem] left-[0.5rem] hover:cursor-pointer"
           onClick={() => {
             setActiveIcon((prev) => {
               return prev === chevronRightIcon
@@ -67,12 +71,12 @@ export const TrucksBoardDispatcherRow: React.FC<{
         />
       )}
       <div
-        className={`grid grid-cols-[12.05rem_12rem_8rem_6rem_5.95rem_repeat(14,5rem)] text-[0.9rem] items-center h-[4rem] bg-blue-grey ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR} flex-shrink-0`}
+        className={`grid ${TRUCKS_BOARD_GRID_LAYOUT} ${TRUCKS_BOARD_TEXT_SIZE} items-center ${TRUCKS_BOARD_ROW_HEIGHT} ${expander.isActive() ? `${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR}` : BLANK_STRING} bg-blue-grey flex-shrink-0`}
       >
         <div
           className={`
               flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full 
-              ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_NORMAL_THICKNESS_X_BORDER} ${TABLE_BORDER_BASE_COLOR}
+              ${TABLE_NORMAL_THICKNESS_X_BORDER} ${TABLE_BORDER_BASE_COLOR}
               ${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR}
               ${bottom}
             `}
@@ -84,12 +88,12 @@ export const TrucksBoardDispatcherRow: React.FC<{
           className={`h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR} ${bottom}`}
         ></div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_BORDER_BASE_COLOR} ${bottom}`}
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR} ${bottom}`}
         >
           {formatCurrency(dispatcherMileageData.totalRevenue)}
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_BORDER_BASE_COLOR} ${bottom}`}
+          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR} ${bottom}`}
         >
           {formatNumber(dispatcherMileageData.totalMiles)}
         </div>
@@ -108,7 +112,7 @@ export const TrucksBoardDispatcherRow: React.FC<{
             key={day}
             day={day}
             isEditable={false}
-            styles={`${index <= 6 && (styles ?? BLANK_STRING)} ${index === 0 && `${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR}`} ${index === 6 ? `${TABLE_DELIMITER_THICKNESS_RIGHT_BORDER} ${TABLE_DELIMITER_RIGHT_COLOR}` : `${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR}`} border-t-0 ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BOTTOM_BORDER_BASE_COLOR} h-[4rem] bg-blue-grey`}
+            styles={`${index <= 6 && (styles ?? BLANK_STRING)} ${index === 0 && `${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR}`} ${index === 6 ? `${TABLE_DELIMITER_THICKNESS_RIGHT_BORDER} ${TABLE_DELIMITER_RIGHT_COLOR}` : `${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR}`} ${!expander.isActive() ? `${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR}` : BLANK_STRING} border-t-0 bg-blue-grey`}
           />
         ))}
       </div>

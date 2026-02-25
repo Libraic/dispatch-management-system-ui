@@ -21,6 +21,8 @@ import {
 import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
+import { TRUCKS_BOARD_ROW_HEIGHT } from "../../../../constants/trucks-board/trucks-board-constants.ts";
+import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const DriverCalendarCell: React.FC<{
   day: string;
@@ -114,7 +116,7 @@ export const DriverCalendarCell: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`${styles ?? BLANK_STRING} flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 h-[4rem] ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"}`}
+        className={`${styles ?? BLANK_STRING} flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${TRUCKS_BOARD_ROW_HEIGHT} ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"} ${SYSTEM_FONT_BOLD} text-black/75`}
         onDoubleClick={() => {
           if (isEditable) {
             mileageFormActivator.change();
