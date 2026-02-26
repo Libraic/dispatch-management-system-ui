@@ -24,6 +24,7 @@ export type MileageDataError = {
   brokerError: string;
   pickUpLocationError: string;
   deliveryLocationError: string;
+  representativeContactNumberError: string;
 };
 
 export type DriverMileageData = {

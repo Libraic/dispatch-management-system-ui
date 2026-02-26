@@ -14,4 +14,5 @@ export const TRAILING_ZERO = "0";
 export const REM_UNIT = "rem";
 export const ZERO = 0;
 export const NOT_AVAILABLE = "N/A";
-export const NEW_LINE = "\n";
+export const OPEN_BRACKET = "(";
+export const CLOSE_BRACKET = ")";

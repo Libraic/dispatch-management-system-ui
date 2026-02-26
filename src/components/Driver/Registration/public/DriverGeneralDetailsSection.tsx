@@ -2,6 +2,8 @@ import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputF
 import { useContext } from "react";
 import { setObjectStringField } from "../../../../utils/registration/registration-utils.ts";
 import { DriverRegistrationContext } from "../../../../context/DriverRegistrationContext.ts";
+import { PHONE_NUMBER_PLACEHOLDER } from "../../../../constants/common/placeholder-constants.ts";
+import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const DriverGeneralDetailsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
@@ -55,7 +57,7 @@ export const DriverGeneralDetailsSection = () => {
 
         <TextualInputForm
           label="Phone Number"
-          placeholder="850-775-8717"
+          placeholder={PHONE_NUMBER_PLACEHOLDER}
           inputFieldValue={driverRegistrationData.phoneNumber}
           isMandatory={true}
           errorMessage={driverRegistrationError.phoneNumber}
@@ -63,7 +65,7 @@ export const DriverGeneralDetailsSection = () => {
             setObjectStringField(
               setDriverRegistrationData,
               "phoneNumber",
-              phoneNumber,
+              formatPhoneNumber(phoneNumber),
             )
           }
         />

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import type { FieldRequirement } from "../../types/internal/common/props-types.ts";
 
 export const setObjectStringField = <T>(
   setData: React.Dispatch<React.SetStateAction<T>>,
@@ -49,6 +50,29 @@ export const validatePassword = (password: string, confirmPassword: string) => {
 
   if (password.length < 8) {
     return "The password has less than 8 characters";
+  }
+
+  return BLANK_STRING;
+};
+
+export const validatePhoneNumber = (
+  value: string,
+  fieldRequirement: FieldRequirement,
+  fieldName?: string,
+) => {
+  if (fieldRequirement === "mandatory") {
+    const fieldNameToDisplay = fieldName ? fieldName : "phone number";
+    const mandatoryFieldValidation = validateMandatoryField(
+      value,
+      fieldNameToDisplay,
+    );
+    if (mandatoryFieldValidation !== BLANK_STRING) {
+      return mandatoryFieldValidation;
+    }
+  }
+
+  if (value !== BLANK_STRING && value.length !== 10) {
+    return "The format is invalid.";
   }
 
   return BLANK_STRING;

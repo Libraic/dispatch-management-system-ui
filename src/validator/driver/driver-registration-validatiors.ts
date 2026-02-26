@@ -8,8 +8,10 @@ import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import {
   validateEmail,
   validateMandatoryField,
+  validatePhoneNumber,
 } from "../../utils/registration/registration-utils.ts";
 import { ErroneousSections } from "../../types/internal/classes/ErroneousSections.ts";
+import { cleanPhoneNumber } from "../../utils/global/input-form-utils.ts";
 
 export const getDriverRegistrationErrors = (
   driverRegistrationData: DriverRegistrationData,
@@ -23,8 +25,9 @@ export const getDriverRegistrationErrors = (
     driverRegistrationData.lastName,
     "last name",
   );
-  driverRegistrationError.phoneNumber = validateMandatoryField(
-    driverRegistrationData.phoneNumber,
+  driverRegistrationError.phoneNumber = validatePhoneNumber(
+    cleanPhoneNumber(driverRegistrationData.phoneNumber),
+    "mandatory",
     "phone number",
   );
   driverRegistrationError.email = validateEmail(

@@ -20,6 +20,7 @@ import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { TABLE_DELIMITER_BOTTOM_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import { TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER } from "../../../../tailwind/tailwind-border-vars.ts";
+import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const TrucksBoardRowContainer: React.FC<{
   companyId: string;
@@ -50,6 +51,9 @@ export const TrucksBoardRowContainer: React.FC<{
     mileageData: MileageData,
     driverMileageDataIdentifier?: string,
   ) => {
+    const representativeContactNumber = mileageData.representativeContactNumber
+      ? cleanPhoneNumber(mileageData.representativeContactNumber)
+      : undefined;
     const upsertRequest: UpsertDriverMileageRequest = {
       driverMileageUuid: driverMileageDataIdentifier ?? undefined,
       companyUuid: companyId,
@@ -66,7 +70,7 @@ export const TrucksBoardRowContainer: React.FC<{
       deliveryLocation: mileageData.deliveryLocation,
       pickUpDate: mileageData.pickUpDate.toISOString().split("T")[0],
       deliveryDate: mileageData.deliveryDate.toISOString().split("T")[0],
-      representativeContactNumber: mileageData.representativeContactNumber,
+      representativeContactNumber: representativeContactNumber,
     };
     const upsertResponse = await upsertDriverMileage(upsertRequest);
 

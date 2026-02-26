@@ -15,3 +15,5 @@ export type StateData<D, E> = {
   error: E;
   setData: React.Dispatch<React.SetStateAction<D>>;
 };
+
+export type FieldRequirement = "mandatory" | "optional";

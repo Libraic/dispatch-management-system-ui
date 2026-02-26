@@ -8,6 +8,8 @@ import type {
   MileageDataError,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import { validatePhoneNumber } from "../registration/registration-utils.ts";
+import { cleanPhoneNumber } from "../global/input-form-utils.ts";
 
 export const getDispatcherErrorMessage = (
   errors: DriversMileageGroupsErrors,
@@ -34,6 +36,7 @@ export const getBlankMileageDataError = (): MileageDataError => {
     brokerError: BLANK_STRING,
     pickUpLocationError: BLANK_STRING,
     deliveryLocationError: BLANK_STRING,
+    representativeContactNumberError: BLANK_STRING,
   };
 };
 
@@ -59,6 +62,19 @@ export const getErrorsIfPresent = (mileageData: MileageData) => {
   if (mileageData.deliveryLocation === BLANK_STRING) {
     isError = true;
     mileageErrors.deliveryLocationError = "Select a delivery location.";
+  }
+
+  const representativeContactNumber = mileageData.representativeContactNumber
+    ? cleanPhoneNumber(mileageData.representativeContactNumber)
+    : BLANK_STRING;
+  const representativeContactNumberValidation = validatePhoneNumber(
+    representativeContactNumber,
+    "optional",
+  );
+  if (representativeContactNumberValidation !== BLANK_STRING) {
+    isError = true;
+    mileageErrors.representativeContactNumberError =
+      representativeContactNumberValidation;
   }
 
   return { isError, mileageErrors };

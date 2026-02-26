@@ -9,6 +9,7 @@ import {
   USA_COUNTRY_ISO_CODE,
 } from "../location/location-utils.ts";
 import type { CreateDriverRequest } from "../../types/api/driver/driver-api-request-types.ts";
+import { cleanPhoneNumber } from "../global/input-form-utils.ts";
 
 export const documentsStatuses = ["Work Permit", "Green Card", "Citizen"];
 export const driverPositions = ["Owner Operator", "Company Driver"];
@@ -56,7 +57,7 @@ export const createCreateDriverRequestFromDriverRegistrationData = (
   return {
     firstName: driverRegistrationData.firstName,
     lastName: driverRegistrationData.lastName,
-    phoneNumber: driverRegistrationData.phoneNumber,
+    phoneNumber: cleanPhoneNumber(driverRegistrationData.phoneNumber),
     email: driverRegistrationData.email,
     documentsStatus: driverRegistrationData.documentsStatus,
     position: driverRegistrationData.position,

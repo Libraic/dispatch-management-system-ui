@@ -8,6 +8,7 @@ import { setObjectStringField } from "../../../../utils/registration/registratio
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import { PHONE_NUMBER_PLACEHOLDER } from "../../../../constants/common/placeholder-constants.ts";
+import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const MileageFormBrokerData: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
@@ -48,10 +49,11 @@ export const MileageFormBrokerData: React.FC<{
           setObjectStringField(
             mileageStateData.setData,
             "representativeContactNumber",
-            representativeContactNumber,
+            formatPhoneNumber(representativeContactNumber),
           )
         }
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        errorMessage={mileageStateData.error.representativeContactNumberError}
       />
     </div>
   );

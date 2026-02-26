@@ -2,6 +2,7 @@ import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm
 import {
   setObjectStringField,
   validateMandatoryField,
+  validatePhoneNumber,
 } from "../../../utils/registration/registration-utils.ts";
 import * as React from "react";
 import { useState } from "react";
@@ -30,6 +31,10 @@ import {
   NAME_PLACEHOLDER,
   PHONE_NUMBER_PLACEHOLDER,
 } from "../../../constants/common/placeholder-constants.ts";
+import {
+  cleanPhoneNumber,
+  formatPhoneNumber,
+} from "../../../utils/global/input-form-utils.ts";
 
 export const DispatcherRegistrationPage = () => {
   const [dispatcherRegistrationData, setDispatcherRegistrationData] = useState(
@@ -52,15 +57,20 @@ export const DispatcherRegistrationPage = () => {
       dispatcherRegistrationData.name,
       "name",
     );
-    errors.phoneNumber = validateMandatoryField(
+
+    const cleanedPhoneNumber = cleanPhoneNumber(
       dispatcherRegistrationData.phoneNumber,
+    );
+    errors.phoneNumber = validatePhoneNumber(
+      cleanedPhoneNumber,
+      "mandatory",
       "phone number",
     );
 
     if (errors.name === BLANK_STRING && errors.phoneNumber === BLANK_STRING) {
       const request: CreateDispatcherRequest = {
         name: dispatcherRegistrationData.name,
-        phoneNumber: dispatcherRegistrationData.phoneNumber,
+        phoneNumber: cleanedPhoneNumber,
         companyUuid: companyUuid,
       };
       const response = await saveDispatcher(request);
@@ -113,11 +123,11 @@ export const DispatcherRegistrationPage = () => {
           inputFieldValue={dispatcherRegistrationData.phoneNumber}
           isMandatory={true}
           errorMessage={dispatcherRegistrationErrorData.phoneNumber}
-          saveInputData={(lastName: string) =>
+          saveInputData={(phoneNumber: string) =>
             setObjectStringField(
               setDispatcherRegistrationData,
               "phoneNumber",
-              lastName,
+              formatPhoneNumber(phoneNumber),
             )
           }
         />

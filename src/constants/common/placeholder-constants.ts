@@ -8,4 +8,4 @@ export const PASSWORD_PLACEHOLDER = "********";
 export const NOTE_PLACEHOLDER = "John Doe is the employee of the month.";
 export const EMERGENCY_CONTACT_NAME_PLACEHOLDER = "Mary";
 export const EMERGENCY_CONTACT_RELATIONSHIP_PLACEHOLDER = "Wife";
-export const PHONE_NUMBER_PLACEHOLDER = "+1 (123) 456-7890";
+export const PHONE_NUMBER_PLACEHOLDER = "(415) 345-6789";
