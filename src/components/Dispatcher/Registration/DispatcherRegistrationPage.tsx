@@ -57,7 +57,7 @@ export const DispatcherRegistrationPage = () => {
       "phone number",
     );
 
-    if (errors.name !== BLANK_STRING || errors.phoneNumber !== BLANK_STRING) {
+    if (errors.name === BLANK_STRING && errors.phoneNumber === BLANK_STRING) {
       const request: CreateDispatcherRequest = {
         name: dispatcherRegistrationData.name,
         phoneNumber: dispatcherRegistrationData.phoneNumber,
