@@ -1,7 +1,7 @@
-import { TrucksBoardDispatcherRow } from "./TrucksBoardDispatcherRow.tsx";
+import { TrucksBoardDispatcherRow } from "../internal/TrucksBoardDispatcherRow.tsx";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import React from "react";
-import { TrucksBoardDriverRow } from "./TrucksBoardDriverRow.tsx";
+import { TrucksBoardDriverRow } from "../internal/TrucksBoardDriverRow.tsx";
 import type {
   DispatcherMileageData,
   MileageData,

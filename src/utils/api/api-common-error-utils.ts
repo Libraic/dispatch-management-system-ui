@@ -15,7 +15,7 @@ export const handleErrors = <
 >(
   apiResponse: ApiResponse<T, E>,
   getBlankErrors: () => ErrorsType,
-  isArrayValueKey: (key: keyof ErrorsType) => boolean,
+  isArrayValueKey: (key?: keyof ErrorsType) => boolean,
 ): ErrorsType | Error | null => {
   if (apiResponse.error) {
     if (ERRORS_KEY in apiResponse.error) {

@@ -1,18 +1,18 @@
-import { TrucksBoardHeader } from "../../Company/TrucksBoard/new/TrucksBoardHeader.tsx";
+import { TrucksBoardHeader } from "../../Company/TrucksBoard/public/TrucksBoardHeader.tsx";
 import { PageHeader } from "../../Common/Page/PageHeader.tsx";
 import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
 import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
-import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-old-utils.ts";
 import { useParams } from "react-router-dom";
-import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/new/TrucksBoardRowContainer.tsx";
+import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/public/TrucksBoardRowContainer.tsx";
 import { useEffect, useState } from "react";
 import type { DispatcherMileageData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
-import { TrucksBoardMenu } from "../../Company/TrucksBoard/new/TrucksBoardMenu.tsx";
+import { TrucksBoardMenu } from "../../Company/TrucksBoard/public/TrucksBoardMenu.tsx";
 import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
 import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 import { TRUCKS_BOARD_VERTICAL_MARGIN } from "../../../constants/trucks-board/trucks-board-constants.ts";
+import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
 
 export const TrucksBoardPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());

@@ -1,9 +1,5 @@
 import {
-  DISPATCHER_KEY,
-  DRIVER_KEY,
   type DriversMileageGroup,
-  type DriversMileageGroupErrors,
-  type DriversMileageGroupsErrors,
   type DriverWeeklyMileage,
   type DriverWeeklyMileageResponse,
   type Mileage,
@@ -16,16 +12,6 @@ import {
   DOLLAR_SIGN,
   ZERO,
 } from "../../../constants/common/global-constants.ts";
-import type { DriverWeeklyMileageData } from "../../../hooks/useDriverWeeklyMileage.ts";
-import { saveDriversMileageOld } from "../../../service/driverMileageService.ts";
-import {
-  MISSING_DISPATCHER,
-  MISSING_DRIVER,
-} from "../../../constants/error/error-message-constants.ts";
-import type {
-  DriverMileage,
-  UpsertDriversMileageRequestOld,
-} from "../../../types/api/driver-mileage/driver-mileage-api-request-old-types.ts";
 import { v4 as uuidv4 } from "uuid";
 import type {
   DispatcherMileageData,
@@ -126,38 +112,6 @@ export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
   } as DriverWeeklyMileage;
 };
 
-// TODO: Consider optimizing this whole logic in the future
-export const saveDriversWeeklyMileage = async (
-  driverWeeklyMileageData: DriverWeeklyMileageData,
-): Promise<DriversMileageGroupsErrors> => {
-  const driversMileageGroups =
-    driverWeeklyMileageData.getDriversMileageGroups();
-
-  // Check if there are any errors before sending the data to BE.
-  const errors = getErrorsPriorUpsertion(driversMileageGroups);
-  if (Object.keys(errors).length !== 0) {
-    return errors;
-  }
-
-  // Prepare the request.
-  const upsertDriversMileageRequest =
-    getUpsertDriversMileageRequestFromDriversMileageGroups(
-      driversMileageGroups,
-      driverWeeklyMileageData.getCompanyUuid(),
-    );
-
-  // Make the API call to the Upsert endpoint.
-  const response = await saveDriversMileageOld(upsertDriversMileageRequest);
-
-  // TODO: Take start and end date as parameters, since they are the same for each group
-  if (response.data) {
-    const groups = groupDriverWeeklyMileageByDispatcher(response.data);
-    driverWeeklyMileageData.setDriversMileageGroups(Object.values(groups));
-  }
-
-  return {} as DriversMileageGroupsErrors;
-};
-
 export const groupDriverWeeklyMileageByDispatcher = (
   data: DriverWeeklyMileageResponse[],
 ) => {
@@ -186,71 +140,4 @@ export const groupDriverWeeklyMileageByDispatcher = (
 
     return acc;
   }, {});
-};
-
-const getErrorsPriorUpsertion = (
-  driversMileageGroups: DriversMileageGroup[],
-): DriversMileageGroupsErrors => {
-  const errors = {} as DriversMileageGroupsErrors;
-  for (const driversMileageGroup of driversMileageGroups) {
-    const driversMileageErrors = {} as DriversMileageGroupErrors;
-    for (const item of driversMileageGroup.items) {
-      if (item.driver === null) {
-        driversMileageErrors[DRIVER_KEY] = MISSING_DRIVER;
-      }
-    }
-
-    if (driversMileageGroup.dispatcher === null) {
-      driversMileageErrors[DISPATCHER_KEY] = MISSING_DISPATCHER;
-    }
-
-    if (Object.keys(driversMileageErrors).length !== 0) {
-      errors[driversMileageGroup.groupIdentifier] = driversMileageErrors;
-    }
-  }
-
-  return errors;
-};
-
-const getUpsertDriversMileageRequestFromDriversMileageGroups = (
-  driversMileageGroups: DriversMileageGroup[],
-  companyUuid: string,
-): UpsertDriversMileageRequestOld => {
-  const currentDriverWeeklyMileage: DriverMileage[] = [];
-  for (const group of driversMileageGroups) {
-    const dispatcherUuid = group.dispatcher!!.uuid;
-    const startDate = group.startDate;
-    const endDate = group.endDate;
-    for (const item of group.items)
-      currentDriverWeeklyMileage.push({
-        mileageUuid: item.uuid,
-        driverUuid: item.driver!!.getUuid(),
-        dispatcherUuid: dispatcherUuid,
-        itemIdentifier: item.itemIdentifier,
-        startDate: startDate,
-        endDate: endDate,
-        mileage: mapMileageDataToMileageRequest(item.mileageData),
-      });
-  }
-  return {
-    companyUuid: companyUuid,
-    driverMileageData: currentDriverWeeklyMileage,
-  };
-};
-
-const mapMileageDataToMileageRequest = (mileageData: Mileage[]) => {
-  return mileageData.map((mileage) => ({
-    date: mileage.date,
-    destinationNote: mileage.destinationNote,
-    revenue: mileage.revenue
-      ? parseFloat(
-          mileage.revenue.split(BLANK_SPACE)[1].replace(/,/g, BLANK_STRING),
-        )
-      : null,
-    miles: mileage.miles
-      ? parseFloat(mileage.miles.replace(/,/g, BLANK_STRING))
-      : null,
-    note: mileage.note,
-    broker: mileage.broker,
-  }));
 };

@@ -61,7 +61,7 @@ export const TruckRegistrationPage = () => {
             const errors = handleErrors(
               response,
               getBlankTruckRegistrationErrors,
-              (_) => false,
+              () => false,
             );
             if (errors === null) {
               setTruckErrorData(getBlankTruckRegistrationErrors());

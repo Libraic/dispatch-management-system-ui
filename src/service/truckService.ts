@@ -45,7 +45,7 @@ export const getTrucks = async (
     );
     const data = response.data.data;
     return data ? data : [];
-  } catch (error: any) {
+  } catch {
     return [];
   }
 };

@@ -26,7 +26,7 @@ import {
   TRUCKS_BOARD_ROW_HEIGHT,
   TRUCKS_BOARD_TEXT_SIZE,
 } from "../../../../constants/trucks-board/trucks-board-constants.ts";
-import { DriverRowMetadata } from "../internal/DriverRowMetadata.tsx";
+import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];

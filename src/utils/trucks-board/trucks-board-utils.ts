@@ -5,7 +5,15 @@ import type {
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 
 import type { Driver } from "../../types/internal/classes/Driver.ts";
-import { BLANK_STRING, ZERO } from "../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  HYPHEN,
+  ZERO,
+} from "../../constants/common/global-constants.ts";
+import {
+  DEFAULT_LOCALE,
+  WEEKDAYS,
+} from "../../constants/date/date-constants.ts";
 
 export const upsertDriverMileageCallbackFunction = (
   prevDispatcherMileageDataList: DispatcherMileageData[],
@@ -105,4 +113,19 @@ export const getBlankMileageData = (day: string): MileageData => {
     loadStatus: "Covered",
     deliveryDate: new Date(pickUpDate.getTime() + 24 * 60 * 60 * 1000),
   };
+};
+
+export const getWeekWithDayAndMonth = (week: string[]) => {
+  const biweeklyTimeline = [...week];
+  for (const weekDay of week) {
+    const [y, m, d] = weekDay.split(HYPHEN).map(Number);
+    const date = new Date(y, m - 1, d);
+    date.setDate(date.getDate() + 7);
+    biweeklyTimeline.push(date.toLocaleDateString(DEFAULT_LOCALE));
+  }
+
+  return biweeklyTimeline.map((day, index) => {
+    const dateParts = day.split(HYPHEN);
+    return `${WEEKDAYS[index % 7].substring(0, 3)} ${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+  });
 };

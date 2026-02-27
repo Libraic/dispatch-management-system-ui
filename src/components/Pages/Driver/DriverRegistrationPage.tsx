@@ -76,7 +76,7 @@ export const DriverRegistrationPage = () => {
     const errors = handleErrors(
       response,
       getBlankDriverRegistrationError,
-      (_) => false,
+      () => false,
     );
     if (errors == null) {
       navigate(baseRoute);

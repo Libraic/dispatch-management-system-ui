@@ -86,7 +86,7 @@ export const DispatcherRegistrationPage = () => {
     const errors = handleErrors(
       response,
       getBlankDispatcherRegistrationErrorData,
-      (_) => false,
+      () => false,
     );
     if (errors === null) {
       navigate(baseRoute);

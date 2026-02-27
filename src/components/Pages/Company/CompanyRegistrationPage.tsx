@@ -63,7 +63,7 @@ export const CompanyRegistrationPage = () => {
     const apiErrors = handleErrors(
       companyData,
       getBlankCompanyRegistrationErrors,
-      (_) => false,
+      () => false,
     );
     if (apiErrors == null) {
       navigate(LANDING);

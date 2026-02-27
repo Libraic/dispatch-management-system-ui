@@ -24,7 +24,7 @@ export const getPaginationDetails = async (
       params: params,
     });
     return response.data;
-  } catch (error: any) {
+  } catch {
     return {
       size: DEFAULT_SIZE,
       pages: 0,

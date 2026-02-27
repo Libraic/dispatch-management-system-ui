@@ -24,7 +24,7 @@ export const saveDriver = async (
     const response = await axios.post(DRIVERS_BASE_URL, createDriverRequest);
     return response.data;
   } catch (error: any) {
-    return handleApiErrors();
+    return handleApiErrors(error);
   }
 };
 
@@ -46,7 +46,7 @@ export const getDrivers = async (
     );
     const data = response.data.data;
     return data ? data : [];
-  } catch (error: any) {
+  } catch {
     return [];
   }
 };

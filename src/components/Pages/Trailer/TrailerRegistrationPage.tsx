@@ -59,7 +59,7 @@ export const TrailerRegistrationPage = () => {
             const errors = handleErrors(
               response,
               getBlankTrailerRegistrationErrors,
-              (_) => false,
+              () => false,
             );
             if (errors === null) {
               setTrailerErrorData(getBlankTrailerRegistrationErrors());
