@@ -1,15 +1,6 @@
-import {
-  type DriversMileageGroup,
-  type DriverWeeklyMileage,
-  type DriverWeeklyMileageResponse,
-  type Mileage,
-} from "../../../types/internal/trucks-board/trucks-board-old-types.ts";
 import { Driver } from "../../../types/internal/classes/Driver.ts";
-import { User } from "../../../types/internal/classes/User.ts";
 import {
-  BLANK_SPACE,
   BLANK_STRING,
-  DOLLAR_SIGN,
   ZERO,
 } from "../../../constants/common/global-constants.ts";
 import { v4 as uuidv4 } from "uuid";
@@ -38,6 +29,12 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
       for (const mileageDatum of driverMileageData.mileage) {
+        const pickUpDate = mileageDatum.pickUpDate
+          ? new Date(mileageDatum.pickUpDate)
+          : new Date(mileageDatum.date);
+        const deliveryDate = mileageDatum.deliveryDate
+          ? new Date(mileageDatum.deliveryDate)
+          : new Date(pickUpDate.getTime() + 24 * 60 * 60 * 1000);
         mileageData.set(mileageDatum.date, {
           date: mileageDatum.date,
           miles: mileageDatum.miles
@@ -48,8 +45,8 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
             : BLANK_STRING,
           broker: mileageDatum.broker,
           representative: mileageDatum.representative ?? undefined,
-          pickUpDate: new Date(mileageDatum.pickUpDate),
-          deliveryDate: new Date(mileageDatum.deliveryDate),
+          pickUpDate: pickUpDate,
+          deliveryDate: deliveryDate,
           pickUpLocation: mileageDatum.pickUpLocation,
           deliveryLocation: mileageDatum.deliveryLocation,
           loadStatus: mileageDatum.loadStatus,
@@ -87,57 +84,4 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
   }
 
   return dispatcherMileageDataList;
-};
-
-export const mapDriverWeeklyMileageResponseToDriverWeeklyMileage = (
-  item: DriverWeeklyMileageResponse,
-) => {
-  return {
-    itemIdentifier: uuidv4(),
-    driver: new Driver(item.driver),
-    uuid: item.uuid,
-    mileageData: item.mileageData.map((mileage) => {
-      return {
-        miles: mileage.miles !== null ? mileage.miles.toString() : BLANK_STRING,
-        revenue:
-          mileage.revenue !== null
-            ? DOLLAR_SIGN + BLANK_SPACE + mileage.revenue.toString()
-            : BLANK_STRING,
-        note: mileage.note,
-        destinationNote: mileage.destinationNote,
-        date: mileage.date,
-        broker: mileage.broker,
-      } as Mileage;
-    }),
-  } as DriverWeeklyMileage;
-};
-
-export const groupDriverWeeklyMileageByDispatcher = (
-  data: DriverWeeklyMileageResponse[],
-) => {
-  if (data.length === 0) {
-    return {};
-  }
-
-  const startDate = data[0].startDate;
-  const endDate = data[0].endDate;
-  return data.reduce<Record<string, DriversMileageGroup>>((acc, curr) => {
-    const dispatcherId = curr.dispatcher.uuid;
-
-    if (!acc[dispatcherId]) {
-      acc[dispatcherId] = {
-        dispatcher: new User(curr.dispatcher),
-        groupIdentifier: uuidv4(),
-        startDate: startDate,
-        endDate: endDate,
-        items: [],
-      };
-    }
-
-    acc[dispatcherId].items.push(
-      mapDriverWeeklyMileageResponseToDriverWeeklyMileage(curr),
-    );
-
-    return acc;
-  }, {});
 };
