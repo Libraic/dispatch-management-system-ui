@@ -105,17 +105,17 @@ export const TrucksBoardRowContainer: React.FC<{
         dispatcherMileageDataIdentifier,
         mileageDataList,
         driver,
-        driverMileageUuid,
         currentWeek,
+        driverMileageUuid,
       );
     });
     activator.activate();
   };
 
   const postDeleteUpdateFn = (
-    driverMileageUuid: string,
     driver: Driver,
     mileageData: MileageData[],
+    driverMileageUuid?: string,
   ) => {
     const currentWeek = updatedDays.slice(0, 7);
     setDispatcherMileageData((prevDispatcherMileageDataList) => {
@@ -124,8 +124,8 @@ export const TrucksBoardRowContainer: React.FC<{
         dispatcherMileageDataIdentifier,
         mileageData,
         driver,
-        driverMileageUuid,
         currentWeek,
+        driverMileageUuid,
       );
     });
   };

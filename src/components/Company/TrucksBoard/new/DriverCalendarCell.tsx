@@ -30,9 +30,9 @@ export const DriverCalendarCell: React.FC<{
   driverMileageData: DriverMileageData;
   isEditable: boolean;
   postDeleteUpdateFn: (
-    driverMileageUuid: string,
     driver: Driver,
     mileageData: MileageData[],
+    driverMileageUuid?: string,
   ) => void;
   styles?: string;
 }> = ({
@@ -106,8 +106,12 @@ export const DriverCalendarCell: React.FC<{
               } as MileageData;
             },
           );
-
-          postDeleteUpdateFn(uuid, driverMileageData.driver!!, mileageDataList);
+          const newUuid = mileageDataList.length === 0 ? undefined : uuid;
+          postDeleteUpdateFn(
+            driverMileageData.driver!!,
+            mileageDataList,
+            newUuid,
+          );
         }
       },
     },

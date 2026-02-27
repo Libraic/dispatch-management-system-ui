@@ -43,9 +43,9 @@ export const TrucksBoardDriverRow: React.FC<{
   isLastDriver: boolean;
   isLastDriverForDispatcher: boolean;
   postDeleteUpdateFn: (
-    driverMileageUuid: string,
     driver: Driver,
     mileageData: MileageData[],
+    driverMileageUuid?: string,
   ) => void;
 }> = ({
   days,
