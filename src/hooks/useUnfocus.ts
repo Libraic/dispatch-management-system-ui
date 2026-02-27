@@ -36,7 +36,7 @@ export const useUnfocus = (
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  });
+  }, [callbackFn, ignoreRefs]);
 
   return cellRef;
 };

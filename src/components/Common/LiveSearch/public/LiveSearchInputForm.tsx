@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BLANK_STRING,
   EMPTY_ARRAY,
@@ -74,45 +74,51 @@ export const LiveSearchInputForm = <D,>({
     setItems(data.items.map((item) => new constructor(item) as Renderable));
   }, [data, constructor]);
 
+  const inputFormContainerRef = useRef<HTMLDivElement>(null);
   const liveSearchDivRef = useUnfocus(() => {
     setIsLiveSearchActive(false);
     setPlaceholderText(placeholder);
     setItems(EMPTY_ARRAY);
-  });
+  }, [inputFormContainerRef]);
 
   return (
-    <div className="flex flex-col gap-y-2 w-fit min-h-[6.5rem]">
-      <TextualInputForm
-        label={label}
-        placeholder={placeholderText}
-        inputFieldValue={value !== BLANK_STRING ? value : query}
-        onFocus={() => {
-          setIsLiveSearchActive(true);
-          setPlaceholderText(BLANK_STRING);
-          if (value !== BLANK_STRING) {
-            setQuery(value);
-          }
-        }}
-        saveInputData={(value: string) => {
-          setQuery(value);
-          if (value !== BLANK_STRING) {
-            cleanData();
-          }
-        }}
-        isMandatory={isMandatory}
-        errorMessage={errorMessage}
-      />
-      <InputFormSearchResult
-        items={items}
-        pagination={pagination}
-        onItemSelected={(item: Renderable) => {
-          setQuery(BLANK_STRING);
-          saveData(item);
-          setItems(EMPTY_ARRAY);
-          setIsLiveSearchActive(false);
-        }}
-        ref={liveSearchDivRef}
-      />
+    <div>
+      <div className="flex flex-col gap-y-2 w-fit">
+        <TextualInputForm
+          ref={inputFormContainerRef}
+          label={label}
+          placeholder={placeholderText}
+          inputFieldValue={value !== BLANK_STRING ? value : query}
+          onFocus={() => {
+            setIsLiveSearchActive(true);
+            setPlaceholderText(BLANK_STRING);
+            if (value !== BLANK_STRING) {
+              setQuery(value);
+            }
+          }}
+          saveInputData={(text: string) => {
+            setQuery(text);
+            if (value !== BLANK_STRING) {
+              cleanData();
+            }
+          }}
+          isMandatory={isMandatory}
+          errorMessage={errorMessage}
+        />
+      </div>
+      {isLiveSearchActive && (
+        <InputFormSearchResult
+          ref={liveSearchDivRef}
+          items={items}
+          pagination={pagination}
+          onItemSelected={(item: Renderable) => {
+            setQuery(BLANK_STRING);
+            saveData(item);
+            setItems(EMPTY_ARRAY);
+            setIsLiveSearchActive(false);
+          }}
+        />
+      )}
     </div>
   );
 };
