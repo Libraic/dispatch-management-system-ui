@@ -40,7 +40,12 @@ export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
   },
 } as const;
 
-export interface LiveSearchBaseData<D> {
+/**
+ * Represents the properties required for the LiveSearchInputForm component.
+ *
+ * @template D - The data type used for constructing a Renderable object.
+ */
+export interface LiveSearchInputFormProps<D> {
   /** The type of entity being searched for, e.g., "Driver", "Truck", etc. */
   entityType: Entity;
 
@@ -60,20 +65,7 @@ export interface LiveSearchBaseData<D> {
   customSearchCriteria?: SearchCriteria[];
 
   isMandatory?: boolean;
-}
 
-export interface LiveSearchCellData<D, R> extends LiveSearchBaseData<D> {
-  object: Renderable | null;
-  saveObject?: (renderable: Renderable) => R;
-  style?: string;
-}
-
-/**
- * Represents the properties required for the LiveSearchInputForm component.
- *
- * @template D - The data type used for constructing a Renderable object.
- */
-export interface LiveSearchInputFormProps<D> extends LiveSearchBaseData<D> {
   /** The label used for the <input> tag inside the live-search Input Form component. */
   label: string;
 

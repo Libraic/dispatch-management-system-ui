@@ -1,2 +1,0 @@
-export const NO_ERROR_BACKGROUND_STYLE = "";
-export const ERRONEOUS_BACKGROUND_STYLE = "";

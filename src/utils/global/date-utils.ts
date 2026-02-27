@@ -1,8 +1,4 @@
-import {
-  BLANK_SPACE,
-  DOT,
-  TRAILING_ZERO,
-} from "../../constants/common/global-constants.ts";
+import { TRAILING_ZERO } from "../../constants/common/global-constants.ts";
 import type {
   DayOfMonth,
   YearData,
@@ -30,12 +26,6 @@ export const convertDateToLittleEndian = (date: YearData) => {
   const day = date.day < 10 ? `${TRAILING_ZERO}${date.day}` : date.day;
   const month = date.month < 10 ? `${TRAILING_ZERO}${date.month}` : date.month;
   return `${day}-${month}-${date.year}`;
-};
-
-export const convertTrucksBoardFormatToIso = (date: string) => {
-  const datePart = date.split(BLANK_SPACE)[1];
-  const dateParts = datePart.split(DOT);
-  return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 };
 
 export const getCurrentYearData = (): YearData => {
@@ -96,43 +86,6 @@ export const formatDate = (date: Date): string => {
   const month = String(date.getMonth() + 1).padStart(2, TRAILING_ZERO);
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
-};
-
-/**
- * Determines whether a given date string corresponds to a date that falls within the current week.
- *
- * The week starts on Monday and ends on Sunday. The function calculates the start and end of the current
- * week based on the current date and compares the provided date string to this range.
- *
- * @param {string} dateString - The date string to evaluate, expected in a format that can be parsed by the `Date` constructor.
- * @returns {boolean} - Returns `true` if the date falls within the current week, otherwise `false`.
- */
-export const isDateInCurrentWeek = (dateString: string): boolean => {
-  const inputDate = new Date(dateString);
-
-  const startOfWeek = new Date();
-  const day = startOfWeek.getDay();
-  const diff = (day === 0 ? -6 : 1) - day;
-  startOfWeek.setDate(startOfWeek.getDate() + diff);
-
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-  return inputDate >= startOfWeek && inputDate <= endOfWeek;
-};
-
-export const isDateTheFirstDayOfCurrentWeek = (dateString: string): boolean => {
-  const inputDate = new Date(dateString);
-
-  const startOfWeek = new Date();
-  const day = startOfWeek.getDay();
-  const diff = (day === 0 ? -6 : 1) - day;
-  startOfWeek.setDate(startOfWeek.getDate() + diff);
-  return (
-    inputDate.getDay() === startOfWeek.getDay() &&
-    inputDate.getMonth() === inputDate.getMonth() &&
-    inputDate.getFullYear() === inputDate.getFullYear()
-  );
 };
 
 export const toIsoDate = (date: Date): string => {

@@ -31,7 +31,6 @@ export const HOVER_TEXT_SOLID_COLOR = "hover:text-solid-blue";
 export const ODD_BACKGROUND_LIGHT_GRAY = "odd:bg-light-gray";
 
 export const TABLE_BORDER_BASE_COLOR = "border-gray-400";
-export const TABLE_LEFT_BORDER_BASE_COLOR = "border-l-gray-400";
 export const TABLE_RIGHT_BORDER_BASE_COLOR = "border-r-gray-400";
 export const TABLE_BOTTOM_BORDER_BASE_COLOR = "border-b-gray-400";
 

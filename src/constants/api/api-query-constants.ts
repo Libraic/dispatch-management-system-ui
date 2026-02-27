@@ -1,7 +1,5 @@
 export const LIKE_CLAUSE = "like";
 export const JOIN_CLAUSE = "join";
-export const LESS_THAN_EQUAL_CLAUSE = "lte";
-export const GREATER_THAN_EQUAL_CLAUSE = "gte";
 export const SIZE = "size";
 export const PAGE = "page";
 

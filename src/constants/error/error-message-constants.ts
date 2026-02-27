@@ -3,10 +3,6 @@ export const INTERNAL_SERVER_ERROR =
 export const NETWORK_ERROR =
   "A network error has occurred. Please try again later.";
 
-// Driver Mileage
-export const MISSING_DRIVER = "The driver is missing.";
-export const MISSING_DISPATCHER = "The dispatcher is missing.";
-
 // Truck
 export const TRUCK_NUMBER_IS_MANDATORY =
   "The trucks-board number cannot be empty.";
