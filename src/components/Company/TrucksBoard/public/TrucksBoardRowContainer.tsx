@@ -82,8 +82,8 @@ export const TrucksBoardRowContainer: React.FC<{
     const mileageResponses = upsertResponse.data!!.mileage;
     const mileageDataList = mileageResponses.map((mileageResponse) => {
       return {
-        revenue: mileageResponse.revenue,
-        miles: mileageResponse.miles,
+        revenue: `${mileageResponse.revenue}`,
+        miles: `${mileageResponse.miles}`,
         broker: mileageResponse.broker,
         representative: mileageResponse.representative,
         representativeContactNumber:

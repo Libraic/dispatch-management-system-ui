@@ -49,11 +49,3 @@ export const formatStringNumber = (number: string) => {
   const decimalPart = parts.length > 1 ? DOT + parts[1] : BLANK_STRING;
   return `${formattedNumber}${decimalPart}`;
 };
-
-export const removeTrailingDotIfNecessary = (input: string) => {
-  if (input.endsWith(DOT)) {
-    return input.substring(0, input.length - 1);
-  }
-
-  return input;
-};
