@@ -142,15 +142,18 @@ export const TrucksBoardRowContainer: React.FC<{
     return BLANK_STRING;
   };
 
-  return dispatcherMileageData.dispatcher !== null ? (
+  const hasDispatcher = dispatcherMileageData.dispatcher !== null;
+  return (
     <div>
-      <TrucksBoardDispatcherRow
-        days={updatedDays}
-        dispatcherMileageData={dispatcherMileageData}
-        expander={activator}
-        styles={prepareStylesForDispatcher()}
-      />
-      {activator.isActive() &&
+      {hasDispatcher && (
+        <TrucksBoardDispatcherRow
+          days={updatedDays}
+          dispatcherMileageData={dispatcherMileageData}
+          expander={activator}
+          styles={prepareStylesForDispatcher()}
+        />
+      )}
+      {(activator.isActive() || !hasDispatcher) &&
         dispatcherMileageData.driverMileageDataList.map(
           (driverMileageData, index) => (
             <div key={driverMileageData.identifier}>
@@ -158,7 +161,7 @@ export const TrucksBoardRowContainer: React.FC<{
                 days={updatedDays}
                 driverMileageData={driverMileageData}
                 upsertDriverMileageData={upsertDriverMileageFn}
-                hasDispatcher={true}
+                hasDispatcher={hasDispatcher}
                 postDeleteUpdateFn={postDeleteUpdateFn}
                 isLastDriverForDispatcher={
                   index ===
@@ -173,30 +176,6 @@ export const TrucksBoardRowContainer: React.FC<{
             </div>
           ),
         )}
-      <ToastRenderer toast={toast} />
-    </div>
-  ) : (
-    <div>
-      {dispatcherMileageData.driverMileageDataList.map(
-        (driverMileageData, index) => (
-          <div key={driverMileageData.identifier}>
-            <TrucksBoardDriverRow
-              days={updatedDays}
-              driverMileageData={driverMileageData}
-              upsertDriverMileageData={upsertDriverMileageFn}
-              hasDispatcher={false}
-              postDeleteUpdateFn={postDeleteUpdateFn}
-              isLastDriverForDispatcher={
-                index === dispatcherMileageData.driverMileageDataList.length - 1
-              }
-              isLastDriver={
-                isLastDispatcher &&
-                index === dispatcherMileageData.driverMileageDataList.length - 1
-              }
-            />
-          </div>
-        ),
-      )}
       <ToastRenderer toast={toast} />
     </div>
   );
