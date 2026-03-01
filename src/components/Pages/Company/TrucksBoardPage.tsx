@@ -13,6 +13,7 @@ import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 import { TRUCKS_BOARD_VERTICAL_MARGIN } from "../../../constants/trucks-board/trucks-board-constants.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
+import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
 export const TrucksBoardPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
@@ -45,7 +46,7 @@ export const TrucksBoardPage = () => {
   }, [companyId, activeWeek]);
 
   return (
-    <div className="h-screen w-screen flex flex-col gap-y-1">
+    <SidebarWrapper>
       <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
       <div
         className={`flex flex-col mx-[3rem] ${TRUCKS_BOARD_VERTICAL_MARGIN}`}
@@ -65,6 +66,6 @@ export const TrucksBoardPage = () => {
           ))}
         </div>
       </div>
-    </div>
+    </SidebarWrapper>
   );
 };

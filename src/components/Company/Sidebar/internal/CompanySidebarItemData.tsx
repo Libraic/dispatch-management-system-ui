@@ -1,17 +1,23 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  SYSTEM_FONT_BOLD,
+  SYSTEM_FONT_NORMAL,
+} from "../../../../tailwind/tailwind-font-vars.ts";
+import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
 
 export const CompanySidebarItemData: React.FC<{
   label: string;
+  sidebarState: SidebarState;
   route?: string;
   img?: string;
-}> = ({ label, route, img }) => {
+}> = ({ label, sidebarState, route, img }) => {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
   return (
     <div
-      className="flex flex-row items-center pl-2 gap-x-3 text-white text-[0.75rem] font-open-sans font-normal cursor-pointer"
+      className="relative flex flex-row items-center pl-2 gap-x-3 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         if (!isClicked) {
@@ -26,11 +32,20 @@ export const CompanySidebarItemData: React.FC<{
       }}
     >
       {img && <img className="w-8 h-8" src={img} alt="img-icon" />}
-      <p
-        className={`text-[0.8rem] text-white font-open-sans  ${isHovered ? "font-bold" : "font-normal"}`}
-      >
-        {label}
-      </p>
+      {sidebarState === "closed" && isHovered && (
+        <p
+          className={`ml-[0.6rem] px-2 text-[0.8rem] bg-black text-white ${SYSTEM_FONT_NORMAL} tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}
+        >
+          {label}
+        </p>
+      )}
+      {sidebarState === "open" && (
+        <p
+          className={`text-[0.8rem] text-black ${isHovered ? SYSTEM_FONT_BOLD : SYSTEM_FONT_NORMAL} tracking-wide`}
+        >
+          {label}
+        </p>
+      )}
     </div>
   );
 };

@@ -2,29 +2,25 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanySidebarItemData } from "./CompanySidebarItemData.tsx";
-import {
-  BACKGROUND_NORMAL_COLOR,
-  BACKGROUND_SOLID_COLOR,
-  HOVER_BACKGROUND_SOLID_COLOR,
-} from "../../../../tailwind/tailwind-colors-vars.ts";
-
-export type SubmenuData = {
-  label: string;
-  route: string;
-};
+import { BACKGROUND_NORMAL_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import type {
+  SidebarState,
+  SubmenuData,
+} from "../../../../types/internal/sidebar/sidebar-types.ts";
 
 export const CompanySidebarItem: React.FC<{
   label: string;
   icon: string;
+  sidebarState: SidebarState;
   baseRoute?: string;
   submenuData?: SubmenuData[];
-}> = ({ label, icon, baseRoute, submenuData }) => {
+}> = ({ label, icon, sidebarState, baseRoute, submenuData }) => {
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
   return (
-    <div className="mt-5 flex flex-col align-top gap-y-2">
+    <div className="mt-5 mx-1 flex flex-col align-top gap-y-2">
       <div
-        className={`${isSubmenuActive ? BACKGROUND_SOLID_COLOR : "bg-solid-black"} ${HOVER_BACKGROUND_SOLID_COLOR}`}
+        className={`${isSubmenuActive ? "bg-[#f2f2f2]" : "bg-[#f9f9f9]"} hover:bg-gray-200 rounded-[0.5rem]`}
         onClick={() => {
           if (baseRoute) {
             navigate(baseRoute);
@@ -33,7 +29,11 @@ export const CompanySidebarItem: React.FC<{
           }
         }}
       >
-        <CompanySidebarItemData label={label} img={icon} />
+        <CompanySidebarItemData
+          label={label}
+          img={icon}
+          sidebarState={sidebarState}
+        />
       </div>
 
       {isSubmenuActive && submenuData && (
@@ -47,6 +47,7 @@ export const CompanySidebarItem: React.FC<{
               >
                 <CompanySidebarItemData
                   label={submenu.label}
+                  sidebarState={sidebarState}
                   route={submenu.route}
                   key={index}
                 />
