@@ -38,6 +38,7 @@ import type {
   GroupsErrorResponse,
 } from "../../../types/api/common/api-errors-types.ts";
 import type { ApiResponse } from "../../../types/api/common/api-response-types.ts";
+import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -112,38 +113,40 @@ export const DriverRegistrationPage = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-between">
-      <div className="flex flex-col items-center">
-        <PageHeader headerInfo={DRIVER_REGISTRATION_HEADER} />
-        <div className="flex flex-row gap-x-6 w-[100%] h-[3.5rem] justify-center my-20">
-          {sections.map((section, index) => (
-            <div className="flex flex-row items-center gap-x-4" key={index}>
-              <DriverRegistrationSection
-                sectionTitle={section}
-                sectionIndex={index + 1}
-                isLast={index < sections.length - 1}
-                isWithErrors={sectionsHandler.isSectionWithErrors(section)}
-                isActive={sectionsHandler.isSectionActive(section)}
-                activateSection={sectionsHandler.activateSection}
-              />
-            </div>
-          ))}
+    <SidebarWrapper>
+      <div className="w-screen h-screen flex flex-col justify-between">
+        <div className="flex flex-col items-center">
+          <PageHeader headerInfo={DRIVER_REGISTRATION_HEADER} />
+          <div className="flex flex-row gap-x-6 w-[100%] h-[3.5rem] justify-center my-20">
+            {sections.map((section, index) => (
+              <div className="flex flex-row items-center gap-x-4" key={index}>
+                <DriverRegistrationSection
+                  sectionTitle={section}
+                  sectionIndex={index + 1}
+                  isLast={index < sections.length - 1}
+                  isWithErrors={sectionsHandler.isSectionWithErrors(section)}
+                  isActive={sectionsHandler.isSectionActive(section)}
+                  activateSection={sectionsHandler.activateSection}
+                />
+              </div>
+            ))}
+          </div>
+          <DriverRegistrationContext value={registrationContextData}>
+            {activeSectionComponent}
+          </DriverRegistrationContext>
         </div>
-        <DriverRegistrationContext value={registrationContextData}>
-          {activeSectionComponent}
-        </DriverRegistrationContext>
+        <div className="flex flex-row items-center justify-center w-screen mb-15 gap-x-10">
+          <SubmitButton actionText="Submit" action={handleSubmit} />
+          <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
+        </div>
+        {toast.getMessage() !== BLANK_STRING && (
+          <Toast
+            key={toast.getIdentifier()}
+            message={toast.getMessage()}
+            type={toast.getOperationResult()}
+          />
+        )}
       </div>
-      <div className="flex flex-row items-center justify-center w-screen mb-15 gap-x-10">
-        <SubmitButton actionText="Submit" action={handleSubmit} />
-        <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
-      </div>
-      {toast.getMessage() !== BLANK_STRING && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
-    </div>
+    </SidebarWrapper>
   );
 };

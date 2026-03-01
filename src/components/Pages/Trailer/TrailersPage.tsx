@@ -9,6 +9,7 @@ import type { TrailerData } from "../../../types/api/trailer/trailer-api-respons
 import { getTrailers } from "../../../service/trailerService.ts";
 import { TrailersTable } from "../../Trailer/View/public/TrailersTable.tsx";
 import { TRAILERS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
+import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
 export const TrailersPage = () => {
   const { companyUuid } = useParams();
@@ -27,20 +28,22 @@ export const TrailersPage = () => {
   );
 
   return (
-    <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
-      <TableHeader
-        companyUuid={companyUuid!!}
-        headerData={TRAILERS_PAGE_HEADER}
-        viewIcon={trailerIcon}
-        buttonSubroute={TRAILER_REGISTRATION}
-        buttonLabel="Add Trailer"
-      />
-      <TrailersTable trailers={trailers} />
-      <PaginationBar
-        joinableEntityId={companyUuid!!}
-        entityType={Entity.TRAILER}
-        fetchFn={fetchTrailersBasedOnPage}
-      />
-    </div>
+    <SidebarWrapper>
+      <div className="flex flex-col justify-center gap-y-[1.5rem] mx-[4rem]">
+        <TableHeader
+          companyUuid={companyUuid!!}
+          headerData={TRAILERS_PAGE_HEADER}
+          viewIcon={trailerIcon}
+          buttonSubroute={TRAILER_REGISTRATION}
+          buttonLabel="Add Trailer"
+        />
+        <TrailersTable trailers={trailers} />
+        <PaginationBar
+          joinableEntityId={companyUuid!!}
+          entityType={Entity.TRAILER}
+          fetchFn={fetchTrailersBasedOnPage}
+        />
+      </div>
+    </SidebarWrapper>
   );
 };

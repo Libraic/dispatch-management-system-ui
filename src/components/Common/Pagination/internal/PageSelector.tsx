@@ -1,5 +1,6 @@
 import * as React from "react";
 import type { Pagination } from "../../../../types/internal/pagination/pagination-types.ts";
+import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const PageSelector: React.FC<{
   pagination: Pagination;
@@ -20,7 +21,7 @@ export const PageSelector: React.FC<{
               fetchFn(index);
             }
           }}
-          className={`border-[#cccccc] px-2 py-[0.1rem] rounded-[0.2rem] text-[0.9rem] text-[#808588] hover:cursor-pointer hover:bg-solid-black hover:text-white ${pagination.getCurrentPage() === index + 1 && "bg-solid-black text-white"}`}
+          className={`${SYSTEM_FONT_NORMAL} border-[#cccccc] px-2 py-[0.1rem] rounded-[0.2rem] text-[0.9rem] text-[#808588] hover:cursor-pointer hover:bg-solid-black hover:text-white ${pagination.getCurrentPage() === index + 1 && "bg-solid-black text-white"}`}
         >
           {index + 1}
         </div>

@@ -7,6 +7,7 @@ import type {
   SidebarState,
   SubmenuData,
 } from "../../../../types/internal/sidebar/sidebar-types.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 
 export const CompanySidebarItem: React.FC<{
   label: string;
@@ -20,7 +21,7 @@ export const CompanySidebarItem: React.FC<{
   return (
     <div className="mt-5 mx-1 flex flex-col align-top gap-y-2">
       <div
-        className={`${isSubmenuActive ? "bg-[#f2f2f2]" : "bg-[#f9f9f9]"} hover:bg-gray-200 rounded-[0.5rem]`}
+        className={`${isSubmenuActive ? "bg-[#f2f2f2]" : "bg-[#f9f9f9]"} ${sidebarState === "open" ? "hover:bg-gray-200" : BLANK_STRING} rounded-[0.5rem]`}
         onClick={() => {
           if (baseRoute) {
             navigate(baseRoute);

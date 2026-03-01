@@ -5,6 +5,7 @@ import {
   SYSTEM_FONT_NORMAL,
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
+import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 
 export const CompanySidebarItemData: React.FC<{
   label: string;
@@ -31,7 +32,13 @@ export const CompanySidebarItemData: React.FC<{
         }
       }}
     >
-      {img && <img className="w-8 h-8" src={img} alt="img-icon" />}
+      {img && (
+        <img
+          className={`w-8 h-8 ${sidebarState === "closed" ? "hover:bg-gray-200 rounded-[0.5rem]" : BLANK_STRING}`}
+          src={img}
+          alt="img-icon"
+        />
+      )}
       {sidebarState === "closed" && isHovered && (
         <p
           className={`ml-[0.6rem] px-2 text-[0.8rem] bg-black text-white ${SYSTEM_FONT_NORMAL} tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}

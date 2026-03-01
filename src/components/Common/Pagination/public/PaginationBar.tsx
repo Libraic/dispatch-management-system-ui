@@ -18,7 +18,7 @@ export const PaginationBar: React.FC<{
     joinableEntityId,
   );
   return (
-    <div className="flex items-center justify-between mx-[2.7rem]">
+    <div className="flex items-center justify-between">
       <PagesRecordsCounter records={pagination.getNumberOfRecords()} />
       <PageSelector pagination={pagination} fetchFn={fetchFn} />
       <PageNavigator pagination={pagination} fetchFn={fetchFn} />

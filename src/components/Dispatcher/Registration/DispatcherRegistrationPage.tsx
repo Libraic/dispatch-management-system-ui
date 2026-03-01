@@ -35,6 +35,7 @@ import {
   cleanPhoneNumber,
   formatPhoneNumber,
 } from "../../../utils/global/input-form-utils.ts";
+import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
 export const DispatcherRegistrationPage = () => {
   const [dispatcherRegistrationData, setDispatcherRegistrationData] = useState(
@@ -100,49 +101,51 @@ export const DispatcherRegistrationPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen gap-y-[15rem]">
-      <PageHeader headerInfo={DISPATCHER_REGISTRATION_HEADER} />
-      <div className="flex items-center justify-center gap-x-[5rem]">
-        <TextualInputForm
-          label="Name"
-          placeholder={NAME_PLACEHOLDER}
-          inputFieldValue={dispatcherRegistrationData.name}
-          isMandatory={true}
-          errorMessage={dispatcherRegistrationErrorData.name}
-          saveInputData={(firstName: string) =>
-            setObjectStringField(
-              setDispatcherRegistrationData,
-              "name",
-              firstName,
-            )
-          }
-        />
-        <TextualInputForm
-          label="Phone Number"
-          placeholder={PHONE_NUMBER_PLACEHOLDER}
-          inputFieldValue={dispatcherRegistrationData.phoneNumber}
-          isMandatory={true}
-          errorMessage={dispatcherRegistrationErrorData.phoneNumber}
-          saveInputData={(phoneNumber: string) =>
-            setObjectStringField(
-              setDispatcherRegistrationData,
-              "phoneNumber",
-              formatPhoneNumber(phoneNumber),
-            )
-          }
-        />
+    <SidebarWrapper>
+      <div className="flex flex-col h-screen w-screen gap-y-[15rem]">
+        <PageHeader headerInfo={DISPATCHER_REGISTRATION_HEADER} />
+        <div className="flex items-center justify-center gap-x-[5rem]">
+          <TextualInputForm
+            label="Name"
+            placeholder={NAME_PLACEHOLDER}
+            inputFieldValue={dispatcherRegistrationData.name}
+            isMandatory={true}
+            errorMessage={dispatcherRegistrationErrorData.name}
+            saveInputData={(firstName: string) =>
+              setObjectStringField(
+                setDispatcherRegistrationData,
+                "name",
+                firstName,
+              )
+            }
+          />
+          <TextualInputForm
+            label="Phone Number"
+            placeholder={PHONE_NUMBER_PLACEHOLDER}
+            inputFieldValue={dispatcherRegistrationData.phoneNumber}
+            isMandatory={true}
+            errorMessage={dispatcherRegistrationErrorData.phoneNumber}
+            saveInputData={(phoneNumber: string) =>
+              setObjectStringField(
+                setDispatcherRegistrationData,
+                "phoneNumber",
+                formatPhoneNumber(phoneNumber),
+              )
+            }
+          />
+        </div>
+        <div className="flex flex-row items-center justify-center w-screen mb-15 gap-x-10">
+          <SubmitButton actionText="Submit" action={handleSubmit} />
+          <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
+        </div>
+        {toast.getMessage() !== BLANK_STRING && (
+          <Toast
+            key={toast.getIdentifier()}
+            message={toast.getMessage()}
+            type={toast.getOperationResult()}
+          />
+        )}
       </div>
-      <div className="flex flex-row items-center justify-center w-screen mb-15 gap-x-10">
-        <SubmitButton actionText="Submit" action={handleSubmit} />
-        <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
-      </div>
-      {toast.getMessage() !== BLANK_STRING && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
-    </div>
+    </SidebarWrapper>
   );
 };

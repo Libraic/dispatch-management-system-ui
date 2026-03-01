@@ -5,7 +5,7 @@ import {
   BACKGROUND_NORMAL_COLOR,
 } from "../../../../tailwind/tailwind-colors-vars.ts";
 
-export const TableNavigableButton: React.FC<{
+export const NavigableButton: React.FC<{
   navigationAddress: string;
   label: string;
   icon: string;

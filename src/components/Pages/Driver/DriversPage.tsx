@@ -9,6 +9,7 @@ import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-con
 import driverIcon from "../../../assets/company-menu/drivers-black.svg";
 import { Entity } from "../../../types/api/common/api-query-types.ts";
 import { DRIVERS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
+import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
 export const DriversPage = () => {
   const [drivers, setDrivers] = useState<DriverData[]>([]);
@@ -27,20 +28,22 @@ export const DriversPage = () => {
   );
 
   return (
-    <div className="flex flex-col w-screen justify-center gap-y-[1.5rem]">
-      <TableHeader
-        companyUuid={companyUuid!!}
-        headerData={DRIVERS_PAGE_HEADER}
-        viewIcon={driverIcon}
-        buttonSubroute={DRIVER_REGISTRATION}
-        buttonLabel="Add Driver"
-      />
-      <DriversTable drivers={drivers} />
-      <PaginationBar
-        joinableEntityId={companyUuid!!}
-        entityType={Entity.DRIVER}
-        fetchFn={fetchDriversBasedOnPage}
-      />
-    </div>
+    <SidebarWrapper>
+      <div className="flex flex-col justify-center gap-y-[1.5rem] mx-[4rem]">
+        <TableHeader
+          companyUuid={companyUuid!!}
+          headerData={DRIVERS_PAGE_HEADER}
+          viewIcon={driverIcon}
+          buttonSubroute={DRIVER_REGISTRATION}
+          buttonLabel="Add Driver"
+        />
+        <DriversTable drivers={drivers} />
+        <PaginationBar
+          joinableEntityId={companyUuid!!}
+          entityType={Entity.DRIVER}
+          fetchFn={fetchDriversBasedOnPage}
+        />
+      </div>
+    </SidebarWrapper>
   );
 };

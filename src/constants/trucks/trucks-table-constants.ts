@@ -7,4 +7,4 @@ export const TRUCKS_VIEW_COLUMNS = [
 ];
 
 export const TRUCKS_VIEW_COLUMNS_LAYOUT =
-  "grid-cols-[15rem_15rem_15rem_15rem_35rem_5rem]";
+  "grid-cols-[minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(20rem,2fr)_1rem]";

@@ -10,7 +10,7 @@ import { TrucksTableContent } from "../internal/TrucksTableContent.tsx";
 export const TrucksTable: React.FC<{ trucks: TruckData[] }> = ({ trucks }) => {
   return (
     <div className="h-[30rem]">
-      <div className="flex flex-col items-center justify-center text-solid-black">
+      <div className="flex flex-col text-solid-black">
         <TableHead
           columnsLayout={TRUCKS_VIEW_COLUMNS_LAYOUT}
           listColumns={TRUCKS_VIEW_COLUMNS}

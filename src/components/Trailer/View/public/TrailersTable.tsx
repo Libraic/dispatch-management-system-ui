@@ -12,7 +12,7 @@ export const TrailersTable: React.FC<{ trailers: TrailerData[] }> = ({
 }) => {
   return (
     <div className="h-[30rem]">
-      <div className="flex flex-col items-center justify-center text-solid-black">
+      <div className="flex flex-col text-solid-black">
         <TableHead
           columnsLayout={TRAILERS_VIEW_COLUMNS_LAYOUT}
           listColumns={TRAILERS_VIEW_COLUMNS}
