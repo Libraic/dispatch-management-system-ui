@@ -16,17 +16,6 @@ export const SELECT_FORM_STYLE =
   "hover:border-light-purple " +
   "select-none";
 
-export const TEXT_AREA_STYLE =
-  "p-1 " +
-  "font-open-sans " +
-  "font-light " +
-  "text-standard-size " +
-  "bg-transparent " +
-  "rounded-sm " +
-  "border-[0.1rem] " +
-  "border-light-grey " +
-  "rounded-xl";
-
 export const INPUT_FORM_LABEL_STYLE =
   "text-[0.9rem] " + "font-open-sans font-medium";
 

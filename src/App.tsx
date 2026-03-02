@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserRegistrationPage } from "./components/Pages/User/UserRegistrationPage.tsx";
 import { CompanyRegistrationPage } from "./components/Pages/Company/CompanyRegistrationPage.tsx";
 import {
   COMPANIES_LIST,
@@ -17,7 +16,6 @@ import {
   TRUCK_REGISTRATION,
   TRUCKS_BOARD,
   TRUCKS_VIEW,
-  USER_REGISTRATION,
 } from "./constants/route/internal-route-constants.ts";
 import { CompaniesPage } from "./components/Pages/Company/CompaniesPage.tsx";
 import { CompanyDashboardPage } from "./components/Pages/Company/CompanyDashboardPage.tsx";
@@ -40,7 +38,6 @@ export const App = () => {
       <Routes>
         <Route path={LANDING} element={<LandingPage />} />
         <Route path={HOME} element={<HomePage />} />
-        <Route path={USER_REGISTRATION} element={<UserRegistrationPage />} />
         <Route
           path={COMPANY_REGISTRATION}
           element={<CompanyRegistrationPage />}

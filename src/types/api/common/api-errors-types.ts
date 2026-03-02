@@ -7,3 +7,9 @@ export type Error = {
 export type GroupsErrorResponse = {
   errors: Error | Error[];
 };
+
+export type ItemError = {
+  id: string;
+  field: string;
+  errorMessage: string;
+};

@@ -13,7 +13,5 @@ export enum Entity {
   DRIVER = "Driver",
   TRUCK = "Truck",
   TRAILER = "Trailer",
-  USER = "User",
-  COMPANY = "Company",
   CITY = "City",
 }

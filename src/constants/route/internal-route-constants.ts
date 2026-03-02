@@ -2,7 +2,6 @@ export const LANDING = "/";
 export const HOME = "/home";
 export const DASHBOARD = "/dashboard";
 
-export const USER_REGISTRATION = "/user/registration";
 export const COMPANY_REGISTRATION = "/Company/registration";
 export const COMPANIES_LIST = "/Company/all";
 export const COMPANY_DASHBOARD = `${DASHBOARD}/:companyUuid`;

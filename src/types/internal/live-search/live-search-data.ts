@@ -10,14 +10,6 @@ export type LiveSearchEndpointConfig = {
 };
 
 export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
-  User: {
-    endpoint: "http://localhost:8090/api/users",
-    searchField: "fullName",
-  },
-  Company: {
-    endpoint: "http://localhost:8090/api/companies",
-    searchField: "name",
-  },
   Driver: {
     endpoint: "http://localhost:8090/api/drivers",
     searchField: "fullName",
