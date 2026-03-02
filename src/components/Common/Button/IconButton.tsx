@@ -11,7 +11,7 @@ export const IconButton: React.FC<{
   const [resource, setResource] = React.useState(unfocusedResource);
   const hoverPanelData = useHoverPanel(!!information);
   return (
-    <div className="relative inline-block mx-3">
+    <div className="relative inline-block">
       <img
         className="w-[2rem] cursor-pointer"
         onMouseEnter={() => {

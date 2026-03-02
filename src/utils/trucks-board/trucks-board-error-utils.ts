@@ -32,14 +32,6 @@ export const getErrorsIfPresent = (mileageData: MileageData) => {
     isError = true;
     mileageErrors.brokerError = "Broker is required.";
   }
-  if (mileageData.pickUpLocation === BLANK_STRING) {
-    isError = true;
-    mileageErrors.pickUpLocationError = "Select a pick-up location.";
-  }
-  if (mileageData.deliveryLocation === BLANK_STRING) {
-    isError = true;
-    mileageErrors.deliveryLocationError = "Select a delivery location.";
-  }
 
   const representativeContactNumber = mileageData.representativeContactNumber
     ? cleanPhoneNumber(mileageData.representativeContactNumber)

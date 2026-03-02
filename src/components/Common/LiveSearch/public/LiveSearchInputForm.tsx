@@ -15,6 +15,7 @@ import { TextualInputForm } from "../../InputForm/public/TextualInputForm.tsx";
 import type { LiveSearchResult } from "../../../../types/api/common/api-response-types.ts";
 import { InputFormSearchResult } from "./InputFormSearchResult.tsx";
 import { DEFAULT_SIZE } from "../../../../constants/api/api-query-constants.ts";
+import type { TailwindProperties } from "../../../../types/internal/style.ts";
 
 /**
  * An input form that uses live search to retrieve data from an endpoint.
@@ -48,7 +49,10 @@ export const LiveSearchInputForm = <D,>({
   cleanData,
   constructor,
   customSearchCriteria,
-}: LiveSearchInputFormProps<D>) => {
+  tailwindProperties,
+}: LiveSearchInputFormProps<D> & {
+  tailwindProperties?: TailwindProperties;
+}) => {
   const [query, setQuery] = useState(BLANK_STRING);
   const [items, setItems] = useState<Renderable[]>([]);
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
@@ -70,6 +74,8 @@ export const LiveSearchInputForm = <D,>({
     customSearchCriteria,
   );
 
+  const weight = tailwindProperties?.width ?? "w-fit";
+
   useEffect(() => {
     setItems(data.items.map((item) => new constructor(item) as Renderable));
   }, [data, constructor]);
@@ -83,7 +89,7 @@ export const LiveSearchInputForm = <D,>({
 
   return (
     <div>
-      <div className="flex flex-col gap-y-2 w-fit">
+      <div className={`flex flex-col gap-y-2 ${weight}`}>
         <TextualInputForm
           ref={inputFormContainerRef}
           label={label}

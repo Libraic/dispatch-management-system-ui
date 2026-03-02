@@ -3,17 +3,34 @@ import type { Dispatcher } from "../classes/Dispatcher.ts";
 
 export type LoadStatus = "Covered" | "Transit" | "Empty" | "Unknown";
 
+export type LocationLabel =
+  | "Pick Up"
+  | "Delivery"
+  | "Starting Point"
+  | "Ending Point";
+
+export type LocationLabelResource = Record<
+  LocationLabel,
+  { focused: string; unfocused: string }
+>;
+
+export interface MileageLocationData {
+  uuid: string;
+  label: LocationLabel;
+  date: Date;
+  location: string;
+  order: number;
+}
+
 export type MileageData = {
   revenue?: string;
   miles?: string;
   // TODO: Consider removing this in favor of pickUpDate
   date: string;
   broker: string;
-  pickUpLocation?: string;
-  pickUpDate: Date;
-  deliveryLocation?: string;
-  deliveryDate: Date;
   loadStatus: LoadStatus;
+  locations: MileageLocationData[];
+  idAcrossTimeframe?: string;
   representative?: string;
   representativeContactNumber?: string;
 };

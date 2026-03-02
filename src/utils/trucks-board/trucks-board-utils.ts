@@ -1,7 +1,9 @@
 import type {
   DispatcherMileageData,
   DriverMileageData,
+  LocationLabel,
   MileageData,
+  MileageLocationData,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 
 import type { Driver } from "../../types/internal/classes/Driver.ts";
@@ -14,6 +16,11 @@ import {
   DEFAULT_LOCALE,
   WEEKDAYS,
 } from "../../constants/date/date-constants.ts";
+import { generateUuid } from "../global/general-utils.ts";
+import type {
+  ApiMileageLocation,
+  MileageResponse,
+} from "../../types/api/driver-mileage/driver-mileage-api-types.ts";
 
 export const upsertDriverMileageCallbackFunction = (
   prevDispatcherMileageDataList: DispatcherMileageData[],
@@ -96,22 +103,53 @@ export const extractUnfocusedCellInformation = (
     return BLANK_STRING;
   }
 
-  const pickUpLocation = mileageData.pickUpLocation;
-  return pickUpLocation ? pickUpLocation : mileageData.loadStatus;
+  if (mileageData.locations.length === 0) {
+    return mileageData.loadStatus;
+  }
+
+  return mileageData.locations
+    .map((l) => l.location)
+    .filter((loc): loc is string => Boolean(loc))
+    .filter((loc, index, arr) => index === 0 || loc !== arr[index - 1])
+    .join(" -> ");
+};
+
+export const getBlankLocation = (
+  date: Date,
+  order: number,
+  label?: LocationLabel,
+): MileageLocationData => {
+  return {
+    uuid: generateUuid(),
+    label: label ?? "Pick Up",
+    date: date,
+    location: BLANK_STRING,
+    order: order,
+  };
+};
+
+export const getInitialMileageLocations = (
+  date: Date,
+): MileageLocationData[] => {
+  const startingPoint = getBlankLocation(new Date(date), 0, "Starting Point");
+  const pickUpLocation = getBlankLocation(new Date(date), 1, "Pick Up");
+  const deliveryLocation = getBlankLocation(
+    new Date(date.getTime() + 24 * 60 * 60 * 1000),
+    2,
+    "Delivery",
+  );
+  return [startingPoint, pickUpLocation, deliveryLocation];
 };
 
 export const getBlankMileageData = (day: string): MileageData => {
-  const pickUpDate = new Date(day);
+  const date = new Date(day);
   return {
     broker: BLANK_STRING,
     date: day,
     revenue: BLANK_STRING,
     miles: BLANK_STRING,
-    pickUpLocation: BLANK_STRING,
-    pickUpDate: pickUpDate,
-    deliveryLocation: BLANK_STRING,
     loadStatus: "Covered",
-    deliveryDate: new Date(pickUpDate.getTime() + 24 * 60 * 60 * 1000),
+    locations: getInitialMileageLocations(date),
   };
 };
 
@@ -128,4 +166,42 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
     const dateParts = day.split(HYPHEN);
     return `${WEEKDAYS[index % 7].substring(0, 3)} ${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
   });
+};
+
+export const fromMileageResponsesToMileageData = (
+  mileageResponses: MileageResponse[],
+) => {
+  return mileageResponses.map((mileageResponse) =>
+    fromMileageResponseToMileageData(mileageResponse),
+  );
+};
+
+export const fromMileageResponseToMileageData = (
+  mileageResponse: MileageResponse,
+): MileageData => {
+  return {
+    revenue: `${mileageResponse.revenue ?? BLANK_STRING}`,
+    miles: `${mileageResponse.miles ?? BLANK_STRING}`,
+    broker: mileageResponse.broker,
+    representative: mileageResponse.representative ?? undefined,
+    representativeContactNumber: mileageResponse.representativeContactNumber,
+    loadStatus: mileageResponse.loadStatus,
+    date: mileageResponse.date,
+    idAcrossTimeframe: mileageResponse.idAcrossTimeframe,
+    locations: mileageResponse.locations.map((location) =>
+      fromApiMileageLocationToMileageLocationData(location),
+    ),
+  };
+};
+
+export const fromApiMileageLocationToMileageLocationData = (
+  location: ApiMileageLocation,
+): MileageLocationData => {
+  return {
+    uuid: generateUuid(),
+    label: location.label as LocationLabel,
+    date: new Date(location.date),
+    location: location.location ?? BLANK_STRING,
+    order: location.order,
+  };
 };

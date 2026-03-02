@@ -1,8 +1,5 @@
 import { Driver } from "../../../types/internal/classes/Driver.ts";
-import {
-  BLANK_STRING,
-  ZERO,
-} from "../../../constants/common/global-constants.ts";
+import { ZERO } from "../../../constants/common/global-constants.ts";
 import { v4 as uuidv4 } from "uuid";
 import type {
   DispatcherMileageData,
@@ -11,6 +8,7 @@ import type {
 } from "../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { GetDriverMileageResponse } from "../../../types/api/driver-mileage/driver-mileage-api-types.ts";
 import { Dispatcher } from "../../../types/internal/classes/Dispatcher.ts";
+import { fromMileageResponseToMileageData } from "../../trucks-board/trucks-board-utils.ts";
 
 export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
   getDriverMileageResponseList: GetDriverMileageResponse[],
@@ -29,29 +27,10 @@ export const convertGetDriverMileageResponseListToDispatcherMileageDataList = (
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
       for (const mileageDatum of driverMileageData.mileage) {
-        const pickUpDate = mileageDatum.pickUpDate
-          ? new Date(mileageDatum.pickUpDate)
-          : new Date(mileageDatum.date);
-        const deliveryDate = mileageDatum.deliveryDate
-          ? new Date(mileageDatum.deliveryDate)
-          : new Date(pickUpDate.getTime() + 24 * 60 * 60 * 1000);
-        mileageData.set(mileageDatum.date, {
-          date: mileageDatum.date,
-          miles: mileageDatum.miles
-            ? mileageDatum.miles.toString()
-            : BLANK_STRING,
-          revenue: mileageDatum.revenue
-            ? mileageDatum.revenue.toString()
-            : BLANK_STRING,
-          broker: mileageDatum.broker,
-          representative: mileageDatum.representative ?? undefined,
-          pickUpDate: pickUpDate,
-          deliveryDate: deliveryDate,
-          pickUpLocation: mileageDatum.pickUpLocation,
-          deliveryLocation: mileageDatum.deliveryLocation,
-          loadStatus: mileageDatum.loadStatus,
-          representativeContactNumber: mileageDatum.representativeContactNumber,
-        });
+        mileageData.set(
+          mileageDatum.date,
+          fromMileageResponseToMileageData(mileageDatum),
+        );
         const dateObject = new Date(mileageDatum.date);
         if (dateObject >= startDateObject && dateObject <= endDateObject) {
           driverTotalRevenue += mileageDatum.revenue ?? ZERO;

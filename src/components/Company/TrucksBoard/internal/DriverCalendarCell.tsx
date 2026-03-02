@@ -6,7 +6,10 @@ import {
   type MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { extractUnfocusedCellInformation } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import {
+  extractUnfocusedCellInformation,
+  fromMileageResponsesToMileageData,
+} from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { MileageFormModal } from "./MileageFormModal.tsx";
 import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
@@ -18,7 +21,6 @@ import {
   deleteDriveMileageDataBetweenDates,
   getMileageData,
 } from "../../../../service/driverMileageService.ts";
-import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { TRUCKS_BOARD_ROW_HEIGHT } from "../../../../constants/trucks-board/trucks-board-constants.ts";
@@ -69,50 +71,34 @@ export const DriverCalendarCell: React.FC<{
           return;
         }
 
-        const pickUpDate = mileageData.pickUpDate;
-        const deliveryDate = mileageData.deliveryDate;
-        if (pickUpDate && deliveryDate) {
-          const data = await deleteDriveMileageDataBetweenDates(
-            uuid,
-            toIsoDate(pickUpDate),
-            toIsoDate(deliveryDate),
-          );
-          if (data.error) {
-            toast.withErrorMessage(data.error.message);
-            return;
-          }
-
-          const mileageResponses = await getMileageData(uuid);
-          if (mileageResponses.error) {
-            toast.withErrorMessage(mileageResponses.error.message);
-            return;
-          }
-
-          const mileageDataList = mileageResponses.data!!.map(
-            (mileageResponse) => {
-              return {
-                revenue: mileageResponse.revenue,
-                miles: mileageResponse.miles,
-                broker: mileageResponse.broker,
-                representative: mileageResponse.representative,
-                representativeContactNumber:
-                  mileageResponse.representativeContactNumber,
-                pickUpLocation: mileageResponse.pickUpLocation,
-                deliveryLocation: mileageResponse.deliveryLocation,
-                pickUpDate: new Date(mileageResponse.pickUpDate),
-                deliveryDate: new Date(mileageResponse.deliveryDate),
-                loadStatus: mileageResponse.loadStatus,
-                date: mileageResponse.date,
-              } as MileageData;
-            },
-          );
-          const newUuid = mileageDataList.length === 0 ? undefined : uuid;
-          postDeleteUpdateFn(
-            driverMileageData.driver!!,
-            mileageDataList,
-            newUuid,
-          );
+        if (!mileageData.idAcrossTimeframe) {
+          return;
         }
+
+        const data = await deleteDriveMileageDataBetweenDates(
+          uuid,
+          mileageData.idAcrossTimeframe,
+        );
+        if (data.error) {
+          toast.withErrorMessage(data.error.message);
+          return;
+        }
+
+        const getMileageResponse = await getMileageData(uuid);
+        if (getMileageResponse.error) {
+          toast.withErrorMessage(getMileageResponse.error.message);
+          return;
+        }
+
+        const mileageResponses = getMileageResponse.data!!;
+        const mileageDataList =
+          fromMileageResponsesToMileageData(mileageResponses);
+        const newUuid = mileageDataList.length === 0 ? undefined : uuid;
+        postDeleteUpdateFn(
+          driverMileageData.driver!!,
+          mileageDataList,
+          newUuid,
+        );
       },
     },
   ];

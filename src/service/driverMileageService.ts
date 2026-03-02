@@ -68,13 +68,11 @@ export const getMileageData = async (
 
 export const deleteDriveMileageDataBetweenDates = async (
   driverMileageUuid: string,
-  startDate: string,
-  endDate: string,
+  idAcrossTimeframe: string,
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   const params = {
     mileage: driverMileageUuid,
-    start: startDate,
-    end: endDate,
+    idAcrossTimeframe: idAcrossTimeframe,
   };
   try {
     const response = await axios.delete<

@@ -1,13 +1,5 @@
 import React, { useState } from "react";
 
-export type ContextMenuData = {
-  getX: () => number;
-  getY: () => number;
-  isActive: () => boolean;
-  open: (e: React.MouseEvent) => void;
-  close: () => void;
-};
-
 export const useContextMenu = () => {
   const [menu, setMenu] = useState<{
     x: number;
