@@ -12,7 +12,6 @@ export const BACKGROUND_PALE_BLUE = "bg-pale-blue";
 export const OUTLINE_PALE_BLUE = "outline-pale-blue";
 
 export const BACKGROUND_NORMAL_COLOR = "bg-light-blue";
-export const BACKGROUND_SOLID_COLOR = "bg-solid-blue";
 export const BACKGROUND_BLUE_GREY_COLOR = "bg-blue-grey";
 export const BORDER_NORMAL_COLOR = "border-light-blue";
 export const BORDER_SOLID_COLOR = "border-solid-blue";
@@ -31,10 +30,3 @@ export const HOVER_TEXT_SOLID_COLOR = "hover:text-solid-blue";
 export const ODD_BACKGROUND_LIGHT_GRAY = "odd:bg-light-gray";
 
 export const TABLE_BORDER_BASE_COLOR = "border-gray-400";
-export const TABLE_RIGHT_BORDER_BASE_COLOR = "border-r-gray-400";
-export const TABLE_BOTTOM_BORDER_BASE_COLOR = "border-b-gray-400";
-
-export const TABLE_DELIMITER_TOP_COLOR = "border-t-light-blue";
-export const TABLE_DELIMITER_BOTTOM_COLOR = "border-b-light-blue";
-export const TABLE_DELIMITER_LEFT_COLOR = "border-l-light-blue";
-export const TABLE_DELIMITER_RIGHT_COLOR = "border-r-light-blue";
