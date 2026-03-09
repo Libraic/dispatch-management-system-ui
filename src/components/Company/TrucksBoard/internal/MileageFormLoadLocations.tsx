@@ -1,67 +1,80 @@
 import React from "react";
-import { setObjectStringField } from "../../../../utils/registration/registration-utils.ts";
 import type {
   MileageData,
   MileageDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
-import { LiveSearchInputForm } from "../../../Common/LiveSearch/public/LiveSearchInputForm.tsx";
-import { Entity } from "../../../../types/api/common/api-query-types.ts";
-import { City } from "../../../../types/internal/classes/City.ts";
-import type { Renderable } from "../../../../types/internal/classes/Renderable.ts";
+import { MileageLocation } from "./MileageLocation.tsx";
+import { MileageLocationCreator } from "./MileageLocationCreator.tsx";
+import {
+  DndContext,
+  type DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 export const MileageFormLoadLocations: React.FC<{
   mileageStateData: StateData<MileageData, MileageDataError>;
 }> = ({ mileageStateData }) => {
+  const locations = mileageStateData.data.locations;
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    mileageStateData.setData((prev) => {
+      const previousLocations = prev.locations;
+      const oldIndex = previousLocations.findIndex((l) => l.uuid === active.id);
+      const newIndex = previousLocations.findIndex((l) => l.uuid === over.id);
+
+      const newArray = arrayMove(previousLocations, oldIndex, newIndex);
+
+      const newLocations = newArray.map((location, index) => ({
+        ...location,
+        order: index,
+      }));
+
+      return {
+        ...prev,
+        locations: newLocations,
+      };
+    });
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 6, // user must move 6px before drag activates
+      },
+    }),
+  );
+
   return (
-    <div className="flex flex-row gap-x-5">
-      <LiveSearchInputForm
-        label="Pick Up"
-        placeholder="Los Angeles, CA"
-        value={mileageStateData.data.pickUpLocation ?? BLANK_STRING}
-        saveData={(city: Renderable) =>
-          setObjectStringField(
-            mileageStateData.setData,
-            "pickUpLocation",
-            city.renderOnForm(),
-          )
-        }
-        cleanData={() =>
-          setObjectStringField(
-            mileageStateData.setData,
-            "pickUpLocation",
-            BLANK_STRING,
-          )
-        }
-        entityType={Entity.CITY}
-        constructor={City}
-        isMandatory={true}
-        errorMessage={mileageStateData.error.pickUpLocationError}
-      />
-      <LiveSearchInputForm
-        label="Delivery"
-        placeholder="Chicago, IL"
-        value={mileageStateData.data.deliveryLocation ?? BLANK_STRING}
-        saveData={(city: Renderable) =>
-          setObjectStringField(
-            mileageStateData.setData,
-            "deliveryLocation",
-            city.renderOnForm(),
-          )
-        }
-        cleanData={() =>
-          setObjectStringField(
-            mileageStateData.setData,
-            "deliveryLocation",
-            BLANK_STRING,
-          )
-        }
-        entityType={Entity.CITY}
-        constructor={City}
-        isMandatory={true}
-        errorMessage={mileageStateData.error.deliveryLocationError}
-      />
-    </div>
+    <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+      <SortableContext
+        items={locations.map((location) => location.uuid)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className="flex flex-col mb-[1.5rem] gap-y-[1rem]">
+          <div className="flex flex-col gap-x-5 max-h-[19rem] pt-5 overflow-y-auto">
+            {locations.map((location) => (
+              <MileageLocation
+                key={location.uuid}
+                mileageStateData={mileageStateData}
+                mileageLocation={location}
+              />
+            ))}
+          </div>
+          <MileageLocationCreator mileageStateData={mileageStateData} />
+        </div>
+      </SortableContext>
+    </DndContext>
   );
 };

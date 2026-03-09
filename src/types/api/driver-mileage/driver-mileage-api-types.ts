@@ -2,6 +2,13 @@ import type { DriverData } from "../driver/driver-api-response-types.ts";
 import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
 import type { LoadStatus } from "../../internal/trucks-board/trucks-board-types.ts";
 
+export type ApiMileageLocation = {
+  label: string;
+  date: string;
+  location: string;
+  order: number;
+};
+
 export type UpsertDriverMileageRequest = {
   companyUuid: string;
   driverMileageUuid?: string;
@@ -19,6 +26,7 @@ export type UpsertDriverMileageRequest = {
   deliveryDate?: string;
   representative?: string;
   representativeContactNumber?: string;
+  locations?: ApiMileageLocation[];
 };
 
 export type UpsertDriverMileageResponse = {
@@ -33,11 +41,9 @@ export type MileageResponse = {
   broker: string;
   representative: string;
   representativeContactNumber: string;
-  pickUpLocation: string;
-  pickUpDate: Date;
-  deliveryLocation: string;
-  deliveryDate: Date;
   loadStatus: LoadStatus;
+  idAcrossTimeframe: string;
+  locations: ApiMileageLocation[];
 };
 
 export type DriverMileageData = {

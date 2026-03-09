@@ -4,10 +4,10 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
 
-export const DateSelector: React.FC<{ label: string; date: Date }> = ({
-  label,
-  date,
-}) => {
+export const DateSelector: React.FC<{
+  label: string;
+  date: Date;
+}> = ({ label, date }) => {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs()
       .set("date", date.getDate())

@@ -7,7 +7,10 @@ import type {
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
-import { upsertDriverMileageCallbackFunction } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import {
+  fromMileageResponsesToMileageData,
+  upsertDriverMileageCallbackFunction,
+} from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import {
   BLANK_SPACE,
   BLANK_STRING,
@@ -21,6 +24,8 @@ import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { TABLE_DELIMITER_BOTTOM_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import { TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER } from "../../../../tailwind/tailwind-border-vars.ts";
 import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
+import { generateUuid } from "../../../../utils/global/general-utils.ts";
+import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 
 export const TrucksBoardRowContainer: React.FC<{
   companyId: string;
@@ -61,16 +66,18 @@ export const TrucksBoardRowContainer: React.FC<{
       driverUuid: driver.getUuid(),
       startDate: dispatcherMileageData.startDate,
       endDate: dispatcherMileageData.endDate,
-      mileageDate: mileageData.pickUpDate.toISOString().split("T")[0],
+      mileageDate: mileageData.date,
       revenue: mileageData.revenue ? parseFloat(mileageData.revenue) : ZERO,
       miles: mileageData.miles ? parseFloat(mileageData.miles) : ZERO,
       broker: mileageData.broker,
       representative: mileageData.representative,
-      pickUpLocation: mileageData.pickUpLocation,
-      deliveryLocation: mileageData.deliveryLocation,
-      pickUpDate: mileageData.pickUpDate.toISOString().split("T")[0],
-      deliveryDate: mileageData.deliveryDate.toISOString().split("T")[0],
       representativeContactNumber: representativeContactNumber,
+      locations: mileageData.locations.map((location) => ({
+        label: location.label,
+        date: toIsoDate(location.date),
+        location: location.location,
+        order: location.order,
+      })),
     };
     const upsertResponse = await upsertDriverMileage(upsertRequest);
 
@@ -80,23 +87,7 @@ export const TrucksBoardRowContainer: React.FC<{
     }
 
     const mileageResponses = upsertResponse.data!!.mileage;
-    const mileageDataList = mileageResponses.map((mileageResponse) => {
-      return {
-        revenue: `${mileageResponse.revenue}`,
-        miles: `${mileageResponse.miles}`,
-        broker: mileageResponse.broker,
-        representative: mileageResponse.representative,
-        representativeContactNumber:
-          mileageResponse.representativeContactNumber,
-        pickUpLocation: mileageResponse.pickUpLocation,
-        deliveryLocation: mileageResponse.deliveryLocation,
-        pickUpDate: new Date(mileageResponse.pickUpDate),
-        deliveryDate: new Date(mileageResponse.deliveryDate),
-        loadStatus: mileageResponse.loadStatus,
-        date: mileageResponse.date,
-      } as MileageData;
-    });
-
+    const mileageDataList = fromMileageResponsesToMileageData(mileageResponses);
     const currentWeek = updatedDays.slice(0, 7);
     const driverMileageUuid = upsertResponse.data!!.driverMileageUuid;
     setDispatcherMileageData((prevDispatcherMileageDataList) => {
@@ -156,7 +147,7 @@ export const TrucksBoardRowContainer: React.FC<{
       {(activator.isActive() || !hasDispatcher) &&
         dispatcherMileageData.driverMileageDataList.map(
           (driverMileageData, index) => (
-            <div key={driverMileageData.identifier}>
+            <div key={driverMileageData.identifier ?? generateUuid()}>
               <TrucksBoardDriverRow
                 days={updatedDays}
                 driverMileageData={driverMileageData}

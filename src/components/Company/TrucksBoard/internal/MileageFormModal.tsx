@@ -17,7 +17,6 @@ import {
   getErrorsIfPresent,
 } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
 import { MileageFormLoadLocations } from "./MileageFormLoadLocations.tsx";
-import { MileageFormDeliverablesDates } from "./MileageFormDeliverablesDates.tsx";
 import { MileageFormRevenue } from "./MileageFormRevenue.tsx";
 import { MileageFormBrokerData } from "./MileageFormBrokerData.tsx";
 import { createStateData } from "../../../../utils/global/props-utils.ts";
@@ -116,7 +115,6 @@ export const MileageFormModal: React.FC<{
         </p>
         <div className="flex flex-col gap-y-[1.15rem]">
           <MileageFormLoadLocations mileageStateData={mileageStateData} />
-          <MileageFormDeliverablesDates mileageData={mileageData} />
           <MileageFormRevenue mileageStateData={mileageStateData} />
           <MileageFormBrokerData mileageStateData={mileageStateData} />
         </div>
