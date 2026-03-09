@@ -5,21 +5,7 @@ import type {
   MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
-import {
-  TABLE_BORDER_BASE_COLOR,
-  TABLE_BOTTOM_BORDER_BASE_COLOR,
-  TABLE_DELIMITER_BOTTOM_COLOR,
-  TABLE_DELIMITER_LEFT_COLOR,
-  TABLE_DELIMITER_RIGHT_COLOR,
-  TABLE_RIGHT_BORDER_BASE_COLOR,
-} from "../../../../tailwind/tailwind-colors-vars.ts";
-import {
-  TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER,
-  TABLE_DELIMITER_THICKNESS_LEFT_BORDER,
-  TABLE_DELIMITER_THICKNESS_RIGHT_BORDER,
-  TABLE_NORMAL_THICKNESS_BOTTOM_BORDER,
-  TABLE_NORMAL_THICKNESS_RIGHT_BORDER,
-} from "../../../../tailwind/tailwind-border-vars.ts";
+import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import clsx from "clsx";
 import {
   TRUCKS_BOARD_GRID_LAYOUT,
@@ -33,8 +19,6 @@ export const TrucksBoardDriverRow: React.FC<{
   driverMileageData: DriverMileageData;
   upsertDriverMileageData: (driver: Driver, mileage: MileageData) => void;
   hasDispatcher: boolean;
-  isLastDriver: boolean;
-  isLastDriverForDispatcher: boolean;
   postDeleteUpdateFn: (
     driver: Driver,
     mileageData: MileageData[],
@@ -45,50 +29,30 @@ export const TrucksBoardDriverRow: React.FC<{
   driverMileageData,
   upsertDriverMileageData,
   hasDispatcher,
-  isLastDriver,
-  isLastDriverForDispatcher,
   postDeleteUpdateFn,
 }) => {
-  const prepareStyles = (dayIndex: number) => {
-    const xBorder =
-      dayIndex === 0
-        ? `${TABLE_DELIMITER_THICKNESS_LEFT_BORDER} ${TABLE_DELIMITER_LEFT_COLOR} ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR}`
-        : `border-l-0 ${TABLE_NORMAL_THICKNESS_RIGHT_BORDER} ${TABLE_RIGHT_BORDER_BASE_COLOR}`;
-    const rightBorder =
-      dayIndex === 6 &&
-      `${TABLE_DELIMITER_THICKNESS_RIGHT_BORDER} ${TABLE_DELIMITER_RIGHT_COLOR}`;
-    const bottomBorder =
-      isLastDriver && dayIndex <= 6
-        ? `${TABLE_DELIMITER_THICKNESS_BOTTOM_BORDER} ${TABLE_DELIMITER_BOTTOM_COLOR}`
-        : `${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BOTTOM_BORDER_BASE_COLOR}`;
-    return `${xBorder} ${rightBorder} ${bottomBorder}`;
-  };
-
   return (
     <div className="flex flex-row">
-      <div
-        className={clsx(`
+      <div className="flex flex-row">
+        <div
+          className={clsx(`
           grid ${TRUCKS_BOARD_GRID_LAYOUT} items-center ${TRUCKS_BOARD_ROW_HEIGHT} bg-gray-50 
-          ${TABLE_NORMAL_THICKNESS_BOTTOM_BORDER} ${TABLE_BORDER_BASE_COLOR}
+          border-b-1 ${TABLE_BORDER_BASE_COLOR}
           flex-shrink-0 ${TRUCKS_BOARD_TEXT_SIZE}
         `)}
-      >
-        <DriverRowMetadata
-          driverMileageData={driverMileageData}
-          hasDispatcher={hasDispatcher}
-          isLastDriverForDispatcher={isLastDriverForDispatcher}
-        />
-        {Array.from({ length: 14 }).map((_, index) => (
-          <DriverCalendarCell
-            key={index}
-            day={days[index]}
-            upsertDriverMileageData={upsertDriverMileageData}
-            driverMileageData={driverMileageData}
-            isEditable={hasDispatcher}
-            postDeleteUpdateFn={postDeleteUpdateFn}
-            styles={prepareStyles(index)}
-          />
-        ))}
+        >
+          <DriverRowMetadata driverMileageData={driverMileageData} />
+          {Array.from({ length: 14 }).map((_, index) => (
+            <DriverCalendarCell
+              key={index}
+              day={days[index]}
+              upsertDriverMileageData={upsertDriverMileageData}
+              driverMileageData={driverMileageData}
+              isEditable={hasDispatcher}
+              postDeleteUpdateFn={postDeleteUpdateFn}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
