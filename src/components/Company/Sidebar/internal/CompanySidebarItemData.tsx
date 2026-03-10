@@ -6,6 +6,7 @@ import {
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
 
 export const CompanySidebarItemData: React.FC<{
   label: string;
@@ -41,7 +42,7 @@ export const CompanySidebarItemData: React.FC<{
       )}
       {sidebarState === "closed" && isHovered && (
         <p
-          className={`ml-[0.6rem] px-2 text-[0.8rem] bg-black text-white ${SYSTEM_FONT_NORMAL} tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}
+          className={`ml-[0.6rem] px-2 text-[0.8rem] ${Z_INDEX_NORMAL_PRECEDENCE} bg-black text-white ${SYSTEM_FONT_NORMAL} tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}
         >
           {label}
         </p>

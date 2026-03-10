@@ -3,6 +3,7 @@ import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import { PLANNER_GRID_LAYOUT } from "../../../../constants/planner/planner-constants.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { Z_INDEX_LOW_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
 
 export const PlannerHeader: React.FC<{
   days: string[];
@@ -11,7 +12,7 @@ export const PlannerHeader: React.FC<{
   const columns = ["Role", "Revenue", "Miles", "RPM", ...updatedDays];
   return (
     <div
-      className={`sticky top-0 z-[1000] flex-shrink-0 bg-pale-blue grid ${PLANNER_GRID_LAYOUT} items-center w-fit h-[3.5rem] ${SYSTEM_FONT_BOLD} text-[0.85rem]`}
+      className={`sticky top-0 ${Z_INDEX_LOW_PRECEDENCE} flex-shrink-0 bg-pale-blue grid ${PLANNER_GRID_LAYOUT} items-center w-fit h-[3.5rem] ${SYSTEM_FONT_BOLD} text-[0.85rem]`}
     >
       {columns.map((column, index) => (
         <div
