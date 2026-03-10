@@ -4,7 +4,7 @@ import type {
   LoadData,
   LoadLocationData,
   LocationLabel,
-} from "../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../types/internal/planner/planner-types.ts";
 
 import type { Driver } from "../../types/internal/classes/Driver.ts";
 import {

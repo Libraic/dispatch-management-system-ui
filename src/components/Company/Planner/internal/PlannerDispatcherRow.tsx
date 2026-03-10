@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
-import chevronRightIcon from "../../../../assets/trucks-board/chevron-right.svg";
-import chevronDownIcon from "../../../../assets/trucks-board/chevron-down.svg";
-import type { DispatcherLoadData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+import chevronRightIcon from "../../../../assets/planner/chevron-right.svg";
+import chevronDownIcon from "../../../../assets/planner/chevron-down.svg";
+import type { DispatcherLoadData } from "../../../../types/internal/planner/planner-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import {
@@ -12,12 +12,12 @@ import {
 } from "../../../../utils/global/number-utils.ts";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import {
-  TRUCKS_BOARD_GRID_LAYOUT,
-  TRUCKS_BOARD_ROW_HEIGHT,
-  TRUCKS_BOARD_TEXT_SIZE,
-} from "../../../../constants/trucks-board/trucks-board-constants.ts";
+  PLANNER_GRID_LAYOUT,
+  PLANNER_ROW_HEIGHT,
+  PLANNER_TEXT_SIZE,
+} from "../../../../constants/planner/planner-constants.ts";
 
-export const TrucksBoardDispatcherRow: React.FC<{
+export const PlannerDispatcherRow: React.FC<{
   dispatcherLoadData: DispatcherLoadData;
   expander: Activator;
 }> = ({ dispatcherLoadData, expander }) => {
@@ -50,7 +50,7 @@ export const TrucksBoardDispatcherRow: React.FC<{
         />
       )}
       <div
-        className={`grid ${TRUCKS_BOARD_GRID_LAYOUT} ${TRUCKS_BOARD_TEXT_SIZE} items-center ${TRUCKS_BOARD_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
+        className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
       >
         <div
           className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR}`}

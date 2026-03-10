@@ -4,18 +4,18 @@ import {
   type DriverLoadData,
   type LoadData,
   LoadStatusColor,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import {
   extractUnfocusedCellInformation,
   fromLoadResponsesToLoadData,
-} from "../../../../utils/trucks-board/trucks-board-utils.ts";
+} from "../../../../utils/planner/planner-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { LoadFormModal } from "./LoadFormModal.tsx";
 import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
 import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
-import removeWhiteIcon from "../../../../assets/trucks-board/load-menu/remove-white.svg";
-import removeBlackIcon from "../../../../assets/trucks-board/load-menu/remove-black.svg";
+import removeWhiteIcon from "../../../../assets/planner/load-menu/remove-white.svg";
+import removeBlackIcon from "../../../../assets/planner/load-menu/remove-black.svg";
 import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
 import {
   deleteLoadDataBetweenDates,
@@ -23,7 +23,7 @@ import {
 } from "../../../../service/loadsService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
-import { TRUCKS_BOARD_ROW_HEIGHT } from "../../../../constants/trucks-board/trucks-board-constants.ts";
+import { PLANNER_ROW_HEIGHT } from "../../../../constants/planner/planner-constants.ts";
 import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 
@@ -100,7 +100,7 @@ export const DriverCalendarCell: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`border-r-1 ${TABLE_BORDER_BASE_COLOR} border-b-1 flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${TRUCKS_BOARD_ROW_HEIGHT} ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"} ${SYSTEM_FONT_BOLD} text-black/75`}
+        className={`border-r-1 ${TABLE_BORDER_BASE_COLOR} border-b-1 flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${PLANNER_ROW_HEIGHT} ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"} ${SYSTEM_FONT_BOLD} text-black/75`}
         onDoubleClick={() => {
           if (isEditable) {
             loadFormActivator.change();

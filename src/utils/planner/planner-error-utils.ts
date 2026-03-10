@@ -1,7 +1,7 @@
 import type {
   LoadData,
   LoadDataError,
-} from "../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../types/internal/planner/planner-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { validatePhoneNumber } from "../registration/registration-utils.ts";
 import { cleanPhoneNumber } from "../global/input-form-utils.ts";

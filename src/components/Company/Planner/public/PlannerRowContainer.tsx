@@ -1,16 +1,16 @@
-import { TrucksBoardDispatcherRow } from "../internal/TrucksBoardDispatcherRow.tsx";
+import { PlannerDispatcherRow } from "../internal/PlannerDispatcherRow.tsx";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import React from "react";
-import { TrucksBoardDriverRow } from "../internal/TrucksBoardDriverRow.tsx";
+import { PlannerDriverRow } from "../internal/PlannerDriverRow.tsx";
 import type {
   DispatcherLoadData,
   LoadData,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import {
   fromLoadResponsesToLoadData,
   upsertDriverLoadCallbackFunction,
-} from "../../../../utils/trucks-board/trucks-board-utils.ts";
+} from "../../../../utils/planner/planner-utils.ts";
 import {
   BLANK_SPACE,
   DOT,
@@ -24,7 +24,7 @@ import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 
-export const TrucksBoardRowContainer: React.FC<{
+export const PlannerRowContainer: React.FC<{
   companyId: string;
   days: string[];
   dispatcherLoadData: DispatcherLoadData;
@@ -115,7 +115,7 @@ export const TrucksBoardRowContainer: React.FC<{
   return (
     <div>
       {hasDispatcher && (
-        <TrucksBoardDispatcherRow
+        <PlannerDispatcherRow
           dispatcherLoadData={dispatcherLoadData}
           expander={activator}
         />
@@ -123,7 +123,7 @@ export const TrucksBoardRowContainer: React.FC<{
       {(activator.isActive() || !hasDispatcher) &&
         dispatcherLoadData.driverLoads.map((driverLoad) => (
           <div key={driverLoad.identifier ?? generateUuid()}>
-            <TrucksBoardDriverRow
+            <PlannerDriverRow
               days={updatedDays}
               driverLoadData={driverLoad}
               upsertDriverLoadData={upsertLoadFn}

@@ -8,7 +8,7 @@ import type {
   LoadData,
   LoadDataError,
   LoadLocationData,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
 import { LoadLocationContextMenu } from "../../../Common/Icon/LoadLocationContextMenu.tsx";
 import { useSortable } from "@dnd-kit/sortable";

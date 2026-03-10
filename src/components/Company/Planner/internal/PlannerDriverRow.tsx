@@ -3,18 +3,18 @@ import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import type {
   DriverLoadData,
   LoadData,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import clsx from "clsx";
 import {
-  TRUCKS_BOARD_GRID_LAYOUT,
-  TRUCKS_BOARD_ROW_HEIGHT,
-  TRUCKS_BOARD_TEXT_SIZE,
-} from "../../../../constants/trucks-board/trucks-board-constants.ts";
+  PLANNER_GRID_LAYOUT,
+  PLANNER_ROW_HEIGHT,
+  PLANNER_TEXT_SIZE,
+} from "../../../../constants/planner/planner-constants.ts";
 import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
 
-export const TrucksBoardDriverRow: React.FC<{
+export const PlannerDriverRow: React.FC<{
   days: string[];
   driverLoadData: DriverLoadData;
   upsertDriverLoadData: (driver: Driver, loadData: LoadData) => void;
@@ -36,9 +36,9 @@ export const TrucksBoardDriverRow: React.FC<{
       <div className="flex flex-row">
         <div
           className={clsx(`
-          grid ${TRUCKS_BOARD_GRID_LAYOUT} items-center ${TRUCKS_BOARD_ROW_HEIGHT} bg-gray-50 
+          grid ${PLANNER_GRID_LAYOUT} items-center ${PLANNER_ROW_HEIGHT} bg-gray-50 
           border-b-1 ${TABLE_BORDER_BASE_COLOR}
-          flex-shrink-0 ${TRUCKS_BOARD_TEXT_SIZE}
+          flex-shrink-0 ${PLANNER_TEXT_SIZE}
         `)}
         >
           <DriverRowMetadata driverLoadData={driverLoadData} />

@@ -67,7 +67,7 @@ export const TruckRegistrationPage = () => {
               setTruckErrorData(getBlankTruckRegistrationErrors());
               setTruckData(getBlankTruckRegistrationData());
               toastData.withSuccessMessage(
-                "The trucks-board was successfully created.",
+                "The planner was successfully created.",
               );
             } else if ("message" in errors) {
               setTruckErrorData(getBlankTruckRegistrationErrors());

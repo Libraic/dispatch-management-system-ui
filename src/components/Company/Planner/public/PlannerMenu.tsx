@@ -1,7 +1,7 @@
 import React from "react";
 import { CalendarIconWrapper } from "../../../Common/Calendar/internal/CalendarIconWrapper.tsx";
 
-export const TrucksBoardMenu: React.FC<{
+export const PlannerMenu: React.FC<{
   extractWeekFromCalendar: (date: Date[]) => void;
 }> = ({ extractWeekFromCalendar }) => {
   return (

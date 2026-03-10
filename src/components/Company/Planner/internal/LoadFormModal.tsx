@@ -7,7 +7,7 @@ import type {
   DriverLoadData,
   LoadData,
   LoadDataError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import {
   SYSTEM_FONT_NORMAL,
   SYSTEM_FONT_THIN,
@@ -15,12 +15,12 @@ import {
 import {
   getBlankLoadDataError,
   getErrorsIfPresent,
-} from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
+} from "../../../../utils/planner/planner-error-utils.ts";
 import { LoadFormLoadLocations } from "./LoadFormLoadLocations.tsx";
 import { LoadFormRevenue } from "./LoadFormRevenue.tsx";
 import { LoadFormBrokerData } from "./LoadFormBrokerData.tsx";
 import { createStateData } from "../../../../utils/global/props-utils.ts";
-import { getBlankLoadData } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { getBlankLoadData } from "../../../../utils/planner/planner-utils.ts";
 
 export const LoadFormModal: React.FC<{
   day: string;

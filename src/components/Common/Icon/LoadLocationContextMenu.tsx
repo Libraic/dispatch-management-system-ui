@@ -7,24 +7,24 @@ import type {
   LoadData,
   LoadDataError,
   LoadLocationData,
-} from "../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../types/internal/planner/planner-types.ts";
 import type { ContextMenuActionItem } from "../../../types/internal/common/context-menu-types.ts";
 import { useContextMenu } from "../../../hooks/useContextMenu.ts";
 import { createPortal } from "react-dom";
-import pickUpFocusedIcon from "../../../assets/trucks-board/locations/pickup-focused.svg";
-import pickUpUnfocusedIcon from "../../../assets/trucks-board/locations/pickup-unfocused.svg";
-import pickUpWhiteIcon from "../../../assets/trucks-board/locations/pickup-white.svg";
-import deliveryFocusedIcon from "../../../assets/trucks-board/locations/delivery-focused.svg";
-import deliveryUnfocusedIcon from "../../../assets/trucks-board/locations/delivery-unfocused.svg";
-import deliveryWhiteIcon from "../../../assets/trucks-board/locations/delivery-white.svg";
-import startingPointUnfocusedIcon from "../../../assets/trucks-board/locations/start-unfocused.svg";
-import startingPointFocusedIcon from "../../../assets/trucks-board/locations/start-focused.svg";
-import startingPointWhiteIcon from "../../../assets/trucks-board/locations/start-white.svg";
-import endingPointFocusedIcon from "../../../assets/trucks-board/locations/end-focused.svg";
-import endingPointUnfocusedIcon from "../../../assets/trucks-board/locations/end-unfocused.svg";
-import endingPointWhiteIcon from "../../../assets/trucks-board/locations/end-white.svg";
-import removeWhiteIcon from "../../../assets/trucks-board/locations/remove-white.svg";
-import removeUnfocusedIcon from "../../../assets/trucks-board/locations/remove-unfocused.svg";
+import pickUpFocusedIcon from "../../../assets/planner/locations/pickup-focused.svg";
+import pickUpUnfocusedIcon from "../../../assets/planner/locations/pickup-unfocused.svg";
+import pickUpWhiteIcon from "../../../assets/planner/locations/pickup-white.svg";
+import deliveryFocusedIcon from "../../../assets/planner/locations/delivery-focused.svg";
+import deliveryUnfocusedIcon from "../../../assets/planner/locations/delivery-unfocused.svg";
+import deliveryWhiteIcon from "../../../assets/planner/locations/delivery-white.svg";
+import startingPointUnfocusedIcon from "../../../assets/planner/locations/start-unfocused.svg";
+import startingPointFocusedIcon from "../../../assets/planner/locations/start-focused.svg";
+import startingPointWhiteIcon from "../../../assets/planner/locations/start-white.svg";
+import endingPointFocusedIcon from "../../../assets/planner/locations/end-focused.svg";
+import endingPointUnfocusedIcon from "../../../assets/planner/locations/end-unfocused.svg";
+import endingPointWhiteIcon from "../../../assets/planner/locations/end-white.svg";
+import removeWhiteIcon from "../../../assets/planner/locations/remove-white.svg";
+import removeUnfocusedIcon from "../../../assets/planner/locations/remove-unfocused.svg";
 
 const iconsResources: LocationLabelResource = {
   "Pick Up": { focused: pickUpFocusedIcon, unfocused: pickUpUnfocusedIcon },

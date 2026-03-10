@@ -2,7 +2,7 @@ import React from "react";
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
 import { setObjectStringField } from "../../../../utils/registration/registration-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";

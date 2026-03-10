@@ -4,11 +4,10 @@ export const NETWORK_ERROR =
   "A network error has occurred. Please try again later.";
 
 // Truck
-export const TRUCK_NUMBER_IS_MANDATORY =
-  "The trucks-board number cannot be empty.";
+export const TRUCK_NUMBER_IS_MANDATORY = "The planner number cannot be empty.";
 export const VIN_NUMBER_IS_MANDATORY = "The VIN number cannot be empty.";
-export const TRUCK_YEAR_INVALID = "The trucks-board year is not valid.";
-export const TRUCK_WEIGHT_INVALID = "The trucks-board weight is not valid.";
+export const TRUCK_YEAR_INVALID = "The planner year is not valid.";
+export const TRUCK_WEIGHT_INVALID = "The planner weight is not valid.";
 
 // Trailer
 export const TRAILER_NUMBER_IS_MANDATORY =

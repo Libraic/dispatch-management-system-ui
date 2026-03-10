@@ -2,7 +2,7 @@ import React from "react";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
-import dragIndicatorIcon from "../../../../assets/trucks-board/drag-indicator.svg";
+import dragIndicatorIcon from "../../../../assets/planner/drag-indicator.svg";
 
 export const Draggable: React.FC<{
   attributes: DraggableAttributes;

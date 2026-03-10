@@ -1,6 +1,6 @@
 import type { DriverData } from "../driver/driver-api-response-types.ts";
 import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
-import type { LoadStatus } from "../../internal/trucks-board/trucks-board-types.ts";
+import type { LoadStatus } from "../../internal/planner/planner-types.ts";
 
 export type ApiLoadLocation = {
   label: string;

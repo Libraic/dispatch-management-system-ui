@@ -12,7 +12,7 @@ import {
   TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
-  TRUCKS_BOARD,
+  PLANNER,
   TRUCKS_VIEW,
 } from "./constants/route/internal-route-constants.ts";
 import { CompaniesPage } from "./components/Pages/Company/CompaniesPage.tsx";
@@ -25,7 +25,7 @@ import { TruckRegistrationPage } from "./components/Pages/Truck/TruckRegistratio
 import { TrailersPage } from "./components/Pages/Trailer/TrailersPage.tsx";
 import { LandingPage } from "./components/Pages/Landing/LandingPage.tsx";
 import { HomePage } from "./components/Pages/Home/HomePage.tsx";
-import { TrucksBoardPage } from "./components/Pages/Company/TrucksBoardPage.tsx";
+import { PlannerPage } from "./components/Pages/Company/PlannerPage.tsx";
 import { DispatcherRegistrationPage } from "./components/Dispatcher/Registration/DispatcherRegistrationPage.tsx";
 
 export const App = () => {
@@ -41,8 +41,8 @@ export const App = () => {
         <Route path={COMPANIES_LIST} element={<CompaniesPage />} />
         <Route path={COMPANY_DASHBOARD} element={<CompanyDashboardPage />} />
         <Route
-          path={`${COMPANY_DASHBOARD}${TRUCKS_BOARD}`}
-          element={<TrucksBoardPage />}
+          path={`${COMPANY_DASHBOARD}${PLANNER}`}
+          element={<PlannerPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVERS_VIEW}`}

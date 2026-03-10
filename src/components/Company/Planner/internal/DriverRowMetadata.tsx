@@ -6,7 +6,7 @@ import {
   formatNumber,
 } from "../../../../utils/global/number-utils.ts";
 import React from "react";
-import type { DriverLoadData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { DriverLoadData } from "../../../../types/internal/planner/planner-types.ts";
 
 export const DriverRowMetadata: React.FC<{
   driverLoadData: DriverLoadData;

@@ -1,6 +1,6 @@
 import { IconButton } from "../../Button/IconButton.tsx";
-import calendarUnfocusedIcon from "../../../../assets/trucks-board/calendar-unfocused.svg";
-import calendarFocusedIcon from "../../../../assets/trucks-board/calendar-focused.svg";
+import calendarUnfocusedIcon from "../../../../assets/planner/calendar-unfocused.svg";
+import calendarFocusedIcon from "../../../../assets/planner/calendar-focused.svg";
 import * as React from "react";
 import { useRef } from "react";
 import { createPortal } from "react-dom";

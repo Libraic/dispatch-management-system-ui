@@ -1,21 +1,21 @@
-import { TrucksBoardHeader } from "../../Company/TrucksBoard/public/TrucksBoardHeader.tsx";
+import { PlannerHeader } from "../../Company/Planner/public/PlannerHeader.tsx";
 import { PageHeader } from "../../Common/Page/PageHeader.tsx";
-import { TRUCKS_BOARD_HEADER } from "../../../constants/common/header-constants.ts";
+import { PLANNER_HEADER } from "../../../constants/common/header-constants.ts";
 import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { useParams } from "react-router-dom";
-import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/public/TrucksBoardRowContainer.tsx";
+import { PlannerRowContainer } from "../../Company/Planner/public/PlannerRowContainer.tsx";
 import { useEffect, useState } from "react";
-import type { DispatcherLoadData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { DispatcherLoadData } from "../../../types/internal/planner/planner-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
-import { TrucksBoardMenu } from "../../Company/TrucksBoard/public/TrucksBoardMenu.tsx";
+import { PlannerMenu } from "../../Company/Planner/public/PlannerMenu.tsx";
 import { getLoadsByCompanyUuidAndStartAndEndDate } from "../../../service/loadsService.ts";
-import { convertGetDriverLoadsResponsesToDispatcherLoadDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
+import { convertGetDriverLoadsResponsesToDispatcherLoadDataList } from "../../../utils/api/planner/planner-api-utils.ts";
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
-import { TRUCKS_BOARD_VERTICAL_MARGIN } from "../../../constants/trucks-board/trucks-board-constants.ts";
-import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
+import { PLANNER_VERTICAL_MARGIN } from "../../../constants/planner/planner-constants.ts";
+import { getWeekWithDayAndMonth } from "../../../utils/planner/planner-utils.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 
-export const TrucksBoardPage = () => {
+export const PlannerPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const days = getWeekWithDayAndMonth(activeWeek);
   const companyId = useParams().companyUuid!!;
@@ -46,15 +46,13 @@ export const TrucksBoardPage = () => {
 
   return (
     <SidebarWrapper>
-      <PageHeader headerInfo={TRUCKS_BOARD_HEADER} />
-      <div
-        className={`flex flex-col mx-[3rem] ${TRUCKS_BOARD_VERTICAL_MARGIN}`}
-      >
-        <TrucksBoardMenu extractWeekFromCalendar={extractWeekFromCalendar} />
+      <PageHeader headerInfo={PLANNER_HEADER} />
+      <div className={`flex flex-col mx-[3rem] ${PLANNER_VERTICAL_MARGIN}`}>
+        <PlannerMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
-          <TrucksBoardHeader days={days} />
+          <PlannerHeader days={days} />
           {dispatcherLoads.map((dispatcherLoadData) => (
-            <TrucksBoardRowContainer
+            <PlannerRowContainer
               key={dispatcherLoadData.identifier}
               companyId={companyId}
               days={days}

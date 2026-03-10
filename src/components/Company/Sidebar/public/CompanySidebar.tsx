@@ -1,10 +1,10 @@
 import { CompanySidebarItem } from "../internal/CompanySidebarItem.tsx";
-import trucksBoardUnhoveredIcon from "../../../../assets/company-menu/trucks-board-unhovered.svg";
+import plannerUnhoveredIcon from "../../../../assets/company-menu/planner-unhovered.svg";
 import {
   DISPATCHERS_VIEW,
   DRIVERS_VIEW,
   TRAILERS_VIEW,
-  TRUCKS_BOARD,
+  PLANNER,
   TRUCKS_VIEW,
 } from "../../../../constants/route/internal-route-constants.ts";
 import { useParams } from "react-router-dom";
@@ -57,9 +57,9 @@ export const CompanySidebar: React.FC<{
         sidebarState={sidebarState}
       />
       <CompanySidebarItem
-        label="Trucks Board"
-        icon={trucksBoardUnhoveredIcon}
-        baseRoute={`${baseRoute}${TRUCKS_BOARD}`}
+        label="Planner"
+        icon={plannerUnhoveredIcon}
+        baseRoute={`${baseRoute}${PLANNER}`}
         sidebarState={sidebarState}
       />
       <CompanySidebarItem

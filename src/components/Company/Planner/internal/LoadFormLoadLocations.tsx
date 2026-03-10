@@ -2,7 +2,7 @@ import React from "react";
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import { LoadLocation } from "./LoadLocation.tsx";
 import { LoadLocationCreator } from "./LoadLocationCreator.tsx";

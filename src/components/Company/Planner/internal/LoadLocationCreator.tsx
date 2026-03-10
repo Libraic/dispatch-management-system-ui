@@ -1,13 +1,13 @@
-import addFocusedIcon from "../../../../assets/trucks-board/add-focused.svg";
-import addUnfocusedIcon from "../../../../assets/trucks-board/add-unfocused.svg";
+import addFocusedIcon from "../../../../assets/planner/add-focused.svg";
+import addUnfocusedIcon from "../../../../assets/planner/add-unfocused.svg";
 import { IconButton } from "../../../Common/Button/IconButton.tsx";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import React from "react";
-import { getBlankLocation } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { getBlankLocation } from "../../../../utils/planner/planner-utils.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const LoadLocationCreator: React.FC<{

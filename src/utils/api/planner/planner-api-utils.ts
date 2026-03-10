@@ -5,10 +5,10 @@ import type {
   DispatcherLoadData,
   DriverLoadData,
   LoadData,
-} from "../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../types/internal/planner/planner-types.ts";
 import type { GetDriverLoadsResponse } from "../../../types/api/loads/load-api-types.ts";
 import { Dispatcher } from "../../../types/internal/classes/Dispatcher.ts";
-import { fromLoadResponseToLoadData } from "../../trucks-board/trucks-board-utils.ts";
+import { fromLoadResponseToLoadData } from "../../planner/planner-utils.ts";
 
 export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
   getDriverLoadsResponses: GetDriverLoadsResponse[],

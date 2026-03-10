@@ -7,7 +7,7 @@ import { divideNumbersAsStrings } from "../../../../utils/global/number-utils.ts
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+} from "../../../../types/internal/planner/planner-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 
 export const LoadFormRevenue: React.FC<{

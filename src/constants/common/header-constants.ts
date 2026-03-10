@@ -1,5 +1,5 @@
-export const TRUCKS_BOARD_HEADER = {
-  header: "Trucks Board",
+export const PLANNER_HEADER = {
+  header: "Planner",
   subheader: "The Weekly Loads of Drivers",
 };
 
@@ -21,31 +21,6 @@ export const TRUCK_CREATION_HEADER = {
 export const TRAILER_CREATION_HEADER = {
   header: "Add Trailer",
   subheader: "Create a new Trailer in the system",
-};
-
-export const BASIC_INFORMATION_HEADER = {
-  header: "Personal Information",
-  subheader: "The personal data of the employee",
-};
-
-export const CONTACT_INFORMATION_HEADER = {
-  header: "Contact Information",
-  subheader: "The contact data of the employee",
-};
-
-export const EMPLOYMENT_INFORMATION_HEADER = {
-  header: "Employment Information",
-  subheader: "Data related to the employment",
-};
-
-export const NOTES_HEADER = {
-  header: "Notes",
-  subheader: "Additional information about the employee",
-};
-
-export const WORKLOAD_HEADER = {
-  header: "Workload",
-  subheader: "The working area of the employee",
 };
 
 export const DRIVERS_PAGE_HEADER = {
