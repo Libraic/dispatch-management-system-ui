@@ -7,10 +7,8 @@ import {
   DISPATCHERS_VIEW,
   DRIVER_REGISTRATION,
   DRIVERS_VIEW,
-  FINANCIAL_REPORTS,
   HOME,
   LANDING,
-  LOAD_BY_LOAD_REPORTS,
   TRAILER_REGISTRATION,
   TRAILERS_VIEW,
   TRUCK_REGISTRATION,
@@ -27,8 +25,6 @@ import { TruckRegistrationPage } from "./components/Pages/Truck/TruckRegistratio
 import { TrailersPage } from "./components/Pages/Trailer/TrailersPage.tsx";
 import { LandingPage } from "./components/Pages/Landing/LandingPage.tsx";
 import { HomePage } from "./components/Pages/Home/HomePage.tsx";
-import { FinancialReportsPage } from "./components/Pages/Company/Reports/FinancialReportsPage.tsx";
-import { LoadByLoadReportsPage } from "./components/Pages/Company/Reports/LoadByLoadReportsPage.tsx";
 import { TrucksBoardPage } from "./components/Pages/Company/TrucksBoardPage.tsx";
 import { DispatcherRegistrationPage } from "./components/Dispatcher/Registration/DispatcherRegistrationPage.tsx";
 
@@ -59,14 +55,6 @@ export const App = () => {
         <Route
           path={`${COMPANY_DASHBOARD}${DRIVER_REGISTRATION}`}
           element={<DriverRegistrationPage />}
-        />
-        <Route
-          path={`${COMPANY_DASHBOARD}${FINANCIAL_REPORTS}`}
-          element={<FinancialReportsPage />}
-        />
-        <Route
-          path={`${COMPANY_DASHBOARD}${LOAD_BY_LOAD_REPORTS}`}
-          element={<LoadByLoadReportsPage />}
         />
         <Route
           path={`${COMPANY_DASHBOARD}${TRUCKS_VIEW}`}
