@@ -4,46 +4,42 @@ import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type {
-  DriverMileageData,
-  MileageData,
-  MileageDataError,
+  DriverLoadData,
+  LoadData,
+  LoadDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import {
   SYSTEM_FONT_NORMAL,
   SYSTEM_FONT_THIN,
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import {
-  getBlankMileageDataError,
+  getBlankLoadDataError,
   getErrorsIfPresent,
 } from "../../../../utils/trucks-board/trucks-board-error-utils.ts";
-import { MileageFormLoadLocations } from "./MileageFormLoadLocations.tsx";
-import { MileageFormRevenue } from "./MileageFormRevenue.tsx";
-import { MileageFormBrokerData } from "./MileageFormBrokerData.tsx";
+import { LoadFormLoadLocations } from "./LoadFormLoadLocations.tsx";
+import { LoadFormRevenue } from "./LoadFormRevenue.tsx";
+import { LoadFormBrokerData } from "./LoadFormBrokerData.tsx";
 import { createStateData } from "../../../../utils/global/props-utils.ts";
-import { getBlankMileageData } from "../../../../utils/trucks-board/trucks-board-utils.ts";
+import { getBlankLoadData } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 
-export const MileageFormModal: React.FC<{
+export const LoadFormModal: React.FC<{
   day: string;
   deactivate: () => void;
-  driverMileageData: DriverMileageData;
-  upsertDriverMileageData: (
+  driverLoadData: DriverLoadData;
+  upsertLoadData: (
     driver: Driver,
-    mileageData: MileageData,
-    driverMileageIdentifier?: string,
+    loadData: LoadData,
+    loadIdentifier?: string,
   ) => void;
-}> = ({ day, deactivate, driverMileageData, upsertDriverMileageData }) => {
+}> = ({ day, deactivate, driverLoadData, upsertLoadData }) => {
   const [closing, setClosing] = useState(false);
-  const [mileageDataError, setMileageDataError] = useState<MileageDataError>(
-    getBlankMileageDataError(),
+  const [loadDataErrors, setLoadDataErrors] = useState<LoadDataError>(
+    getBlankLoadDataError(),
   );
-  const [mileageData, setMileageData] = useState<MileageData>(
-    driverMileageData.mileage.get(day) ?? getBlankMileageData(day),
+  const [loadData, setLoadData] = useState<LoadData>(
+    driverLoadData.loads.get(day) ?? getBlankLoadData(day),
   );
-  const mileageStateData = createStateData(
-    mileageData,
-    mileageDataError,
-    setMileageData,
-  );
+  const loadStateData = createStateData(loadData, loadDataErrors, setLoadData);
 
   const quitFn = useCallback(() => {
     setClosing(true);
@@ -51,25 +47,25 @@ export const MileageFormModal: React.FC<{
   }, [deactivate]);
 
   const submitFn = useCallback(() => {
-    const { isError, mileageErrors } = getErrorsIfPresent(mileageData);
+    const { isError, loadErrors } = getErrorsIfPresent(loadData);
     if (isError) {
-      setMileageDataError(mileageErrors);
+      setLoadDataErrors(loadErrors);
       return;
     }
 
-    upsertDriverMileageData(
-      driverMileageData.driver!!,
-      mileageData,
-      driverMileageData.identifier ?? undefined,
+    upsertLoadData(
+      driverLoadData.driver!!,
+      loadData,
+      driverLoadData.identifier ?? undefined,
     );
     setClosing(true);
     setTimeout(deactivate, 220);
   }, [
     deactivate,
-    driverMileageData.driver,
-    driverMileageData.identifier,
-    mileageData,
-    upsertDriverMileageData,
+    driverLoadData.driver,
+    driverLoadData.identifier,
+    loadData,
+    upsertLoadData,
   ]);
 
   useEffect(() => {
@@ -109,14 +105,14 @@ export const MileageFormModal: React.FC<{
           animate-[var(--animate-modal-enter)] ${closing ? "animate-[var(--animate-modal-exit)]" : ""}
         `}
       >
-        <p className={`${SYSTEM_FONT_NORMAL}`}>Mileage Form</p>
+        <p className={`${SYSTEM_FONT_NORMAL}`}>Load Form</p>
         <p className={`pb-[3rem] ${SYSTEM_FONT_THIN}`}>
-          Complete the required data for Mileage
+          Complete the required data for the Load
         </p>
         <div className="flex flex-col gap-y-[1.15rem]">
-          <MileageFormLoadLocations mileageStateData={mileageStateData} />
-          <MileageFormRevenue mileageStateData={mileageStateData} />
-          <MileageFormBrokerData mileageStateData={mileageStateData} />
+          <LoadFormLoadLocations loadStateData={loadStateData} />
+          <LoadFormRevenue loadStateData={loadStateData} />
+          <LoadFormBrokerData loadStateData={loadStateData} />
         </div>
         <div className="flex flex-row items-center justify-center mb-[1.3rem] gap-x-10">
           <SubmitButton actionText="Submit" action={submitFn} />

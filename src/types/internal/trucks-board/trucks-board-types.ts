@@ -14,7 +14,7 @@ export type LocationLabelResource = Record<
   { focused: string; unfocused: string }
 >;
 
-export interface MileageLocationData {
+export interface LoadLocationData {
   uuid: string;
   label: LocationLabel;
   date: Date;
@@ -22,20 +22,20 @@ export interface MileageLocationData {
   order: number;
 }
 
-export type MileageData = {
+export type LoadData = {
   revenue?: string;
   miles?: string;
   // TODO: Consider removing this in favor of pickUpDate
   date: string;
   broker: string;
   loadStatus: LoadStatus;
-  locations: MileageLocationData[];
+  locations: LoadLocationData[];
   idAcrossTimeframe?: string;
   representative?: string;
   representativeContactNumber?: string;
 };
 
-export type MileageDataError = {
+export type LoadDataError = {
   revenueError: string;
   milesError: string;
   brokerError: string;
@@ -44,22 +44,22 @@ export type MileageDataError = {
   representativeContactNumberError: string;
 };
 
-export type DriverMileageData = {
+export type DriverLoadData = {
   identifier: string | null;
   driver: Driver | null;
   totalRevenue: number;
   totalMiles: number;
-  mileage: Map<string, MileageData>;
+  loads: Map<string, LoadData>;
 };
 
-export type DispatcherMileageData = {
+export type DispatcherLoadData = {
   identifier: string;
   dispatcher: Dispatcher | null;
   startDate: string;
   endDate: string;
   totalRevenue: number;
   totalMiles: number;
-  driverMileageDataList: DriverMileageData[];
+  driverLoads: DriverLoadData[];
 };
 
 export const LoadStatusColor: Record<LoadStatus, string> = {

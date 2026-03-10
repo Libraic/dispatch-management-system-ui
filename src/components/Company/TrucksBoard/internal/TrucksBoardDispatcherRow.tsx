@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import chevronRightIcon from "../../../../assets/trucks-board/chevron-right.svg";
 import chevronDownIcon from "../../../../assets/trucks-board/chevron-down.svg";
-import type { DispatcherMileageData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { DispatcherLoadData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import {
@@ -18,19 +18,19 @@ import {
 } from "../../../../constants/trucks-board/trucks-board-constants.ts";
 
 export const TrucksBoardDispatcherRow: React.FC<{
-  dispatcherMileageData: DispatcherMileageData;
+  dispatcherLoadData: DispatcherLoadData;
   expander: Activator;
-}> = ({ dispatcherMileageData, expander }) => {
+}> = ({ dispatcherLoadData, expander }) => {
   const [activeIcon, setActiveIcon] = useState(BLANK_STRING);
 
   useEffect(() => {
-    if (dispatcherMileageData.driverMileageDataList.length === 0) {
+    if (dispatcherLoadData.driverLoads.length === 0) {
       setActiveIcon(BLANK_STRING);
     } else {
       const icon = expander.isActive() ? chevronDownIcon : chevronRightIcon;
       setActiveIcon(icon);
     }
-  }, [expander, dispatcherMileageData.driverMileageDataList.length]);
+  }, [expander, dispatcherLoadData.driverLoads.length]);
 
   return (
     <div className="relative flex flex-row">
@@ -55,26 +55,26 @@ export const TrucksBoardDispatcherRow: React.FC<{
         <div
           className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {dispatcherMileageData.dispatcher &&
-            dispatcherMileageData.dispatcher.renderOnForm()}
+          {dispatcherLoadData.dispatcher &&
+            dispatcherLoadData.dispatcher.renderOnForm()}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatCurrency(dispatcherMileageData.totalRevenue)}
+          {formatCurrency(dispatcherLoadData.totalRevenue)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatNumber(dispatcherMileageData.totalMiles)}
+          {formatNumber(dispatcherLoadData.totalMiles)}
         </div>
         <div
           className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatNumber(
             divide(
-              dispatcherMileageData.totalRevenue,
-              dispatcherMileageData.totalMiles,
+              dispatcherLoadData.totalRevenue,
+              dispatcherLoadData.totalMiles,
             ),
           )}
         </div>

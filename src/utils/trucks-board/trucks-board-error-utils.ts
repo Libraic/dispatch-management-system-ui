@@ -1,12 +1,12 @@
 import type {
-  MileageData,
-  MileageDataError,
+  LoadData,
+  LoadDataError,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { validatePhoneNumber } from "../registration/registration-utils.ts";
 import { cleanPhoneNumber } from "../global/input-form-utils.ts";
 
-export const getBlankMileageDataError = (): MileageDataError => {
+export const getBlankLoadDataError = (): LoadDataError => {
   return {
     revenueError: BLANK_STRING,
     milesError: BLANK_STRING,
@@ -17,24 +17,24 @@ export const getBlankMileageDataError = (): MileageDataError => {
   };
 };
 
-export const getErrorsIfPresent = (mileageData: MileageData) => {
+export const getErrorsIfPresent = (loadData: LoadData) => {
   let isError = false;
-  const mileageErrors: MileageDataError = getBlankMileageDataError();
-  if (mileageData.revenue === BLANK_STRING) {
+  const loadErrors: LoadDataError = getBlankLoadDataError();
+  if (loadData.revenue === BLANK_STRING) {
     isError = true;
-    mileageErrors.revenueError = "Revenue is required.";
+    loadErrors.revenueError = "Revenue is required.";
   }
-  if (mileageData.miles === BLANK_STRING) {
+  if (loadData.miles === BLANK_STRING) {
     isError = true;
-    mileageErrors.milesError = "Miles are required.";
+    loadErrors.milesError = "Miles are required.";
   }
-  if (mileageData.broker === BLANK_STRING) {
+  if (loadData.broker === BLANK_STRING) {
     isError = true;
-    mileageErrors.brokerError = "Broker is required.";
+    loadErrors.brokerError = "Broker is required.";
   }
 
-  const representativeContactNumber = mileageData.representativeContactNumber
-    ? cleanPhoneNumber(mileageData.representativeContactNumber)
+  const representativeContactNumber = loadData.representativeContactNumber
+    ? cleanPhoneNumber(loadData.representativeContactNumber)
     : BLANK_STRING;
   const representativeContactNumberValidation = validatePhoneNumber(
     representativeContactNumber,
@@ -42,9 +42,9 @@ export const getErrorsIfPresent = (mileageData: MileageData) => {
   );
   if (representativeContactNumberValidation !== BLANK_STRING) {
     isError = true;
-    mileageErrors.representativeContactNumberError =
+    loadErrors.representativeContactNumberError =
       representativeContactNumberValidation;
   }
 
-  return { isError, mileageErrors };
+  return { isError, loadErrors: loadErrors };
 };

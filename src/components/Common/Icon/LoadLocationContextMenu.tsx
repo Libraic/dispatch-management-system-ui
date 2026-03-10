@@ -4,9 +4,9 @@ import type { StateData } from "../../../types/internal/common/props-types.ts";
 import type {
   LocationLabel,
   LocationLabelResource,
-  MileageData,
-  MileageDataError,
-  MileageLocationData,
+  LoadData,
+  LoadDataError,
+  LoadLocationData,
 } from "../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { ContextMenuActionItem } from "../../../types/internal/common/context-menu-types.ts";
 import { useContextMenu } from "../../../hooks/useContextMenu.ts";
@@ -39,18 +39,18 @@ const iconsResources: LocationLabelResource = {
   },
 };
 
-export const MileageLocationContextMenu: React.FC<{
-  mileageStateData: StateData<MileageData, MileageDataError>;
-  mileageLocation: MileageLocationData;
-}> = ({ mileageStateData, mileageLocation }) => {
-  const icons = iconsResources[mileageLocation.label];
+export const LoadLocationContextMenu: React.FC<{
+  loadStateData: StateData<LoadData, LoadDataError>;
+  loadLocation: LoadLocationData;
+}> = ({ loadStateData, loadLocation }) => {
+  const icons = iconsResources[loadLocation.label];
   const [activeIcon, setActiveIcon] = useState(icons.unfocused);
   const contextMenu = useContextMenu();
 
   const labelSetterFunction = (locationLabel: LocationLabel) => {
-    mileageStateData.setData((prevData) => {
+    loadStateData.setData((prevData) => {
       const locations = prevData.locations.map((location) =>
-        location.uuid !== mileageLocation.uuid
+        location.uuid !== loadLocation.uuid
           ? location
           : {
               ...location,
@@ -62,12 +62,12 @@ export const MileageLocationContextMenu: React.FC<{
     });
   };
 
-  const mileageLocationRemover = () => {
-    mileageStateData.setData((prevData) => {
+  const loadLocationRemover = () => {
+    loadStateData.setData((prevData) => {
       let order = 0;
-      const locations: MileageLocationData[] = [];
+      const locations: LoadLocationData[] = [];
       for (const prevLocation of prevData.locations) {
-        if (prevLocation.uuid !== mileageLocation.uuid) {
+        if (prevLocation.uuid !== loadLocation.uuid) {
           locations.push({ ...prevLocation, order: order });
           order++;
         }
@@ -109,7 +109,7 @@ export const MileageLocationContextMenu: React.FC<{
       activeIcon: removeWhiteIcon,
       inactiveIcon: removeUnfocusedIcon,
       label: "Delete",
-      action: mileageLocationRemover,
+      action: loadLocationRemover,
       level: 2,
     },
   ];

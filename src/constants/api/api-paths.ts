@@ -32,9 +32,9 @@ export const TRUCKS_BASE_URL = BASE_URL + "/trucks";
 export const TRAILERS_BASE_URL = BASE_URL + "/trailers";
 
 /**
- * Drivers' Mileage-related API paths.
+ * Loads-related API paths.
  */
-export const DRIVERS_MILEAGE_BASE_URL = BASE_URL + "/drivers-mileage";
+export const LOADS_BASE_URL = BASE_URL + "/loads";
 
 /**
  * The API paths related to Reports.

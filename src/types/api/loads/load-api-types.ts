@@ -2,21 +2,21 @@ import type { DriverData } from "../driver/driver-api-response-types.ts";
 import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
 import type { LoadStatus } from "../../internal/trucks-board/trucks-board-types.ts";
 
-export type ApiMileageLocation = {
+export type ApiLoadLocation = {
   label: string;
   date: string;
   location: string;
   order: number;
 };
 
-export type UpsertDriverMileageRequest = {
+export type UpsertLoadRequest = {
   companyUuid: string;
-  driverMileageUuid?: string;
+  loadUuid?: string;
   dispatcherUuid?: string;
   driverUuid?: string;
   startDate?: string;
   endDate?: string;
-  mileageDate?: string;
+  loadDate?: string;
   revenue?: number;
   miles?: number;
   broker?: string;
@@ -26,15 +26,15 @@ export type UpsertDriverMileageRequest = {
   deliveryDate?: string;
   representative?: string;
   representativeContactNumber?: string;
-  locations?: ApiMileageLocation[];
+  locations?: ApiLoadLocation[];
 };
 
-export type UpsertDriverMileageResponse = {
-  driverMileageUuid: string;
-  mileage: MileageResponse[];
+export type UpsertLoadResponse = {
+  loadUuid: string;
+  loads: LoadResponse[];
 };
 
-export type MileageResponse = {
+export type LoadResponse = {
   date: string;
   revenue?: number;
   miles?: number;
@@ -43,16 +43,16 @@ export type MileageResponse = {
   representativeContactNumber: string;
   loadStatus: LoadStatus;
   idAcrossTimeframe: string;
-  locations: ApiMileageLocation[];
+  locations: ApiLoadLocation[];
 };
 
-export type DriverMileageData = {
-  driverMileageUuid: string | null;
+export type DriverLoadData = {
+  loadUuid: string | null;
   driver: DriverData;
-  mileage: MileageResponse[];
+  loads: LoadResponse[];
 };
 
-export type GetDriverMileageResponse = {
+export type GetDriverLoadsResponse = {
   dispatcher: DispatcherData;
-  driverMileageDataList: DriverMileageData[];
+  driverLoads: DriverLoadData[];
 };

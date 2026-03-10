@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DRIVERS_MILEAGE_BASE_URL } from "../constants/api/api-paths.ts";
+import { LOADS_BASE_URL } from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import {
   COMPANY_ID_QUERY_PARAM,
@@ -12,36 +12,33 @@ import type {
 } from "../types/api/common/api-response-types.ts";
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
-  GetDriverMileageResponse,
-  MileageResponse,
-  UpsertDriverMileageRequest,
-  UpsertDriverMileageResponse,
-} from "../types/api/driver-mileage/driver-mileage-api-types.ts";
+  GetDriverLoadsResponse,
+  LoadResponse,
+  UpsertLoadRequest,
+  UpsertLoadResponse,
+} from "../types/api/loads/load-api-types.ts";
 
-export const upsertDriverMileage = async (
-  upsertDriversMileageRequest: UpsertDriverMileageRequest,
-): Promise<ApiResponse<UpsertDriverMileageResponse, Error>> => {
+export const upsertLoad = async (
+  upsertLoadRequest: UpsertLoadRequest,
+): Promise<ApiResponse<UpsertLoadResponse, Error>> => {
   try {
-    const response = await axios.put(
-      DRIVERS_MILEAGE_BASE_URL,
-      upsertDriversMileageRequest,
-    );
+    const response = await axios.put(LOADS_BASE_URL, upsertLoadRequest);
     return response.data;
   } catch (error: any) {
     return handleApiErrors(error);
   }
 };
 
-export const getDriversMileageByCompanyUuidAndStartAndEndDate = async (
+export const getLoadsByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
   week: string[],
-): Promise<ApiResponse<GetDriverMileageResponse[], Error>> => {
+): Promise<ApiResponse<GetDriverLoadsResponse[], Error>> => {
   const startDate = week[0];
   const endDate = week[week.length - 1];
   try {
     const response = await axios.get<
-      ApiResponse<GetDriverMileageResponse[], Error>
-    >(DRIVERS_MILEAGE_BASE_URL, {
+      ApiResponse<GetDriverLoadsResponse[], Error>
+    >(LOADS_BASE_URL, {
       params: {
         [COMPANY_ID_QUERY_PARAM]: companyUuid,
         [START_DATE_QUERY_PARAM]: startDate,
@@ -54,10 +51,10 @@ export const getDriversMileageByCompanyUuidAndStartAndEndDate = async (
   }
 };
 
-export const getMileageData = async (
-  driverMileageUuid: string,
-): Promise<ApiResponse<MileageResponse[], Error>> => {
-  const url = DRIVERS_MILEAGE_BASE_URL + `/${driverMileageUuid}`;
+export const getLoadData = async (
+  loadUuid: string,
+): Promise<ApiResponse<LoadResponse[], Error>> => {
+  const url = LOADS_BASE_URL + `/${loadUuid}`;
   try {
     const response = await axios.get(url);
     return response.data;
@@ -66,18 +63,18 @@ export const getMileageData = async (
   }
 };
 
-export const deleteDriveMileageDataBetweenDates = async (
-  driverMileageUuid: string,
+export const deleteLoadDataBetweenDates = async (
+  loadUuid: string,
   idAcrossTimeframe: string,
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   const params = {
-    mileage: driverMileageUuid,
+    load: loadUuid,
     idAcrossTimeframe: idAcrossTimeframe,
   };
   try {
     const response = await axios.delete<
-      ApiResponse<GetDriverMileageResponse[], Error>
-    >(DRIVERS_MILEAGE_BASE_URL, {
+      ApiResponse<GetDriverLoadsResponse[], Error>
+    >(LOADS_BASE_URL, {
       params: params,
     });
     return response.data;

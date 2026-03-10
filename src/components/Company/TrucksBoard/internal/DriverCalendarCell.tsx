@@ -1,26 +1,26 @@
 import React from "react";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import {
-  type DriverMileageData,
+  type DriverLoadData,
+  type LoadData,
   LoadStatusColor,
-  type MileageData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import {
   extractUnfocusedCellInformation,
-  fromMileageResponsesToMileageData,
+  fromLoadResponsesToLoadData,
 } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
-import { MileageFormModal } from "./MileageFormModal.tsx";
+import { LoadFormModal } from "./LoadFormModal.tsx";
 import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
 import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
-import removeWhiteIcon from "../../../../assets/trucks-board/mileage-menu/remove-white.svg";
-import removeBlackIcon from "../../../../assets/trucks-board/mileage-menu/remove-black.svg";
+import removeWhiteIcon from "../../../../assets/trucks-board/load-menu/remove-white.svg";
+import removeBlackIcon from "../../../../assets/trucks-board/load-menu/remove-black.svg";
 import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
 import {
-  deleteDriveMileageDataBetweenDates,
-  getMileageData,
-} from "../../../../service/driverMileageService.ts";
+  deleteLoadDataBetweenDates,
+  getLoadData,
+} from "../../../../service/loadsService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { TRUCKS_BOARD_ROW_HEIGHT } from "../../../../constants/trucks-board/trucks-board-constants.ts";
@@ -29,30 +29,29 @@ import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-va
 
 export const DriverCalendarCell: React.FC<{
   day: string;
-  upsertDriverMileageData: (driver: Driver, mileage: MileageData) => void;
-  driverMileageData: DriverMileageData;
+  upsertDriverLoadData: (driver: Driver, loadData: LoadData) => void;
+  driverLoadData: DriverLoadData;
   isEditable: boolean;
   postDeleteUpdateFn: (
     driver: Driver,
-    mileageData: MileageData[],
-    driverMileageUuid?: string,
+    loadDataList: LoadData[],
+    loadUuid?: string,
   ) => void;
   styles?: string;
 }> = ({
   day,
-  upsertDriverMileageData,
-  driverMileageData,
+  upsertDriverLoadData,
+  driverLoadData,
   isEditable,
   postDeleteUpdateFn,
 }) => {
   const toast = useToast();
-  const mileageFormActivator = useActivator();
+  const loadFormActivator = useActivator();
   const unfocusedCellInformation = extractUnfocusedCellInformation(
     day,
-    driverMileageData,
+    driverLoadData,
   );
-  const loadStatus =
-    driverMileageData.mileage.get(day)?.loadStatus ?? "Unknown";
+  const loadStatus = driverLoadData.loads.get(day)?.loadStatus ?? "Unknown";
   const bgColor = LoadStatusColor[loadStatus];
   const contextMenu = useContextMenu();
   const actionItems: ContextMenuActionItem[] = [
@@ -61,44 +60,39 @@ export const DriverCalendarCell: React.FC<{
       inactiveIcon: removeBlackIcon,
       label: "Delete",
       action: async () => {
-        const uuid = driverMileageData.identifier;
+        const uuid = driverLoadData.identifier;
         if (!uuid) {
           return;
         }
 
-        const mileageData = driverMileageData.mileage.get(day);
-        if (!mileageData) {
+        const loadData = driverLoadData.loads.get(day);
+        if (!loadData) {
           return;
         }
 
-        if (!mileageData.idAcrossTimeframe) {
+        if (!loadData.idAcrossTimeframe) {
           return;
         }
 
-        const data = await deleteDriveMileageDataBetweenDates(
+        const data = await deleteLoadDataBetweenDates(
           uuid,
-          mileageData.idAcrossTimeframe,
+          loadData.idAcrossTimeframe,
         );
         if (data.error) {
           toast.withErrorMessage(data.error.message);
           return;
         }
 
-        const getMileageResponse = await getMileageData(uuid);
-        if (getMileageResponse.error) {
-          toast.withErrorMessage(getMileageResponse.error.message);
+        const getLoadResponse = await getLoadData(uuid);
+        if (getLoadResponse.error) {
+          toast.withErrorMessage(getLoadResponse.error.message);
           return;
         }
 
-        const mileageResponses = getMileageResponse.data!!;
-        const mileageDataList =
-          fromMileageResponsesToMileageData(mileageResponses);
-        const newUuid = mileageDataList.length === 0 ? undefined : uuid;
-        postDeleteUpdateFn(
-          driverMileageData.driver!!,
-          mileageDataList,
-          newUuid,
-        );
+        const loadResponses = getLoadResponse.data!!;
+        const loadDataList = fromLoadResponsesToLoadData(loadResponses);
+        const newUuid = loadDataList.length === 0 ? undefined : uuid;
+        postDeleteUpdateFn(driverLoadData.driver!!, loadDataList, newUuid);
       },
     },
   ];
@@ -109,7 +103,7 @@ export const DriverCalendarCell: React.FC<{
         className={`border-r-1 ${TABLE_BORDER_BASE_COLOR} border-b-1 flex items-center justify-center whitespace-pre-line text-center text-[0.75rem] ${isEditable && "hover:cursor-pointer"} select-none flex-shrink-0 ${TRUCKS_BOARD_ROW_HEIGHT} ${unfocusedCellInformation !== BLANK_STRING ? bgColor : "bg-red"} ${SYSTEM_FONT_BOLD} text-black/75`}
         onDoubleClick={() => {
           if (isEditable) {
-            mileageFormActivator.change();
+            loadFormActivator.change();
           }
         }}
         onContextMenu={contextMenu.open}
@@ -117,12 +111,12 @@ export const DriverCalendarCell: React.FC<{
       >
         {unfocusedCellInformation}
       </div>
-      {mileageFormActivator.isActive() && (
-        <MileageFormModal
+      {loadFormActivator.isActive() && (
+        <LoadFormModal
           day={day}
-          deactivate={mileageFormActivator.deactivate}
-          upsertDriverMileageData={upsertDriverMileageData}
-          driverMileageData={driverMileageData}
+          deactivate={loadFormActivator.deactivate}
+          upsertLoadData={upsertDriverLoadData}
+          driverLoadData={driverLoadData}
         />
       )}
       {contextMenu.isActive() && (

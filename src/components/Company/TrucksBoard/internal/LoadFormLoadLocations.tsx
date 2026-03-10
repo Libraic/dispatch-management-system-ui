@@ -1,11 +1,11 @@
 import React from "react";
 import type {
-  MileageData,
-  MileageDataError,
+  LoadData,
+  LoadDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
-import { MileageLocation } from "./MileageLocation.tsx";
-import { MileageLocationCreator } from "./MileageLocationCreator.tsx";
+import { LoadLocation } from "./LoadLocation.tsx";
+import { LoadLocationCreator } from "./LoadLocationCreator.tsx";
 import {
   DndContext,
   type DragEndEvent,
@@ -19,17 +19,17 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-export const MileageFormLoadLocations: React.FC<{
-  mileageStateData: StateData<MileageData, MileageDataError>;
-}> = ({ mileageStateData }) => {
-  const locations = mileageStateData.data.locations;
+export const LoadFormLoadLocations: React.FC<{
+  loadStateData: StateData<LoadData, LoadDataError>;
+}> = ({ loadStateData }) => {
+  const locations = loadStateData.data.locations;
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over || active.id === over.id) return;
 
-    mileageStateData.setData((prev) => {
+    loadStateData.setData((prev) => {
       const previousLocations = prev.locations;
       const oldIndex = previousLocations.findIndex((l) => l.uuid === active.id);
       const newIndex = previousLocations.findIndex((l) => l.uuid === over.id);
@@ -65,14 +65,14 @@ export const MileageFormLoadLocations: React.FC<{
         <div className="flex flex-col mb-[1.5rem] gap-y-[1rem]">
           <div className="flex flex-col gap-x-5 max-h-[19rem] pt-5 overflow-y-auto">
             {locations.map((location) => (
-              <MileageLocation
+              <LoadLocation
                 key={location.uuid}
-                mileageStateData={mileageStateData}
-                mileageLocation={location}
+                loadStateData={loadStateData}
+                loadLocation={location}
               />
             ))}
           </div>
-          <MileageLocationCreator mileageStateData={mileageStateData} />
+          <LoadLocationCreator loadStateData={loadStateData} />
         </div>
       </SortableContext>
     </DndContext>

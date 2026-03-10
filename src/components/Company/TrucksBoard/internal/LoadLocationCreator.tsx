@@ -3,23 +3,23 @@ import addUnfocusedIcon from "../../../../assets/trucks-board/add-unfocused.svg"
 import { IconButton } from "../../../Common/Button/IconButton.tsx";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import type {
-  MileageData,
-  MileageDataError,
+  LoadData,
+  LoadDataError,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import React from "react";
 import { getBlankLocation } from "../../../../utils/trucks-board/trucks-board-utils.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 
-export const MileageLocationCreator: React.FC<{
-  mileageStateData: StateData<MileageData, MileageDataError>;
-}> = ({ mileageStateData }) => {
+export const LoadLocationCreator: React.FC<{
+  loadStateData: StateData<LoadData, LoadDataError>;
+}> = ({ loadStateData }) => {
   return (
     <div className="flex flex-row items-center gap-x-[1rem]">
       <IconButton
         unfocusedResource={addUnfocusedIcon}
         focusedResource={addFocusedIcon}
         action={() => {
-          mileageStateData.setData((prevData) => ({
+          loadStateData.setData((prevData) => ({
             ...prevData,
             locations: [
               ...prevData.locations,

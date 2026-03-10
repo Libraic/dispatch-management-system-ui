@@ -1,8 +1,8 @@
 import React from "react";
 import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import type {
-  DriverMileageData,
-  MileageData,
+  DriverLoadData,
+  LoadData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
@@ -16,18 +16,18 @@ import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
 
 export const TrucksBoardDriverRow: React.FC<{
   days: string[];
-  driverMileageData: DriverMileageData;
-  upsertDriverMileageData: (driver: Driver, mileage: MileageData) => void;
+  driverLoadData: DriverLoadData;
+  upsertDriverLoadData: (driver: Driver, loadData: LoadData) => void;
   hasDispatcher: boolean;
   postDeleteUpdateFn: (
     driver: Driver,
-    mileageData: MileageData[],
-    driverMileageUuid?: string,
+    loadDataList: LoadData[],
+    loadUuid?: string,
   ) => void;
 }> = ({
   days,
-  driverMileageData,
-  upsertDriverMileageData,
+  driverLoadData,
+  upsertDriverLoadData,
   hasDispatcher,
   postDeleteUpdateFn,
 }) => {
@@ -41,13 +41,13 @@ export const TrucksBoardDriverRow: React.FC<{
           flex-shrink-0 ${TRUCKS_BOARD_TEXT_SIZE}
         `)}
         >
-          <DriverRowMetadata driverMileageData={driverMileageData} />
+          <DriverRowMetadata driverLoadData={driverLoadData} />
           {Array.from({ length: 14 }).map((_, index) => (
             <DriverCalendarCell
               key={index}
               day={days[index]}
-              upsertDriverMileageData={upsertDriverMileageData}
-              driverMileageData={driverMileageData}
+              upsertDriverLoadData={upsertDriverLoadData}
+              driverLoadData={driverLoadData}
               isEditable={hasDispatcher}
               postDeleteUpdateFn={postDeleteUpdateFn}
             />

@@ -1,6 +1,6 @@
 export const TRUCKS_BOARD_HEADER = {
   header: "Trucks Board",
-  subheader: "The Weekly Mileage of Drivers",
+  subheader: "The Weekly Loads of Drivers",
 };
 
 export const COMPANY_REGISTRATION_HEADER = {

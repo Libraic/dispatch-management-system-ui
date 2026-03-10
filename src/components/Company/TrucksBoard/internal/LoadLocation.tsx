@@ -5,22 +5,22 @@ import { LiveSearchInputForm } from "../../../Common/LiveSearch/public/LiveSearc
 import React from "react";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import type {
-  MileageData,
-  MileageDataError,
-  MileageLocationData,
+  LoadData,
+  LoadDataError,
+  LoadLocationData,
 } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
-import { MileageLocationContextMenu } from "../../../Common/Icon/MileageLocationContextMenu.tsx";
+import { LoadLocationContextMenu } from "../../../Common/Icon/LoadLocationContextMenu.tsx";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-export const MileageLocation: React.FC<{
-  mileageStateData: StateData<MileageData, MileageDataError>;
-  mileageLocation: MileageLocationData;
+export const LoadLocation: React.FC<{
+  loadStateData: StateData<LoadData, LoadDataError>;
+  loadLocation: LoadLocationData;
   errorMessage?: string;
-}> = ({ mileageStateData, mileageLocation, errorMessage }) => {
-  const label = mileageLocation.label;
-  const value = mileageLocation.location;
+}> = ({ loadStateData, loadLocation, errorMessage }) => {
+  const label = loadLocation.label;
+  const value = loadLocation.location;
   const dateLabel = `${label} Date`;
   const {
     attributes,
@@ -29,7 +29,7 @@ export const MileageLocation: React.FC<{
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: mileageLocation.uuid });
+  } = useSortable({ id: loadLocation.uuid });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -46,9 +46,9 @@ export const MileageLocation: React.FC<{
       {...listeners}
     >
       <div className="mb-[2.8rem]">
-        <MileageLocationContextMenu
-          mileageStateData={mileageStateData}
-          mileageLocation={mileageLocation}
+        <LoadLocationContextMenu
+          loadStateData={loadStateData}
+          loadLocation={loadLocation}
         />
       </div>
       <LiveSearchInputForm
@@ -56,10 +56,10 @@ export const MileageLocation: React.FC<{
         placeholder="Los Angeles, CA"
         value={value}
         saveData={(city: Renderable) => {
-          mileageStateData.setData((prevData) => ({
+          loadStateData.setData((prevData) => ({
             ...prevData,
             locations: prevData.locations.map((location) =>
-              mileageLocation.uuid !== location.uuid
+              loadLocation.uuid !== location.uuid
                 ? location
                 : {
                     ...location,
@@ -69,10 +69,10 @@ export const MileageLocation: React.FC<{
           }));
         }}
         cleanData={() => {
-          mileageStateData.setData((prevData) => ({
+          loadStateData.setData((prevData) => ({
             ...prevData,
             locations: prevData.locations.filter(
-              (location) => mileageLocation.uuid !== location.uuid,
+              (location) => loadLocation.uuid !== location.uuid,
             ),
           }));
         }}
@@ -82,7 +82,7 @@ export const MileageLocation: React.FC<{
         errorMessage={errorMessage}
         tailwindProperties={{ width: "w-[14.2rem]" }}
       />
-      <DateSelector label={dateLabel} date={mileageLocation.date} />
+      <DateSelector label={dateLabel} date={loadLocation.date} />
     </div>
   );
 };

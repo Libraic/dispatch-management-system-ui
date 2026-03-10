@@ -6,33 +6,33 @@ import {
   formatNumber,
 } from "../../../../utils/global/number-utils.ts";
 import React from "react";
-import type { DriverMileageData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { DriverLoadData } from "../../../../types/internal/trucks-board/trucks-board-types.ts";
 
 export const DriverRowMetadata: React.FC<{
-  driverMileageData: DriverMileageData;
-}> = ({ driverMileageData }) => {
+  driverLoadData: DriverLoadData;
+}> = ({ driverLoadData }) => {
   return (
     <React.Fragment>
       <div
         className={`flex items-center pl-[4rem] ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
-        {driverMileageData.driver && driverMileageData.driver.renderOnForm()}
+        {driverLoadData.driver && driverLoadData.driver.renderOnForm()}
       </div>
       <div
         className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
-        {formatCurrency(driverMileageData.totalRevenue)}
+        {formatCurrency(driverLoadData.totalRevenue)}
       </div>
       <div
         className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
-        {formatNumber(driverMileageData.totalMiles)}
+        {formatNumber(driverLoadData.totalMiles)}
       </div>
       <div
         className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_BORDER_BASE_COLOR} border-r-1`}
       >
         {formatNumber(
-          divide(driverMileageData.totalRevenue, driverMileageData.totalMiles),
+          divide(driverLoadData.totalRevenue, driverLoadData.totalMiles),
         )}
       </div>
     </React.Fragment>

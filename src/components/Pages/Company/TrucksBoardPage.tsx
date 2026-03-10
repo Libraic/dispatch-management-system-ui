@@ -5,11 +5,11 @@ import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { useParams } from "react-router-dom";
 import { TrucksBoardRowContainer } from "../../Company/TrucksBoard/public/TrucksBoardRowContainer.tsx";
 import { useEffect, useState } from "react";
-import type { DispatcherMileageData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
+import type { DispatcherLoadData } from "../../../types/internal/trucks-board/trucks-board-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
 import { TrucksBoardMenu } from "../../Company/TrucksBoard/public/TrucksBoardMenu.tsx";
-import { getDriversMileageByCompanyUuidAndStartAndEndDate } from "../../../service/driverMileageService.ts";
-import { convertGetDriverMileageResponseListToDispatcherMileageDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
+import { getLoadsByCompanyUuidAndStartAndEndDate } from "../../../service/loadsService.ts";
+import { convertGetDriverLoadsResponsesToDispatcherLoadDataList } from "../../../utils/api/trucks-board/trucks-board-api-utils.ts";
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 import { TRUCKS_BOARD_VERTICAL_MARGIN } from "../../../constants/trucks-board/trucks-board-constants.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/trucks-board/trucks-board-utils.ts";
@@ -19,8 +19,8 @@ export const TrucksBoardPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const days = getWeekWithDayAndMonth(activeWeek);
   const companyId = useParams().companyUuid!!;
-  const [dispatcherMileageDataList, setDispatcherMileageDataList] =
-    useState<DispatcherMileageData[]>(EMPTY_ARRAY);
+  const [dispatcherLoads, setDispatcherLoads] =
+    useState<DispatcherLoadData[]>(EMPTY_ARRAY);
 
   const extractWeekFromCalendar = (dates: Date[]) => {
     const vals = dates.map((date) => date.toLocaleDateString(DEFAULT_LOCALE));
@@ -28,21 +28,20 @@ export const TrucksBoardPage = () => {
   };
 
   useEffect(() => {
-    getDriversMileageByCompanyUuidAndStartAndEndDate(
-      companyId,
-      activeWeek,
-    ).then((data) => {
-      const getDriverMileageResponseList = data.data ?? EMPTY_ARRAY;
-      const startDate = activeWeek[0];
-      const endDate = activeWeek[activeWeek.length - 1];
-      const _dispatcherMileageDataList =
-        convertGetDriverMileageResponseListToDispatcherMileageDataList(
-          getDriverMileageResponseList,
-          startDate,
-          endDate,
-        );
-      setDispatcherMileageDataList(_dispatcherMileageDataList);
-    });
+    getLoadsByCompanyUuidAndStartAndEndDate(companyId, activeWeek).then(
+      (data) => {
+        const getDriverLoadsResponses = data.data ?? EMPTY_ARRAY;
+        const startDate = activeWeek[0];
+        const endDate = activeWeek[activeWeek.length - 1];
+        const dispatcherLoads =
+          convertGetDriverLoadsResponsesToDispatcherLoadDataList(
+            getDriverLoadsResponses,
+            startDate,
+            endDate,
+          );
+        setDispatcherLoads(dispatcherLoads);
+      },
+    );
   }, [companyId, activeWeek]);
 
   return (
@@ -54,13 +53,13 @@ export const TrucksBoardPage = () => {
         <TrucksBoardMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <TrucksBoardHeader days={days} />
-          {dispatcherMileageDataList.map((dispatcherMileageData) => (
+          {dispatcherLoads.map((dispatcherLoadData) => (
             <TrucksBoardRowContainer
-              key={dispatcherMileageData.identifier}
+              key={dispatcherLoadData.identifier}
               companyId={companyId}
               days={days}
-              dispatcherMileageData={dispatcherMileageData}
-              setDispatcherMileageData={setDispatcherMileageDataList}
+              dispatcherLoadData={dispatcherLoadData}
+              setDispatcherLoadData={setDispatcherLoads}
             />
           ))}
         </div>

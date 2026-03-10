@@ -1,9 +1,9 @@
 import type {
-  DispatcherMileageData,
-  DriverMileageData,
+  DispatcherLoadData,
+  DriverLoadData,
+  LoadData,
+  LoadLocationData,
   LocationLabel,
-  MileageData,
-  MileageLocationData,
 } from "../../types/internal/trucks-board/trucks-board-types.ts";
 
 import type { Driver } from "../../types/internal/classes/Driver.ts";
@@ -18,96 +18,91 @@ import {
 } from "../../constants/date/date-constants.ts";
 import { generateUuid } from "../global/general-utils.ts";
 import type {
-  ApiMileageLocation,
-  MileageResponse,
-} from "../../types/api/driver-mileage/driver-mileage-api-types.ts";
+  ApiLoadLocation,
+  LoadResponse,
+} from "../../types/api/loads/load-api-types.ts";
 
-export const upsertDriverMileageCallbackFunction = (
-  prevDispatcherMileageDataList: DispatcherMileageData[],
-  dispatcherMileageDataIdentifier: string,
-  mileageDataList: MileageData[],
+export const upsertDriverLoadCallbackFunction = (
+  prevDispatcherLoadDataList: DispatcherLoadData[],
+  dispatcherLoadDataIdentifier: string,
+  loadDataList: LoadData[],
   driver: Driver,
   currentWeek: string[],
-  driverMileageUuid?: string,
+  loadUuid?: string,
 ) => {
-  const newDispatcherMileageDataList: DispatcherMileageData[] = [];
-  for (const prevDispatcherMileageData of prevDispatcherMileageDataList) {
-    if (
-      prevDispatcherMileageData.identifier !== dispatcherMileageDataIdentifier
-    ) {
-      newDispatcherMileageDataList.push(prevDispatcherMileageData);
+  const newDispatcherLoadDataList: DispatcherLoadData[] = [];
+  for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
+    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
+      newDispatcherLoadDataList.push(prevDispatcherLoadData);
     } else {
-      const newDriverMileageDataList: DriverMileageData[] = [];
-      for (const currentDriverMileageData of prevDispatcherMileageData.driverMileageDataList) {
-        if (currentDriverMileageData.driver!!.getUuid() !== driver.getUuid()) {
-          newDriverMileageDataList.push(currentDriverMileageData);
+      const newDriverLoadDataList: DriverLoadData[] = [];
+      for (const currentLoadData of prevDispatcherLoadData.driverLoads) {
+        if (currentLoadData.driver!!.getUuid() !== driver.getUuid()) {
+          newDriverLoadDataList.push(currentLoadData);
         } else {
-          const newMileageData = new Map<string, MileageData>(
-            mileageDataList.map((mileageData) => [
-              mileageData.date,
-              mileageData,
-            ]),
+          const newLoadData = new Map<string, LoadData>(
+            loadDataList.map((loadData) => [loadData.date, loadData]),
           );
 
           let driverTotalMiles = 0;
           let driverTotalRevenue = 0;
-          for (const mileageDatum of newMileageData.values()) {
-            if (currentWeek.includes(mileageDatum.date)) {
-              driverTotalMiles += mileageDatum.miles
-                ? parseFloat(mileageDatum.miles)
+          for (const loadDatum of newLoadData.values()) {
+            if (currentWeek.includes(loadDatum.date)) {
+              driverTotalMiles += loadDatum.miles
+                ? parseFloat(loadDatum.miles)
                 : ZERO;
-              driverTotalRevenue += mileageDatum.revenue
-                ? parseFloat(mileageDatum.revenue)
+              driverTotalRevenue += loadDatum.revenue
+                ? parseFloat(loadDatum.revenue)
                 : ZERO;
             }
           }
 
-          newDriverMileageDataList.push({
-            ...currentDriverMileageData,
-            identifier: driverMileageUuid ?? null,
+          newDriverLoadDataList.push({
+            ...currentLoadData,
+            identifier: loadUuid ?? null,
             totalRevenue: driverTotalRevenue,
             totalMiles: driverTotalMiles,
             driver: driver,
-            mileage: newMileageData,
+            loads: newLoadData,
           });
         }
       }
 
       let dispatcherTotalMiles = 0;
       let dispatcherTotalRevenue = 0;
-      for (const driverMileageDatum of newDriverMileageDataList) {
-        dispatcherTotalMiles += driverMileageDatum.totalMiles;
-        dispatcherTotalRevenue += driverMileageDatum.totalRevenue;
+      for (const driverLoadDatum of newDriverLoadDataList) {
+        dispatcherTotalMiles += driverLoadDatum.totalMiles;
+        dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
       }
-      newDispatcherMileageDataList.push({
-        ...prevDispatcherMileageData,
+      newDispatcherLoadDataList.push({
+        ...prevDispatcherLoadData,
         totalMiles: dispatcherTotalMiles,
         totalRevenue: dispatcherTotalRevenue,
-        driverMileageDataList: newDriverMileageDataList,
+        driverLoads: newDriverLoadDataList,
       });
     }
   }
 
-  return newDispatcherMileageDataList;
+  return newDispatcherLoadDataList;
 };
 
 export const extractUnfocusedCellInformation = (
   day: string,
-  driverMileageData?: DriverMileageData,
+  driverLoadData?: DriverLoadData,
 ): string => {
-  if (!driverMileageData) {
+  if (!driverLoadData) {
     return BLANK_STRING;
   }
-  const mileageData = driverMileageData.mileage.get(day);
-  if (!mileageData) {
+  const loadData = driverLoadData.loads.get(day);
+  if (!loadData) {
     return BLANK_STRING;
   }
 
-  if (mileageData.locations.length === 0) {
-    return mileageData.loadStatus;
+  if (loadData.locations.length === 0) {
+    return loadData.loadStatus;
   }
 
-  return mileageData.locations
+  return loadData.locations
     .map((l) => l.location)
     .filter((loc): loc is string => Boolean(loc))
     .filter((loc, index, arr) => index === 0 || loc !== arr[index - 1])
@@ -118,7 +113,7 @@ export const getBlankLocation = (
   date: Date,
   order: number,
   label?: LocationLabel,
-): MileageLocationData => {
+): LoadLocationData => {
   return {
     uuid: generateUuid(),
     label: label ?? "Pick Up",
@@ -128,9 +123,7 @@ export const getBlankLocation = (
   };
 };
 
-export const getInitialMileageLocations = (
-  date: Date,
-): MileageLocationData[] => {
+export const getInitialLoadLocations = (date: Date): LoadLocationData[] => {
   const startingPoint = getBlankLocation(new Date(date), 0, "Starting Point");
   const pickUpLocation = getBlankLocation(new Date(date), 1, "Pick Up");
   const deliveryLocation = getBlankLocation(
@@ -141,7 +134,7 @@ export const getInitialMileageLocations = (
   return [startingPoint, pickUpLocation, deliveryLocation];
 };
 
-export const getBlankMileageData = (day: string): MileageData => {
+export const getBlankLoadData = (day: string): LoadData => {
   const date = new Date(day);
   return {
     broker: BLANK_STRING,
@@ -149,7 +142,7 @@ export const getBlankMileageData = (day: string): MileageData => {
     revenue: BLANK_STRING,
     miles: BLANK_STRING,
     loadStatus: "Covered",
-    locations: getInitialMileageLocations(date),
+    locations: getInitialLoadLocations(date),
   };
 };
 
@@ -168,35 +161,33 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
   });
 };
 
-export const fromMileageResponsesToMileageData = (
-  mileageResponses: MileageResponse[],
-) => {
-  return mileageResponses.map((mileageResponse) =>
-    fromMileageResponseToMileageData(mileageResponse),
+export const fromLoadResponsesToLoadData = (loadResponses: LoadResponse[]) => {
+  return loadResponses.map((loadResponse) =>
+    fromLoadResponseToLoadData(loadResponse),
   );
 };
 
-export const fromMileageResponseToMileageData = (
-  mileageResponse: MileageResponse,
-): MileageData => {
+export const fromLoadResponseToLoadData = (
+  loadResponse: LoadResponse,
+): LoadData => {
   return {
-    revenue: `${mileageResponse.revenue ?? BLANK_STRING}`,
-    miles: `${mileageResponse.miles ?? BLANK_STRING}`,
-    broker: mileageResponse.broker,
-    representative: mileageResponse.representative ?? undefined,
-    representativeContactNumber: mileageResponse.representativeContactNumber,
-    loadStatus: mileageResponse.loadStatus,
-    date: mileageResponse.date,
-    idAcrossTimeframe: mileageResponse.idAcrossTimeframe,
-    locations: mileageResponse.locations.map((location) =>
-      fromApiMileageLocationToMileageLocationData(location),
+    revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
+    miles: `${loadResponse.miles ?? BLANK_STRING}`,
+    broker: loadResponse.broker,
+    representative: loadResponse.representative ?? undefined,
+    representativeContactNumber: loadResponse.representativeContactNumber,
+    loadStatus: loadResponse.loadStatus,
+    date: loadResponse.date,
+    idAcrossTimeframe: loadResponse.idAcrossTimeframe,
+    locations: loadResponse.locations.map((location) =>
+      fromApiLoadLocationToLoadLocationData(location),
     ),
   };
 };
 
-export const fromApiMileageLocationToMileageLocationData = (
-  location: ApiMileageLocation,
-): MileageLocationData => {
+export const fromApiLoadLocationToLoadLocationData = (
+  location: ApiLoadLocation,
+): LoadLocationData => {
   return {
     uuid: generateUuid(),
     label: location.label as LocationLabel,
