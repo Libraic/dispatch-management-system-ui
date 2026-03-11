@@ -2,7 +2,7 @@ import * as React from "react";
 import errorIcon from "../../../../assets/global/error.svg";
 import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
 
-export const InputFormError: React.FC<{ errorMessage: string }> = ({
+export const ErrorContainer: React.FC<{ errorMessage: string }> = ({
   errorMessage,
 }) => {
   return (

@@ -1,10 +1,18 @@
 import type {
   LoadData,
   LoadDataError,
+  LoadLocationError,
 } from "../../types/internal/planner/planner-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { validatePhoneNumber } from "../registration/registration-utils.ts";
 import { cleanPhoneNumber } from "../global/input-form-utils.ts";
+
+export const getBlankLocationError = (): LoadLocationError => {
+  return {
+    locationError: BLANK_STRING,
+    dateError: BLANK_STRING,
+  };
+};
 
 export const getBlankLoadDataError = (): LoadDataError => {
   return {
@@ -14,6 +22,7 @@ export const getBlankLoadDataError = (): LoadDataError => {
     pickUpLocationError: BLANK_STRING,
     deliveryLocationError: BLANK_STRING,
     representativeContactNumberError: BLANK_STRING,
+    locationsErrors: new Map<string, LoadLocationError>(),
   };
 };
 
@@ -46,5 +55,21 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
       representativeContactNumberValidation;
   }
 
+  const locationErrors = new Map<string, LoadLocationError>();
+  for (let i = 0; i < loadData.locations.length; i++) {
+    const currentLocation = loadData.locations[i];
+    const locationError = getBlankLocationError();
+    if (i > 0 && currentLocation.date < loadData.locations[i - 1].date) {
+      isError = true;
+      locationError.dateError = "Locations must be in chronological order.";
+    }
+    if (currentLocation.location === BLANK_STRING) {
+      isError = true;
+      locationError.locationError = "Location is required.";
+    }
+    locationErrors.set(currentLocation.uuid, locationError);
+  }
+
+  loadErrors.locationsErrors = locationErrors;
   return { isError, loadErrors: loadErrors };
 };

@@ -3,11 +3,13 @@ import { TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import * as React from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { ErrorContainer } from "../InputForm/public/ErrorContainer.tsx";
 
 export const DateSelector: React.FC<{
   label: string;
   date: Date;
-}> = ({ label, date }) => {
+  errorMessage?: string;
+}> = ({ label, date, errorMessage }) => {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs()
       .set("date", date.getDate())
@@ -25,60 +27,62 @@ export const DateSelector: React.FC<{
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        label={label}
-        value={value}
-        onChange={handleChange}
-        enableAccessibleFieldDOMStructure={false}
-        slots={{ textField: TextField }}
-        slotProps={{
-          textField: {
-            variant: "outlined",
-            sx: {
-              width: 280,
-              marginBottom: "50px",
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "25px",
-                "& fieldset": {
-                  borderColor: "#f2f2f2",
-                  borderWidth: "2px",
+    <div className="flex flex-col min-h-[6.6rem]">
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label={label}
+          value={value}
+          onChange={handleChange}
+          enableAccessibleFieldDOMStructure={false}
+          slots={{ textField: TextField }}
+          slotProps={{
+            textField: {
+              variant: "outlined",
+              sx: {
+                width: 280,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "25px",
+                  "& fieldset": {
+                    borderColor: "#f2f2f2",
+                    borderWidth: "2px",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#f2f2f2",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#3a59d1",
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    padding: "1.15rem 1.2rem",
+                    fontFamily: "'Inter Tight', sans-serif",
+                    fontSize: "0.85rem",
+                  },
                 },
-                "&:hover fieldset": {
-                  borderColor: "#f2f2f2",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#3a59d1",
-                },
-                "& .MuiOutlinedInput-input": {
-                  padding: "1.15rem 1.2rem",
+                "& .MuiInputLabel-root": {
                   fontFamily: "'Inter Tight', sans-serif",
-                  fontSize: "0.85rem",
+                  fontSize: "0.95rem",
+                  fontWeight: 300,
+                  color: "black",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#3a59d1",
+                  fontWeight: 400,
                 },
               },
-              "& .MuiInputLabel-root": {
-                fontFamily: "'Inter Tight', sans-serif",
-                fontSize: "0.95rem",
-                fontWeight: 300,
-                color: "black",
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#3a59d1",
-                fontWeight: 400,
+            },
+            day: {
+              sx: {
+                // Selected day
+                "&.Mui-selected": {
+                  backgroundColor: "#3a59d1",
+                  color: "white",
+                },
               },
             },
-          },
-          day: {
-            sx: {
-              // Selected day
-              "&.Mui-selected": {
-                backgroundColor: "#3a59d1",
-                color: "white",
-              },
-            },
-          },
-        }}
-      />
-    </LocalizationProvider>
+          }}
+        />
+      </LocalizationProvider>
+      {errorMessage && <ErrorContainer errorMessage={errorMessage} />}
+    </div>
   );
 };

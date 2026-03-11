@@ -35,6 +35,11 @@ export type LoadData = {
   representativeContactNumber?: string;
 };
 
+export interface LoadLocationError {
+  locationError: string;
+  dateError: string;
+}
+
 export type LoadDataError = {
   revenueError: string;
   milesError: string;
@@ -42,6 +47,7 @@ export type LoadDataError = {
   pickUpLocationError: string;
   deliveryLocationError: string;
   representativeContactNumberError: string;
+  locationsErrors: Map<string, LoadLocationError>;
 };
 
 export type DriverLoadData = {

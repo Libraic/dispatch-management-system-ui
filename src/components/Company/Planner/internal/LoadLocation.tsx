@@ -17,8 +17,7 @@ import { CSS } from "@dnd-kit/utilities";
 export const LoadLocation: React.FC<{
   loadStateData: StateData<LoadData, LoadDataError>;
   loadLocation: LoadLocationData;
-  errorMessage?: string;
-}> = ({ loadStateData, loadLocation, errorMessage }) => {
+}> = ({ loadStateData, loadLocation }) => {
   const label = loadLocation.label;
   const value = loadLocation.location;
   const dateLabel = `${label} Date`;
@@ -36,6 +35,10 @@ export const LoadLocation: React.FC<{
     transition,
     opacity: isDragging ? 0.5 : 1,
   };
+
+  const errorMessages = loadStateData.error.locationsErrors.get(
+    loadLocation.uuid,
+  );
 
   return (
     <div
@@ -79,10 +82,14 @@ export const LoadLocation: React.FC<{
         entityType={Entity.CITY}
         constructor={City}
         isMandatory={true}
-        errorMessage={errorMessage}
+        errorMessage={errorMessages?.locationError}
         tailwindProperties={{ width: "w-[14.2rem]" }}
       />
-      <DateSelector label={dateLabel} date={loadLocation.date} />
+      <DateSelector
+        label={dateLabel}
+        date={loadLocation.date}
+        errorMessage={errorMessages?.dateError}
+      />
     </div>
   );
 };

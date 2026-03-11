@@ -1,6 +1,6 @@
 import { type ChangeEvent, forwardRef, useState } from "react";
 import { getInputTagNameFromLabel } from "../../../../utils/global/input-form-utils.ts";
-import { InputFormError } from "../public/InputFormError.tsx";
+import { ErrorContainer } from "../public/ErrorContainer.tsx";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import { InputFormLabel } from "./InputFormLabel.tsx";
@@ -86,7 +86,7 @@ export const InputFormContainer = forwardRef<
           />
         </div>
 
-        {errorMessage && <InputFormError errorMessage={errorMessage} />}
+        {errorMessage && <ErrorContainer errorMessage={errorMessage} />}
       </div>
     );
   },
