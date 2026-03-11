@@ -34,6 +34,7 @@ export const CompanySidebarItem: React.FC<{
           label={label}
           img={icon}
           sidebarState={sidebarState}
+          hasSubmenu={!!submenuData}
         />
       </div>
 
@@ -49,6 +50,7 @@ export const CompanySidebarItem: React.FC<{
                 <CompanySidebarItemData
                   label={submenu.label}
                   sidebarState={sidebarState}
+                  hasSubmenu={false}
                   route={submenu.route}
                   key={index}
                 />

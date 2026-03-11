@@ -11,9 +11,10 @@ import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../tailwind/tailwind-layout-
 export const CompanySidebarItemData: React.FC<{
   label: string;
   sidebarState: SidebarState;
+  hasSubmenu: boolean;
   route?: string;
   img?: string;
-}> = ({ label, sidebarState, route, img }) => {
+}> = ({ label, sidebarState, hasSubmenu, route, img }) => {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
@@ -27,7 +28,7 @@ export const CompanySidebarItemData: React.FC<{
         }
       }}
       onClick={() => {
-        setIsClicked((prev) => !prev);
+        setIsClicked((prev) => (hasSubmenu ? !prev : prev));
         if (route) {
           navigate(route);
         }
@@ -49,7 +50,7 @@ export const CompanySidebarItemData: React.FC<{
       )}
       {sidebarState === "open" && (
         <p
-          className={`text-[0.8rem] text-black ${isHovered ? SYSTEM_FONT_BOLD : SYSTEM_FONT_NORMAL} tracking-wide`}
+          className={`text-[0.8rem] text-black ${isHovered || isClicked ? SYSTEM_FONT_BOLD : SYSTEM_FONT_NORMAL} tracking-wide`}
         >
           {label}
         </p>
