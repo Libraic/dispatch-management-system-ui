@@ -1,5 +1,5 @@
-import type { Driver } from "../classes/Driver.ts";
-import type { Dispatcher } from "../classes/Dispatcher.ts";
+import type { DispatcherData } from "../../api/dispatcher/dispatcher-api-response-types.ts";
+import type { DriverData } from "../../api/driver/driver-api-response-types.ts";
 
 export type LoadStatus = "Covered" | "Transit" | "Empty" | "Unknown";
 
@@ -52,7 +52,7 @@ export type LoadDataError = {
 
 export type DriverLoadData = {
   identifier: string | null;
-  driver: Driver | null;
+  driver: DriverData;
   totalRevenue: number;
   totalMiles: number;
   loads: Map<string, LoadData>;
@@ -60,7 +60,7 @@ export type DriverLoadData = {
 
 export type DispatcherLoadData = {
   identifier: string;
-  dispatcher: Dispatcher | null;
+  dispatcher: DispatcherData;
   startDate: string;
   endDate: string;
   totalRevenue: number;

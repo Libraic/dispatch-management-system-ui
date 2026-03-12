@@ -1,4 +1,3 @@
-import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import { SubmitButton } from "../../../Common/Button/SubmitButton.tsx";
 import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
 import React, { useCallback, useEffect, useState } from "react";
@@ -21,13 +20,14 @@ import { LoadFormRevenue } from "./LoadFormRevenue.tsx";
 import { LoadFormBrokerData } from "./LoadFormBrokerData.tsx";
 import { createStateData } from "../../../../utils/global/props-utils.ts";
 import { getBlankLoadData } from "../../../../utils/planner/planner-utils.ts";
+import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 
 export const LoadFormModal: React.FC<{
   day: string;
   deactivate: () => void;
   driverLoadData: DriverLoadData;
   upsertLoadData: (
-    driver: Driver,
+    driver: DriverData,
     loadData: LoadData,
     loadIdentifier?: string,
   ) => void;

@@ -6,7 +6,6 @@ import type {
   DispatcherLoadData,
   LoadData,
 } from "../../../../types/internal/planner/planner-types.ts";
-import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import {
   fromLoadResponsesToLoadData,
   upsertDriverLoadCallbackFunction,
@@ -23,6 +22,7 @@ import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { toIsoDate } from "../../../../utils/global/date-utils.ts";
+import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 
 export const PlannerRowContainer: React.FC<{
   companyId: string;
@@ -42,7 +42,7 @@ export const PlannerRowContainer: React.FC<{
   const toast = useToast();
 
   const upsertLoadFn = async (
-    driver: Driver,
+    driver: DriverData,
     loadData: LoadData,
     driverLoadIdentifier?: string,
   ) => {
@@ -52,8 +52,8 @@ export const PlannerRowContainer: React.FC<{
     const upsertRequest: UpsertLoadRequest = {
       loadUuid: driverLoadIdentifier,
       companyUuid: companyId,
-      dispatcherUuid: dispatcherLoadData.dispatcher!!.getUuid(),
-      driverUuid: driver.getUuid(),
+      dispatcherUuid: dispatcherLoadData.dispatcher!!.uuid,
+      driverUuid: driver.uuid,
       startDate: dispatcherLoadData.startDate,
       endDate: dispatcherLoadData.endDate,
       loadDate: loadData.date,
@@ -94,7 +94,7 @@ export const PlannerRowContainer: React.FC<{
   };
 
   const postDeleteUpdateFn = (
-    driver: Driver,
+    driver: DriverData,
     loadDataList: LoadData[],
     loadUuid?: string,
   ) => {

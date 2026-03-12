@@ -16,6 +16,7 @@ import {
   PLANNER_ROW_HEIGHT,
   PLANNER_TEXT_SIZE,
 } from "../../../../constants/planner/planner-constants.ts";
+import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const PlannerDispatcherRow: React.FC<{
   dispatcherLoadData: DispatcherLoadData;
@@ -53,25 +54,31 @@ export const PlannerDispatcherRow: React.FC<{
         className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
       >
         <div
-          className={`flex items-center px-10 ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {dispatcherLoadData.dispatcher &&
-            dispatcherLoadData.dispatcher.renderOnForm()}
+          <p>
+            {dispatcherLoadData.dispatcher &&
+              dispatcherLoadData.dispatcher.name}
+          </p>
+          <p className="text-gray-500">
+            {dispatcherLoadData.dispatcher &&
+              formatPhoneNumber(dispatcherLoadData.dispatcher.phoneNumber)}
+          </p>
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatCurrency(dispatcherLoadData.totalRevenue)}
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatNumber(dispatcherLoadData.totalMiles)}
         </div>
         <div
-          className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatNumber(
+          {formatCurrency(
             divide(
               dispatcherLoadData.totalRevenue,
               dispatcherLoadData.totalMiles,

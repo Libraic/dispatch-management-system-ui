@@ -1,4 +1,3 @@
-import { Driver } from "../../../types/internal/classes/Driver.ts";
 import { ZERO } from "../../../constants/common/global-constants.ts";
 import { v4 as uuidv4 } from "uuid";
 import type {
@@ -7,7 +6,6 @@ import type {
   LoadData,
 } from "../../../types/internal/planner/planner-types.ts";
 import type { GetDriverLoadsResponse } from "../../../types/api/loads/load-api-types.ts";
-import { Dispatcher } from "../../../types/internal/classes/Dispatcher.ts";
 import { fromLoadResponseToLoadData } from "../../planner/planner-utils.ts";
 
 export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
@@ -38,7 +36,7 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
       totalMiles += driverTotalMiles;
       driverLoadDataList.push({
         identifier: driverLoadData.loadUuid,
-        driver: new Driver(driverLoadData.driver),
+        driver: driverLoadData.driver,
         totalRevenue: driverTotalRevenue,
         totalMiles: driverTotalMiles,
         loads: loadData,
@@ -47,10 +45,7 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
 
     dispatcherLoadDataList.push({
       identifier: uuidv4(),
-      dispatcher:
-        getDriverLoadResponse.dispatcher === null
-          ? null
-          : new Dispatcher(getDriverLoadResponse.dispatcher),
+      dispatcher: getDriverLoadResponse.dispatcher,
       totalMiles: totalMiles,
       totalRevenue: totalRevenue,
       startDate: startDate,

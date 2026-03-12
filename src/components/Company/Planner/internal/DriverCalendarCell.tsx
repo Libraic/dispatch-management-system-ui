@@ -5,7 +5,6 @@ import {
   type LoadData,
   LoadStatusColor,
 } from "../../../../types/internal/planner/planner-types.ts";
-import type { Driver } from "../../../../types/internal/classes/Driver.ts";
 import {
   extractUnfocusedCellInformation,
   fromLoadResponsesToLoadData,
@@ -26,14 +25,15 @@ import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { PLANNER_ROW_HEIGHT } from "../../../../constants/planner/planner-constants.ts";
 import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 
 export const DriverCalendarCell: React.FC<{
   day: string;
-  upsertDriverLoadData: (driver: Driver, loadData: LoadData) => void;
+  upsertDriverLoadData: (driver: DriverData, loadData: LoadData) => void;
   driverLoadData: DriverLoadData;
   isEditable: boolean;
   postDeleteUpdateFn: (
-    driver: Driver,
+    driver: DriverData,
     loadDataList: LoadData[],
     loadUuid?: string,
   ) => void;

@@ -7,6 +7,7 @@ import {
 } from "../../../../utils/global/number-utils.ts";
 import React from "react";
 import type { DriverLoadData } from "../../../../types/internal/planner/planner-types.ts";
+import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const DriverRowMetadata: React.FC<{
   driverLoadData: DriverLoadData;
@@ -14,24 +15,28 @@ export const DriverRowMetadata: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`flex items-center pl-[4rem] ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
+        className={`flex flex-col items-center justify-center pl-[3.5rem] ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
-        {driverLoadData.driver && driverLoadData.driver.renderOnForm()}
+        <p>{driverLoadData.driver && driverLoadData.driver.fullName}</p>
+        <p className="text-gray-500">
+          {driverLoadData.driver &&
+            formatPhoneNumber(driverLoadData.driver.phoneNumber)}
+        </p>
       </div>
       <div
-        className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+        className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
         {formatCurrency(driverLoadData.totalRevenue)}
       </div>
       <div
-        className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+        className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
         {formatNumber(driverLoadData.totalMiles)}
       </div>
       <div
-        className={`flex items-center px-5 ${SYSTEM_FONT_LIGHT} h-full ${TABLE_BORDER_BASE_COLOR} border-r-1`}
+        className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full ${TABLE_BORDER_BASE_COLOR} border-r-1`}
       >
-        {formatNumber(
+        {formatCurrency(
           divide(driverLoadData.totalRevenue, driverLoadData.totalMiles),
         )}
       </div>

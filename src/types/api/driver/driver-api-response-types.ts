@@ -5,9 +5,7 @@ export type DriverData = {
   fullName: string;
   truckNumber: string;
   trailerNumber: string;
-  email: string;
   phoneNumber: string;
-  documentsStatus: number;
   state: string;
   city: string;
 };

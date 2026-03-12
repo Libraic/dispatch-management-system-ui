@@ -1,5 +1,4 @@
 import React from "react";
-import { Driver } from "../../../../types/internal/classes/Driver.ts";
 import type {
   DriverLoadData,
   LoadData,
@@ -13,14 +12,15 @@ import {
   PLANNER_TEXT_SIZE,
 } from "../../../../constants/planner/planner-constants.ts";
 import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
+import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 
 export const PlannerDriverRow: React.FC<{
   days: string[];
   driverLoadData: DriverLoadData;
-  upsertDriverLoadData: (driver: Driver, loadData: LoadData) => void;
+  upsertDriverLoadData: (driver: DriverData, loadData: LoadData) => void;
   hasDispatcher: boolean;
   postDeleteUpdateFn: (
-    driver: Driver,
+    driver: DriverData,
     loadDataList: LoadData[],
     loadUuid?: string,
   ) => void;

@@ -5,8 +5,6 @@ import type {
   LoadLocationData,
   LocationLabel,
 } from "../../types/internal/planner/planner-types.ts";
-
-import type { Driver } from "../../types/internal/classes/Driver.ts";
 import {
   BLANK_STRING,
   HYPHEN,
@@ -21,12 +19,13 @@ import type {
   ApiLoadLocation,
   LoadResponse,
 } from "../../types/api/loads/load-api-types.ts";
+import type { DriverData } from "../../types/api/driver/driver-api-response-types.ts";
 
 export const upsertDriverLoadCallbackFunction = (
   prevDispatcherLoadDataList: DispatcherLoadData[],
   dispatcherLoadDataIdentifier: string,
   loadDataList: LoadData[],
-  driver: Driver,
+  driver: DriverData,
   currentWeek: string[],
   loadUuid?: string,
 ) => {
@@ -37,7 +36,7 @@ export const upsertDriverLoadCallbackFunction = (
     } else {
       const newDriverLoadDataList: DriverLoadData[] = [];
       for (const currentLoadData of prevDispatcherLoadData.driverLoads) {
-        if (currentLoadData.driver!!.getUuid() !== driver.getUuid()) {
+        if (currentLoadData.driver!!.uuid !== driver.uuid) {
           newDriverLoadDataList.push(currentLoadData);
         } else {
           const newLoadData = new Map<string, LoadData>(
