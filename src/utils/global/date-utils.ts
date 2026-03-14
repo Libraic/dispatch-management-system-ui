@@ -89,7 +89,17 @@ export const formatDate = (date: Date): string => {
 };
 
 export const toIsoDate = (date: Date): string => {
-  return date.toISOString().split("T")[0];
+  return /^\d{4}-\d{2}-\d{2}$/.test(date.toString())
+    ? date.toString()
+    : date.toISOString().split("T")[0];
+};
+
+export const getNextDayFromCurrentDate = (date: Date): Date => {
+  return new Date(date.getTime() + 24 * 60 * 60 * 1000);
+};
+
+export const normalizeDate = (date: Date): Date => {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 };
 
 /**

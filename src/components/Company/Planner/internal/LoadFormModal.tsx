@@ -23,7 +23,7 @@ import { getBlankLoadData } from "../../../../utils/planner/planner-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 
 export const LoadFormModal: React.FC<{
-  day: string;
+  day?: string;
   deactivate: () => void;
   driverLoadData: DriverLoadData;
   upsertLoadData: (
@@ -31,14 +31,17 @@ export const LoadFormModal: React.FC<{
     loadData: LoadData,
     loadIdentifier?: string,
   ) => void;
-}> = ({ day, deactivate, driverLoadData, upsertLoadData }) => {
+  loadUuid?: string;
+}> = ({ day, deactivate, driverLoadData, upsertLoadData, loadUuid }) => {
+  const initialLoadData =
+    loadUuid && driverLoadData
+      ? driverLoadData.loads.filter((load) => load.id === loadUuid)[0]
+      : getBlankLoadData(day!!);
   const [closing, setClosing] = useState(false);
   const [loadDataErrors, setLoadDataErrors] = useState<LoadDataError>(
     getBlankLoadDataError(),
   );
-  const [loadData, setLoadData] = useState<LoadData>(
-    driverLoadData.loads.get(day) ?? getBlankLoadData(day),
-  );
+  const [loadData, setLoadData] = useState<LoadData>(initialLoadData);
   const loadStateData = createStateData(loadData, loadDataErrors, setLoadData);
 
   const quitFn = useCallback(() => {
@@ -53,20 +56,10 @@ export const LoadFormModal: React.FC<{
       return;
     }
 
-    upsertLoadData(
-      driverLoadData.driver!!,
-      loadData,
-      driverLoadData.identifier ?? undefined,
-    );
+    upsertLoadData(driverLoadData.driver!!, loadData);
     setClosing(true);
     setTimeout(deactivate, 220);
-  }, [
-    deactivate,
-    driverLoadData.driver,
-    driverLoadData.identifier,
-    loadData,
-    upsertLoadData,
-  ]);
+  }, [deactivate, driverLoadData.driver, loadData, upsertLoadData]);
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");

@@ -1,7 +1,7 @@
 import type { DispatcherData } from "../../api/dispatcher/dispatcher-api-response-types.ts";
 import type { DriverData } from "../../api/driver/driver-api-response-types.ts";
 
-export type LoadStatus = "Covered" | "Transit" | "Empty" | "Unknown";
+export type LoadStatus = "Dispatched" | "Delivered";
 
 export type LocationLabel =
   | "Pick Up"
@@ -23,14 +23,14 @@ export interface LoadLocationData {
 }
 
 export type LoadData = {
-  revenue?: string;
-  miles?: string;
-  // TODO: Consider removing this in favor of pickUpDate
-  date: string;
+  id?: string;
+  revenue: string;
+  miles: string;
+  startDate: Date;
+  endDate: Date;
   broker: string;
   loadStatus: LoadStatus;
   locations: LoadLocationData[];
-  idAcrossTimeframe?: string;
   representative?: string;
   representativeContactNumber?: string;
 };
@@ -51,26 +51,29 @@ export type LoadDataError = {
 };
 
 export type DriverLoadData = {
-  identifier: string | null;
+  relationId: string;
   driver: DriverData;
   totalRevenue: number;
   totalMiles: number;
-  loads: Map<string, LoadData>;
+  loads: LoadData[];
 };
 
 export type DispatcherLoadData = {
   identifier: string;
   dispatcher: DispatcherData;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   totalRevenue: number;
   totalMiles: number;
   driverLoads: DriverLoadData[];
 };
 
+export const LoadBlockColor: Record<LoadStatus, string> = {
+  Dispatched: "bg-[#6495ed]/50",
+  Delivered: "bg-[#b2d3c2]/50",
+};
+
 export const LoadStatusColor: Record<LoadStatus, string> = {
-  Covered: "bg-[#5dbb63]",
-  Transit: "bg-[#b2d3c2]",
-  Empty: "bg-[#bd2734]",
-  Unknown: "bg-pale-blue",
+  Dispatched: "text-[#0041c2]",
+  Delivered: "text-[#234f1e]",
 };

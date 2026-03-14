@@ -2,13 +2,22 @@ import React from "react";
 import { SYSTEM_FONT_BOLD } from "../../../../tailwind/tailwind-font-vars.ts";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import { PLANNER_GRID_LAYOUT } from "../../../../constants/planner/planner-constants.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import {
+  BLANK_SPACE,
+  BLANK_STRING,
+  DOT,
+  HYPHEN,
+} from "../../../../constants/common/global-constants.ts";
 import { Z_INDEX_LOW_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
 
 export const PlannerHeader: React.FC<{
   days: string[];
 }> = ({ days }) => {
-  const updatedDays = days.map((day) => day.substring(0, day.length - 5));
+  const updatedDays = days.map((day) => {
+    const dayTokens = day.split(BLANK_SPACE);
+    const dateTokens = dayTokens[1].split(HYPHEN);
+    return `${dayTokens[0]} ${dateTokens[1]}.${dateTokens[2]}`;
+  });
   const columns = ["Role", "Revenue", "Miles", "RPM", ...updatedDays];
   return (
     <div

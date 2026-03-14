@@ -8,7 +8,6 @@ import type {
 import {
   BLANK_STRING,
   HYPHEN,
-  ZERO,
 } from "../../constants/common/global-constants.ts";
 import {
   DEFAULT_LOCALE,
@@ -20,14 +19,13 @@ import type {
   LoadResponse,
 } from "../../types/api/loads/load-api-types.ts";
 import type { DriverData } from "../../types/api/driver/driver-api-response-types.ts";
+import { getNextDayFromCurrentDate } from "../global/date-utils.ts";
 
 export const upsertDriverLoadCallbackFunction = (
   prevDispatcherLoadDataList: DispatcherLoadData[],
   dispatcherLoadDataIdentifier: string,
-  loadDataList: LoadData[],
+  newLoadDatum: LoadData,
   driver: DriverData,
-  currentWeek: string[],
-  loadUuid?: string,
 ) => {
   const newDispatcherLoadDataList: DispatcherLoadData[] = [];
   for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
@@ -35,30 +33,91 @@ export const upsertDriverLoadCallbackFunction = (
       newDispatcherLoadDataList.push(prevDispatcherLoadData);
     } else {
       const newDriverLoadDataList: DriverLoadData[] = [];
-      for (const currentLoadData of prevDispatcherLoadData.driverLoads) {
-        if (currentLoadData.driver!!.uuid !== driver.uuid) {
-          newDriverLoadDataList.push(currentLoadData);
+      for (const currentDriverLoadData of prevDispatcherLoadData.driverLoads) {
+        if (currentDriverLoadData.driver!!.uuid !== driver.uuid) {
+          newDriverLoadDataList.push(currentDriverLoadData);
         } else {
-          const newLoadData = new Map<string, LoadData>(
-            loadDataList.map((loadData) => [loadData.date, loadData]),
-          );
-
           let driverTotalMiles = 0;
           let driverTotalRevenue = 0;
-          for (const loadDatum of newLoadData.values()) {
-            if (currentWeek.includes(loadDatum.date)) {
-              driverTotalMiles += loadDatum.miles
-                ? parseFloat(loadDatum.miles)
-                : ZERO;
-              driverTotalRevenue += loadDatum.revenue
-                ? parseFloat(loadDatum.revenue)
-                : ZERO;
+          const loads = currentDriverLoadData.loads.filter(
+            (loadDatum) => loadDatum.id !== newLoadDatum.id,
+          );
+          loads.push(newLoadDatum);
+          const startDateObject = prevDispatcherLoadData.startDate;
+          const endDateObject = prevDispatcherLoadData.endDate;
+          for (const loadDatum of loads) {
+            const loadStartDate = loadDatum.startDate;
+            const loadEndDate = loadDatum.endDate;
+            if (
+              !(loadEndDate < startDateObject || endDateObject < loadStartDate)
+            ) {
+              driverTotalRevenue += parseFloat(loadDatum.revenue);
+              driverTotalMiles += parseFloat(loadDatum.miles);
             }
           }
 
           newDriverLoadDataList.push({
-            ...currentLoadData,
-            identifier: loadUuid ?? null,
+            ...currentDriverLoadData,
+            totalRevenue: driverTotalRevenue,
+            totalMiles: driverTotalMiles,
+            driver: driver,
+            loads: loads,
+          });
+        }
+      }
+
+      let dispatcherTotalMiles = 0;
+      let dispatcherTotalRevenue = 0;
+      for (const driverLoadDatum of newDriverLoadDataList) {
+        dispatcherTotalMiles += driverLoadDatum.totalMiles;
+        dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
+      }
+      newDispatcherLoadDataList.push({
+        ...prevDispatcherLoadData,
+        totalMiles: dispatcherTotalMiles,
+        totalRevenue: dispatcherTotalRevenue,
+        driverLoads: newDriverLoadDataList,
+      });
+    }
+  }
+
+  return newDispatcherLoadDataList;
+};
+
+export const updateLoadsAfterDeletions = (
+  prevDispatcherLoadDataList: DispatcherLoadData[],
+  dispatcherLoadDataIdentifier: string,
+  newLoadData: LoadData[],
+  driver: DriverData,
+) => {
+  const newDispatcherLoadDataList: DispatcherLoadData[] = [];
+  for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
+    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
+      newDispatcherLoadDataList.push(prevDispatcherLoadData);
+    } else {
+      const newDriverLoadDataList: DriverLoadData[] = [];
+      for (const currentDriverLoadData of prevDispatcherLoadData.driverLoads) {
+        if (currentDriverLoadData.driver!!.uuid !== driver.uuid) {
+          newDriverLoadDataList.push(currentDriverLoadData);
+        } else {
+          let driverTotalMiles = 0;
+          let driverTotalRevenue = 0;
+          for (const loadDatum of newLoadData) {
+            const startDateObject = prevDispatcherLoadData.startDate;
+            const endDateObject = prevDispatcherLoadData.endDate;
+            if (
+              !(
+                loadDatum.endDate < startDateObject ||
+                endDateObject < loadDatum.startDate
+              )
+            ) {
+              driverTotalRevenue += parseFloat(loadDatum.revenue);
+              driverTotalMiles += parseFloat(loadDatum.miles);
+            }
+          }
+
+          newDriverLoadDataList.push({
+            ...currentDriverLoadData,
             totalRevenue: driverTotalRevenue,
             totalMiles: driverTotalMiles,
             driver: driver,
@@ -85,29 +144,6 @@ export const upsertDriverLoadCallbackFunction = (
   return newDispatcherLoadDataList;
 };
 
-export const extractUnfocusedCellInformation = (
-  day: string,
-  driverLoadData?: DriverLoadData,
-): string => {
-  if (!driverLoadData) {
-    return BLANK_STRING;
-  }
-  const loadData = driverLoadData.loads.get(day);
-  if (!loadData) {
-    return BLANK_STRING;
-  }
-
-  if (loadData.locations.length === 0) {
-    return loadData.loadStatus;
-  }
-
-  return loadData.locations
-    .map((l) => l.location)
-    .filter((loc): loc is string => Boolean(loc))
-    .filter((loc, index, arr) => index === 0 || loc !== arr[index - 1])
-    .join(" -> ");
-};
-
 export const getBlankLocation = (
   date: Date,
   order: number,
@@ -126,7 +162,7 @@ export const getInitialLoadLocations = (date: Date): LoadLocationData[] => {
   const startingPoint = getBlankLocation(new Date(date), 0, "Starting Point");
   const pickUpLocation = getBlankLocation(new Date(date), 1, "Pick Up");
   const deliveryLocation = getBlankLocation(
-    new Date(date.getTime() + 24 * 60 * 60 * 1000),
+    getNextDayFromCurrentDate(date),
     2,
     "Delivery",
   );
@@ -134,14 +170,16 @@ export const getInitialLoadLocations = (date: Date): LoadLocationData[] => {
 };
 
 export const getBlankLoadData = (day: string): LoadData => {
-  const date = new Date(day);
+  const startDate = new Date(day);
+  const endDate = getNextDayFromCurrentDate(startDate);
   return {
     broker: BLANK_STRING,
-    date: day,
+    startDate: startDate,
+    endDate: endDate,
     revenue: BLANK_STRING,
     miles: BLANK_STRING,
-    loadStatus: "Covered",
-    locations: getInitialLoadLocations(date),
+    loadStatus: "Dispatched",
+    locations: getInitialLoadLocations(startDate),
   };
 };
 
@@ -156,28 +194,23 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
 
   return biweeklyTimeline.map((day, index) => {
     const dateParts = day.split(HYPHEN);
-    return `${WEEKDAYS[index % 7].substring(0, 3)} ${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+    return `${WEEKDAYS[index % 7].substring(0, 3)} ${dateParts[0]}${HYPHEN}${dateParts[1]}${HYPHEN}${dateParts[2]}`;
   });
-};
-
-export const fromLoadResponsesToLoadData = (loadResponses: LoadResponse[]) => {
-  return loadResponses.map((loadResponse) =>
-    fromLoadResponseToLoadData(loadResponse),
-  );
 };
 
 export const fromLoadResponseToLoadData = (
   loadResponse: LoadResponse,
 ): LoadData => {
   return {
+    id: loadResponse.loadUuid,
     revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
     miles: `${loadResponse.miles ?? BLANK_STRING}`,
     broker: loadResponse.broker,
     representative: loadResponse.representative ?? undefined,
     representativeContactNumber: loadResponse.representativeContactNumber,
     loadStatus: loadResponse.loadStatus,
-    date: loadResponse.date,
-    idAcrossTimeframe: loadResponse.idAcrossTimeframe,
+    startDate: loadResponse.startDate,
+    endDate: loadResponse.endDate,
     locations: loadResponse.locations.map((location) =>
       fromApiLoadLocationToLoadLocationData(location),
     ),

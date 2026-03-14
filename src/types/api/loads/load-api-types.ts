@@ -14,9 +14,6 @@ export type UpsertLoadRequest = {
   loadUuid?: string;
   dispatcherUuid?: string;
   driverUuid?: string;
-  startDate?: string;
-  endDate?: string;
-  loadDate?: string;
   revenue?: number;
   miles?: number;
   broker?: string;
@@ -31,23 +28,32 @@ export type UpsertLoadRequest = {
 
 export type UpsertLoadResponse = {
   loadUuid: string;
-  loads: LoadResponse[];
-};
-
-export type LoadResponse = {
-  date: string;
-  revenue?: number;
-  miles?: number;
+  startDate: Date;
+  endDate: Date;
+  revenue: number;
+  miles: number;
   broker: string;
   representative: string;
   representativeContactNumber: string;
   loadStatus: LoadStatus;
-  idAcrossTimeframe: string;
+  locations: ApiLoadLocation[];
+};
+
+export type LoadResponse = {
+  loadUuid: string;
+  revenue: number;
+  miles: number;
+  broker: string;
+  representative?: string;
+  representativeContactNumber?: string;
+  loadStatus: LoadStatus;
+  startDate: Date;
+  endDate: Date;
   locations: ApiLoadLocation[];
 };
 
 export type DriverLoadData = {
-  loadUuid: string | null;
+  relationUuid: string;
   driver: DriverData;
   loads: LoadResponse[];
 };

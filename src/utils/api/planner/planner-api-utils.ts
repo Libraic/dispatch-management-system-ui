@@ -21,13 +21,17 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
     let totalRevenue = 0.0;
     let totalMiles = 0.0;
     for (const driverLoadData of getDriverLoadResponse.driverLoads) {
-      const loadData = new Map<string, LoadData>();
+      const loads: LoadData[] = [];
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
       for (const loadDatum of driverLoadData.loads) {
-        loadData.set(loadDatum.date, fromLoadResponseToLoadData(loadDatum));
-        const dateObject = new Date(loadDatum.date);
-        if (dateObject >= startDateObject && dateObject <= endDateObject) {
+        loads.push(fromLoadResponseToLoadData(loadDatum));
+        if (
+          !(
+            loadDatum.endDate < startDateObject ||
+            endDateObject < loadDatum.startDate
+          )
+        ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
           driverTotalMiles += loadDatum.miles ?? ZERO;
         }
@@ -35,11 +39,11 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
       totalRevenue += driverTotalRevenue;
       totalMiles += driverTotalMiles;
       driverLoadDataList.push({
-        identifier: driverLoadData.loadUuid,
+        relationId: driverLoadData.relationUuid,
         driver: driverLoadData.driver,
         totalRevenue: driverTotalRevenue,
         totalMiles: driverTotalMiles,
-        loads: loadData,
+        loads: loads,
       });
     }
 
@@ -48,8 +52,8 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
       dispatcher: getDriverLoadResponse.dispatcher,
       totalMiles: totalMiles,
       totalRevenue: totalRevenue,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
       driverLoads: driverLoadDataList,
     });
   }

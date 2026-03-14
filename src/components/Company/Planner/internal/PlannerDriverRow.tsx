@@ -13,17 +13,14 @@ import {
 } from "../../../../constants/planner/planner-constants.ts";
 import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
+import { LoadBlock } from "./LoadBlock.tsx";
 
 export const PlannerDriverRow: React.FC<{
   days: string[];
   driverLoadData: DriverLoadData;
   upsertDriverLoadData: (driver: DriverData, loadData: LoadData) => void;
   hasDispatcher: boolean;
-  postDeleteUpdateFn: (
-    driver: DriverData,
-    loadDataList: LoadData[],
-    loadUuid?: string,
-  ) => void;
+  postDeleteUpdateFn: (driver: DriverData, loadDataList: LoadData[]) => void;
 }> = ({
   days,
   driverLoadData,
@@ -33,13 +30,13 @@ export const PlannerDriverRow: React.FC<{
 }) => {
   return (
     <div className="flex flex-row">
-      <div className="flex flex-row">
+      <div className="relative flex flex-row">
         <div
           className={clsx(`
-          grid ${PLANNER_GRID_LAYOUT} items-center ${PLANNER_ROW_HEIGHT} bg-gray-50 
-          border-b-1 ${TABLE_BORDER_BASE_COLOR}
-          flex-shrink-0 ${PLANNER_TEXT_SIZE}
-        `)}
+            grid ${PLANNER_GRID_LAYOUT} items-center ${PLANNER_ROW_HEIGHT} bg-gray-50
+            border-b-1 ${TABLE_BORDER_BASE_COLOR}
+            flex-shrink-0 ${PLANNER_TEXT_SIZE}
+          `)}
         >
           <DriverRowMetadata driverLoadData={driverLoadData} />
           {Array.from({ length: 14 }).map((_, index) => (
@@ -49,10 +46,22 @@ export const PlannerDriverRow: React.FC<{
               upsertDriverLoadData={upsertDriverLoadData}
               driverLoadData={driverLoadData}
               isEditable={hasDispatcher}
-              postDeleteUpdateFn={postDeleteUpdateFn}
             />
           ))}
         </div>
+        {driverLoadData.loads.length > 0 && (
+          <div className="absolute inset-0 pointer-events-none">
+            {driverLoadData.loads.map((load) => (
+              <LoadBlock
+                key={load.id}
+                driverLoadData={driverLoadData}
+                load={load}
+                days={days}
+                postDeleteUpdateFn={postDeleteUpdateFn}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,28 +1,28 @@
-import { PlannerDispatcherRow } from "../internal/PlannerDispatcherRow.tsx";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import React from "react";
-import { PlannerDriverRow } from "../internal/PlannerDriverRow.tsx";
 import type {
   DispatcherLoadData,
   LoadData,
 } from "../../../../types/internal/planner/planner-types.ts";
 import {
-  fromLoadResponsesToLoadData,
-  upsertDriverLoadCallbackFunction,
-} from "../../../../utils/planner/planner-utils.ts";
-import {
   BLANK_SPACE,
-  DOT,
   ZERO,
 } from "../../../../constants/common/global-constants.ts";
 import type { UpsertLoadRequest } from "../../../../types/api/loads/load-api-types.ts";
 import { upsertLoad } from "../../../../service/loadsService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
-import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
-import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
+import {
+  fromApiLoadLocationToLoadLocationData,
+  updateLoadsAfterDeletions,
+  upsertDriverLoadCallbackFunction,
+} from "../../../../utils/planner/planner-utils.ts";
+import { PlannerDispatcherRow } from "../internal/PlannerDispatcherRow.tsx";
+import { PlannerDriverRow } from "../internal/PlannerDriverRow.tsx";
+import { generateUuid } from "../../../../utils/global/general-utils.ts";
+import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 
 export const PlannerRowContainer: React.FC<{
   companyId: string;
@@ -32,31 +32,20 @@ export const PlannerRowContainer: React.FC<{
     React.SetStateAction<DispatcherLoadData[]>
   >;
 }> = ({ companyId, days, dispatcherLoadData, setDispatcherLoadData }) => {
-  const updatedDays = days.map((day) => {
-    const datePart = day.split(BLANK_SPACE)[1];
-    const dateParts = datePart.split(DOT);
-    return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-  });
+  const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
   const activator = useActivator();
   const dispatcherLoadIdentifier = dispatcherLoadData.identifier;
   const toast = useToast();
 
-  const upsertLoadFn = async (
-    driver: DriverData,
-    loadData: LoadData,
-    driverLoadIdentifier?: string,
-  ) => {
+  const upsertLoadFn = async (driver: DriverData, loadData: LoadData) => {
     const representativeContactNumber = loadData.representativeContactNumber
       ? cleanPhoneNumber(loadData.representativeContactNumber)
       : undefined;
     const upsertRequest: UpsertLoadRequest = {
-      loadUuid: driverLoadIdentifier,
+      loadUuid: loadData.id,
       companyUuid: companyId,
       dispatcherUuid: dispatcherLoadData.dispatcher!!.uuid,
       driverUuid: driver.uuid,
-      startDate: dispatcherLoadData.startDate,
-      endDate: dispatcherLoadData.endDate,
-      loadDate: loadData.date,
       revenue: loadData.revenue ? parseFloat(loadData.revenue) : ZERO,
       miles: loadData.miles ? parseFloat(loadData.miles) : ZERO,
       broker: loadData.broker,
@@ -76,37 +65,41 @@ export const PlannerRowContainer: React.FC<{
       return;
     }
 
-    const loadResponses = upsertResponse.data!!.loads;
-    const loadDataList = fromLoadResponsesToLoadData(loadResponses);
-    const currentWeek = updatedDays.slice(0, 7);
-    const loadUuid = upsertResponse.data!!.loadUuid;
+    const loadResponse = upsertResponse.data!!;
+    const upsertedLoadData: LoadData = {
+      id: loadResponse.loadUuid,
+      revenue: `${loadResponse.revenue}`,
+      miles: `${loadResponse.miles}`,
+      broker: loadResponse.broker,
+      representative: loadResponse.representative ?? undefined,
+      representativeContactNumber:
+        loadResponse.representativeContactNumber ?? undefined,
+      loadStatus: loadResponse.loadStatus,
+      startDate: loadResponse.startDate,
+      endDate: loadResponse.endDate,
+      locations: loadResponse.locations.map((location) =>
+        fromApiLoadLocationToLoadLocationData(location),
+      ),
+    };
+
     setDispatcherLoadData((prevDispatcherLoadDataList) => {
       return upsertDriverLoadCallbackFunction(
         prevDispatcherLoadDataList,
         dispatcherLoadIdentifier,
-        loadDataList,
+        upsertedLoadData,
         driver,
-        currentWeek,
-        loadUuid,
       );
     });
     activator.activate();
   };
 
-  const postDeleteUpdateFn = (
-    driver: DriverData,
-    loadDataList: LoadData[],
-    loadUuid?: string,
-  ) => {
-    const currentWeek = updatedDays.slice(0, 7);
+  const postDeleteUpdateFn = (driver: DriverData, loadDataList: LoadData[]) => {
     setDispatcherLoadData((prevDispatcherLoadDataList) => {
-      return upsertDriverLoadCallbackFunction(
+      return updateLoadsAfterDeletions(
         prevDispatcherLoadDataList,
         dispatcherLoadIdentifier,
         loadDataList,
         driver,
-        currentWeek,
-        loadUuid,
       );
     });
   };
@@ -122,7 +115,7 @@ export const PlannerRowContainer: React.FC<{
       )}
       {(activator.isActive() || !hasDispatcher) &&
         dispatcherLoadData.driverLoads.map((driverLoad) => (
-          <div key={driverLoad.identifier ?? generateUuid()}>
+          <div key={driverLoad.relationId ?? generateUuid()}>
             <PlannerDriverRow
               days={updatedDays}
               driverLoadData={driverLoad}
