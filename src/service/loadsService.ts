@@ -1,8 +1,11 @@
 import axios from "axios";
-import { LOADS_BASE_URL } from "../constants/api/api-paths.ts";
+import {
+  LOADS_BASE_URL,
+  LOADS_COMPANIES_URL,
+  LOADS_RELATIONS_URL,
+} from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import {
-  COMPANY_ID_QUERY_PARAM,
   END_DATE_QUERY_PARAM,
   START_DATE_QUERY_PARAM,
 } from "../constants/api/api-query-constants.ts";
@@ -17,6 +20,7 @@ import type {
   UpsertLoadRequest,
   UpsertLoadResponse,
 } from "../types/api/loads/load-api-types.ts";
+import { toIsoDate } from "../utils/global/date-utils.ts";
 
 export const upsertLoad = async (
   upsertLoadRequest: UpsertLoadRequest,
@@ -34,13 +38,14 @@ export const getLoadsByCompanyUuidAndStartAndEndDate = async (
   week: string[],
 ): Promise<ApiResponse<GetDriverLoadsResponse[], Error>> => {
   const startDate = week[0];
-  const endDate = week[week.length - 1];
+  const endDateObject = new Date(week[week.length - 1]);
+  endDateObject.setDate(endDateObject.getDate() + 7);
+  const endDate = toIsoDate(endDateObject);
   try {
     const response = await axios.get<
       ApiResponse<GetDriverLoadsResponse[], Error>
-    >(LOADS_BASE_URL, {
+    >(LOADS_COMPANIES_URL + `/${companyUuid}`, {
       params: {
-        [COMPANY_ID_QUERY_PARAM]: companyUuid,
         [START_DATE_QUERY_PARAM]: startDate,
         [END_DATE_QUERY_PARAM]: endDate,
       },
@@ -53,30 +58,31 @@ export const getLoadsByCompanyUuidAndStartAndEndDate = async (
 
 export const getLoadData = async (
   loadUuid: string,
+  startDate: Date,
+  endDate: Date,
 ): Promise<ApiResponse<LoadResponse[], Error>> => {
-  const url = LOADS_BASE_URL + `/${loadUuid}`;
+  const url = LOADS_RELATIONS_URL + `/${loadUuid}`;
+  const params = {
+    startDate: toIsoDate(startDate),
+    endDate: toIsoDate(endDate),
+  };
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      params: params,
+    });
     return response.data;
   } catch (error) {
     return handleApiErrors(error);
   }
 };
 
-export const deleteLoadDataBetweenDates = async (
+export const deleteLoadByUuid = async (
   loadUuid: string,
-  idAcrossTimeframe: string,
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
-  const params = {
-    load: loadUuid,
-    idAcrossTimeframe: idAcrossTimeframe,
-  };
   try {
     const response = await axios.delete<
       ApiResponse<GetDriverLoadsResponse[], Error>
-    >(LOADS_BASE_URL, {
-      params: params,
-    });
+    >(LOADS_BASE_URL + `/${loadUuid}`);
     return response.data;
   } catch (error) {
     return handleApiErrors(error);

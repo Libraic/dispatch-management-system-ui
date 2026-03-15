@@ -33,28 +33,29 @@ export const PlannerDispatcherRow: React.FC<{
     }
   }, [expander, dispatcherLoadData.driverLoads.length]);
 
+  const handleOnClickFn = () => {
+    setActiveIcon((prev) => {
+      return prev === chevronRightIcon ? chevronDownIcon : chevronRightIcon;
+    });
+    expander.change();
+  };
+
   return (
     <div className="relative flex flex-row">
       {activeIcon !== BLANK_STRING && (
         <img
           src={activeIcon}
           alt="chevron-right"
-          className="absolute w-7 h-7 z-[999] mt-[1.3rem] left-[0.5rem] hover:cursor-pointer"
-          onClick={() => {
-            setActiveIcon((prev) => {
-              return prev === chevronRightIcon
-                ? chevronDownIcon
-                : chevronRightIcon;
-            });
-            expander.change();
-          }}
+          className="absolute w-7 h-7 z-[999] mt-[1.3rem] pr-[0.5rem] left-[0.5rem] hover:cursor-pointer"
+          onClick={handleOnClickFn}
         />
       )}
       <div
         className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
       >
         <div
-          className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR} hover:cursor-pointer select-none`}
+          onClick={handleOnClickFn}
         >
           <p>
             {dispatcherLoadData.dispatcher &&

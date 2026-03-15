@@ -15,7 +15,7 @@ export const DriverRowMetadata: React.FC<{
   return (
     <React.Fragment>
       <div
-        className={`flex flex-col items-center justify-center pl-[3.5rem] ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
+        className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
         <p>{driverLoadData.driver && driverLoadData.driver.fullName}</p>
         <p className="text-gray-500">
