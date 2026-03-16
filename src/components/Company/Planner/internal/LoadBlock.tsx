@@ -101,7 +101,11 @@ export const LoadBlock: React.FC<{
     <div
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
       onDoubleClick={() => loadFormActivator.change()}
-      onContextMenu={contextMenu.open}
+      onContextMenu={(e: React.MouseEvent) => {
+        if (!loadFormActivator.isActive()) {
+          contextMenu.open(e);
+        }
+      }}
       onClick={contextMenu.close}
       style={{
         left: `${leftRem}rem`,
