@@ -22,18 +22,27 @@ export interface LoadLocationData {
   order: number;
 }
 
-export type LoadData = {
+export interface WorkforceActionData {
   id?: string;
-  revenue: string;
-  miles: string;
   startDate: Date;
   endDate: Date;
+}
+
+export interface LoadData extends WorkforceActionData {
+  revenue: string;
+  miles: string;
   broker: string;
   loadStatus: LoadStatus;
   locations: LoadLocationData[];
   representative?: string;
   representativeContactNumber?: string;
-};
+}
+
+export interface VehicleMaintenanceData extends WorkforceActionData {
+  location: string;
+}
+
+export interface DaysOffPeriodData extends WorkforceActionData {}
 
 export interface LoadLocationError {
   locationError: string;
@@ -50,30 +59,61 @@ export type LoadDataError = {
   locationsErrors: Map<string, LoadLocationError>;
 };
 
-export type DriverLoadData = {
+export type VehicleMaintenanceErrors = {
+  locationError: string;
+};
+
+export type DriverWorkforce = {
   relationId: string;
   driver: DriverData;
   totalRevenue: number;
   totalMiles: number;
   loads: LoadData[];
+  vehicleMaintenanceRecords: VehicleMaintenanceData[];
+  daysOffPeriods: DaysOffPeriodData[];
 };
 
-export type DispatcherLoadData = {
+export type DispatcherPlanningData = {
   identifier: string;
   dispatcher: DispatcherData;
   startDate: Date;
   endDate: Date;
   totalRevenue: number;
   totalMiles: number;
-  driverLoads: DriverLoadData[];
+  driverPlanningData: DriverWorkforce[];
 };
 
-export const LoadBlockColor: Record<LoadStatus, string> = {
-  Dispatched: "bg-[#6495ed]/50",
-  Delivered: "bg-[#b2d3c2]/50",
-};
+export interface CalendarBookFormHandler {
+  submit: () => boolean;
+}
 
-export const LoadStatusColor: Record<LoadStatus, string> = {
-  Dispatched: "text-[#0041c2]",
-  Delivered: "text-[#234f1e]",
+export interface FormProps {
+  workforce: DriverWorkforce;
+  calendarBookModalType?: CalendarBookModalType;
+  day?: string;
+  id?: string;
+}
+
+export const CalendarBookModalTypes = ["Load", "Shop", "Days-off"] as const;
+export type CalendarBookModalType = (typeof CalendarBookModalTypes)[number];
+export type CalendarBookModalMetadata = {
+  name: string;
+  description: string;
+};
+export const LOAD_FORM_METADATA: Record<
+  CalendarBookModalType,
+  CalendarBookModalMetadata
+> = {
+  Load: {
+    name: "Load Form",
+    description: "Complete the required data for the Load",
+  },
+  Shop: {
+    name: "Shop Form",
+    description: "Complete the details of the Shop day",
+  },
+  "Days-off": {
+    name: "Days Off Form",
+    description: "Complete the details of your Day Off",
+  },
 };

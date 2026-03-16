@@ -1,22 +1,17 @@
 import axios from "axios";
 import {
   LOADS_BASE_URL,
-  LOADS_COMPANIES_URL,
   LOADS_RELATIONS_URL,
   LOADS_STARTING_POINT_PATH,
 } from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
-import {
-  END_DATE_QUERY_PARAM,
-  START_DATE_QUERY_PARAM,
-} from "../constants/api/api-query-constants.ts";
 import type {
   ApiResponse,
   NoContentResponse,
 } from "../types/api/common/api-response-types.ts";
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
-  GetDriverLoadsResponse,
+  GetDriversPlanningDataResponse,
   GetLoadStartingPointResponse,
   LoadResponse,
   UpsertLoadRequest,
@@ -35,35 +30,12 @@ export const upsertLoad = async (
   }
 };
 
-export const getLoadsByCompanyUuidAndStartAndEndDate = async (
-  companyUuid: string,
-  week: string[],
-): Promise<ApiResponse<GetDriverLoadsResponse[], Error>> => {
-  const startDate = week[0];
-  const endDateObject = new Date(week[week.length - 1]);
-  endDateObject.setDate(endDateObject.getDate() + 7);
-  const endDate = toIsoDate(endDateObject);
-  try {
-    const response = await axios.get<
-      ApiResponse<GetDriverLoadsResponse[], Error>
-    >(LOADS_COMPANIES_URL + `/${companyUuid}`, {
-      params: {
-        [START_DATE_QUERY_PARAM]: startDate,
-        [END_DATE_QUERY_PARAM]: endDate,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    return handleApiErrors(error);
-  }
-};
-
 export const getLoadData = async (
-  loadUuid: string,
+  relationId: string,
   startDate: Date,
   endDate: Date,
 ): Promise<ApiResponse<LoadResponse[], Error>> => {
-  const url = LOADS_RELATIONS_URL + `/${loadUuid}`;
+  const url = LOADS_RELATIONS_URL + `/${relationId}`;
   const params = {
     startDate: toIsoDate(startDate),
     endDate: toIsoDate(endDate),
@@ -102,7 +74,7 @@ export const deleteLoadByUuid = async (
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
     const response = await axios.delete<
-      ApiResponse<GetDriverLoadsResponse[], Error>
+      ApiResponse<GetDriversPlanningDataResponse[], Error>
     >(LOADS_BASE_URL + `/${loadUuid}`);
     return response.data;
   } catch (error) {

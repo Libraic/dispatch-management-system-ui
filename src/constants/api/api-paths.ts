@@ -30,7 +30,6 @@ export const TRAILERS_BASE_URL = BASE_URL + "/trailers";
  * Loads-related API paths.
  */
 export const LOADS_BASE_URL = BASE_URL + "/loads";
-export const LOADS_COMPANIES_URL = LOADS_BASE_URL + "/companies";
 export const LOADS_RELATIONS_URL = LOADS_BASE_URL + "/relations";
 export const LOADS_STARTING_POINT_PATH = "/starting-point";
 
@@ -39,3 +38,21 @@ export const LOADS_STARTING_POINT_PATH = "/starting-point";
  */
 
 export const DISPATCHERS_BASE_URL = BASE_URL + "/dispatchers";
+
+/**
+ * The API paths related to Vehicle Maintenance.
+ */
+export const VEHICLE_MAINTENANCE_BASE_URL = BASE_URL + "/vehicle-maintenance";
+export const VEHICLE_MAINTENANCE_RELATIONS_URL =
+  VEHICLE_MAINTENANCE_BASE_URL + "/relations";
+
+/**
+ * The API paths related to Days Off.
+ */
+export const DAYS_OFF_BASE_URL = BASE_URL + "/days-off";
+export const DAYS_OFF_RELATIONS_URL = DAYS_OFF_BASE_URL + "/relations";
+
+/**
+ * The API paths related to Planning.
+ */
+export const PLANNING_BASE_URL = BASE_URL + "/planner";

@@ -1,41 +1,37 @@
 import {
   type DriverWorkforce,
-  type LoadData,
+  type VehicleMaintenanceData,
 } from "../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
-  SYSTEM_FONT_THIN,
 } from "../../../../tailwind/tailwind-font-vars.ts";
+import { PlannableModal } from "./forms/PlannableModal.tsx";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
 import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
-import {
-  deleteLoadByUuid,
-  getLoadData,
-} from "../../../../service/loadService.ts";
-import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/planner-utils.ts";
 import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
-import pickUpIcon from "../../../../assets/planner/blocks/pickup.svg";
-import deliveryIcon from "../../../../assets/planner/blocks/delivery.svg";
+import vehicleMaintenanceIcon from "../../../../assets/planner/blocks/vehicle-maintenance.svg";
+import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/planner-utils.ts";
+import {
+  deleteVehicleMaintenanceRecordByUuid,
+  getVehicleMaintenanceData,
+} from "../../../../service/vehicleMaintenanceService.ts";
 import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
 import { PlanningContext } from "../../../../context/PlanningContext.ts";
-import { PlannableModal } from "./forms/PlannableModal.tsx";
-import { fromGetLoadResponseToLoadData } from "../../../../utils/planner/load-utils.ts";
+import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../../../utils/planner/vehicle-maintenance-utils.ts";
 
-export const LoadBlock: React.FC<{
-  driverLoadData: DriverWorkforce;
-  load: LoadData;
-}> = ({ driverLoadData, load }) => {
+export const VehicleMaintenanceBlock: React.FC<{
+  workforce: DriverWorkforce;
+  vehicleMaintenanceData: VehicleMaintenanceData;
+}> = ({ workforce, vehicleMaintenanceData }) => {
   const context = useContext(PlanningContext);
   const days = context!!.days;
-  const firstLocation = load.locations[0];
-  const lastLocation = load.locations[load.locations.length - 1];
   const { startingPoint, width } = getStartingPointAndWidthOfBlock(
-    load.startDate,
-    load.endDate,
+    vehicleMaintenanceData.startDate,
+    vehicleMaintenanceData.endDate,
     days,
   );
 
@@ -43,11 +39,13 @@ export const LoadBlock: React.FC<{
   const toast = useToast();
 
   const deleteAction = async () => {
-    if (!load.id) {
+    if (!vehicleMaintenanceData.id) {
       return;
     }
 
-    const data = await deleteLoadByUuid(load.id);
+    const data = await deleteVehicleMaintenanceRecordByUuid(
+      vehicleMaintenanceData.id,
+    );
     if (data.error) {
       toast.withErrorMessage(data.error.message);
       return;
@@ -55,24 +53,32 @@ export const LoadBlock: React.FC<{
 
     const startDate = new Date(days[0]);
     const endDate = new Date(days[days.length - 1]);
-    const getLoadResponse = await getLoadData(
-      driverLoadData.relationId,
+    const getVehicleMaintenanceDataResponse = await getVehicleMaintenanceData(
+      workforce.relationId,
       startDate,
       endDate,
     );
-    if (getLoadResponse.error) {
-      toast.withErrorMessage(getLoadResponse.error.message);
+    if (getVehicleMaintenanceDataResponse.error) {
+      toast.withErrorMessage(getVehicleMaintenanceDataResponse.error.message);
       return;
     }
 
-    const loadResponses = getLoadResponse.data!!;
-    const loadDataList = loadResponses.map((loadResponse) =>
-      fromGetLoadResponseToLoadData(loadResponse),
+    const vehicleMaintenanceDataList = getVehicleMaintenanceDataResponse.data!!;
+    const finalVehicleMaintenanceDataList = vehicleMaintenanceDataList.map(
+      (vehicleMaintenanceData) =>
+        fromGetVehicleMaintenanceRecordToVehicleMaintenanceData(
+          vehicleMaintenanceData,
+        ),
     );
-    context!!.postLoadDeleteUpdateFn(driverLoadData.driver!!, loadDataList);
+    context!!.postVehicleMaintenanceRecordDeleteUpdateFn(
+      workforce.driver.uuid,
+      finalVehicleMaintenanceDataList,
+    );
   };
+
   const contextMenu = useContextMenu();
   const actionItems: ContextMenuActionItem[] = [getDeleteOption(deleteAction)];
+
   return (
     <div
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
@@ -92,9 +98,9 @@ export const LoadBlock: React.FC<{
         className={`
           relative h-full mx-1
           rounded-lg
-          bg-light-blue/40
-          flex items-center justify-between
+          flex items-center
           px-3
+          bg-[#ff5f1f]/50
           shadow-sm
           cursor-pointer
           overflow-hidden
@@ -103,34 +109,23 @@ export const LoadBlock: React.FC<{
           ${SYSTEM_FONT_NORMAL} text-[0.8rem]
         `}
       >
-        <div className="flex items-center gap-2">
-          <img src={pickUpIcon} alt="pickup" className="w-5 h-5" />
+        <div className="flex flex-row justify-between items-center gap-2 w-full">
           <div>
-            <p className="text-center text-[0.6rem]">{load.broker}</p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {firstLocation.location}
-            </p>
+            <img
+              src={vehicleMaintenanceIcon}
+              alt="pickup"
+              className="w-6 h-6"
+            />
           </div>
-        </div>
 
-        <div className="flex-1 flex items-center mx-2 min-w-0">
-          <div className="flex-1 h-[0.05rem] bg-current opacity-50" />
-          <span
-            className={`text-[0.8rem] opacity-50 ${SYSTEM_FONT_THIN} mb-[0.081rem]`}
-          >
-            ›
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <img src={deliveryIcon} alt="delivery" className="w-5 h-5" />
           <div>
             <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#986fc5] ${SYSTEM_FONT_BOLD}`}
+              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#dd571c] ${SYSTEM_FONT_BOLD}`}
             >
-              {load.loadStatus}
+              Service
             </p>
             <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {lastLocation.location}
+              {vehicleMaintenanceData.location}
             </p>
           </div>
         </div>
@@ -139,9 +134,9 @@ export const LoadBlock: React.FC<{
         <PlannableModal
           deactivate={loadFormActivator.deactivate}
           props={{
-            id: load.id,
-            calendarBookModalType: "Load",
-            workforce: driverLoadData,
+            id: vehicleMaintenanceData.id,
+            calendarBookModalType: "Shop",
+            workforce: workforce,
           }}
         />
       )}

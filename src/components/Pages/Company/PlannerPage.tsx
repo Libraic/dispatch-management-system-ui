@@ -3,24 +3,24 @@ import { PageHeader } from "../../Common/Page/PageHeader.tsx";
 import { PLANNER_HEADER } from "../../../constants/common/header-constants.ts";
 import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { useParams } from "react-router-dom";
-import { PlannerRowContainer } from "../../Company/Planner/public/PlannerRowContainer.tsx";
+import { PlannerRow } from "../../Company/Planner/public/PlannerRow.tsx";
 import { useEffect, useState } from "react";
-import type { DispatcherLoadData } from "../../../types/internal/planner/planner-types.ts";
+import type { DispatcherPlanningData } from "../../../types/internal/planner/planner-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
 import { PlannerMenu } from "../../Company/Planner/public/PlannerMenu.tsx";
-import { getLoadsByCompanyUuidAndStartAndEndDate } from "../../../service/loadsService.ts";
 import { convertGetDriverLoadsResponsesToDispatcherLoadDataList } from "../../../utils/api/planner/planner-api-utils.ts";
 import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 import { PLANNER_VERTICAL_MARGIN } from "../../../constants/planner/planner-constants.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/planner/planner-utils.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
+import { getPlanningDataByCompanyUuidAndStartAndEndDate } from "../../../service/plannerService.ts";
 
 export const PlannerPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const days = getWeekWithDayAndMonth(activeWeek);
   const companyId = useParams().companyUuid!!;
   const [dispatcherLoads, setDispatcherLoads] =
-    useState<DispatcherLoadData[]>(EMPTY_ARRAY);
+    useState<DispatcherPlanningData[]>(EMPTY_ARRAY);
 
   const extractWeekFromCalendar = (dates: Date[]) => {
     const vals = dates.map((date) => date.toLocaleDateString(DEFAULT_LOCALE));
@@ -28,7 +28,7 @@ export const PlannerPage = () => {
   };
 
   useEffect(() => {
-    getLoadsByCompanyUuidAndStartAndEndDate(companyId, activeWeek).then(
+    getPlanningDataByCompanyUuidAndStartAndEndDate(companyId, activeWeek).then(
       (data) => {
         const getDriverLoadsResponses = data.data ?? EMPTY_ARRAY;
         const startDate = activeWeek[0];
@@ -52,11 +52,11 @@ export const PlannerPage = () => {
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <PlannerHeader days={days} />
           {dispatcherLoads.map((dispatcherLoadData) => (
-            <PlannerRowContainer
+            <PlannerRow
               key={dispatcherLoadData.identifier}
               companyId={companyId}
               days={days}
-              dispatcherLoadData={dispatcherLoadData}
+              dispatcherPlanningData={dispatcherLoadData}
               setDispatcherLoadData={setDispatcherLoads}
             />
           ))}

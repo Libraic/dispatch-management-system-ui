@@ -6,11 +6,11 @@ import {
   formatNumber,
 } from "../../../../utils/global/number-utils.ts";
 import React from "react";
-import type { DriverLoadData } from "../../../../types/internal/planner/planner-types.ts";
+import type { DriverWorkforce } from "../../../../types/internal/planner/planner-types.ts";
 import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const DriverRowMetadata: React.FC<{
-  driverLoadData: DriverLoadData;
+  driverLoadData: DriverWorkforce;
 }> = ({ driverLoadData }) => {
   return (
     <React.Fragment>

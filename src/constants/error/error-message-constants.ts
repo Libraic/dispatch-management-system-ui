@@ -18,3 +18,5 @@ export const EQUIPMENT_TYPE_IS_MANDATORY =
 export const EQUIPMENT_SIZE_INVALID = "The equipment size is not valid.";
 export const PALLET_CAPACITY_INVALID = "The pallet capacity is not valid.";
 export const MAX_WEIGHT_INVALID = "The max weight is not valid.";
+
+export const LOCATION_REQUIRED = "Location is required.";

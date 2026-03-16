@@ -7,8 +7,8 @@ import type {
   LoadDataError,
 } from "../../../../types/internal/planner/planner-types.ts";
 import React from "react";
-import { getBlankLocation } from "../../../../utils/planner/planner-utils.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
+import { getBlankLocation } from "../../../../utils/planner/load-utils.ts";
 
 export const LoadLocationCreator: React.FC<{
   loadStateData: StateData<LoadData, LoadDataError>;

@@ -1,41 +1,58 @@
 import { ZERO } from "../../../constants/common/global-constants.ts";
 import { v4 as uuidv4 } from "uuid";
 import type {
-  DispatcherLoadData,
-  DriverLoadData,
+  DispatcherPlanningData,
+  DriverWorkforce,
   LoadData,
 } from "../../../types/internal/planner/planner-types.ts";
-import type { GetDriverLoadsResponse } from "../../../types/api/loads/load-api-types.ts";
-import { fromLoadResponseToLoadData } from "../../planner/planner-utils.ts";
+import type { GetDriversPlanningDataResponse } from "../../../types/api/loads/load-api-types.ts";
+import { toNormalizedIsoDate } from "../../global/date-utils.ts";
+import { fromGetLoadResponseToLoadData } from "../../planner/load-utils.ts";
+import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../planner/vehicle-maintenance-utils.ts";
+import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../planner/days-off-utils.ts";
 
 export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
-  getDriverLoadsResponses: GetDriverLoadsResponse[],
+  getDriverLoadsResponses: GetDriversPlanningDataResponse[],
   startDate: string,
   endDate: string,
 ) => {
-  const dispatcherLoadDataList: DispatcherLoadData[] = [];
-  const startDateObject = new Date(startDate);
-  const endDateObject = new Date(endDate);
+  const dispatcherLoadDataList: DispatcherPlanningData[] = [];
+  const startDateObject = toNormalizedIsoDate(startDate);
+  const endDateObject = toNormalizedIsoDate(endDate);
   for (const getDriverLoadResponse of getDriverLoadsResponses) {
-    const driverLoadDataList: DriverLoadData[] = [];
+    const driverLoadDataList: DriverWorkforce[] = [];
     let totalRevenue = 0.0;
     let totalMiles = 0.0;
-    for (const driverLoadData of getDriverLoadResponse.driverLoads) {
+    for (const driverLoadData of getDriverLoadResponse.driverPlanningData) {
       const loads: LoadData[] = [];
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
       for (const loadDatum of driverLoadData.loads) {
-        loads.push(fromLoadResponseToLoadData(loadDatum));
+        const mappedLoadDatum = fromGetLoadResponseToLoadData(loadDatum);
+        loads.push(mappedLoadDatum);
         if (
           !(
-            loadDatum.endDate < startDateObject ||
-            endDateObject < loadDatum.startDate
+            mappedLoadDatum.endDate < startDateObject ||
+            endDateObject < mappedLoadDatum.startDate
           )
         ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
           driverTotalMiles += loadDatum.miles ?? ZERO;
         }
       }
+      const vehicleMaintenanceRecords =
+        driverLoadData.vehicleMaintenanceRecords.map(
+          (vehicleMaintenanceRecord) =>
+            fromGetVehicleMaintenanceRecordToVehicleMaintenanceData(
+              vehicleMaintenanceRecord,
+            ),
+        );
+
+      const daysOffPeriodData = driverLoadData.daysOffPeriods.map(
+        (daysOffPeriod) =>
+          fromGetDaysOffPeriodResponseToDaysOffPeriodData(daysOffPeriod),
+      );
+
       totalRevenue += driverTotalRevenue;
       totalMiles += driverTotalMiles;
       driverLoadDataList.push({
@@ -44,6 +61,8 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
         totalRevenue: driverTotalRevenue,
         totalMiles: driverTotalMiles,
         loads: loads,
+        vehicleMaintenanceRecords: vehicleMaintenanceRecords,
+        daysOffPeriods: daysOffPeriodData,
       });
     }
 
@@ -54,7 +73,7 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
       totalRevenue: totalRevenue,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      driverLoads: driverLoadDataList,
+      driverPlanningData: driverLoadDataList,
     });
   }
 

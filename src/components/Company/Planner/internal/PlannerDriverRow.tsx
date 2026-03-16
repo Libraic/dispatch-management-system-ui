@@ -1,9 +1,6 @@
-import React from "react";
-import type {
-  DriverLoadData,
-  LoadData,
-} from "../../../../types/internal/planner/planner-types.ts";
-import { DriverCalendarCell } from "./DriverCalendarCell.tsx";
+import React, { useContext } from "react";
+import type { DriverWorkforce } from "../../../../types/internal/planner/planner-types.ts";
+import { PlannerCalendarCell } from "./PlannerCalendarCell.tsx";
 import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
 import clsx from "clsx";
 import {
@@ -12,22 +9,16 @@ import {
   PLANNER_TEXT_SIZE,
 } from "../../../../constants/planner/planner-constants.ts";
 import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
-import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 import { LoadBlock } from "./LoadBlock.tsx";
+import { VehicleMaintenanceBlock } from "./VehicleMaintenanceBlock.tsx";
+import { DaysOffPeriodBlock } from "./DaysOffPeriodBlock.tsx";
+import { PlanningContext } from "../../../../context/PlanningContext.ts";
 
 export const PlannerDriverRow: React.FC<{
-  days: string[];
-  driverLoadData: DriverLoadData;
-  upsertDriverLoadData: (driver: DriverData, loadData: LoadData) => void;
-  hasDispatcher: boolean;
-  postDeleteUpdateFn: (driver: DriverData, loadDataList: LoadData[]) => void;
-}> = ({
-  days,
-  driverLoadData,
-  upsertDriverLoadData,
-  hasDispatcher,
-  postDeleteUpdateFn,
-}) => {
+  driverPlanningData: DriverWorkforce;
+}> = ({ driverPlanningData }) => {
+  const context = useContext(PlanningContext);
+  const days = context!!.days;
   return (
     <div className="flex flex-row">
       <div className="relative flex flex-row">
@@ -38,26 +29,49 @@ export const PlannerDriverRow: React.FC<{
             flex-shrink-0 ${PLANNER_TEXT_SIZE}
           `)}
         >
-          <DriverRowMetadata driverLoadData={driverLoadData} />
+          <DriverRowMetadata driverLoadData={driverPlanningData} />
           {Array.from({ length: 14 }).map((_, index) => (
-            <DriverCalendarCell
+            <PlannerCalendarCell
               key={index}
               day={days[index]}
-              upsertDriverLoadData={upsertDriverLoadData}
-              driverLoadData={driverLoadData}
-              isEditable={hasDispatcher}
+              formProps={{
+                day: days[index],
+                workforce: driverPlanningData,
+              }}
             />
           ))}
         </div>
-        {driverLoadData.loads.length > 0 && (
+        {driverPlanningData.loads.length > 0 && (
           <div className="absolute inset-0 pointer-events-none">
-            {driverLoadData.loads.map((load) => (
+            {driverPlanningData.loads.map((load) => (
               <LoadBlock
                 key={load.id}
-                driverLoadData={driverLoadData}
+                driverLoadData={driverPlanningData}
                 load={load}
-                days={days}
-                postDeleteUpdateFn={postDeleteUpdateFn}
+              />
+            ))}
+          </div>
+        )}
+        {driverPlanningData.vehicleMaintenanceRecords.length > 0 && (
+          <div className="absolute inset-0 pointer-events-none">
+            {driverPlanningData.vehicleMaintenanceRecords.map(
+              (vehicleMaintenanceRecord) => (
+                <VehicleMaintenanceBlock
+                  key={vehicleMaintenanceRecord.id}
+                  workforce={driverPlanningData}
+                  vehicleMaintenanceData={vehicleMaintenanceRecord}
+                />
+              ),
+            )}
+          </div>
+        )}
+        {driverPlanningData.daysOffPeriods.length > 0 && (
+          <div className="absolute inset-0 pointer-events-none">
+            {driverPlanningData.daysOffPeriods.map((daysOffPeriod) => (
+              <DaysOffPeriodBlock
+                key={daysOffPeriod.id}
+                workforce={driverPlanningData}
+                daysOffPeriodData={daysOffPeriod}
               />
             ))}
           </div>

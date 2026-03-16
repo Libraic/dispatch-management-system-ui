@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import chevronRightIcon from "../../../../assets/planner/chevron-right.svg";
 import chevronDownIcon from "../../../../assets/planner/chevron-down.svg";
-import type { DispatcherLoadData } from "../../../../types/internal/planner/planner-types.ts";
+import type { DispatcherPlanningData } from "../../../../types/internal/planner/planner-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import {
@@ -19,19 +19,19 @@ import {
 import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const PlannerDispatcherRow: React.FC<{
-  dispatcherLoadData: DispatcherLoadData;
+  dispatcherLoadData: DispatcherPlanningData;
   expander: Activator;
 }> = ({ dispatcherLoadData, expander }) => {
   const [activeIcon, setActiveIcon] = useState(BLANK_STRING);
 
   useEffect(() => {
-    if (dispatcherLoadData.driverLoads.length === 0) {
+    if (dispatcherLoadData.driverPlanningData.length === 0) {
       setActiveIcon(BLANK_STRING);
     } else {
       const icon = expander.isActive() ? chevronDownIcon : chevronRightIcon;
       setActiveIcon(icon);
     }
-  }, [expander, dispatcherLoadData.driverLoads.length]);
+  }, [expander, dispatcherLoadData.driverPlanningData.length]);
 
   const handleOnClickFn = () => {
     setActiveIcon((prev) => {

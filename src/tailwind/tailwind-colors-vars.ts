@@ -9,10 +9,8 @@
  */
 
 export const BACKGROUND_PALE_BLUE = "bg-pale-blue";
-export const OUTLINE_PALE_BLUE = "outline-pale-blue";
 
 export const BACKGROUND_NORMAL_COLOR = "bg-light-blue";
-export const BACKGROUND_BLUE_GREY_COLOR = "bg-blue-grey";
 export const BORDER_NORMAL_COLOR = "border-light-blue";
 export const BORDER_SOLID_COLOR = "border-solid-blue";
 export const BORDER_PALE_BLUE = "border-pale-blue";
@@ -26,6 +24,7 @@ export const HOVER_BACKGROUND_NORMAL_COLOR = "hover:bg-light-blue";
 export const HOVER_BACKGROUND_SOLID_COLOR = "hover:bg-solid-blue";
 export const HOVER_BACKGROUND_PALE_BLUE = "hover:bg-pale-blue";
 export const HOVER_TEXT_SOLID_COLOR = "hover:text-solid-blue";
+export const HOVER_TEXT_NORMAL_COLOR = "hover:text-light-blue";
 
 export const ODD_BACKGROUND_LIGHT_GRAY = "odd:bg-light-gray";
 

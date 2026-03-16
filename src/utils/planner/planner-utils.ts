@@ -1,204 +1,46 @@
 import type {
-  DispatcherLoadData,
-  DriverLoadData,
-  LoadData,
-  LoadLocationData,
-  LocationLabel,
+  DispatcherPlanningData,
+  DriverWorkforce,
 } from "../../types/internal/planner/planner-types.ts";
-import {
-  BLANK_STRING,
-  HYPHEN,
-} from "../../constants/common/global-constants.ts";
+import { HYPHEN } from "../../constants/common/global-constants.ts";
 import {
   DEFAULT_LOCALE,
   WEEKDAYS,
 } from "../../constants/date/date-constants.ts";
-import { generateUuid } from "../global/general-utils.ts";
-import type {
-  ApiLoadLocation,
-  LoadResponse,
-} from "../../types/api/loads/load-api-types.ts";
-import type { DriverData } from "../../types/api/driver/driver-api-response-types.ts";
-import { getNextDayFromCurrentDate } from "../global/date-utils.ts";
+import { toIsoDate } from "../global/date-utils.ts";
+import {
+  DAY_CELL_WIDTH,
+  METADATA_WIDTH,
+} from "../../constants/planner/planner-constants.ts";
 
-export const upsertDriverLoadCallbackFunction = (
-  prevDispatcherLoadDataList: DispatcherLoadData[],
-  dispatcherLoadDataIdentifier: string,
-  newLoadDatum: LoadData,
-  driver: DriverData,
-) => {
-  const newDispatcherLoadDataList: DispatcherLoadData[] = [];
-  for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
-    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
-      newDispatcherLoadDataList.push(prevDispatcherLoadData);
-    } else {
-      const newDriverLoadDataList: DriverLoadData[] = [];
-      for (const currentDriverLoadData of prevDispatcherLoadData.driverLoads) {
-        if (currentDriverLoadData.driver!!.uuid !== driver.uuid) {
-          newDriverLoadDataList.push(currentDriverLoadData);
-        } else {
-          let driverTotalMiles = 0;
-          let driverTotalRevenue = 0;
-          const loads = currentDriverLoadData.loads.filter(
-            (loadDatum) => loadDatum.id !== newLoadDatum.id,
-          );
-          loads.push(newLoadDatum);
-          const startDateObject = prevDispatcherLoadData.startDate;
-          const endDateObject = prevDispatcherLoadData.endDate;
-          for (const loadDatum of loads) {
-            const loadStartDate = loadDatum.startDate;
-            const loadEndDate = loadDatum.endDate;
-            if (
-              !(loadEndDate < startDateObject || endDateObject < loadStartDate)
-            ) {
-              driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.miles);
-            }
+export const updateDriverField = <K extends keyof DriverWorkforce>(
+  prevDispatcherPlanningData: DispatcherPlanningData[],
+  dispatcherPlanningDatumId: string,
+  driverId: string,
+  field: K,
+  updateFieldFn: (current: DriverWorkforce[K]) => DriverWorkforce[K],
+): DispatcherPlanningData[] =>
+  prevDispatcherPlanningData.map((dispatcherLoadDatum) => {
+    if (dispatcherLoadDatum.identifier !== dispatcherPlanningDatumId) {
+      return dispatcherLoadDatum;
+    }
+
+    return {
+      ...dispatcherLoadDatum,
+      driverPlanningData: dispatcherLoadDatum.driverPlanningData.map(
+        (driverPlanningDatum) => {
+          if (driverPlanningDatum.driver.uuid !== driverId) {
+            return driverPlanningDatum;
           }
 
-          newDriverLoadDataList.push({
-            ...currentDriverLoadData,
-            totalRevenue: driverTotalRevenue,
-            totalMiles: driverTotalMiles,
-            driver: driver,
-            loads: loads,
-          });
-        }
-      }
-
-      let dispatcherTotalMiles = 0;
-      let dispatcherTotalRevenue = 0;
-      for (const driverLoadDatum of newDriverLoadDataList) {
-        dispatcherTotalMiles += driverLoadDatum.totalMiles;
-        dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
-      }
-      newDispatcherLoadDataList.push({
-        ...prevDispatcherLoadData,
-        totalMiles: dispatcherTotalMiles,
-        totalRevenue: dispatcherTotalRevenue,
-        driverLoads: newDriverLoadDataList,
-      });
-    }
-  }
-
-  return newDispatcherLoadDataList;
-};
-
-export const updateLoadsAfterDeletions = (
-  prevDispatcherLoadDataList: DispatcherLoadData[],
-  dispatcherLoadDataIdentifier: string,
-  newLoadData: LoadData[],
-  driver: DriverData,
-) => {
-  const newDispatcherLoadDataList: DispatcherLoadData[] = [];
-  for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
-    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
-      newDispatcherLoadDataList.push(prevDispatcherLoadData);
-    } else {
-      const newDriverLoadDataList: DriverLoadData[] = [];
-      for (const currentDriverLoadData of prevDispatcherLoadData.driverLoads) {
-        if (currentDriverLoadData.driver!!.uuid !== driver.uuid) {
-          newDriverLoadDataList.push(currentDriverLoadData);
-        } else {
-          let driverTotalMiles = 0;
-          let driverTotalRevenue = 0;
-          for (const loadDatum of newLoadData) {
-            const startDateObject = prevDispatcherLoadData.startDate;
-            const endDateObject = prevDispatcherLoadData.endDate;
-            if (
-              !(
-                loadDatum.endDate < startDateObject ||
-                endDateObject < loadDatum.startDate
-              )
-            ) {
-              driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.miles);
-            }
-          }
-
-          newDriverLoadDataList.push({
-            ...currentDriverLoadData,
-            totalRevenue: driverTotalRevenue,
-            totalMiles: driverTotalMiles,
-            driver: driver,
-            loads: newLoadData,
-          });
-        }
-      }
-
-      let dispatcherTotalMiles = 0;
-      let dispatcherTotalRevenue = 0;
-      for (const driverLoadDatum of newDriverLoadDataList) {
-        dispatcherTotalMiles += driverLoadDatum.totalMiles;
-        dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
-      }
-      newDispatcherLoadDataList.push({
-        ...prevDispatcherLoadData,
-        totalMiles: dispatcherTotalMiles,
-        totalRevenue: dispatcherTotalRevenue,
-        driverLoads: newDriverLoadDataList,
-      });
-    }
-  }
-
-  return newDispatcherLoadDataList;
-};
-
-export const getBlankLocation = (
-  date: Date,
-  order: number,
-  label?: LocationLabel,
-  location?: string,
-): LoadLocationData => {
-  return {
-    uuid: generateUuid(),
-    label: label ?? "Pick Up",
-    date: date,
-    location: location ?? BLANK_STRING,
-    order: order,
-  };
-};
-
-export const getInitialLoadLocations = (
-  date: Date,
-  initialLocation?: string,
-): LoadLocationData[] => {
-  const startingPoint = getBlankLocation(
-    new Date(date),
-    0,
-    "Starting Point",
-    initialLocation,
-  );
-  const pickUpLocation = getBlankLocation(
-    new Date(date),
-    1,
-    "Pick Up",
-    initialLocation,
-  );
-  const deliveryLocation = getBlankLocation(
-    getNextDayFromCurrentDate(date),
-    2,
-    "Delivery",
-  );
-  return [startingPoint, pickUpLocation, deliveryLocation];
-};
-
-export const getBlankLoadData = (
-  day: string,
-  initialLocation?: string,
-): LoadData => {
-  const startDate = new Date(day);
-  const endDate = getNextDayFromCurrentDate(startDate);
-  return {
-    broker: BLANK_STRING,
-    startDate: startDate,
-    endDate: endDate,
-    revenue: BLANK_STRING,
-    miles: BLANK_STRING,
-    loadStatus: "Dispatched",
-    locations: getInitialLoadLocations(startDate, initialLocation),
-  };
-};
+          return {
+            ...driverPlanningDatum,
+            [field]: updateFieldFn(driverPlanningDatum[field]),
+          };
+        },
+      ),
+    };
+  });
 
 export const getWeekWithDayAndMonth = (week: string[]) => {
   const biweeklyTimeline = [...week];
@@ -215,33 +57,24 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
   });
 };
 
-export const fromLoadResponseToLoadData = (
-  loadResponse: LoadResponse,
-): LoadData => {
+export const getStartingPointAndWidthOfBlock = (
+  startDate: Date,
+  endDate: Date,
+  days: string[],
+) => {
+  const startIndex = getDayIndex(startDate, days);
+  const endIndex = getDayIndex(endDate, days);
+  const clampedStart = Math.max(startIndex === -1 ? 0 : startIndex, 0);
+  const clampedEnd = Math.min(endIndex === -1 ? 13 : endIndex, 13);
+  const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
+  const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
   return {
-    id: loadResponse.loadUuid,
-    revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
-    miles: `${loadResponse.miles ?? BLANK_STRING}`,
-    broker: loadResponse.broker,
-    representative: loadResponse.representative ?? undefined,
-    representativeContactNumber: loadResponse.representativeContactNumber,
-    loadStatus: loadResponse.loadStatus,
-    startDate: loadResponse.startDate,
-    endDate: loadResponse.endDate,
-    locations: loadResponse.locations.map((location) =>
-      fromApiLoadLocationToLoadLocationData(location),
-    ),
+    startingPoint: leftRem,
+    width: widthRem,
   };
 };
 
-export const fromApiLoadLocationToLoadLocationData = (
-  location: ApiLoadLocation,
-): LoadLocationData => {
-  return {
-    uuid: generateUuid(),
-    label: location.label as LocationLabel,
-    date: new Date(location.date),
-    location: location.location ?? BLANK_STRING,
-    order: location.order,
-  };
+const getDayIndex = (date: Date, days: string[]): number => {
+  const target = toIsoDate(date);
+  return days.findIndex((d) => d === target);
 };

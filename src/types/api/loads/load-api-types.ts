@@ -1,6 +1,8 @@
 import type { DriverData } from "../driver/driver-api-response-types.ts";
 import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
 import type { LoadStatus } from "../../internal/planner/planner-types.ts";
+import type { GetVehicleMaintenanceResponse } from "../vehicle-maintenance/vehicle-maintenance-api-response-types.ts";
+import type { GetDaysOffPeriodResponse } from "../days-off/days-off-api-response-types.ts";
 
 export type ApiLoadLocation = {
   label: string;
@@ -28,8 +30,8 @@ export type UpsertLoadRequest = {
 
 export type UpsertLoadResponse = {
   loadUuid: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   revenue: number;
   miles: number;
   broker: string;
@@ -47,20 +49,22 @@ export type LoadResponse = {
   representative?: string;
   representativeContactNumber?: string;
   loadStatus: LoadStatus;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   locations: ApiLoadLocation[];
 };
 
-export type DriverLoadData = {
+export type DriverPlanningData = {
   relationUuid: string;
   driver: DriverData;
   loads: LoadResponse[];
+  vehicleMaintenanceRecords: GetVehicleMaintenanceResponse[];
+  daysOffPeriods: GetDaysOffPeriodResponse[];
 };
 
-export type GetDriverLoadsResponse = {
+export type GetDriversPlanningDataResponse = {
   dispatcher: DispatcherData;
-  driverLoads: DriverLoadData[];
+  driverPlanningData: DriverPlanningData[];
 };
 
 export interface GetLoadStartingPointResponse {

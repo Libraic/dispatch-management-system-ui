@@ -6,13 +6,7 @@ import type {
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { validatePhoneNumber } from "../registration/registration-utils.ts";
 import { cleanPhoneNumber } from "../global/input-form-utils.ts";
-
-export const getBlankLocationError = (): LoadLocationError => {
-  return {
-    locationError: BLANK_STRING,
-    dateError: BLANK_STRING,
-  };
-};
+import { LOCATION_REQUIRED } from "../../constants/error/error-message-constants.ts";
 
 export const getBlankLoadDataError = (): LoadDataError => {
   return {
@@ -65,11 +59,18 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
     }
     if (currentLocation.location === BLANK_STRING) {
       isError = true;
-      locationError.locationError = "Location is required.";
+      locationError.locationError = LOCATION_REQUIRED;
     }
     locationErrors.set(currentLocation.uuid, locationError);
   }
 
   loadErrors.locationsErrors = locationErrors;
   return { isError, loadErrors: loadErrors };
+};
+
+const getBlankLocationError = (): LoadLocationError => {
+  return {
+    locationError: BLANK_STRING,
+    dateError: BLANK_STRING,
+  };
 };
