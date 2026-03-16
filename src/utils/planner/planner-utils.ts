@@ -148,19 +148,33 @@ export const getBlankLocation = (
   date: Date,
   order: number,
   label?: LocationLabel,
+  location?: string,
 ): LoadLocationData => {
   return {
     uuid: generateUuid(),
     label: label ?? "Pick Up",
     date: date,
-    location: BLANK_STRING,
+    location: location ?? BLANK_STRING,
     order: order,
   };
 };
 
-export const getInitialLoadLocations = (date: Date): LoadLocationData[] => {
-  const startingPoint = getBlankLocation(new Date(date), 0, "Starting Point");
-  const pickUpLocation = getBlankLocation(new Date(date), 1, "Pick Up");
+export const getInitialLoadLocations = (
+  date: Date,
+  initialLocation?: string,
+): LoadLocationData[] => {
+  const startingPoint = getBlankLocation(
+    new Date(date),
+    0,
+    "Starting Point",
+    initialLocation,
+  );
+  const pickUpLocation = getBlankLocation(
+    new Date(date),
+    1,
+    "Pick Up",
+    initialLocation,
+  );
   const deliveryLocation = getBlankLocation(
     getNextDayFromCurrentDate(date),
     2,
@@ -169,7 +183,10 @@ export const getInitialLoadLocations = (date: Date): LoadLocationData[] => {
   return [startingPoint, pickUpLocation, deliveryLocation];
 };
 
-export const getBlankLoadData = (day: string): LoadData => {
+export const getBlankLoadData = (
+  day: string,
+  initialLocation?: string,
+): LoadData => {
   const startDate = new Date(day);
   const endDate = getNextDayFromCurrentDate(startDate);
   return {
@@ -179,7 +196,7 @@ export const getBlankLoadData = (day: string): LoadData => {
     revenue: BLANK_STRING,
     miles: BLANK_STRING,
     loadStatus: "Dispatched",
-    locations: getInitialLoadLocations(startDate),
+    locations: getInitialLoadLocations(startDate, initialLocation),
   };
 };
 

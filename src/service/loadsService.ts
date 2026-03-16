@@ -3,6 +3,7 @@ import {
   LOADS_BASE_URL,
   LOADS_COMPANIES_URL,
   LOADS_RELATIONS_URL,
+  LOADS_STARTING_POINT_PATH,
 } from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import {
@@ -16,6 +17,7 @@ import type {
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
   GetDriverLoadsResponse,
+  GetLoadStartingPointResponse,
   LoadResponse,
   UpsertLoadRequest,
   UpsertLoadResponse,
@@ -65,6 +67,25 @@ export const getLoadData = async (
   const params = {
     startDate: toIsoDate(startDate),
     endDate: toIsoDate(endDate),
+  };
+  try {
+    const response = await axios.get(url, {
+      params: params,
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiErrors(error);
+  }
+};
+
+export const getStartingPointLocation = async (
+  relationUuid: string,
+  date: Date,
+): Promise<ApiResponse<GetLoadStartingPointResponse, Error>> => {
+  const url =
+    LOADS_RELATIONS_URL + `/${relationUuid}` + LOADS_STARTING_POINT_PATH;
+  const params = {
+    date: toIsoDate(date),
   };
   try {
     const response = await axios.get(url, {

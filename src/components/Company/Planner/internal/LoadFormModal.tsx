@@ -21,6 +21,7 @@ import { LoadFormBrokerData } from "./LoadFormBrokerData.tsx";
 import { createStateData } from "../../../../utils/global/props-utils.ts";
 import { getBlankLoadData } from "../../../../utils/planner/planner-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
+import { getStartingPointLocation } from "../../../../service/loadsService.ts";
 
 export const LoadFormModal: React.FC<{
   day?: string;
@@ -83,6 +84,21 @@ export const LoadFormModal: React.FC<{
       window.removeEventListener("keydown", handleEnterKeyDown);
     };
   }, [quitFn, submitFn]);
+
+  useEffect(() => {
+    if (day) {
+      getStartingPointLocation(driverLoadData.relationId, new Date(day)).then(
+        (data) => {
+          if (data.data) {
+            const location = data.data.location;
+            if (location !== null) {
+              setLoadData(getBlankLoadData(day, location));
+            }
+          }
+        },
+      );
+    }
+  }, [day, driverLoadData.relationId]);
 
   return createPortal(
     <div className="flex w-screen h-screen items-center justify-center z-1000 inset-0 fixed backdrop-blur-lg">

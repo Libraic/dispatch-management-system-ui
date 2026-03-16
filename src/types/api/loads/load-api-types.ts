@@ -62,3 +62,7 @@ export type GetDriverLoadsResponse = {
   dispatcher: DispatcherData;
   driverLoads: DriverLoadData[];
 };
+
+export interface GetLoadStartingPointResponse {
+  location: string;
+}

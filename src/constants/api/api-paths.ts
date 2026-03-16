@@ -32,6 +32,7 @@ export const TRAILERS_BASE_URL = BASE_URL + "/trailers";
 export const LOADS_BASE_URL = BASE_URL + "/loads";
 export const LOADS_COMPANIES_URL = LOADS_BASE_URL + "/companies";
 export const LOADS_RELATIONS_URL = LOADS_BASE_URL + "/relations";
+export const LOADS_STARTING_POINT_PATH = "/starting-point";
 
 /**
  * The API paths related to Dispatchers.
