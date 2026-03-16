@@ -5,7 +5,6 @@ import { PLANNER_GRID_LAYOUT } from "../../../../constants/planner/planner-const
 import {
   BLANK_SPACE,
   BLANK_STRING,
-  DOT,
   HYPHEN,
 } from "../../../../constants/common/global-constants.ts";
 import { Z_INDEX_LOW_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";

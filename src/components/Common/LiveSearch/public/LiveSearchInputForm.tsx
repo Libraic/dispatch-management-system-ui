@@ -53,7 +53,7 @@ export const LiveSearchInputForm = <D,>({
 }: LiveSearchInputFormProps<D> & {
   tailwindProperties?: TailwindProperties;
 }) => {
-  const [query, setQuery] = useState(BLANK_STRING);
+  const [query, setQuery] = useState(value);
   const [items, setItems] = useState<Renderable[]>([]);
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const [placeholderText, setPlaceholderText] = useState(placeholder);
@@ -94,7 +94,7 @@ export const LiveSearchInputForm = <D,>({
           ref={inputFormContainerRef}
           label={label}
           placeholder={placeholderText}
-          inputFieldValue={value !== BLANK_STRING ? value : query}
+          inputFieldValue={query}
           onFocus={() => {
             setIsLiveSearchActive(true);
             setPlaceholderText(BLANK_STRING);
@@ -104,7 +104,7 @@ export const LiveSearchInputForm = <D,>({
           }}
           saveInputData={(text: string) => {
             setQuery(text);
-            if (value !== BLANK_STRING) {
+            if (value !== BLANK_STRING && cleanData) {
               cleanData();
             }
           }}
@@ -118,7 +118,7 @@ export const LiveSearchInputForm = <D,>({
           items={items}
           pagination={pagination}
           onItemSelected={(item: Renderable) => {
-            setQuery(BLANK_STRING);
+            setQuery(item.renderOnForm());
             saveData(item);
             setItems(EMPTY_ARRAY);
             setIsLiveSearchActive(false);

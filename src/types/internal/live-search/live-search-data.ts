@@ -70,6 +70,7 @@ export interface LiveSearchInputFormProps<D> {
   /** A callback function to save the currently entered data. */
   saveData: (value: Renderable) => void;
 
+  // TODO: Consider deleting this prop
   /** A callback function to clear the entered data in the input field. */
-  cleanData: () => void;
+  cleanData?: () => void;
 }

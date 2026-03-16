@@ -71,14 +71,6 @@ export const LoadLocation: React.FC<{
             ),
           }));
         }}
-        cleanData={() => {
-          loadStateData.setData((prevData) => ({
-            ...prevData,
-            locations: prevData.locations.filter(
-              (location) => loadLocation.uuid !== location.uuid,
-            ),
-          }));
-        }}
         entityType={Entity.CITY}
         constructor={City}
         isMandatory={true}
