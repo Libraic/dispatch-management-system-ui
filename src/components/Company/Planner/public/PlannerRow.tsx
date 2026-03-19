@@ -52,7 +52,7 @@ export const PlannerRow: React.FC<{
   >;
 }> = ({ companyId, days, dispatcherPlanningData, setDispatcherLoadData }) => {
   const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
-  const activator = useActivator();
+  const activator = useActivator(true);
   const dispatcherLoadIdentifier = dispatcherPlanningData.identifier;
   const toast = useToast();
 

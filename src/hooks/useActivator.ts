@@ -22,8 +22,8 @@ export type Activator = {
  * - `deactivate`: Sets the state to inactive (false).
  * - `change`: Toggles the state between active and inactive.
  */
-export const useActivator = (): Activator => {
-  const [isActive, setIsActive] = useState(false);
+export const useActivator = (initialState?: boolean): Activator => {
+  const [isActive, setIsActive] = useState(initialState ?? false);
 
   return {
     isActive: () => isActive,
