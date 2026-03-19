@@ -4,7 +4,7 @@ import {
   type FormProps,
   type WorkforceActionData,
 } from "../../../../types/internal/planner/planner-types.ts";
-import { PlannableModal } from "./forms/PlannableModal.tsx";
+import { SchedulableModal } from "./forms/SchedulableModal.tsx";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import { PLANNER_ROW_HEIGHT } from "../../../../constants/planner/planner-constants.ts";
@@ -60,7 +60,7 @@ export const PlannerCalendarCell: React.FC<{
         onDoubleClick={() => loadFormActivator.change()}
       ></div>
       {loadFormActivator.isActive() && (
-        <PlannableModal
+        <SchedulableModal
           deactivate={loadFormActivator.deactivate}
           props={formProps}
         />

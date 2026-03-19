@@ -14,7 +14,7 @@ import type {
   GetVehicleMaintenanceResponse,
   UpsertVehicleMaintenanceRecordResponse,
 } from "../types/api/vehicle-maintenance/vehicle-maintenance-api-response-types.ts";
-import type { GetDriversPlanningDataResponse } from "../types/api/loads/load-api-types.ts";
+import type { GetDispatchingDataResponse } from "../types/api/loads/load-api-types.ts";
 import { toIsoDate } from "../utils/global/date-utils.ts";
 
 export const upsertVehicleMaintenanceRecord = async (
@@ -53,7 +53,7 @@ export const deleteVehicleMaintenanceRecordByUuid = async (
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
     const response = await axios.delete<
-      ApiResponse<GetDriversPlanningDataResponse[], Error>
+      ApiResponse<GetDispatchingDataResponse[], Error>
     >(VEHICLE_MAINTENANCE_BASE_URL + `/${vehicleMaintenanceRecordUuid}`);
     return response.data;
   } catch (error) {

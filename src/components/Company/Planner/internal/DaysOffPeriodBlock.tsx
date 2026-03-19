@@ -2,7 +2,7 @@ import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/plann
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import React, { useContext } from "react";
-import { PlanningContext } from "../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
 import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
 import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
 import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
@@ -11,7 +11,7 @@ import {
   SYSTEM_FONT_NORMAL,
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import daysOffIcon from "../../../../assets/planner/blocks/days-off.svg";
-import { PlannableModal } from "./forms/PlannableModal.tsx";
+import { SchedulableModal } from "./forms/SchedulableModal.tsx";
 import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
 import type {
   DaysOffPeriodData,
@@ -28,7 +28,7 @@ export const DaysOffPeriodBlock: React.FC<{
   workforce: DriverWorkforce;
   daysOffPeriodData: DaysOffPeriodData;
 }> = ({ workforce, daysOffPeriodData }) => {
-  const context = useContext(PlanningContext);
+  const context = useContext(DispatchingContext);
   const days = context!!.days;
   const { startingPoint, width } = getStartingPointAndWidthOfBlock(
     daysOffPeriodData.startDate,
@@ -124,7 +124,7 @@ export const DaysOffPeriodBlock: React.FC<{
         </div>
       </div>
       {loadFormActivator.isActive() && (
-        <PlannableModal
+        <SchedulableModal
           deactivate={loadFormActivator.deactivate}
           props={{
             workforce: workforce,

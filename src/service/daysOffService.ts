@@ -10,7 +10,7 @@ import {
 } from "../constants/api/api-paths.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import { toIsoDate } from "../utils/global/date-utils.ts";
-import type { GetDriversPlanningDataResponse } from "../types/api/loads/load-api-types.ts";
+import type { GetDispatchingDataResponse } from "../types/api/loads/load-api-types.ts";
 import type { UpsertDayOffPeriodRequest } from "../types/api/days-off/days-off-api-request-types.ts";
 import type {
   GetDaysOffPeriodResponse,
@@ -53,7 +53,7 @@ export const deleteDaysOffPeriodByUuid = async (
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
     const response = await axios.delete<
-      ApiResponse<GetDriversPlanningDataResponse[], Error>
+      ApiResponse<GetDispatchingDataResponse[], Error>
     >(DAYS_OFF_BASE_URL + `/${daysOffPeriodUuid}`);
     return response.data;
   } catch (error) {

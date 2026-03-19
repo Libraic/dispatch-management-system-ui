@@ -7,7 +7,7 @@ import type {
 } from "../../../../../types/internal/planner/planner-types.ts";
 import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
 import { toIsoDate } from "../../../../../utils/global/date-utils.ts";
-import { PlanningContext } from "../../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 
 export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
   (daysOffProps, ref) => {
@@ -33,7 +33,7 @@ export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
 
     const { id, day, workforce } = daysOffProps;
     const { startDate, endDate } = getInitialData(workforce, id, day);
-    const context = useContext(PlanningContext);
+    const context = useContext(DispatchingContext);
 
     const submit = () => {
       const daysOffPeriodData: DaysOffPeriodData = {

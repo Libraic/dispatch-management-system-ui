@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import chevronRightIcon from "../../../../assets/planner/chevron-right.svg";
 import chevronDownIcon from "../../../../assets/planner/chevron-down.svg";
-import type { DispatcherPlanningData } from "../../../../types/internal/planner/planner-types.ts";
+import type { DispatchingRelation } from "../../../../types/internal/planner/planner-types.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import {
@@ -19,19 +19,19 @@ import {
 import { formatPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
 
 export const PlannerDispatcherRow: React.FC<{
-  dispatcherLoadData: DispatcherPlanningData;
+  dispatchingRelation: DispatchingRelation;
   expander: Activator;
-}> = ({ dispatcherLoadData, expander }) => {
+}> = ({ dispatchingRelation, expander }) => {
   const [activeIcon, setActiveIcon] = useState(BLANK_STRING);
 
   useEffect(() => {
-    if (dispatcherLoadData.driverPlanningData.length === 0) {
+    if (dispatchingRelation.workforceUnits.length === 0) {
       setActiveIcon(BLANK_STRING);
     } else {
       const icon = expander.isActive() ? chevronDownIcon : chevronRightIcon;
       setActiveIcon(icon);
     }
-  }, [expander, dispatcherLoadData.driverPlanningData.length]);
+  }, [expander, dispatchingRelation.workforceUnits.length]);
 
   const handleOnClickFn = () => {
     setActiveIcon((prev) => {
@@ -58,31 +58,31 @@ export const PlannerDispatcherRow: React.FC<{
           onClick={handleOnClickFn}
         >
           <p>
-            {dispatcherLoadData.dispatcher &&
-              dispatcherLoadData.dispatcher.name}
+            {dispatchingRelation.dispatcher &&
+              dispatchingRelation.dispatcher.name}
           </p>
           <p className="text-gray-500">
-            {dispatcherLoadData.dispatcher &&
-              formatPhoneNumber(dispatcherLoadData.dispatcher.phoneNumber)}
+            {dispatchingRelation.dispatcher &&
+              formatPhoneNumber(dispatchingRelation.dispatcher.phoneNumber)}
           </p>
         </div>
         <div
           className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatCurrency(dispatcherLoadData.totalRevenue)}
+          {formatCurrency(dispatchingRelation.totalRevenue)}
         </div>
         <div
           className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatNumber(dispatcherLoadData.totalMiles)}
+          {formatNumber(dispatchingRelation.totalMiles)}
         </div>
         <div
           className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatCurrency(
             divide(
-              dispatcherLoadData.totalRevenue,
-              dispatcherLoadData.totalMiles,
+              dispatchingRelation.totalRevenue,
+              dispatchingRelation.totalMiles,
             ),
           )}
         </div>

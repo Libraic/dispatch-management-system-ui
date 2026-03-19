@@ -1,20 +1,20 @@
 import type {
   DaysOffPeriodData,
-  DispatcherPlanningData,
+  DispatchingRelation,
 } from "../../types/internal/planner/planner-types.ts";
 import { updateDriverField } from "./planner-utils.ts";
 import { toNormalizedIsoDate } from "../global/date-utils.ts";
 import type { GetDaysOffPeriodResponse } from "../../types/api/days-off/days-off-api-response-types.ts";
 
 export const changeDaysOffPeriodData = (
-  prevDispatcherPlanningData: DispatcherPlanningData[],
-  dispatcherPlanningDatumId: string,
+  prevDispatchingRelations: DispatchingRelation[],
+  dispatchingRelationId: string,
   driverId: string,
   newDaysOffPeriodDatum: DaysOffPeriodData,
 ) =>
   updateDriverField(
-    prevDispatcherPlanningData,
-    dispatcherPlanningDatumId,
+    prevDispatchingRelations,
+    dispatchingRelationId,
     driverId,
     "daysOffPeriods",
     (periods) => [
@@ -24,14 +24,14 @@ export const changeDaysOffPeriodData = (
   );
 
 export const updateDaysOffPeriodsAfterDeletions = (
-  prevDispatcherPlanningData: DispatcherPlanningData[],
-  dispatcherPlanningDatumId: string,
+  prevDispatchingRelations: DispatchingRelation[],
+  dispatchingRelationId: string,
   driverId: string,
   newDaysOffPeriodData: DaysOffPeriodData[],
 ) =>
   updateDriverField(
-    prevDispatcherPlanningData,
-    dispatcherPlanningDatumId,
+    prevDispatchingRelations,
+    dispatchingRelationId,
     driverId,
     "daysOffPeriods",
     () => newDaysOffPeriodData,

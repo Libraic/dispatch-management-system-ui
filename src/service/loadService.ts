@@ -11,9 +11,9 @@ import type {
 } from "../types/api/common/api-response-types.ts";
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
-  GetDriversPlanningDataResponse,
+  GetDispatchingDataResponse,
   GetLoadStartingPointResponse,
-  LoadResponse,
+  GetLoadResponse,
   UpsertLoadRequest,
   UpsertLoadResponse,
 } from "../types/api/loads/load-api-types.ts";
@@ -34,7 +34,7 @@ export const getLoadData = async (
   relationId: string,
   startDate: Date,
   endDate: Date,
-): Promise<ApiResponse<LoadResponse[], Error>> => {
+): Promise<ApiResponse<GetLoadResponse[], Error>> => {
   const url = LOADS_RELATIONS_URL + `/${relationId}`;
   const params = {
     startDate: toIsoDate(startDate),
@@ -74,7 +74,7 @@ export const deleteLoadByUuid = async (
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
     const response = await axios.delete<
-      ApiResponse<GetDriversPlanningDataResponse[], Error>
+      ApiResponse<GetDispatchingDataResponse[], Error>
     >(LOADS_BASE_URL + `/${loadUuid}`);
     return response.data;
   } catch (error) {

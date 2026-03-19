@@ -1,5 +1,5 @@
 import type {
-  DispatcherPlanningData,
+  DispatchingRelation,
   DriverWorkforce,
 } from "../../types/internal/planner/planner-types.ts";
 import { HYPHEN } from "../../constants/common/global-constants.ts";
@@ -14,28 +14,28 @@ import {
 } from "../../constants/planner/planner-constants.ts";
 
 export const updateDriverField = <K extends keyof DriverWorkforce>(
-  prevDispatcherPlanningData: DispatcherPlanningData[],
-  dispatcherPlanningDatumId: string,
+  prevDispatchingRelations: DispatchingRelation[],
+  dispatchingRelationId: string,
   driverId: string,
   field: K,
   updateFieldFn: (current: DriverWorkforce[K]) => DriverWorkforce[K],
-): DispatcherPlanningData[] =>
-  prevDispatcherPlanningData.map((dispatcherLoadDatum) => {
-    if (dispatcherLoadDatum.identifier !== dispatcherPlanningDatumId) {
-      return dispatcherLoadDatum;
+): DispatchingRelation[] =>
+  prevDispatchingRelations.map((dispatchingRelation) => {
+    if (dispatchingRelation.id !== dispatchingRelationId) {
+      return dispatchingRelation;
     }
 
     return {
-      ...dispatcherLoadDatum,
-      driverPlanningData: dispatcherLoadDatum.driverPlanningData.map(
-        (driverPlanningDatum) => {
-          if (driverPlanningDatum.driver.uuid !== driverId) {
-            return driverPlanningDatum;
+      ...dispatchingRelation,
+      workforceUnits: dispatchingRelation.workforceUnits.map(
+        (workforceUnit) => {
+          if (workforceUnit.driver.uuid !== driverId) {
+            return workforceUnit;
           }
 
           return {
-            ...driverPlanningDatum,
-            [field]: updateFieldFn(driverPlanningDatum[field]),
+            ...workforceUnit,
+            [field]: updateFieldFn(workforceUnit[field]),
           };
         },
       ),

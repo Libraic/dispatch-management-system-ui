@@ -41,7 +41,7 @@ export type UpsertLoadResponse = {
   locations: ApiLoadLocation[];
 };
 
-export type LoadResponse = {
+export type GetLoadResponse = {
   loadUuid: string;
   revenue: number;
   miles: number;
@@ -54,17 +54,17 @@ export type LoadResponse = {
   locations: ApiLoadLocation[];
 };
 
-export type DriverPlanningData = {
+export type WorkforceData = {
   relationUuid: string;
   driver: DriverData;
-  loads: LoadResponse[];
+  loads: GetLoadResponse[];
   vehicleMaintenanceRecords: GetVehicleMaintenanceResponse[];
   daysOffPeriods: GetDaysOffPeriodResponse[];
 };
 
-export type GetDriversPlanningDataResponse = {
+export type GetDispatchingDataResponse = {
   dispatcher: DispatcherData;
-  driverPlanningData: DriverPlanningData[];
+  workforceData: WorkforceData[];
 };
 
 export interface GetLoadStartingPointResponse {

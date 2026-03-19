@@ -73,14 +73,14 @@ export type DriverWorkforce = {
   daysOffPeriods: DaysOffPeriodData[];
 };
 
-export type DispatcherPlanningData = {
-  identifier: string;
+export type DispatchingRelation = {
+  id: string;
   dispatcher: DispatcherData;
   startDate: Date;
   endDate: Date;
   totalRevenue: number;
   totalMiles: number;
-  driverPlanningData: DriverWorkforce[];
+  workforceUnits: DriverWorkforce[];
 };
 
 export interface CalendarBookFormHandler {

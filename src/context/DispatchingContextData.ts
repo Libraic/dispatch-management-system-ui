@@ -5,7 +5,7 @@ import type {
   VehicleMaintenanceData,
 } from "../types/internal/planner/planner-types.ts";
 
-export type PlanningContextData = {
+export type DispatchingContextData = {
   days: string[];
   upsertLoadDataFn: (driver: DriverData, loadData: LoadData) => void;
   upsertVehicleMaintenanceRecordFn: (

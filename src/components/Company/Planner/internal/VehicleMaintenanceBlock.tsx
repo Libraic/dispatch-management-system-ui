@@ -7,7 +7,7 @@ import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
 } from "../../../../tailwind/tailwind-font-vars.ts";
-import { PlannableModal } from "./forms/PlannableModal.tsx";
+import { SchedulableModal } from "./forms/SchedulableModal.tsx";
 import { useActivator } from "../../../../hooks/useActivator.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
 import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
@@ -20,14 +20,14 @@ import {
   getVehicleMaintenanceData,
 } from "../../../../service/vehicleMaintenanceService.ts";
 import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
-import { PlanningContext } from "../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../../../utils/planner/vehicle-maintenance-utils.ts";
 
 export const VehicleMaintenanceBlock: React.FC<{
   workforce: DriverWorkforce;
   vehicleMaintenanceData: VehicleMaintenanceData;
 }> = ({ workforce, vehicleMaintenanceData }) => {
-  const context = useContext(PlanningContext);
+  const context = useContext(DispatchingContext);
   const days = context!!.days;
   const { startingPoint, width } = getStartingPointAndWidthOfBlock(
     vehicleMaintenanceData.startDate,
@@ -131,7 +131,7 @@ export const VehicleMaintenanceBlock: React.FC<{
         </div>
       </div>
       {loadFormActivator.isActive() && (
-        <PlannableModal
+        <SchedulableModal
           deactivate={loadFormActivator.deactivate}
           props={{
             id: vehicleMaintenanceData.id,

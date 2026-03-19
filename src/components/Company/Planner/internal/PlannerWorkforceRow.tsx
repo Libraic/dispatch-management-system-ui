@@ -12,12 +12,12 @@ import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
 import { LoadBlock } from "./LoadBlock.tsx";
 import { VehicleMaintenanceBlock } from "./VehicleMaintenanceBlock.tsx";
 import { DaysOffPeriodBlock } from "./DaysOffPeriodBlock.tsx";
-import { PlanningContext } from "../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
 
-export const PlannerDriverRow: React.FC<{
-  driverPlanningData: DriverWorkforce;
-}> = ({ driverPlanningData }) => {
-  const context = useContext(PlanningContext);
+export const PlannerWorkforceRow: React.FC<{
+  workforce: DriverWorkforce;
+}> = ({ workforce }) => {
+  const context = useContext(DispatchingContext);
   const days = context!!.days;
   return (
     <div className="flex flex-row">
@@ -29,48 +29,44 @@ export const PlannerDriverRow: React.FC<{
             flex-shrink-0 ${PLANNER_TEXT_SIZE}
           `)}
         >
-          <DriverRowMetadata driverLoadData={driverPlanningData} />
+          <DriverRowMetadata driverLoadData={workforce} />
           {Array.from({ length: 14 }).map((_, index) => (
             <PlannerCalendarCell
               key={index}
               day={days[index]}
               formProps={{
                 day: days[index],
-                workforce: driverPlanningData,
+                workforce: workforce,
               }}
             />
           ))}
         </div>
-        {driverPlanningData.loads.length > 0 && (
+        {workforce.loads.length > 0 && (
           <div className="absolute inset-0 pointer-events-none">
-            {driverPlanningData.loads.map((load) => (
-              <LoadBlock
-                key={load.id}
-                driverLoadData={driverPlanningData}
-                load={load}
-              />
+            {workforce.loads.map((load) => (
+              <LoadBlock key={load.id} driverLoadData={workforce} load={load} />
             ))}
           </div>
         )}
-        {driverPlanningData.vehicleMaintenanceRecords.length > 0 && (
+        {workforce.vehicleMaintenanceRecords.length > 0 && (
           <div className="absolute inset-0 pointer-events-none">
-            {driverPlanningData.vehicleMaintenanceRecords.map(
+            {workforce.vehicleMaintenanceRecords.map(
               (vehicleMaintenanceRecord) => (
                 <VehicleMaintenanceBlock
                   key={vehicleMaintenanceRecord.id}
-                  workforce={driverPlanningData}
+                  workforce={workforce}
                   vehicleMaintenanceData={vehicleMaintenanceRecord}
                 />
               ),
             )}
           </div>
         )}
-        {driverPlanningData.daysOffPeriods.length > 0 && (
+        {workforce.daysOffPeriods.length > 0 && (
           <div className="absolute inset-0 pointer-events-none">
-            {driverPlanningData.daysOffPeriods.map((daysOffPeriod) => (
+            {workforce.daysOffPeriods.map((daysOffPeriod) => (
               <DaysOffPeriodBlock
                 key={daysOffPeriod.id}
-                workforce={driverPlanningData}
+                workforce={workforce}
                 daysOffPeriodData={daysOffPeriod}
               />
             ))}

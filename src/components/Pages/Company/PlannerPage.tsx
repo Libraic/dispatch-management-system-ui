@@ -5,7 +5,7 @@ import { getCurrentWeekDays } from "../../../utils/global/date-utils.ts";
 import { useParams } from "react-router-dom";
 import { PlannerRow } from "../../Company/Planner/public/PlannerRow.tsx";
 import { useEffect, useState } from "react";
-import type { DispatcherPlanningData } from "../../../types/internal/planner/planner-types.ts";
+import type { DispatchingRelation } from "../../../types/internal/planner/planner-types.ts";
 import { EMPTY_ARRAY } from "../../../constants/common/global-constants.ts";
 import { PlannerMenu } from "../../Company/Planner/public/PlannerMenu.tsx";
 import { convertGetDriverLoadsResponsesToDispatcherLoadDataList } from "../../../utils/api/planner/planner-api-utils.ts";
@@ -13,14 +13,14 @@ import { DEFAULT_LOCALE } from "../../../constants/date/date-constants.ts";
 import { PLANNER_VERTICAL_MARGIN } from "../../../constants/planner/planner-constants.ts";
 import { getWeekWithDayAndMonth } from "../../../utils/planner/planner-utils.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
-import { getPlanningDataByCompanyUuidAndStartAndEndDate } from "../../../service/plannerService.ts";
+import { getSchedulableDataByCompanyUuidAndStartAndEndDate } from "../../../service/plannerService.ts";
 
 export const PlannerPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const days = getWeekWithDayAndMonth(activeWeek);
   const companyId = useParams().companyUuid!!;
-  const [dispatcherLoads, setDispatcherLoads] =
-    useState<DispatcherPlanningData[]>(EMPTY_ARRAY);
+  const [dispatchingRelations, setDispatchingRelations] =
+    useState<DispatchingRelation[]>(EMPTY_ARRAY);
 
   const extractWeekFromCalendar = (dates: Date[]) => {
     const vals = dates.map((date) => date.toLocaleDateString(DEFAULT_LOCALE));
@@ -28,20 +28,21 @@ export const PlannerPage = () => {
   };
 
   useEffect(() => {
-    getPlanningDataByCompanyUuidAndStartAndEndDate(companyId, activeWeek).then(
-      (data) => {
-        const getDriverLoadsResponses = data.data ?? EMPTY_ARRAY;
-        const startDate = activeWeek[0];
-        const endDate = activeWeek[activeWeek.length - 1];
-        const dispatcherLoads =
-          convertGetDriverLoadsResponsesToDispatcherLoadDataList(
-            getDriverLoadsResponses,
-            startDate,
-            endDate,
-          );
-        setDispatcherLoads(dispatcherLoads);
-      },
-    );
+    getSchedulableDataByCompanyUuidAndStartAndEndDate(
+      companyId,
+      activeWeek,
+    ).then((data) => {
+      const getDriverLoadsResponses = data.data ?? EMPTY_ARRAY;
+      const startDate = activeWeek[0];
+      const endDate = activeWeek[activeWeek.length - 1];
+      const dispatchingRelations =
+        convertGetDriverLoadsResponsesToDispatcherLoadDataList(
+          getDriverLoadsResponses,
+          startDate,
+          endDate,
+        );
+      setDispatchingRelations(dispatchingRelations);
+    });
   }, [companyId, activeWeek]);
 
   return (
@@ -51,13 +52,13 @@ export const PlannerPage = () => {
         <PlannerMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
           <PlannerHeader days={days} />
-          {dispatcherLoads.map((dispatcherLoadData) => (
+          {dispatchingRelations.map((dispatchingRelation) => (
             <PlannerRow
-              key={dispatcherLoadData.identifier}
+              key={dispatchingRelation.id}
               companyId={companyId}
               days={days}
-              dispatcherPlanningData={dispatcherLoadData}
-              setDispatcherLoadData={setDispatcherLoads}
+              dispatchingRelation={dispatchingRelation}
+              setDispatchingRelation={setDispatchingRelations}
             />
           ))}
         </div>

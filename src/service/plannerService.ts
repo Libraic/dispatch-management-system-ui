@@ -1,4 +1,4 @@
-import type { GetDriversPlanningDataResponse } from "../types/api/loads/load-api-types.ts";
+import type { GetDispatchingDataResponse } from "../types/api/loads/load-api-types.ts";
 import type { ApiResponse } from "../types/api/common/api-response-types.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import { toIsoDate } from "../utils/global/date-utils.ts";
@@ -11,17 +11,17 @@ import {
 } from "../constants/api/api-query-constants.ts";
 import type { Error } from "../types/api/common/api-errors-types.ts";
 
-export const getPlanningDataByCompanyUuidAndStartAndEndDate = async (
+export const getSchedulableDataByCompanyUuidAndStartAndEndDate = async (
   companyUuid: string,
   week: string[],
-): Promise<ApiResponse<GetDriversPlanningDataResponse[], Error>> => {
+): Promise<ApiResponse<GetDispatchingDataResponse[], Error>> => {
   const startDate = week[0];
   const endDateObject = new Date(week[week.length - 1]);
   endDateObject.setDate(endDateObject.getDate() + 7);
   const endDate = toIsoDate(endDateObject);
   try {
     const response = await axios.get<
-      ApiResponse<GetDriversPlanningDataResponse[], Error>
+      ApiResponse<GetDispatchingDataResponse[], Error>
     >(PLANNING_BASE_URL, {
       params: {
         [COMPANY_ID_QUERY_PARAM]: companyUuid,

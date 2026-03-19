@@ -1,5 +1,5 @@
 import type {
-  DispatcherPlanningData,
+  DispatchingRelation,
   VehicleMaintenanceData,
 } from "../../types/internal/planner/planner-types.ts";
 import { updateDriverField } from "./planner-utils.ts";
@@ -8,14 +8,14 @@ import { toIsoDate, toNormalizedIsoDate } from "../global/date-utils.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 
 export const changeWorkforceVehicleMaintenanceData = (
-  prevDispatcherPlanningData: DispatcherPlanningData[],
-  dispatcherPlanningDatumId: string,
+  prevDispatchingRelations: DispatchingRelation[],
+  dispatchingRelationId: string,
   driverId: string,
   newVehicleMaintenanceDatum: VehicleMaintenanceData,
 ) =>
   updateDriverField(
-    prevDispatcherPlanningData,
-    dispatcherPlanningDatumId,
+    prevDispatchingRelations,
+    dispatchingRelationId,
     driverId,
     "vehicleMaintenanceRecords",
     (records) => [
@@ -25,14 +25,14 @@ export const changeWorkforceVehicleMaintenanceData = (
   );
 
 export const updateVehicleMaintenanceDataAfterDeletion = (
-  prevDispatcherPlanningData: DispatcherPlanningData[],
-  dispatcherPlanningDatumId: string,
+  prevDispatchingRelations: DispatchingRelation[],
+  dispatchingRelationId: string,
   driverId: string,
   newVehicleMaintenanceData: VehicleMaintenanceData[],
 ) =>
   updateDriverField(
-    prevDispatcherPlanningData,
-    dispatcherPlanningDatumId,
+    prevDispatchingRelations,
+    dispatchingRelationId,
     driverId,
     "vehicleMaintenanceRecords",
     () => newVehicleMaintenanceData,

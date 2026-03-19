@@ -1,6 +1,6 @@
 import type { DriverData } from "../../types/api/driver/driver-api-response-types.ts";
 import type {
-  DispatcherPlanningData,
+  DispatchingRelation,
   DriverWorkforce,
   LoadData,
   LoadLocationData,
@@ -14,28 +14,28 @@ import {
 import { generateUuid } from "../global/general-utils.ts";
 import type {
   ApiLoadLocation,
-  LoadResponse,
+  GetLoadResponse,
 } from "../../types/api/loads/load-api-types.ts";
 
 export const upsertDriverLoadCallbackFunction = (
-  prevDispatcherLoadDataList: DispatcherPlanningData[],
+  prevDispatcherLoadDataList: DispatchingRelation[],
   dispatcherLoadDataIdentifier: string,
   newLoadDatum: LoadData,
   driver: DriverData,
 ) => {
-  const newDispatcherLoadDataList: DispatcherPlanningData[] = [];
+  const newDispatcherLoadDataList: DispatchingRelation[] = [];
   for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
-    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
+    if (prevDispatcherLoadData.id !== dispatcherLoadDataIdentifier) {
       newDispatcherLoadDataList.push(prevDispatcherLoadData);
     } else {
       const newDriverLoadDataList: DriverWorkforce[] = [];
-      for (const currentDriverLoadData of prevDispatcherLoadData.driverPlanningData) {
-        if (currentDriverLoadData.driver.uuid !== driver.uuid) {
-          newDriverLoadDataList.push(currentDriverLoadData);
+      for (const workforce of prevDispatcherLoadData.workforceUnits) {
+        if (workforce.driver.uuid !== driver.uuid) {
+          newDriverLoadDataList.push(workforce);
         } else {
           let driverTotalMiles = 0;
           let driverTotalRevenue = 0;
-          const loads = currentDriverLoadData.loads.filter(
+          const loads = workforce.loads.filter(
             (loadDatum) => loadDatum.id !== newLoadDatum.id,
           );
           loads.push(newLoadDatum);
@@ -53,7 +53,7 @@ export const upsertDriverLoadCallbackFunction = (
           }
 
           newDriverLoadDataList.push({
-            ...currentDriverLoadData,
+            ...workforce,
             totalRevenue: driverTotalRevenue,
             totalMiles: driverTotalMiles,
             driver: driver,
@@ -72,7 +72,7 @@ export const upsertDriverLoadCallbackFunction = (
         ...prevDispatcherLoadData,
         totalMiles: dispatcherTotalMiles,
         totalRevenue: dispatcherTotalRevenue,
-        driverPlanningData: newDriverLoadDataList,
+        workforceUnits: newDriverLoadDataList,
       });
     }
   }
@@ -81,18 +81,18 @@ export const upsertDriverLoadCallbackFunction = (
 };
 
 export const updateLoadsAfterDeletions = (
-  prevDispatcherLoadDataList: DispatcherPlanningData[],
+  prevDispatcherLoadDataList: DispatchingRelation[],
   dispatcherLoadDataIdentifier: string,
   newLoadData: LoadData[],
   driver: DriverData,
 ) => {
-  const newDispatcherLoadDataList: DispatcherPlanningData[] = [];
+  const newDispatcherLoadDataList: DispatchingRelation[] = [];
   for (const prevDispatcherLoadData of prevDispatcherLoadDataList) {
-    if (prevDispatcherLoadData.identifier !== dispatcherLoadDataIdentifier) {
+    if (prevDispatcherLoadData.id !== dispatcherLoadDataIdentifier) {
       newDispatcherLoadDataList.push(prevDispatcherLoadData);
     } else {
       const newDriverLoadDataList: DriverWorkforce[] = [];
-      for (const currentDriverLoadData of prevDispatcherLoadData.driverPlanningData) {
+      for (const currentDriverLoadData of prevDispatcherLoadData.workforceUnits) {
         if (currentDriverLoadData.driver!!.uuid !== driver.uuid) {
           newDriverLoadDataList.push(currentDriverLoadData);
         } else {
@@ -132,7 +132,7 @@ export const updateLoadsAfterDeletions = (
         ...prevDispatcherLoadData,
         totalMiles: dispatcherTotalMiles,
         totalRevenue: dispatcherTotalRevenue,
-        driverPlanningData: newDriverLoadDataList,
+        workforceUnits: newDriverLoadDataList,
       });
     }
   }
@@ -141,7 +141,7 @@ export const updateLoadsAfterDeletions = (
 };
 
 export const fromGetLoadResponseToLoadData = (
-  loadResponse: LoadResponse,
+  loadResponse: GetLoadResponse,
 ): LoadData => {
   return {
     id: loadResponse.loadUuid,

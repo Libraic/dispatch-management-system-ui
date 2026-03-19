@@ -23,7 +23,7 @@ import { BLANK_STRING } from "../../../../../constants/common/global-constants.t
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm.tsx";
 import { DaysOffForm } from "./DaysOffForm.tsx";
 
-export const PlannableModal: React.FC<{
+export const SchedulableModal: React.FC<{
   deactivate: () => void;
   props?: FormProps;
 }> = ({ deactivate, props }) => {

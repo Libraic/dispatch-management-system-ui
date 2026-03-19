@@ -21,15 +21,15 @@ import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx"
 import pickUpIcon from "../../../../assets/planner/blocks/pickup.svg";
 import deliveryIcon from "../../../../assets/planner/blocks/delivery.svg";
 import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
-import { PlanningContext } from "../../../../context/PlanningContext.ts";
-import { PlannableModal } from "./forms/PlannableModal.tsx";
+import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
+import { SchedulableModal } from "./forms/SchedulableModal.tsx";
 import { fromGetLoadResponseToLoadData } from "../../../../utils/planner/load-utils.ts";
 
 export const LoadBlock: React.FC<{
   driverLoadData: DriverWorkforce;
   load: LoadData;
 }> = ({ driverLoadData, load }) => {
-  const context = useContext(PlanningContext);
+  const context = useContext(DispatchingContext);
   const days = context!!.days;
   const firstLocation = load.locations[0];
   const lastLocation = load.locations[load.locations.length - 1];
@@ -136,7 +136,7 @@ export const LoadBlock: React.FC<{
         </div>
       </div>
       {loadFormActivator.isActive() && (
-        <PlannableModal
+        <SchedulableModal
           deactivate={loadFormActivator.deactivate}
           props={{
             id: load.id,

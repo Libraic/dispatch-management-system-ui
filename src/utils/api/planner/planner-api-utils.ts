@@ -1,29 +1,29 @@
 import { ZERO } from "../../../constants/common/global-constants.ts";
 import { v4 as uuidv4 } from "uuid";
 import type {
-  DispatcherPlanningData,
+  DispatchingRelation,
   DriverWorkforce,
   LoadData,
 } from "../../../types/internal/planner/planner-types.ts";
-import type { GetDriversPlanningDataResponse } from "../../../types/api/loads/load-api-types.ts";
+import type { GetDispatchingDataResponse } from "../../../types/api/loads/load-api-types.ts";
 import { toNormalizedIsoDate } from "../../global/date-utils.ts";
 import { fromGetLoadResponseToLoadData } from "../../planner/load-utils.ts";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../planner/vehicle-maintenance-utils.ts";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../planner/days-off-utils.ts";
 
 export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
-  getDriverLoadsResponses: GetDriversPlanningDataResponse[],
+  getDriverLoadsResponses: GetDispatchingDataResponse[],
   startDate: string,
   endDate: string,
 ) => {
-  const dispatcherLoadDataList: DispatcherPlanningData[] = [];
+  const dispatchingRelations: DispatchingRelation[] = [];
   const startDateObject = toNormalizedIsoDate(startDate);
   const endDateObject = toNormalizedIsoDate(endDate);
   for (const getDriverLoadResponse of getDriverLoadsResponses) {
     const driverLoadDataList: DriverWorkforce[] = [];
     let totalRevenue = 0.0;
     let totalMiles = 0.0;
-    for (const driverLoadData of getDriverLoadResponse.driverPlanningData) {
+    for (const driverLoadData of getDriverLoadResponse.workforceData) {
       const loads: LoadData[] = [];
       let driverTotalRevenue = 0.0;
       let driverTotalMiles = 0.0;
@@ -66,16 +66,16 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
       });
     }
 
-    dispatcherLoadDataList.push({
-      identifier: uuidv4(),
+    dispatchingRelations.push({
+      id: uuidv4(),
       dispatcher: getDriverLoadResponse.dispatcher,
       totalMiles: totalMiles,
       totalRevenue: totalRevenue,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
-      driverPlanningData: driverLoadDataList,
+      workforceUnits: driverLoadDataList,
     });
   }
 
-  return dispatcherLoadDataList;
+  return dispatchingRelations;
 };

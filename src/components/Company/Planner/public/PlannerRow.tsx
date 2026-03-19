@@ -2,7 +2,7 @@ import { useActivator } from "../../../../hooks/useActivator.ts";
 import React from "react";
 import type {
   DaysOffPeriodData,
-  DispatcherPlanningData,
+  DispatchingRelation,
   LoadData,
   VehicleMaintenanceData,
 } from "../../../../types/internal/planner/planner-types.ts";
@@ -20,15 +20,15 @@ import {
 } from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 import { PlannerDispatcherRow } from "../internal/PlannerDispatcherRow.tsx";
-import { PlannerDriverRow } from "../internal/PlannerDriverRow.tsx";
+import { PlannerWorkforceRow } from "../internal/PlannerWorkforceRow.tsx";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import type { UpsertVehicleMaintenanceRecordRequest } from "../../../../types/api/vehicle-maintenance/vehicle-maintenance-api-request-types.ts";
 import { upsertVehicleMaintenanceRecord } from "../../../../service/vehicleMaintenanceService.ts";
-import { PlanningContext } from "../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
 import type { UpsertDayOffPeriodRequest } from "../../../../types/api/days-off/days-off-api-request-types.ts";
 import { upsertDaysOffPeriod } from "../../../../service/daysOffService.ts";
-import type { PlanningContextData } from "../../../../context/PlanningContextData.ts";
+import type { DispatchingContextData } from "../../../../context/DispatchingContextData.ts";
 import {
   fromApiLoadLocationToLoadLocationData,
   updateLoadsAfterDeletions,
@@ -46,14 +46,14 @@ import {
 export const PlannerRow: React.FC<{
   companyId: string;
   days: string[];
-  dispatcherPlanningData: DispatcherPlanningData;
-  setDispatcherLoadData: React.Dispatch<
-    React.SetStateAction<DispatcherPlanningData[]>
+  dispatchingRelation: DispatchingRelation;
+  setDispatchingRelation: React.Dispatch<
+    React.SetStateAction<DispatchingRelation[]>
   >;
-}> = ({ companyId, days, dispatcherPlanningData, setDispatcherLoadData }) => {
+}> = ({ companyId, days, dispatchingRelation, setDispatchingRelation }) => {
   const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
   const activator = useActivator(true);
-  const dispatcherLoadIdentifier = dispatcherPlanningData.identifier;
+  const dispatchingRelationId = dispatchingRelation.id;
   const toast = useToast();
 
   const upsertLoadFn = async (driver: DriverData, loadData: LoadData) => {
@@ -63,7 +63,7 @@ export const PlannerRow: React.FC<{
     const upsertRequest: UpsertLoadRequest = {
       loadUuid: loadData.id,
       companyUuid: companyId,
-      dispatcherUuid: dispatcherPlanningData.dispatcher!!.uuid,
+      dispatcherUuid: dispatchingRelation.dispatcher.uuid,
       driverUuid: driver.uuid,
       revenue: loadData.revenue ? parseFloat(loadData.revenue) : ZERO,
       miles: loadData.miles ? parseFloat(loadData.miles) : ZERO,
@@ -101,10 +101,10 @@ export const PlannerRow: React.FC<{
       ),
     };
 
-    setDispatcherLoadData((prevDispatcherLoadDataList) => {
+    setDispatchingRelation((prevDispatcherLoadDataList) => {
       return upsertDriverLoadCallbackFunction(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         upsertedLoadData,
         driver,
       );
@@ -136,10 +136,10 @@ export const PlannerRow: React.FC<{
       startDate: toNormalizedIsoDate(data.startDate),
       endDate: toNormalizedIsoDate(data.endDate),
     };
-    setDispatcherLoadData((prevDispatcherLoadDataList) =>
+    setDispatchingRelation((prevDispatcherLoadDataList) =>
       changeWorkforceVehicleMaintenanceData(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         driverId,
         newVehicleMaintenanceData,
       ),
@@ -169,10 +169,10 @@ export const PlannerRow: React.FC<{
       startDate: toNormalizedIsoDate(data.startDate),
       endDate: toNormalizedIsoDate(data.endDate),
     };
-    setDispatcherLoadData((prevDispatcherLoadDataList) =>
+    setDispatchingRelation((prevDispatcherLoadDataList) =>
       changeDaysOffPeriodData(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         driverId,
         newDaysOffPeriodData,
       ),
@@ -183,10 +183,10 @@ export const PlannerRow: React.FC<{
     driverId: string,
     vehicleMaintenanceData: VehicleMaintenanceData[],
   ) => {
-    setDispatcherLoadData((prevDispatcherLoadDataList) => {
+    setDispatchingRelation((prevDispatcherLoadDataList) => {
       return updateVehicleMaintenanceDataAfterDeletion(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         driverId,
         vehicleMaintenanceData,
       );
@@ -197,10 +197,10 @@ export const PlannerRow: React.FC<{
     driver: DriverData,
     loadDataList: LoadData[],
   ) => {
-    setDispatcherLoadData((prevDispatcherLoadDataList) => {
+    setDispatchingRelation((prevDispatcherLoadDataList) => {
       return updateLoadsAfterDeletions(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         loadDataList,
         driver,
       );
@@ -211,17 +211,17 @@ export const PlannerRow: React.FC<{
     driverId: string,
     daysOffPeriodData: DaysOffPeriodData[],
   ) => {
-    setDispatcherLoadData((prevDispatcherLoadDataList) => {
+    setDispatchingRelation((prevDispatcherLoadDataList) => {
       return updateDaysOffPeriodsAfterDeletions(
         prevDispatcherLoadDataList,
-        dispatcherLoadIdentifier,
+        dispatchingRelationId,
         driverId,
         daysOffPeriodData,
       );
     });
   };
 
-  const planningContextData: PlanningContextData = {
+  const dispatchingContextData: DispatchingContextData = {
     days: updatedDays,
     upsertLoadDataFn: upsertLoadFn,
     upsertVehicleMaintenanceRecordFn: upsertVehicleMaintenanceRecordFn,
@@ -235,19 +235,17 @@ export const PlannerRow: React.FC<{
   return (
     <div>
       <PlannerDispatcherRow
-        dispatcherLoadData={dispatcherPlanningData}
+        dispatchingRelation={dispatchingRelation}
         expander={activator}
       />
-      <PlanningContext value={planningContextData}>
+      <DispatchingContext value={dispatchingContextData}>
         {activator.isActive() &&
-          dispatcherPlanningData.driverPlanningData.map(
-            (driverPlanningDatum) => (
-              <div key={driverPlanningDatum.relationId ?? generateUuid()}>
-                <PlannerDriverRow driverPlanningData={driverPlanningDatum} />
-              </div>
-            ),
-          )}
-      </PlanningContext>
+          dispatchingRelation.workforceUnits.map((workforce) => (
+            <div key={workforce.relationId ?? generateUuid()}>
+              <PlannerWorkforceRow workforce={workforce} />
+            </div>
+          ))}
+      </DispatchingContext>
       <ToastRenderer toast={toast} />
     </div>
   );

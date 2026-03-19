@@ -20,7 +20,7 @@ import {
 } from "../../../../../utils/planner/load-error-utils.ts";
 import { createStateData } from "../../../../../utils/global/props-utils.ts";
 import { getStartingPointLocation } from "../../../../../service/loadService.ts";
-import { PlanningContext } from "../../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { getBlankLoadData } from "../../../../../utils/planner/load-utils.ts";
 
 export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
@@ -39,7 +39,7 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
       loadDataErrors,
       setLoadData,
     );
-    const context = useContext(PlanningContext);
+    const context = useContext(DispatchingContext);
 
     const submit = () => {
       const { isError, loadErrors } = getErrorsIfPresent(loadData);

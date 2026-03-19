@@ -13,7 +13,7 @@ import { City } from "../../../../../types/internal/classes/City.ts";
 import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
 import { BLANK_STRING } from "../../../../../constants/common/global-constants.ts";
 import { LOCATION_REQUIRED } from "../../../../../constants/error/error-message-constants.ts";
-import { PlanningContext } from "../../../../../context/PlanningContext.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { getBlankVehicleMaintenanceData } from "../../../../../utils/planner/vehicle-maintenance-utils.ts";
 import { getBlankVehicleMaintenanceErrors } from "../../../../../utils/planner/vehicle-maintenance-errors-utils.ts";
 
@@ -42,7 +42,7 @@ export const VehicleMaintenanceForm = forwardRef<
   const [shopData, setShopData] = useState<VehicleMaintenanceData>(
     getInitialData(workforce, id, day),
   );
-  const context = useContext(PlanningContext);
+  const context = useContext(DispatchingContext);
   const submit = () => {
     if (shopData.location === BLANK_STRING) {
       setShopErrors({ locationError: LOCATION_REQUIRED });
