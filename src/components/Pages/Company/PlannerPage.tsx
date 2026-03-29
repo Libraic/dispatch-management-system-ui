@@ -14,6 +14,7 @@ import { PLANNER_VERTICAL_MARGIN } from "../../../constants/planner/planner-cons
 import { getWeekWithDayAndMonth } from "../../../utils/planner/planner-utils.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
 import { getSchedulableDataByCompanyUuidAndStartAndEndDate } from "../../../service/plannerService.ts";
+import { TimelineCursor } from "../../Company/Planner/internal/TimelineCursor.tsx";
 
 export const PlannerPage = () => {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
@@ -44,13 +45,13 @@ export const PlannerPage = () => {
       setDispatchingRelations(dispatchingRelations);
     });
   }, [companyId, activeWeek]);
-
   return (
     <SidebarWrapper>
       <PageHeader headerInfo={PLANNER_HEADER} />
       <div className={`flex flex-col mx-[3rem] ${PLANNER_VERTICAL_MARGIN}`}>
         <PlannerMenu extractWeekFromCalendar={extractWeekFromCalendar} />
-        <div className="flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
+        <div className="relative flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
+          <TimelineCursor days={days}/>
           <PlannerHeader days={days} />
           {dispatchingRelations.map((dispatchingRelation) => (
             <PlannerRow
