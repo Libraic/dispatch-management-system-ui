@@ -51,7 +51,7 @@ export const Toast: React.FC<{ message: string; type: ToastTypeEnum }> = ({
 
   return (
     <div
-      className={`flex items-center justify-center py-8 rounded-2xl border ${toastStyle.borderColor} ${toastStyle.backgroundColor} text-black absolute top-6 left-1/2 -translate-x-1/2 min-w-[23rem] w-fit h-[3.5rem] font-inter-400 text-[1.25rem] shadow-md transition-all duration-300 ease-in-out
+      className={`flex items-center justify-center py-8 rounded-2xl border ${toastStyle.borderColor} ${toastStyle.backgroundColor} text-black fixed top-6 left-1/2 -translate-x-1/2 min-w-[23rem] w-fit h-[3.5rem] font-inter-400 text-[1.25rem] shadow-md transition-all duration-300 ease-in-out
         ${
           animateOut
             ? "opacity-0 -translate-y-5"

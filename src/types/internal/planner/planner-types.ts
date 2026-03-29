@@ -14,10 +14,19 @@ export type LocationLabelResource = Record<
   { focused: string; unfocused: string }
 >;
 
+export type Period = "AM" | "PM";
+
+export interface Time {
+  hour: string;
+  minute: string;
+  period: Period;
+}
+
 export interface LoadLocationData {
   uuid: string;
   label: LocationLabel;
   date: Date;
+  time: Time;
   location: string;
   order: number;
 }

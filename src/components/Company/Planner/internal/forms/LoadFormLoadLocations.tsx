@@ -63,7 +63,7 @@ export const LoadFormLoadLocations: React.FC<{
         strategy={verticalListSortingStrategy}
       >
         <div className="flex flex-col mb-[1.5rem] gap-y-[1rem]">
-          <div className="flex flex-col gap-x-5 max-h-[19rem] pt-5 overflow-y-auto">
+          <div className="flex flex-col gap-x-5 pt-5">
             {locations.map((location) => (
               <LoadLocation
                 key={location.uuid}

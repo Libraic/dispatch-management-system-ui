@@ -17,6 +17,7 @@ import {
   PLANNER_TEXT_SIZE,
 } from "../../../../../constants/planner/planner-constants.ts";
 import { formatPhoneNumber } from "../../../../../utils/global/input-form-utils.ts";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
 
 export const PlannerDispatcherRow: React.FC<{
   dispatchingRelation: DispatchingRelation;
@@ -46,7 +47,7 @@ export const PlannerDispatcherRow: React.FC<{
         <img
           src={activeIcon}
           alt="chevron-right"
-          className="absolute w-7 h-7 z-[999] mt-[1.3rem] pr-[0.5rem] left-[0.5rem] hover:cursor-pointer"
+          className={`absolute w-7 h-7 ${Z_INDEX_NORMAL_PRECEDENCE} mt-[1.3rem] pr-[0.5rem] left-[0.5rem] hover:cursor-pointer`}
           onClick={handleOnClickFn}
         />
       )}

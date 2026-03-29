@@ -12,7 +12,7 @@ import {
   type CalendarTimeline,
   type CalendarUnitType,
 } from "../../../../types/internal/calendar/calendar-types.ts";
-import type { DayOfMonth } from "../../../../types/internal/date/date-types.ts";
+import type { DayOfMonth } from "../../../../types/internal/time/date-types.ts";
 import { getDatesForTheTimeline } from "../../../../utils/calendar/calendar-utils.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";

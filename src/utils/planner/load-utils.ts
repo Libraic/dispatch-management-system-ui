@@ -5,6 +5,7 @@ import type {
   LoadData,
   LoadLocationData,
   LocationLabel,
+  Time,
 } from "../../types/internal/planner/planner-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import {
@@ -16,6 +17,7 @@ import type {
   ApiLoadLocation,
   GetLoadResponse,
 } from "../../types/api/loads/load-api-types.ts";
+import { hhmmToTime } from "../../types/internal/time/time-types.ts";
 
 export const upsertDriverLoadCallbackFunction = (
   prevDispatcherLoadDataList: DispatchingRelation[],
@@ -162,6 +164,7 @@ export const fromGetLoadResponseToLoadData = (
 export const getBlankLoadData = (
   day: string,
   initialLocation?: string,
+  initialTime?: Time,
 ): LoadData => {
   const startDate = new Date(day);
   const endDate = getNextDayFromCurrentDate(startDate);
@@ -172,7 +175,7 @@ export const getBlankLoadData = (
     revenue: BLANK_STRING,
     miles: BLANK_STRING,
     loadStatus: "Dispatched",
-    locations: getInitialLoadLocations(startDate, initialLocation),
+    locations: getInitialLoadLocations(startDate, initialLocation, initialTime),
   };
 };
 
@@ -183,6 +186,7 @@ export const fromApiLoadLocationToLoadLocationData = (
     uuid: generateUuid(),
     label: location.label as LocationLabel,
     date: new Date(location.date),
+    time: hhmmToTime(location.time),
     location: location.location ?? BLANK_STRING,
     order: location.order,
   };
@@ -193,11 +197,13 @@ export const getBlankLocation = (
   order: number,
   label?: LocationLabel,
   location?: string,
+  time?: Time,
 ): LoadLocationData => {
   return {
     uuid: generateUuid(),
     label: label ?? "Pick Up",
     date: date,
+    time: time ?? getDefaultTime(),
     location: location ?? BLANK_STRING,
     order: order,
   };
@@ -206,18 +212,21 @@ export const getBlankLocation = (
 const getInitialLoadLocations = (
   date: Date,
   initialLocation?: string,
+  initialTime?: Time,
 ): LoadLocationData[] => {
   const startingPoint = getBlankLocation(
     new Date(date),
     0,
     "Starting Point",
     initialLocation,
+    initialTime,
   );
   const pickUpLocation = getBlankLocation(
     new Date(date),
     1,
     "Pick Up",
     initialLocation,
+    initialTime,
   );
   const deliveryLocation = getBlankLocation(
     getNextDayFromCurrentDate(date),
@@ -225,4 +234,12 @@ const getInitialLoadLocations = (
     "Delivery",
   );
   return [startingPoint, pickUpLocation, deliveryLocation];
+};
+
+const getDefaultTime = (): Time => {
+  return {
+    hour: "12",
+    minute: "00",
+    period: "PM",
+  };
 };

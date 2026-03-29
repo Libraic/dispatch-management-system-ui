@@ -10,7 +10,7 @@ import {
   CalendarUnitTypes,
   type WeekIndexer,
 } from "../../../../types/internal/calendar/calendar-types.ts";
-import type { DayOfMonth } from "../../../../types/internal/date/date-types.ts";
+import type { DayOfMonth } from "../../../../types/internal/time/date-types.ts";
 
 export const CalendarBody: React.FC<{
   unitType: CalendarUnitType;

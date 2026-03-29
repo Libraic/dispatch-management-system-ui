@@ -1,4 +1,4 @@
-import type { YearData } from "../date/date-types.ts";
+import type { YearData } from "../time/date-types.ts";
 
 export type CompanyRegistrationTypes = {
   name: string;

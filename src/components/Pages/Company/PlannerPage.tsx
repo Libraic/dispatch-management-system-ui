@@ -51,12 +51,11 @@ export const PlannerPage = () => {
       <div className={`flex flex-col mx-[3rem] ${PLANNER_VERTICAL_MARGIN}`}>
         <PlannerMenu extractWeekFromCalendar={extractWeekFromCalendar} />
         <div className="relative flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
-          <TimelineCursor days={days}/>
+          <TimelineCursor days={days} />
           <PlannerHeader days={days} />
           {dispatchingRelations.map((dispatchingRelation) => (
             <PlannerRow
               key={dispatchingRelation.id}
-              companyId={companyId}
               days={days}
               dispatchingRelation={dispatchingRelation}
               setDispatchingRelation={setDispatchingRelations}

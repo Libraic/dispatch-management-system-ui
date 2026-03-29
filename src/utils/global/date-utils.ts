@@ -2,7 +2,7 @@ import { TRAILING_ZERO } from "../../constants/common/global-constants.ts";
 import type {
   DayOfMonth,
   YearData,
-} from "../../types/internal/date/date-types.ts";
+} from "../../types/internal/time/date-types.ts";
 import type { WeekIndexer } from "../../types/internal/calendar/calendar-types.ts";
 import { DEFAULT_LOCALE } from "../../constants/date/date-constants.ts";
 

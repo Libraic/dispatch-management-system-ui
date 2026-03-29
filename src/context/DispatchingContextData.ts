@@ -1,13 +1,14 @@
 import type { DriverData } from "../types/api/driver/driver-api-response-types.ts";
 import type {
   DaysOffPeriodData,
+  DriverWorkforce,
   LoadData,
   VehicleMaintenanceData,
 } from "../types/internal/planner/planner-types.ts";
 
 export type DispatchingContextData = {
   days: string[];
-  upsertLoadDataFn: (driver: DriverData, loadData: LoadData) => void;
+  upsertLoadDataFn: (workforce: DriverWorkforce, loadData: LoadData) => void;
   upsertVehicleMaintenanceRecordFn: (
     shop: VehicleMaintenanceData,
     driverId: string,

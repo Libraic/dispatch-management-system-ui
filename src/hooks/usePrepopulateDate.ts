@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import type { DateObject } from "../types/internal/date/date-types.ts";
+import type { DateObject } from "../types/internal/time/date-types.ts";
 
 export const usePrepopulateDate = <T>(
   setterFunction: React.Dispatch<React.SetStateAction<T>>,

@@ -5,6 +5,7 @@ import {
 } from "../../../../constants/planner/planner-constants.ts";
 import { toIsoDate } from "../../../../utils/global/date-utils.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
 
 export const TimelineCursor: FC<{ days: string[] }> = ({ days }) => {
   const lineRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ export const TimelineCursor: FC<{ days: string[] }> = ({ days }) => {
   return (
     <div
       ref={lineRef}
-      className="absolute top-0 bottom-0 w-0.5 bg-red-500/70 pointer-events-none z-10"
+      className={`absolute top-0 bottom-0 w-0.5 bg-red-500/70 pointer-events-none ${Z_INDEX_NORMAL_PRECEDENCE}`}
     />
   );
 };

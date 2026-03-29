@@ -7,15 +7,14 @@ import type { GetDaysOffPeriodResponse } from "../days-off/days-off-api-response
 export type ApiLoadLocation = {
   label: string;
   date: string;
+  time: string;
   location: string;
   order: number;
 };
 
 export type UpsertLoadRequest = {
-  companyUuid: string;
   loadUuid?: string;
-  dispatcherUuid?: string;
-  driverUuid?: string;
+  relationUuid?: string;
   revenue?: number;
   miles?: number;
   broker?: string;
@@ -69,4 +68,5 @@ export type GetDispatchingDataResponse = {
 
 export interface GetLoadStartingPointResponse {
   location: string;
+  time: string;
 }

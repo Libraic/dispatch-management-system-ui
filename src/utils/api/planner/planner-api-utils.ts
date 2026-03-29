@@ -5,11 +5,16 @@ import type {
   DriverWorkforce,
   LoadData,
 } from "../../../types/internal/planner/planner-types.ts";
-import type { GetDispatchingDataResponse } from "../../../types/api/loads/load-api-types.ts";
-import { toNormalizedIsoDate } from "../../global/date-utils.ts";
+import type {
+  GetDispatchingDataResponse,
+  UpsertLoadRequest,
+} from "../../../types/api/loads/load-api-types.ts";
+import { toIsoDate, toNormalizedIsoDate } from "../../global/date-utils.ts";
 import { fromGetLoadResponseToLoadData } from "../../planner/load-utils.ts";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../planner/vehicle-maintenance-utils.ts";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../planner/days-off-utils.ts";
+import { timeToHHmm } from "../../../types/internal/time/time-types.ts";
+import { cleanPhoneNumber } from "../../global/input-form-utils.ts";
 
 export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
   getDriverLoadsResponses: GetDispatchingDataResponse[],
@@ -78,4 +83,29 @@ export const convertGetDriverLoadsResponsesToDispatcherLoadDataList = (
   }
 
   return dispatchingRelations;
+};
+
+export const createUpsertLoadRequest = (
+  loadData: LoadData,
+  relationId: string,
+): UpsertLoadRequest => {
+  const representativeContactNumber = loadData.representativeContactNumber
+    ? cleanPhoneNumber(loadData.representativeContactNumber)
+    : undefined;
+  return {
+    loadUuid: loadData.id,
+    relationUuid: relationId,
+    revenue: loadData.revenue ? parseFloat(loadData.revenue) : ZERO,
+    miles: loadData.miles ? parseFloat(loadData.miles) : ZERO,
+    broker: loadData.broker,
+    representative: loadData.representative,
+    representativeContactNumber: representativeContactNumber,
+    locations: loadData.locations.map((location) => ({
+      label: location.label,
+      date: toIsoDate(location.date),
+      location: location.location,
+      order: location.order,
+      time: timeToHHmm(location.time),
+    })),
+  };
 };

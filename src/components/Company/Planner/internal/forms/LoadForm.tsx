@@ -22,6 +22,7 @@ import { createStateData } from "../../../../../utils/global/props-utils.ts";
 import { getStartingPointLocation } from "../../../../../service/loadService.ts";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { getBlankLoadData } from "../../../../../utils/planner/load-utils.ts";
+import { hhmmToTime } from "../../../../../types/internal/time/time-types.ts";
 
 export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
   (loadFormProps, ref) => {
@@ -48,7 +49,7 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
         return false;
       }
 
-      context!!.upsertLoadDataFn(workforce.driver!!, loadData);
+      context!!.upsertLoadDataFn(workforce, loadData);
       return true;
     };
 
@@ -62,8 +63,9 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
           (data) => {
             if (data.data) {
               const location = data.data.location;
+              const time = hhmmToTime(data.data.time);
               if (location !== null) {
-                setLoadData(getBlankLoadData(day, location));
+                setLoadData(getBlankLoadData(day, location, time));
               }
             }
           },
@@ -72,7 +74,7 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
     }, [day, workforce.relationId]);
 
     return (
-      <div className="flex flex-col gap-y-[1.15rem]">
+      <div className="w-full flex flex-col gap-y-[1.15rem]">
         <LoadFormLoadLocations loadStateData={loadStateData} />
         <LoadFormRevenue loadStateData={loadStateData} />
         <LoadFormBrokerData loadStateData={loadStateData} />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { DateObject } from "../types/internal/date/date-types.ts";
+import type { DateObject } from "../types/internal/time/date-types.ts";
 
 export const useDateObject = (
   defaultDay: number,

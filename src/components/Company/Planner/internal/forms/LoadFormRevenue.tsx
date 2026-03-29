@@ -17,7 +17,7 @@ export const LoadFormRevenue: React.FC<{
   const miles = loadStateData.data.miles ?? BLANK_STRING;
   const rpm = divideNumbersAsStrings(revenue, miles);
   return (
-    <div className="flex flex-row gap-x-5">
+    <div className="flex items-center flex-row gap-x-5">
       <CurrencyInputForm
         label="Revenue"
         placeholder="100.25"

@@ -3,21 +3,14 @@ import React from "react";
 import type {
   DaysOffPeriodData,
   DispatchingRelation,
+  DriverWorkforce,
   LoadData,
   VehicleMaintenanceData,
 } from "../../../../types/internal/planner/planner-types.ts";
-import {
-  BLANK_SPACE,
-  ZERO,
-} from "../../../../constants/common/global-constants.ts";
-import type { UpsertLoadRequest } from "../../../../types/api/loads/load-api-types.ts";
+import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
 import { upsertLoad } from "../../../../service/loadService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
-import { cleanPhoneNumber } from "../../../../utils/global/input-form-utils.ts";
-import {
-  toIsoDate,
-  toNormalizedIsoDate,
-} from "../../../../utils/global/date-utils.ts";
+import { toNormalizedIsoDate } from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 import { PlannerDispatcherRow } from "../internal/rows/PlannerDispatcherRow.tsx";
 import { PlannerWorkforceRow } from "../internal/rows/PlannerWorkforceRow.tsx";
@@ -42,41 +35,28 @@ import {
   changeDaysOffPeriodData,
   updateDaysOffPeriodsAfterDeletions,
 } from "../../../../utils/planner/days-off-utils.ts";
+import { createUpsertLoadRequest } from "../../../../utils/api/planner/planner-api-utils.ts";
 
 export const PlannerRow: React.FC<{
-  companyId: string;
   days: string[];
   dispatchingRelation: DispatchingRelation;
   setDispatchingRelation: React.Dispatch<
     React.SetStateAction<DispatchingRelation[]>
   >;
-}> = ({ companyId, days, dispatchingRelation, setDispatchingRelation }) => {
+}> = ({ days, dispatchingRelation, setDispatchingRelation }) => {
   const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
   const activator = useActivator(true);
   const dispatchingRelationId = dispatchingRelation.id;
   const toast = useToast();
 
-  const upsertLoadFn = async (driver: DriverData, loadData: LoadData) => {
-    const representativeContactNumber = loadData.representativeContactNumber
-      ? cleanPhoneNumber(loadData.representativeContactNumber)
-      : undefined;
-    const upsertRequest: UpsertLoadRequest = {
-      loadUuid: loadData.id,
-      companyUuid: companyId,
-      dispatcherUuid: dispatchingRelation.dispatcher.uuid,
-      driverUuid: driver.uuid,
-      revenue: loadData.revenue ? parseFloat(loadData.revenue) : ZERO,
-      miles: loadData.miles ? parseFloat(loadData.miles) : ZERO,
-      broker: loadData.broker,
-      representative: loadData.representative,
-      representativeContactNumber: representativeContactNumber,
-      locations: loadData.locations.map((location) => ({
-        label: location.label,
-        date: toIsoDate(location.date),
-        location: location.location,
-        order: location.order,
-      })),
-    };
+  const upsertLoadFn = async (
+    workforce: DriverWorkforce,
+    loadData: LoadData,
+  ) => {
+    const upsertRequest = createUpsertLoadRequest(
+      loadData,
+      workforce.relationId,
+    );
     const upsertResponse = await upsertLoad(upsertRequest);
 
     if (upsertResponse.error) {
@@ -106,7 +86,7 @@ export const PlannerRow: React.FC<{
         prevDispatcherLoadDataList,
         dispatchingRelationId,
         upsertedLoadData,
-        driver,
+        workforce.driver,
       );
     });
   };

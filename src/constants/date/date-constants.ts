@@ -1,4 +1,4 @@
-import type { YearData } from "../../types/internal/date/date-types.ts";
+import type { YearData } from "../../types/internal/time/date-types.ts";
 
 export const LAST_ADMITTABLE_BIRTH_YEAR = 2007;
 export const DEFAULT_BIRTH_DATE: YearData = {

@@ -8,11 +8,13 @@ import type {
   LoadData,
   LoadDataError,
   LoadLocationData,
+  Time,
 } from "../../../../types/internal/planner/planner-types.ts";
 import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
 import { LoadLocationContextMenu } from "../../../Common/Icon/LoadLocationContextMenu.tsx";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { TimePicker } from "../../../Common/TimePicker/public/TimePicker.tsx";
 
 export const LoadLocation: React.FC<{
   loadStateData: StateData<LoadData, LoadDataError>;
@@ -39,6 +41,20 @@ export const LoadLocation: React.FC<{
   const errorMessages = loadStateData.error.locationsErrors.get(
     loadLocation.uuid,
   );
+
+  const changeTime = (time: Time) => {
+    loadStateData.setData((prevData) => ({
+      ...prevData,
+      locations: prevData.locations.map((location) =>
+        loadLocation.uuid !== location.uuid
+          ? location
+          : {
+              ...location,
+              time: time,
+            },
+      ),
+    }));
+  };
 
   return (
     <div
@@ -82,6 +98,7 @@ export const LoadLocation: React.FC<{
         date={loadLocation.date}
         errorMessage={errorMessages?.dateError}
       />
+      <TimePicker time={loadLocation.time} setTime={changeTime} label="ETA" />
     </div>
   );
 };

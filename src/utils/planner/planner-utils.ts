@@ -1,6 +1,7 @@
 import type {
   DispatchingRelation,
   DriverWorkforce,
+  Time,
 } from "../../types/internal/planner/planner-types.ts";
 import { HYPHEN } from "../../constants/common/global-constants.ts";
 import {
@@ -12,6 +13,7 @@ import {
   DAY_CELL_WIDTH,
   METADATA_WIDTH,
 } from "../../constants/planner/planner-constants.ts";
+import { timeToHHmm } from "../../types/internal/time/time-types.ts";
 
 export const updateDriverField = <K extends keyof DriverWorkforce>(
   prevDispatchingRelations: DispatchingRelation[],
@@ -57,15 +59,29 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
   });
 };
 
+const getBlockCoverage = (time: Time) => {
+  const isoTime = timeToHHmm(time);
+  const [hours, minutes] = isoTime.split(":").map(Number);
+  return (hours * 60 + minutes) / 1440.0;
+};
+
 export const getStartingPointAndWidthOfBlock = (
   startDate: Date,
   endDate: Date,
   days: string[],
+  startTime?: Time,
+  endTime?: Time,
 ) => {
+  const startBlockCoverage = startTime ? getBlockCoverage(startTime) : 0;
+  const endBlockCoverage = endTime ? 1 - getBlockCoverage(endTime) : 0;
   const startIndex = getDayIndex(startDate, days);
   const endIndex = getDayIndex(endDate, days);
-  const clampedStart = Math.max(startIndex === -1 ? 0 : startIndex, 0);
-  const clampedEnd = Math.min(endIndex === -1 ? 13 : endIndex, 13);
+  const clampedStart = Math.abs(
+    Math.max(startIndex === -1 ? 0 : startIndex, 0) + startBlockCoverage,
+  );
+  const clampedEnd = Math.abs(
+    Math.min(endIndex === -1 ? 13 : endIndex, 13) - endBlockCoverage,
+  );
   const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
   const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
   return {

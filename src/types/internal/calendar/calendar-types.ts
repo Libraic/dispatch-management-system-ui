@@ -1,4 +1,4 @@
-import type { DayOfMonth } from "../date/date-types.ts";
+import type { DayOfMonth } from "../time/date-types.ts";
 
 export type CalendarTimeline = {
   year: string;

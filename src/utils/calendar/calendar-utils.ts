@@ -1,4 +1,4 @@
-import type { DayOfMonth } from "../../types/internal/date/date-types.ts";
+import type { DayOfMonth } from "../../types/internal/time/date-types.ts";
 import {
   type CalendarTimeline,
   type CalendarUnitType,

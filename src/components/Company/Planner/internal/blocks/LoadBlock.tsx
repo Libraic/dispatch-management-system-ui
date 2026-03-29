@@ -37,6 +37,8 @@ export const LoadBlock: React.FC<{
     load.startDate,
     load.endDate,
     days,
+    firstLocation.time,
+    lastLocation.time,
   );
 
   const loadFormActivator = useActivator();

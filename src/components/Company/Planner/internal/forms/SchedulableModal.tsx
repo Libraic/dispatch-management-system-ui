@@ -22,6 +22,7 @@ import {
 import { BLANK_STRING } from "../../../../../constants/common/global-constants.ts";
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm.tsx";
 import { DaysOffForm } from "./DaysOffForm.tsx";
+import { Z_INDEX_MEDIUM_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
 
 export const SchedulableModal: React.FC<{
   deactivate: () => void;
@@ -75,12 +76,14 @@ export const SchedulableModal: React.FC<{
   }, [quitFn, submitFn]);
 
   return createPortal(
-    <div className="flex w-screen h-screen items-center justify-center z-1000 inset-0 fixed backdrop-blur-lg">
+    <div
+      className={`flex w-screen h-screen items-start justify-center overflow-y-auto py-[2.5rem] ${Z_INDEX_MEDIUM_PRECEDENCE} inset-0 fixed backdrop-blur-lg`}
+    >
       <div
         className={`
           flex flex-col items-center justify-center
           px-[1rem] pt-[1rem]
-          w-fit h-fit
+          w-fit
           rounded-[0.5rem]
           border-[0.1rem] border-gray-200
           select-none
