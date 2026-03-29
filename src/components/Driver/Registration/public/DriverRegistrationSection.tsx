@@ -1,11 +1,15 @@
 import * as React from "react";
 import {
-  BORDER_NORMAL_COLOR,
-  HOVER_BORDER_NORMAL_COLOR,
-  HOVER_BACKGROUND_NORMAL_COLOR,
   BACKGROUND_NORMAL_COLOR,
+  BORDER_NORMAL_COLOR,
+  HOVER_BACKGROUND_NORMAL_COLOR,
+  HOVER_BORDER_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
 } from "../../../../tailwind/tailwind-colors-vars.ts";
+import {
+  SYSTEM_FONT_MEDIUM,
+  SYSTEM_FONT_NORMAL,
+} from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const DriverRegistrationSection: React.FC<{
   sectionTitle: string;
@@ -45,10 +49,10 @@ export const DriverRegistrationSection: React.FC<{
         onClick={() => activateSection(sectionTitle)}
         className={`flex justify-center items-center w-9 h-9 rounded-[50%] border-[0.1rem] cursor-pointer ${borderColor} ${borderColorOnHover} ${backgroundColor} ${backgroundColorOnHover} ${textColor} hover:text-white transition-all ease-in duration-100`}
       >
-        <p className="font-lato font-medium text-[1rem]">{sectionIndex}</p>
+        <p className={`${SYSTEM_FONT_MEDIUM} text-[1rem]`}>{sectionIndex}</p>
       </div>
       <p
-        className={`font-lato font-regular text-standard-size text-center ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}`}
+        className={`${SYSTEM_FONT_NORMAL} text-standard-size text-center ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}`}
       >
         {sectionTitle}
       </p>

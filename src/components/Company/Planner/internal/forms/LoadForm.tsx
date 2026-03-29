@@ -1,6 +1,6 @@
-import { LoadFormLoadLocations } from "../LoadFormLoadLocations.tsx";
-import { LoadFormRevenue } from "../LoadFormRevenue.tsx";
-import { LoadFormBrokerData } from "../LoadFormBrokerData.tsx";
+import { LoadFormLoadLocations } from "./LoadFormLoadLocations.tsx";
+import { LoadFormRevenue } from "./LoadFormRevenue.tsx";
+import { LoadFormBrokerData } from "./LoadFormBrokerData.tsx";
 import {
   forwardRef,
   useContext,

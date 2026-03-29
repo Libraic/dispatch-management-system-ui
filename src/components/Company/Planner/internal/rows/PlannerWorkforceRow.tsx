@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import type { DriverWorkforce } from "../../../../types/internal/planner/planner-types.ts";
-import { PlannerCalendarCell } from "./PlannerCalendarCell.tsx";
-import { TABLE_BORDER_BASE_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import type { DriverWorkforce } from "../../../../../types/internal/planner/planner-types.ts";
+import { PlannerCalendarCell } from "../PlannerCalendarCell.tsx";
+import { TABLE_BORDER_BASE_COLOR } from "../../../../../tailwind/tailwind-colors-vars.ts";
 import clsx from "clsx";
 import {
   PLANNER_GRID_LAYOUT,
   PLANNER_ROW_HEIGHT,
   PLANNER_TEXT_SIZE,
-} from "../../../../constants/planner/planner-constants.ts";
-import { DriverRowMetadata } from "./DriverRowMetadata.tsx";
-import { LoadBlock } from "./LoadBlock.tsx";
-import { VehicleMaintenanceBlock } from "./VehicleMaintenanceBlock.tsx";
-import { DaysOffPeriodBlock } from "./DaysOffPeriodBlock.tsx";
-import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
+} from "../../../../../constants/planner/planner-constants.ts";
+import { DriverRowMetadata } from "../DriverRowMetadata.tsx";
+import { LoadBlock } from "../blocks/LoadBlock.tsx";
+import { VehicleMaintenanceBlock } from "../blocks/VehicleMaintenanceBlock.tsx";
+import { DaysOffPeriodBlock } from "../blocks/DaysOffPeriodBlock.tsx";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 
 export const PlannerWorkforceRow: React.FC<{
   workforce: DriverWorkforce;

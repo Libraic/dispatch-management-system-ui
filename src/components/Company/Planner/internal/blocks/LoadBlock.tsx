@@ -1,29 +1,29 @@
 import {
   type DriverWorkforce,
   type LoadData,
-} from "../../../../types/internal/planner/planner-types.ts";
+} from "../../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
   SYSTEM_FONT_THIN,
-} from "../../../../tailwind/tailwind-font-vars.ts";
-import { useActivator } from "../../../../hooks/useActivator.ts";
-import { useToast } from "../../../../hooks/useToast.ts";
-import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
-import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
+} from "../../../../../tailwind/tailwind-font-vars.ts";
+import { useActivator } from "../../../../../hooks/useActivator.ts";
+import { useToast } from "../../../../../hooks/useToast.ts";
+import { useContextMenu } from "../../../../../hooks/useContextMenu.ts";
+import type { ContextMenuActionItem } from "../../../../../types/internal/common/context-menu-types.ts";
 import {
   deleteLoadByUuid,
   getLoadData,
-} from "../../../../service/loadService.ts";
-import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/planner-utils.ts";
-import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
-import pickUpIcon from "../../../../assets/planner/blocks/pickup.svg";
-import deliveryIcon from "../../../../assets/planner/blocks/delivery.svg";
-import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
-import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
-import { SchedulableModal } from "./forms/SchedulableModal.tsx";
-import { fromGetLoadResponseToLoadData } from "../../../../utils/planner/load-utils.ts";
+} from "../../../../../service/loadService.ts";
+import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
+import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
+import pickUpIcon from "../../../../../assets/planner/blocks/pickup.svg";
+import deliveryIcon from "../../../../../assets/planner/blocks/delivery.svg";
+import { getDeleteOption } from "../../../../../utils/context-menu/context-menu-utils.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
+import { SchedulableModal } from "../forms/SchedulableModal.tsx";
+import { fromGetLoadResponseToLoadData } from "../../../../../utils/planner/load-utils.ts";
 
 export const LoadBlock: React.FC<{
   driverLoadData: DriverWorkforce;
@@ -125,7 +125,7 @@ export const LoadBlock: React.FC<{
           <img src={deliveryIcon} alt="delivery" className="w-5 h-5" />
           <div>
             <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#986fc5] ${SYSTEM_FONT_BOLD}`}
+              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-light-blue ${SYSTEM_FONT_BOLD}`}
             >
               {load.loadStatus}
             </p>

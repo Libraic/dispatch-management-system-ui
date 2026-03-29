@@ -15,6 +15,7 @@ import {
 import type { DayOfMonth } from "../../../../types/internal/date/date-types.ts";
 import { getDatesForTheTimeline } from "../../../../utils/calendar/calendar-utils.ts";
 import type { Activator } from "../../../../hooks/useActivator.ts";
+import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const Calendar: React.FC<{
   unitType: CalendarUnitType;
@@ -65,7 +66,7 @@ export const Calendar: React.FC<{
         left: `${left}px`,
       }}
       onClick={(e) => e.stopPropagation()}
-      className={`absolute z-9999 bg-white/20 backdrop-blur-lg w-[17.25rem] h-fit border-[0.08rem] border-gray-300 rounded-[0.35rem] px-2 py-1 font-open-sans`}
+      className={`absolute z-9999 bg-white/20 backdrop-blur-lg w-[17.25rem] h-fit border-[0.08rem] border-gray-300 rounded-[0.35rem] px-2 py-1 ${SYSTEM_FONT_NORMAL}`}
     >
       <div className="flex flex-row items-center gap-x-10 text-[0.9rem]">
         <CalendarTimeUnitSelector

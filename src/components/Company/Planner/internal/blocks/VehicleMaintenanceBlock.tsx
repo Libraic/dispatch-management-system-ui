@@ -1,27 +1,27 @@
 import {
   type DriverWorkforce,
   type VehicleMaintenanceData,
-} from "../../../../types/internal/planner/planner-types.ts";
+} from "../../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
-} from "../../../../tailwind/tailwind-font-vars.ts";
-import { SchedulableModal } from "./forms/SchedulableModal.tsx";
-import { useActivator } from "../../../../hooks/useActivator.ts";
-import { useToast } from "../../../../hooks/useToast.ts";
-import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
-import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
-import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
-import vehicleMaintenanceIcon from "../../../../assets/planner/blocks/vehicle-maintenance.svg";
-import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/planner-utils.ts";
+} from "../../../../../tailwind/tailwind-font-vars.ts";
+import { SchedulableModal } from "../forms/SchedulableModal.tsx";
+import { useActivator } from "../../../../../hooks/useActivator.ts";
+import { useToast } from "../../../../../hooks/useToast.ts";
+import { useContextMenu } from "../../../../../hooks/useContextMenu.ts";
+import type { ContextMenuActionItem } from "../../../../../types/internal/common/context-menu-types.ts";
+import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
+import vehicleMaintenanceIcon from "../../../../../assets/planner/blocks/vehicle-maintenance.svg";
+import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
 import {
   deleteVehicleMaintenanceRecordByUuid,
   getVehicleMaintenanceData,
-} from "../../../../service/vehicleMaintenanceService.ts";
-import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
-import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
-import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../../../utils/planner/vehicle-maintenance-utils.ts";
+} from "../../../../../service/vehicleMaintenanceService.ts";
+import { getDeleteOption } from "../../../../../utils/context-menu/context-menu-utils.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
+import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../../../../utils/planner/vehicle-maintenance-utils.ts";
 
 export const VehicleMaintenanceBlock: React.FC<{
   workforce: DriverWorkforce;

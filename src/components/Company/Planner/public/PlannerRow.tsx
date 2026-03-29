@@ -19,8 +19,8 @@ import {
   toNormalizedIsoDate,
 } from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
-import { PlannerDispatcherRow } from "../internal/PlannerDispatcherRow.tsx";
-import { PlannerWorkforceRow } from "../internal/PlannerWorkforceRow.tsx";
+import { PlannerDispatcherRow } from "../internal/rows/PlannerDispatcherRow.tsx";
+import { PlannerWorkforceRow } from "../internal/rows/PlannerWorkforceRow.tsx";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import type { UpsertVehicleMaintenanceRecordRequest } from "../../../../types/api/vehicle-maintenance/vehicle-maintenance-api-request-types.ts";

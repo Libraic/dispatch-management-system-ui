@@ -1,28 +1,28 @@
-import { getStartingPointAndWidthOfBlock } from "../../../../utils/planner/planner-utils.ts";
-import { useActivator } from "../../../../hooks/useActivator.ts";
-import { useToast } from "../../../../hooks/useToast.ts";
+import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
+import { useActivator } from "../../../../../hooks/useActivator.ts";
+import { useToast } from "../../../../../hooks/useToast.ts";
 import React, { useContext } from "react";
-import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
-import { useContextMenu } from "../../../../hooks/useContextMenu.ts";
-import type { ContextMenuActionItem } from "../../../../types/internal/common/context-menu-types.ts";
-import { getDeleteOption } from "../../../../utils/context-menu/context-menu-utils.ts";
+import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
+import { useContextMenu } from "../../../../../hooks/useContextMenu.ts";
+import type { ContextMenuActionItem } from "../../../../../types/internal/common/context-menu-types.ts";
+import { getDeleteOption } from "../../../../../utils/context-menu/context-menu-utils.ts";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
-} from "../../../../tailwind/tailwind-font-vars.ts";
-import daysOffIcon from "../../../../assets/planner/blocks/days-off.svg";
-import { SchedulableModal } from "./forms/SchedulableModal.tsx";
-import { ContextMenu } from "../../../Common/ContextMenu/public/ContextMenu.tsx";
+} from "../../../../../tailwind/tailwind-font-vars.ts";
+import daysOffIcon from "../../../../../assets/planner/blocks/days-off.svg";
+import { SchedulableModal } from "../forms/SchedulableModal.tsx";
+import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
 import type {
   DaysOffPeriodData,
   DriverWorkforce,
-} from "../../../../types/internal/planner/planner-types.ts";
+} from "../../../../../types/internal/planner/planner-types.ts";
 import {
   deleteDaysOffPeriodByUuid,
   getDaysOffPeriodData,
-} from "../../../../service/daysOffService.ts";
-import { toIsoDate } from "../../../../utils/global/date-utils.ts";
-import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../../../utils/planner/days-off-utils.ts";
+} from "../../../../../service/daysOffService.ts";
+import { toIsoDate } from "../../../../../utils/global/date-utils.ts";
+import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../../../../utils/planner/days-off-utils.ts";
 
 export const DaysOffPeriodBlock: React.FC<{
   workforce: DriverWorkforce;
