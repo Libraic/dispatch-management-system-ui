@@ -1,8 +1,5 @@
 import { TRAILING_ZERO } from "../../constants/common/global-constants.ts";
-import type {
-  DayOfMonth,
-  YearData,
-} from "../../types/internal/time/date-types.ts";
+import type { DayOfMonth } from "../../types/internal/time/date-types.ts";
 import type { WeekIndexer } from "../../types/internal/calendar/calendar-types.ts";
 import { DEFAULT_LOCALE } from "../../constants/date/date-constants.ts";
 
@@ -20,21 +17,6 @@ export const getCurrentWeekDays = (): string[] => {
   }
 
   return weekDays;
-};
-
-export const convertDateToLittleEndian = (date: YearData) => {
-  const day = date.day < 10 ? `${TRAILING_ZERO}${date.day}` : date.day;
-  const month = date.month < 10 ? `${TRAILING_ZERO}${date.month}` : date.month;
-  return `${day}-${month}-${date.year}`;
-};
-
-export const getCurrentYearData = (): YearData => {
-  const date = new Date();
-  return {
-    day: date.getDate(),
-    month: date.getMonth() + 1,
-    year: date.getFullYear(),
-  };
 };
 
 export const getListOfNYears = (n: number): string[] => {

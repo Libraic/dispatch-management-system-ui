@@ -1,4 +1,8 @@
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import {
+  BLANK_SPACE,
+  BLANK_STRING,
+  NOT_AVAILABLE,
+} from "../../constants/common/global-constants.ts";
 
 export const getNameInitials = (name: string) => {
   if (name === BLANK_STRING) {
@@ -6,14 +10,14 @@ export const getNameInitials = (name: string) => {
   }
 
   return name
-    .split(" ")
+    .split(BLANK_SPACE)
     .filter((word) => word !== BLANK_STRING)
     .map((word) => word[0].toUpperCase())
-    .join("");
+    .join(BLANK_STRING);
 };
 
 export const getPropertySafe = (property: string | null) => {
-  return property ? property : "N/A";
+  return property ? property : NOT_AVAILABLE;
 };
 
 export const getSpentDays = (referenceDate: string) => {

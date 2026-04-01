@@ -96,6 +96,19 @@ export const LoadLocation: React.FC<{
       <DateSelector
         label={dateLabel}
         date={loadLocation.date}
+        setDate={(date: Date) => {
+          loadStateData.setData((prevData) => ({
+            ...prevData,
+            locations: prevData.locations.map((location) =>
+              loadLocation.uuid !== location.uuid
+                ? location
+                : {
+                    ...location,
+                    date: date,
+                  },
+            ),
+          }));
+        }}
         errorMessage={errorMessages?.dateError}
       />
       <TimePicker time={loadLocation.time} setTime={changeTime} label="ETA" />

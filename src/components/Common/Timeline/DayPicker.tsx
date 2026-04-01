@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
-import { Calendar } from "../../Calendar/public/Calendar.tsx";
-import { CalendarUnitTypes } from "../../../../types/internal/calendar/calendar-types.ts";
+import { Calendar } from "../Calendar/public/Calendar.tsx";
+import { CalendarUnitTypes } from "../../../types/internal/calendar/calendar-types.ts";
 import * as React from "react";
 import { useRef } from "react";
-import { useActivator } from "../../../../hooks/useActivator.ts";
-import { formatDate } from "../../../../utils/global/date-utils.ts";
-import { SYSTEM_FONT_THIN } from "../../../../tailwind/tailwind-font-vars.ts";
+import { useActivator } from "../../../hooks/useActivator.ts";
+import { formatDate } from "../../../utils/global/date-utils.ts";
+import { SYSTEM_FONT_THIN } from "../../../tailwind/tailwind-font-vars.ts";
 
 export const DayPicker: React.FC<{
   date: Date;

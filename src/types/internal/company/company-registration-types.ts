@@ -1,5 +1,3 @@
-import type { YearData } from "../time/date-types.ts";
-
 export type CompanyRegistrationTypes = {
   name: string;
   mcNumber?: string;
@@ -7,8 +5,8 @@ export type CompanyRegistrationTypes = {
   email: string;
   password: string;
   confirmPassword: string;
-  serviceDate: YearData;
-  startDate: YearData;
+  serviceDate: Date;
+  startDate: Date;
 };
 
 export type CompanyRegistrationError = {

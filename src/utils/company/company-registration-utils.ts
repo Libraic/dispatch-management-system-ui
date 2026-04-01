@@ -4,10 +4,7 @@ import type {
 } from "../../types/internal/company/company-registration-types.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import * as React from "react";
-import {
-  convertDateToLittleEndian,
-  getCurrentYearData,
-} from "../global/date-utils.ts";
+import { toIsoDate } from "../global/date-utils.ts";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
   return {
@@ -15,8 +12,8 @@ export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
     email: BLANK_STRING,
     password: BLANK_STRING,
     confirmPassword: BLANK_STRING,
-    serviceDate: getCurrentYearData(),
-    startDate: getCurrentYearData(),
+    serviceDate: new Date(),
+    startDate: new Date(),
   };
 };
 
@@ -42,7 +39,7 @@ export const createCreateCompanyRequestFromCompanyRegistrationData = (
     email: companyRegistrationData.email,
     mcNumber: companyRegistrationData.mcNumber ?? null,
     address: companyRegistrationData.address ?? null,
-    serviceDate: convertDateToLittleEndian(companyRegistrationData.serviceDate),
-    startDate: convertDateToLittleEndian(companyRegistrationData.startDate),
+    serviceDate: toIsoDate(companyRegistrationData.serviceDate),
+    startDate: toIsoDate(companyRegistrationData.startDate),
   };
 };

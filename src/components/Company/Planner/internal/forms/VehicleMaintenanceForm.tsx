@@ -3,8 +3,8 @@ import type {
   CalendarBookFormHandler,
   DriverWorkforce,
   FormProps,
-  VehicleMaintenanceErrors,
   VehicleMaintenanceData,
+  VehicleMaintenanceErrors,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import { LiveSearchInputForm } from "../../../../Common/LiveSearch/public/LiveSearchInputForm.tsx";
 import type { Renderable } from "../../../../../types/internal/classes/Renderable.ts";
@@ -80,8 +80,26 @@ export const VehicleMaintenanceForm = forwardRef<
         tailwindProperties={{ width: "w-[14.2rem]" }}
       />
       <div className="flex flex-row gap-x-5">
-        <DateSelector label="Start Date" date={shopData.startDate} />
-        <DateSelector label="End Date" date={shopData.endDate} />
+        <DateSelector
+          label="Start Date"
+          setDate={(date: Date) => {
+            setShopData((prevData) => ({
+              ...prevData,
+              startDate: date,
+            }));
+          }}
+          date={shopData.startDate}
+        />
+        <DateSelector
+          label="End Date"
+          setDate={(date: Date) => {
+            setShopData((prevData) => ({
+              ...prevData,
+              endDate: date,
+            }));
+          }}
+          date={shopData.endDate}
+        />
       </div>
     </div>
   );

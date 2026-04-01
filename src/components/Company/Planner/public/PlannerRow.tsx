@@ -10,7 +10,10 @@ import type {
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
 import { upsertLoad } from "../../../../service/loadService.ts";
 import { useToast } from "../../../../hooks/useToast.ts";
-import { toNormalizedIsoDate } from "../../../../utils/global/date-utils.ts";
+import {
+  toIsoDate,
+  toNormalizedIsoDate,
+} from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
 import { PlannerDispatcherRow } from "../internal/rows/PlannerDispatcherRow.tsx";
 import { PlannerWorkforceRow } from "../internal/rows/PlannerWorkforceRow.tsx";
@@ -100,8 +103,8 @@ export const PlannerRow: React.FC<{
       vehicleMaintenanceRecordUuid: vehicleMaintenanceData.id,
       relationId: relationId,
       location: vehicleMaintenanceData.location,
-      startDate: vehicleMaintenanceData.startDate,
-      endDate: vehicleMaintenanceData.endDate,
+      startDate: toIsoDate(vehicleMaintenanceData.startDate),
+      endDate: toIsoDate(vehicleMaintenanceData.endDate),
     };
 
     const upsertResponse = await upsertVehicleMaintenanceRecord(request);
@@ -117,6 +120,7 @@ export const PlannerRow: React.FC<{
       startDate: toNormalizedIsoDate(data.startDate),
       endDate: toNormalizedIsoDate(data.endDate),
     };
+
     setDispatchingRelation((prevDispatcherLoadDataList) =>
       changeWorkforceVehicleMaintenanceData(
         prevDispatcherLoadDataList,
@@ -135,8 +139,8 @@ export const PlannerRow: React.FC<{
     const request: UpsertDayOffPeriodRequest = {
       daysOffPeriodId: daysOffPeriodData.id,
       relationId: relationId,
-      startDate: daysOffPeriodData.startDate,
-      endDate: daysOffPeriodData.endDate,
+      startDate: toIsoDate(daysOffPeriodData.startDate),
+      endDate: toIsoDate(daysOffPeriodData.endDate),
     };
 
     const upsertResponse = await upsertDaysOffPeriod(request);

@@ -1,9 +1,3 @@
-export type YearData = {
-  day: number;
-  month: number;
-  year: number;
-};
-
 export type DateObject = {
   day: number;
   month: number;

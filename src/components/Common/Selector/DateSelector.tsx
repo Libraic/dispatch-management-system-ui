@@ -8,8 +8,9 @@ import { ErrorContainer } from "../InputForm/public/ErrorContainer.tsx";
 export const DateSelector: React.FC<{
   label: string;
   date: Date;
+  setDate: (date: Date) => void;
   errorMessage?: string;
-}> = ({ label, date, errorMessage }) => {
+}> = ({ label, date, setDate, errorMessage }) => {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs()
       .set("date", date.getDate())
@@ -19,11 +20,13 @@ export const DateSelector: React.FC<{
 
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
+    const date = new Date();
     if (newValue) {
       date.setDate(newValue.date());
       date.setMonth(newValue.month());
       date.setFullYear(newValue.year());
     }
+    setDate(date);
   };
 
   return (

@@ -4,7 +4,11 @@ import type {
 } from "../../types/internal/planner/planner-types.ts";
 import { updateDriverField } from "./planner-utils.ts";
 import type { GetVehicleMaintenanceResponse } from "../../types/api/vehicle-maintenance/vehicle-maintenance-api-response-types.ts";
-import { toIsoDate, toNormalizedIsoDate } from "../global/date-utils.ts";
+import {
+  normalizeDate,
+  toIsoDate,
+  toNormalizedIsoDate,
+} from "../global/date-utils.ts";
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 
 export const changeWorkforceVehicleMaintenanceData = (
@@ -54,8 +58,8 @@ export const getBlankVehicleMaintenanceData = (
 ): VehicleMaintenanceData => {
   const startDate = day ? new Date(day) : new Date(toIsoDate(new Date()));
   return {
-    startDate: startDate,
-    endDate: new Date(startDate),
+    startDate: normalizeDate(startDate),
+    endDate: normalizeDate(startDate),
     location: BLANK_STRING,
   };
 };

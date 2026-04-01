@@ -1,45 +1,21 @@
-import { forwardRef, useContext, useImperativeHandle } from "react";
+import { forwardRef, useContext, useImperativeHandle, useState } from "react";
 import type {
   CalendarBookFormHandler,
   DaysOffPeriodData,
-  DriverWorkforce,
   FormProps,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
-import { toIsoDate } from "../../../../../utils/global/date-utils.ts";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
+import { getInitialData } from "../../../../../utils/planner/days-off-utils.ts";
 
 export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
   (daysOffProps, ref) => {
-    const getInitialData = (
-      workforce: DriverWorkforce,
-      id?: string,
-      day?: string,
-    ): { startDate: Date; endDate: Date } => {
-      if (!id) {
-        const startDate = day ? new Date(day) : new Date(toIsoDate(new Date()));
-        const endDate = new Date(startDate);
-        return { startDate, endDate };
-      }
-
-      const dayOffPeriod = workforce.daysOffPeriods.filter(
-        (daysOffPeriod) => daysOffPeriod.id === daysOffProps.id,
-      )[0];
-      return {
-        startDate: new Date(dayOffPeriod.startDate),
-        endDate: new Date(dayOffPeriod.endDate),
-      };
-    };
-
     const { id, day, workforce } = daysOffProps;
-    const { startDate, endDate } = getInitialData(workforce, id, day);
+    const [daysOffPeriodData, setDaysOffPeriodData] =
+      useState<DaysOffPeriodData>(getInitialData(workforce, id, day));
     const context = useContext(DispatchingContext);
 
     const submit = () => {
-      const daysOffPeriodData: DaysOffPeriodData = {
-        startDate: startDate,
-        endDate: endDate,
-      };
       context!!.upsertDaysOffPeriodFn(
         daysOffPeriodData,
         workforce.driver.uuid,
@@ -55,8 +31,26 @@ export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
     return (
       <div className="flex flex-col items-center justify-center pt-5">
         <div className="flex flex-row gap-x-5">
-          <DateSelector label="Start Date" date={startDate} />
-          <DateSelector label="End Date" date={endDate} />
+          <DateSelector
+            label="Start Date"
+            setDate={(date: Date) => {
+              setDaysOffPeriodData((prevData) => ({
+                ...prevData,
+                startDate: date,
+              }));
+            }}
+            date={daysOffPeriodData.startDate}
+          />
+          <DateSelector
+            label="End Date"
+            setDate={(date: Date) => {
+              setDaysOffPeriodData((prevData) => ({
+                ...prevData,
+                endDate: date,
+              }));
+            }}
+            date={daysOffPeriodData.endDate}
+          />
         </div>
       </div>
     );

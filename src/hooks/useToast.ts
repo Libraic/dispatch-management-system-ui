@@ -7,8 +7,6 @@ export type ToastData = {
   getIdentifier: () => string | null;
   withErrorMessage: (message: string) => void;
   withSuccessMessage: (message: string) => void;
-  reset: () => void;
-  isOk: () => boolean;
   getOperationResult: () => ToastTypeEnum;
 };
 
@@ -33,8 +31,6 @@ export const useToast = (): ToastData => {
         setToastType(ToastTypeEnum.SUCCESS);
         setToastId(Date.now().toString());
       },
-      reset: () => setMessage(BLANK_STRING),
-      isOk: () => message.length === 0,
       getOperationResult: () => toastType,
     }),
     [message, toastId, toastType],
