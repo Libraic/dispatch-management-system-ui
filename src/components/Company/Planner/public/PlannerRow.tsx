@@ -97,6 +97,7 @@ export const PlannerRow: React.FC<{
     relationId: string,
   ) => {
     const request: UpsertVehicleMaintenanceRecordRequest = {
+      vehicleMaintenanceRecordUuid: vehicleMaintenanceData.id,
       relationId: relationId,
       location: vehicleMaintenanceData.location,
       startDate: vehicleMaintenanceData.startDate,
@@ -132,6 +133,7 @@ export const PlannerRow: React.FC<{
     relationId: string,
   ) => {
     const request: UpsertDayOffPeriodRequest = {
+      daysOffPeriodId: daysOffPeriodData.id,
       relationId: relationId,
       startDate: daysOffPeriodData.startDate,
       endDate: daysOffPeriodData.endDate,

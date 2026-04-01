@@ -4,7 +4,6 @@ import {
   LOADS_RELATIONS_URL,
   LOADS_STARTING_POINT_PATH,
 } from "../constants/api/api-paths.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 import type {
   ApiResponse,
   NoContentResponse,
@@ -12,12 +11,13 @@ import type {
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
   GetDispatchingDataResponse,
-  GetLoadStartingPointResponse,
   GetLoadResponse,
+  GetLoadStartingPointResponse,
   UpsertLoadRequest,
   UpsertLoadResponse,
 } from "../types/api/loads/load-api-types.ts";
 import { toIsoDate } from "../utils/global/date-utils.ts";
+import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
 
 export const upsertLoad = async (
   upsertLoadRequest: UpsertLoadRequest,
@@ -45,7 +45,7 @@ export const getLoadData = async (
       params: params,
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     return handleApiErrors(error);
   }
 };
@@ -64,7 +64,7 @@ export const getStartingPointLocation = async (
       params: params,
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     return handleApiErrors(error);
   }
 };
@@ -77,7 +77,7 @@ export const deleteLoadByUuid = async (
       ApiResponse<GetDispatchingDataResponse[], Error>
     >(LOADS_BASE_URL + `/${loadUuid}`);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     return handleApiErrors(error);
   }
 };
