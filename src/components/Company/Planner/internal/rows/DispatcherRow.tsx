@@ -19,7 +19,7 @@ import {
 import { formatPhoneNumber } from "../../../../../utils/global/input-form-utils.ts";
 import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
 
-export const PlannerDispatcherRow: React.FC<{
+export const DispatcherRow: React.FC<{
   dispatchingRelation: DispatchingRelation;
   expander: Activator;
 }> = ({ dispatchingRelation, expander }) => {
@@ -42,7 +42,7 @@ export const PlannerDispatcherRow: React.FC<{
   };
 
   return (
-    <div className="relative flex flex-row">
+    <div className="relative flex flex-row w-full">
       {activeIcon !== BLANK_STRING && (
         <img
           src={activeIcon}
@@ -88,7 +88,7 @@ export const PlannerDispatcherRow: React.FC<{
           )}
         </div>
         <div
-          className={`border-r-1 ${TABLE_BORDER_BASE_COLOR} w-[112rem] h-full`}
+          className={`border-r-1 ${TABLE_BORDER_BASE_COLOR} w-[126rem] h-full`}
         ></div>
       </div>
     </div>

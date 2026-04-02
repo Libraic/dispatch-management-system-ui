@@ -15,7 +15,7 @@ import {
   toNormalizedIsoDate,
 } from "../../../../utils/global/date-utils.ts";
 import type { DriverData } from "../../../../types/api/driver/driver-api-response-types.ts";
-import { PlannerDispatcherRow } from "../internal/rows/PlannerDispatcherRow.tsx";
+import { DispatcherRow } from "../internal/rows/DispatcherRow.tsx";
 import { PlannerWorkforceRow } from "../internal/rows/PlannerWorkforceRow.tsx";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
 import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
@@ -220,7 +220,7 @@ export const PlannerRow: React.FC<{
 
   return (
     <div>
-      <PlannerDispatcherRow
+      <DispatcherRow
         dispatchingRelation={dispatchingRelation}
         expander={activator}
       />
