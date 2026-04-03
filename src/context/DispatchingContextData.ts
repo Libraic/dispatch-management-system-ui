@@ -3,12 +3,17 @@ import type {
   DaysOffPeriodData,
   DriverWorkforce,
   LoadData,
+  LoadStatus,
   VehicleMaintenanceData,
 } from "../types/internal/planner/planner-types.ts";
 
 export type DispatchingContextData = {
   days: string[];
-  upsertLoadDataFn: (workforce: DriverWorkforce, loadData: LoadData) => void;
+  upsertLoadDataFn: (
+    workforce: DriverWorkforce,
+    loadData: LoadData,
+    loadStatus?: LoadStatus,
+  ) => void;
   upsertVehicleMaintenanceRecordFn: (
     shop: VehicleMaintenanceData,
     driverId: string,

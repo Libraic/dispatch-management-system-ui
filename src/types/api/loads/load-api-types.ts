@@ -24,6 +24,7 @@ export type UpsertLoadRequest = {
   deliveryDate?: string;
   representative?: string;
   representativeContactNumber?: string;
+  loadStatus?: LoadStatus;
   locations?: ApiLoadLocation[];
 };
 

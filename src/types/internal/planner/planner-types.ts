@@ -1,18 +1,20 @@
 import type { DispatcherData } from "../../api/dispatcher/dispatcher-api-response-types.ts";
 import type { DriverData } from "../../api/driver/driver-api-response-types.ts";
 
-export type LoadStatus = "Dispatched" | "Delivered";
+export type LoadStatus =
+  | "Booked"
+  | "Dispatched"
+  | "Transit"
+  | "Delivered"
+  | "Docs Sent"
+  | "Invoiced"
+  | "Paid";
 
 export type LocationLabel =
   | "Pick Up"
   | "Delivery"
   | "Starting Point"
   | "Ending Point";
-
-export type LocationLabelResource = Record<
-  LocationLabel,
-  { focused: string; unfocused: string }
->;
 
 export type Period = "AM" | "PM";
 

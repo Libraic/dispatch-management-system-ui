@@ -5,6 +5,7 @@ import type {
   DispatchingRelation,
   DriverWorkforce,
   LoadData,
+  LoadStatus,
   VehicleMaintenanceData,
 } from "../../../../types/internal/planner/planner-types.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
@@ -55,11 +56,17 @@ export const PlannerRow: React.FC<{
   const upsertLoadFn = async (
     workforce: DriverWorkforce,
     loadData: LoadData,
+    loadStatus?: LoadStatus,
   ) => {
     const upsertRequest = createUpsertLoadRequest(
       loadData,
       workforce.relationId,
     );
+
+    if (loadStatus) {
+      upsertRequest.loadStatus = loadStatus;
+    }
+
     const upsertResponse = await upsertLoad(upsertRequest);
 
     if (upsertResponse.error) {

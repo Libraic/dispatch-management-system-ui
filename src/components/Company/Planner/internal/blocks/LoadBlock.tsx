@@ -1,6 +1,7 @@
 import {
   type DriverWorkforce,
   type LoadData,
+  type LoadStatus,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
 import {
@@ -20,17 +21,56 @@ import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/pl
 import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
 import pickUpIcon from "../../../../../assets/planner/blocks/pickup.svg";
 import deliveryIcon from "../../../../../assets/planner/blocks/delivery.svg";
-import { getDeleteOption } from "../../../../../utils/context-menu/context-menu-utils.ts";
+import {
+  getChangeStatusOptions,
+  getDeleteOption,
+} from "../../../../../utils/context-menu/context-menu-utils.ts";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { SchedulableModal } from "../forms/SchedulableModal.tsx";
 import { fromGetLoadResponseToLoadData } from "../../../../../utils/planner/load-utils.ts";
+
+const loadStatusColor: Record<
+  LoadStatus,
+  { textColor: string; backgroundColor: string }
+> = {
+  Booked: {
+    textColor: "text-[#2F5FA8]",
+    backgroundColor: "bg-[#E6F0FF]",
+  },
+  Dispatched: {
+    textColor: "text-[#6B4FD3]",
+    backgroundColor: "bg-[#EDE9FE]",
+  },
+  Transit: {
+    textColor: "text-[#B7791F]",
+    backgroundColor: "bg-[#FFF4D6]",
+  },
+  Delivered: {
+    textColor: "text-[#2F855A]",
+    backgroundColor: "bg-[#E6F7EF]",
+  },
+  "Docs Sent": {
+    textColor: "text-[#7E22CE]",
+    backgroundColor: "bg-[#F3E8FF]",
+  },
+  Invoiced: {
+    textColor: "text-[#C53030]",
+    backgroundColor: "bg-[#FFE9EC]",
+  },
+  Paid: {
+    textColor: "text-[#0F766E]",
+    backgroundColor: "bg-[#E6FBF4]",
+  },
+};
 
 export const LoadBlock: React.FC<{
   driverLoadData: DriverWorkforce;
   load: LoadData;
 }> = ({ driverLoadData, load }) => {
-  const context = useContext(DispatchingContext);
-  const days = context!!.days;
+  const background = loadStatusColor[load.loadStatus].backgroundColor;
+  const textColor = loadStatusColor[load.loadStatus].textColor;
+  const context = useContext(DispatchingContext)!!;
+  const days = context.days;
   const firstLocation = load.locations[0];
   const lastLocation = load.locations[load.locations.length - 1];
   const { startingPoint, width } = getStartingPointAndWidthOfBlock(
@@ -43,6 +83,10 @@ export const LoadBlock: React.FC<{
 
   const loadFormActivator = useActivator();
   const toast = useToast();
+
+  const updateStatusFn = (loadStatus: LoadStatus) => {
+    context.upsertLoadDataFn(driverLoadData, load, loadStatus);
+  };
 
   const deleteAction = async () => {
     if (!load.id) {
@@ -73,8 +117,12 @@ export const LoadBlock: React.FC<{
     );
     context!!.postLoadDeleteUpdateFn(driverLoadData.driver!!, loadDataList);
   };
+
   const contextMenu = useContextMenu();
-  const actionItems: ContextMenuActionItem[] = [getDeleteOption(deleteAction)];
+  const actionItems: ContextMenuActionItem[] = [
+    ...getChangeStatusOptions(updateStatusFn),
+    getDeleteOption(deleteAction),
+  ];
   return (
     <div
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
@@ -94,7 +142,7 @@ export const LoadBlock: React.FC<{
         className={`
           relative h-full mx-1
           rounded-lg
-          bg-light-blue/40
+          ${background}
           flex items-center justify-between
           px-3
           shadow-sm
@@ -127,7 +175,7 @@ export const LoadBlock: React.FC<{
           <img src={deliveryIcon} alt="delivery" className="w-5 h-5" />
           <div>
             <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-light-blue ${SYSTEM_FONT_BOLD}`}
+              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] ${textColor} ${SYSTEM_FONT_BOLD}`}
             >
               {load.loadStatus}
             </p>

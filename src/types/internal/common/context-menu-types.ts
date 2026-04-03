@@ -9,9 +9,8 @@ export interface ContextMenuData {
 }
 
 export interface ContextMenuActionItem {
-  activeIcon: string;
-  inactiveIcon: string;
   action: () => void;
   label: string;
+  svgPath: string;
   level?: number;
 }
