@@ -1,6 +1,10 @@
 import type { Period, Time } from "../planner/planner-types.ts";
 
-export const timeToHHmm = (time: Time) => {
+export const timeToHHmm = (time?: Time) => {
+  if (!time) {
+    return undefined;
+  }
+
   let hour = parseInt(time.hour, 10);
 
   if (time.period === "AM") {
@@ -19,7 +23,10 @@ export const timeToHHmm = (time: Time) => {
   return `${hh}:${mm}`;
 };
 
-export const hhmmToTime = (hhmm: string): Time => {
+export const hhmmToTime = (hhmm?: string): Time | undefined => {
+  if (!hhmm) {
+    return undefined;
+  }
   const [hourStr, minuteStr] = hhmm.split(":");
   let hour = parseInt(hourStr, 10);
 

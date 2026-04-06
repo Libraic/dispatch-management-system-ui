@@ -59,8 +59,12 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
   });
 };
 
-const getBlockCoverage = (time: Time) => {
-  const isoTime = timeToHHmm(time);
+const getBlockCoverage = (time?: Time) => {
+  if (!time) {
+    return 0;
+  }
+
+  const isoTime = timeToHHmm(time)!!;
   const [hours, minutes] = isoTime.split(":").map(Number);
   return (hours * 60 + minutes) / 1440.0;
 };
@@ -72,8 +76,8 @@ export const getStartingPointAndWidthOfBlock = (
   startTime?: Time,
   endTime?: Time,
 ) => {
-  const startBlockCoverage = startTime ? getBlockCoverage(startTime) : 0;
-  const endBlockCoverage = endTime ? 1 - getBlockCoverage(endTime) : 0;
+  const startBlockCoverage = getBlockCoverage(startTime);
+  const endBlockCoverage = 1 - getBlockCoverage(endTime);
   const startIndex = getDayIndex(startDate, days);
   const endIndex = getDayIndex(endDate, days);
   const clampedStart = Math.abs(

@@ -56,13 +56,16 @@ export const LoadLocation: React.FC<{
     }));
   };
 
+  const isDeliveryOrPickUp =
+    loadLocation.label === "Pick Up" || loadLocation.label === "Delivery";
+
   return (
     <div
       className={`flex flex-row gap-x-5 items-center cursor-grab active:cursor-grabbing`}
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
+      ref={isDeliveryOrPickUp ? setNodeRef : undefined}
+      style={isDeliveryOrPickUp ? style : undefined}
+      {...(isDeliveryOrPickUp ? attributes : {})}
+      {...(isDeliveryOrPickUp ? listeners : {})}
     >
       <div className="mb-[2.8rem]">
         <LoadLocationContextMenu
@@ -111,7 +114,13 @@ export const LoadLocation: React.FC<{
         }}
         errorMessage={errorMessages?.dateError}
       />
-      <TimePicker time={loadLocation.time} setTime={changeTime} label="ETA" />
+      {isDeliveryOrPickUp && (
+        <TimePicker
+          time={loadLocation.time!!}
+          setTime={changeTime}
+          label="ETA"
+        />
+      )}
     </div>
   );
 };

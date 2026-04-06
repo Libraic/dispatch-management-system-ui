@@ -28,9 +28,9 @@ export interface LoadLocationData {
   uuid: string;
   label: LocationLabel;
   date: Date;
-  time: Time;
   location: string;
   order: number;
+  time?: Time;
 }
 
 export interface WorkforceActionData {

@@ -7,9 +7,9 @@ import type { GetDaysOffPeriodResponse } from "../days-off/days-off-api-response
 export type ApiLoadLocation = {
   label: string;
   date: string;
-  time: string;
   location: string;
   order: number;
+  time?: string;
 };
 
 export type UpsertLoadRequest = {

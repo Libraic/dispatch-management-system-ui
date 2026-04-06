@@ -1,6 +1,7 @@
 import {
   type DriverWorkforce,
   type LoadData,
+  type LoadLocationData,
   type LoadStatus,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
@@ -63,6 +64,26 @@ const loadStatusColor: Record<
   },
 };
 
+const getFirstPickUpLocation = (locations: LoadLocationData[]) => {
+  for (const location of locations) {
+    if (location.label === "Pick Up") {
+      return location;
+    }
+  }
+
+  return undefined;
+};
+
+const getLastDeliveryLocation = (locations: LoadLocationData[]) => {
+  for (let i = locations.length - 1; i >= 0; i--) {
+    if (locations[i].label === "Delivery") {
+      return locations[i];
+    }
+  }
+
+  return undefined;
+};
+
 export const LoadBlock: React.FC<{
   driverLoadData: DriverWorkforce;
   load: LoadData;
@@ -71,14 +92,14 @@ export const LoadBlock: React.FC<{
   const textColor = loadStatusColor[load.loadStatus].textColor;
   const context = useContext(DispatchingContext)!!;
   const days = context.days;
-  const firstLocation = load.locations[0];
-  const lastLocation = load.locations[load.locations.length - 1];
+  const firstLocation = getFirstPickUpLocation(load.locations)!!;
+  const lastLocation = getLastDeliveryLocation(load.locations)!!;
   const { startingPoint, width } = getStartingPointAndWidthOfBlock(
-    load.startDate,
-    load.endDate,
+    firstLocation.date,
+    lastLocation.date,
     days,
-    firstLocation.time,
-    lastLocation.time,
+    firstLocation!!.time,
+    lastLocation!!.time,
   );
 
   const loadFormActivator = useActivator();
@@ -158,7 +179,7 @@ export const LoadBlock: React.FC<{
           <div>
             <p className="text-center text-[0.6rem]">{load.broker}</p>
             <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {firstLocation.location}
+              {firstLocation!!.location}
             </p>
           </div>
         </div>
@@ -180,7 +201,7 @@ export const LoadBlock: React.FC<{
               {load.loadStatus}
             </p>
             <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {lastLocation.location}
+              {lastLocation!!.location}
             </p>
           </div>
         </div>
