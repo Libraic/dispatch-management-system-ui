@@ -56,18 +56,19 @@ export interface VehicleMaintenanceData extends WorkforceActionData {
 export interface DaysOffPeriodData extends WorkforceActionData {}
 
 export interface LoadLocationError {
-  locationError: string;
-  dateError: string;
+  locationError?: string;
+  dateError?: string;
 }
 
 export type LoadDataError = {
-  revenueError: string;
-  milesError: string;
-  brokerError: string;
-  pickUpLocationError: string;
-  deliveryLocationError: string;
-  representativeContactNumberError: string;
-  locationsErrors: Map<string, LoadLocationError>;
+  revenueError?: string;
+  milesError?: string;
+  brokerError?: string;
+  pickUpLocationError?: string;
+  deliveryLocationError?: string;
+  representativeContactNumberError?: string;
+  locationsErrors?: Map<string, LoadLocationError>;
+  ingestionError?: string;
 };
 
 export type VehicleMaintenanceErrors = {
@@ -95,7 +96,7 @@ export type DispatchingRelation = {
 };
 
 export interface CalendarBookFormHandler {
-  submit: () => boolean;
+  submit: () => Promise<boolean>;
 }
 
 export interface FormProps {

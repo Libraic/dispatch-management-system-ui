@@ -2,13 +2,13 @@ import React from "react";
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../../types/internal/planner/planner-types.ts";
-import { TextualInputForm } from "../../../../Common/InputForm/public/TextualInputForm.tsx";
-import { setObjectStringField } from "../../../../../utils/registration/registration-utils.ts";
-import { BLANK_STRING } from "../../../../../constants/common/global-constants.ts";
-import type { StateData } from "../../../../../types/internal/common/props-types.ts";
-import { PHONE_NUMBER_PLACEHOLDER } from "../../../../../constants/common/placeholder-constants.ts";
-import { formatPhoneNumber } from "../../../../../utils/global/input-form-utils.ts";
+} from "../../../../../../types/internal/planner/planner-types.ts";
+import { TextualInputForm } from "../../../../../Common/InputForm/public/TextualInputForm.tsx";
+import { setObjectStringField } from "../../../../../../utils/registration/registration-utils.ts";
+import { BLANK_STRING } from "../../../../../../constants/common/global-constants.ts";
+import type { StateData } from "../../../../../../types/internal/common/props-types.ts";
+import { PHONE_NUMBER_PLACEHOLDER } from "../../../../../../constants/common/placeholder-constants.ts";
+import { formatPhoneNumber } from "../../../../../../utils/global/input-form-utils.ts";
 
 export const LoadFormBrokerData: React.FC<{
   loadStateData: StateData<LoadData, LoadDataError>;

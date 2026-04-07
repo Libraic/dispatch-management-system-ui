@@ -100,8 +100,8 @@ export const LoadBlock: React.FC<{
   const loadFormActivator = useActivator();
   const toast = useToast();
 
-  const updateStatusFn = (loadStatus: LoadStatus) => {
-    context.upsertLoadDataFn(driverLoadData, load, loadStatus);
+  const updateStatusFn = async (loadStatus: LoadStatus) => {
+    await context.upsertLoadDataFn(driverLoadData, load, loadStatus);
   };
 
   const deleteAction = async () => {

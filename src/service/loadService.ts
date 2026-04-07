@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   LOADS_BASE_URL,
+  LOADS_DOCUMENTS,
   LOADS_RELATIONS_URL,
   LOADS_STARTING_POINT_PATH,
 } from "../constants/api/api-paths.ts";
@@ -80,4 +81,11 @@ export const deleteLoadByUuid = async (
   } catch (error: any) {
     return handleApiErrors(error);
   }
+};
+
+export const ingestDocument = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  await axios.post(LOADS_DOCUMENTS, formData);
 };

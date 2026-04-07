@@ -69,6 +69,7 @@ export const PlannerRow: React.FC<{
 
     const upsertResponse = await upsertLoad(upsertRequest);
 
+    console.log("upsertResponse", upsertResponse);
     if (upsertResponse.error) {
       toast.withErrorMessage(upsertResponse.error.message);
       return;

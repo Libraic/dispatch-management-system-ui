@@ -13,7 +13,7 @@ export type DispatchingContextData = {
     workforce: DriverWorkforce,
     loadData: LoadData,
     loadStatus?: LoadStatus,
-  ) => void;
+  ) => Promise<void>;
   upsertVehicleMaintenanceRecordFn: (
     shop: VehicleMaintenanceData,
     driverId: string,

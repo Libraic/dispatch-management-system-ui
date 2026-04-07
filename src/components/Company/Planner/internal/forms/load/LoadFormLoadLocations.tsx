@@ -2,10 +2,10 @@ import React from "react";
 import type {
   LoadData,
   LoadDataError,
-} from "../../../../../types/internal/planner/planner-types.ts";
-import type { StateData } from "../../../../../types/internal/common/props-types.ts";
-import { LoadLocation } from "../LoadLocation.tsx";
-import { LoadLocationCreator } from "../LoadLocationCreator.tsx";
+} from "../../../../../../types/internal/planner/planner-types.ts";
+import type { StateData } from "../../../../../../types/internal/common/props-types.ts";
+import { LoadLocation } from "../../LoadLocation.tsx";
+import { LoadLocationCreator } from "../../LoadLocationCreator.tsx";
 import {
   DndContext,
   type DragEndEvent,

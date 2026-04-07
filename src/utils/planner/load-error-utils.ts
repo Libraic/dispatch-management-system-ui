@@ -6,34 +6,24 @@ import type {
 import { BLANK_STRING } from "../../constants/common/global-constants.ts";
 import { validatePhoneNumber } from "../registration/registration-utils.ts";
 import { cleanPhoneNumber } from "../global/input-form-utils.ts";
-import { LOCATION_REQUIRED } from "../../constants/error/error-message-constants.ts";
-
-export const getBlankLoadDataError = (): LoadDataError => {
-  return {
-    revenueError: BLANK_STRING,
-    milesError: BLANK_STRING,
-    brokerError: BLANK_STRING,
-    pickUpLocationError: BLANK_STRING,
-    deliveryLocationError: BLANK_STRING,
-    representativeContactNumberError: BLANK_STRING,
-    locationsErrors: new Map<string, LoadLocationError>(),
-  };
-};
+import {
+  BROKER_REQUIRED_ERROR,
+  LOCATION_REQUIRED,
+  LOCATIONS_CHRONOLOGICAL_ORDER_ERROR,
+  MILES_REQUIRED_ERROR,
+  REVENUE_REQUIRED_ERROR,
+} from "../../constants/error/error-message-constants.ts";
 
 export const getErrorsIfPresent = (loadData: LoadData) => {
-  let isError = false;
-  const loadErrors: LoadDataError = getBlankLoadDataError();
+  const loadErrors: LoadDataError = {};
   if (loadData.revenue === BLANK_STRING) {
-    isError = true;
-    loadErrors.revenueError = "Revenue is required.";
+    loadErrors.revenueError = REVENUE_REQUIRED_ERROR;
   }
   if (loadData.miles === BLANK_STRING) {
-    isError = true;
-    loadErrors.milesError = "Miles are required.";
+    loadErrors.milesError = MILES_REQUIRED_ERROR;
   }
   if (loadData.broker === BLANK_STRING) {
-    isError = true;
-    loadErrors.brokerError = "Broker is required.";
+    loadErrors.brokerError = BROKER_REQUIRED_ERROR;
   }
 
   const representativeContactNumber = loadData.representativeContactNumber
@@ -44,7 +34,6 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
     "optional",
   );
   if (representativeContactNumberValidation !== BLANK_STRING) {
-    isError = true;
     loadErrors.representativeContactNumberError =
       representativeContactNumberValidation;
   }
@@ -52,25 +41,19 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
   const locationErrors = new Map<string, LoadLocationError>();
   for (let i = 0; i < loadData.locations.length; i++) {
     const currentLocation = loadData.locations[i];
-    const locationError = getBlankLocationError();
+    const locationError: LoadLocationError = {};
     if (i > 0 && currentLocation.date < loadData.locations[i - 1].date) {
-      isError = true;
-      locationError.dateError = "Locations must be in chronological order.";
+      locationError.dateError = LOCATIONS_CHRONOLOGICAL_ORDER_ERROR;
     }
     if (currentLocation.location === BLANK_STRING) {
-      isError = true;
       locationError.locationError = LOCATION_REQUIRED;
     }
     locationErrors.set(currentLocation.uuid, locationError);
   }
 
-  loadErrors.locationsErrors = locationErrors;
-  return { isError, loadErrors: loadErrors };
-};
+  if (Object.keys(locationErrors).length !== 0) {
+    loadErrors.locationsErrors = locationErrors;
+  }
 
-const getBlankLocationError = (): LoadLocationError => {
-  return {
-    locationError: BLANK_STRING,
-    dateError: BLANK_STRING,
-  };
+  return loadErrors;
 };

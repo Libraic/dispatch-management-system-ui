@@ -38,7 +38,7 @@ export const LoadLocation: React.FC<{
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const errorMessages = loadStateData.error.locationsErrors.get(
+  const errorMessages = loadStateData.error.locationsErrors?.get(
     loadLocation.uuid,
   );
 

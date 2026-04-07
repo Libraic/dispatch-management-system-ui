@@ -12,9 +12,8 @@ import {
 import {
   SYSTEM_FONT_LIGHT,
   SYSTEM_FONT_NORMAL,
-  SYSTEM_FONT_THIN,
 } from "../../../../../tailwind/tailwind-font-vars.ts";
-import { LoadForm } from "./LoadForm.tsx";
+import { LoadForm } from "./load/LoadForm.tsx";
 import {
   HOVER_TEXT_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
@@ -44,8 +43,8 @@ export const SchedulableModal: React.FC<{
     setTimeout(deactivate, 220);
   }, [deactivate]);
 
-  const submitFn = useCallback(() => {
-    const isSuccessful = formRef.current?.submit();
+  const submitFn = useCallback(async () => {
+    const isSuccessful = await formRef.current?.submit();
     if (isSuccessful) {
       setClosing(true);
       setTimeout(deactivate, 220);
@@ -60,9 +59,9 @@ export const SchedulableModal: React.FC<{
       }
     };
 
-    const handleEnterKeyDown = (event: KeyboardEvent) => {
+    const handleEnterKeyDown = async (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        submitFn();
+        await submitFn();
       }
     };
 
@@ -94,7 +93,7 @@ export const SchedulableModal: React.FC<{
         <p className={`${SYSTEM_FONT_NORMAL}`}>
           {LOAD_FORM_METADATA[modalType].name}
         </p>
-        <p className={`pb-[3rem] ${SYSTEM_FONT_THIN}`}>
+        <p className={`pb-[3rem] ${SYSTEM_FONT_LIGHT} text-[0.95rem]`}>
           {LOAD_FORM_METADATA[modalType].description}
         </p>
         {!props?.calendarBookModalType && (
