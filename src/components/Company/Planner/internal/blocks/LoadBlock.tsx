@@ -5,11 +5,7 @@ import {
   type LoadStatus,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import React, { useContext } from "react";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_NORMAL,
-  SYSTEM_FONT_THIN,
-} from "../../../../../tailwind/tailwind-font-vars.ts";
+import { SYSTEM_FONT_NORMAL } from "../../../../../tailwind/tailwind-font-vars.ts";
 import { useActivator } from "../../../../../hooks/useActivator.ts";
 import { useToast } from "../../../../../hooks/useToast.ts";
 import { useContextMenu } from "../../../../../hooks/useContextMenu.ts";
@@ -20,8 +16,6 @@ import {
 } from "../../../../../service/loadService.ts";
 import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
 import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
-import pickUpIcon from "../../../../../assets/planner/blocks/pickup.svg";
-import deliveryIcon from "../../../../../assets/planner/blocks/delivery.svg";
 import {
   getChangeStatusOptions,
   getDeleteOption,
@@ -29,6 +23,7 @@ import {
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { SchedulableModal } from "../forms/SchedulableModal.tsx";
 import { fromGetLoadResponseToLoadData } from "../../../../../utils/planner/load-utils.ts";
+import { LoadBlockDetails } from "./LoadBlockDetails.tsx";
 
 const loadStatusColor: Record<
   LoadStatus,
@@ -174,37 +169,13 @@ export const LoadBlock: React.FC<{
           ${SYSTEM_FONT_NORMAL} text-[0.8rem]
         `}
       >
-        <div className="flex items-center gap-2">
-          <img src={pickUpIcon} alt="pickup" className="w-5 h-5" />
-          <div>
-            <p className="text-center text-[0.6rem]">{load.broker}</p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {firstLocation!!.location}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex-1 flex items-center mx-2 min-w-0">
-          <div className="flex-1 h-[0.05rem] bg-current opacity-50" />
-          <span
-            className={`text-[0.8rem] opacity-50 ${SYSTEM_FONT_THIN} mb-[0.081rem]`}
-          >
-            ›
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <img src={deliveryIcon} alt="delivery" className="w-5 h-5" />
-          <div>
-            <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] ${textColor} ${SYSTEM_FONT_BOLD}`}
-            >
-              {load.loadStatus}
-            </p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {lastLocation!!.location}
-            </p>
-          </div>
-        </div>
+        <LoadBlockDetails
+          textColor={textColor}
+          load={load}
+          startLocation={firstLocation.location}
+          endLocation={lastLocation.location}
+          width={width}
+        />
       </div>
       {loadFormActivator.isActive() && (
         <SchedulableModal
