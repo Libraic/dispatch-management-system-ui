@@ -9,11 +9,17 @@ import { SYSTEM_FONT_MEDIUM } from "../../../tailwind/tailwind-font-vars.ts";
 export const SubmitButton: React.FC<{
   actionText: string;
   action: (e: React.FormEvent) => void;
-}> = ({ actionText, action }) => {
+  isInteractable?: boolean;
+}> = ({ actionText, action, isInteractable }) => {
+  const interactable = isInteractable ?? true;
   return (
     <button
-      className={`min-w-[5rem] border-1 ${BORDER_SOLID_COLOR} rounded-3xl text-black bg-white  text-[1rem] py-[0.2rem] px-[0.4rem] ${HOVER_BACKGROUND_SOLID_COLOR} ${HOVER_BORDER_SOLID_COLOR} hover:text-white hover:cursor-pointer ${SYSTEM_FONT_MEDIUM} transition-all ease-in duration-150`}
-      onClick={action}
+      className={`min-w-[5rem] border-1 ${BORDER_SOLID_COLOR} rounded-3xl text-black bg-white  text-[1rem] py-[0.2rem] px-[0.4rem] ${HOVER_BACKGROUND_SOLID_COLOR} ${HOVER_BORDER_SOLID_COLOR} hover:text-white ${interactable ? "hover:cursor-pointer" : "hover:cursor-not-allowed"} ${SYSTEM_FONT_MEDIUM} transition-all ease-in duration-150`}
+      onClick={(e: React.FormEvent) => {
+        if (interactable) {
+          action(e);
+        }
+      }}
     >
       {actionText}
     </button>

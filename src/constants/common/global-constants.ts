@@ -12,3 +12,4 @@ export const ZERO = 0;
 export const NOT_AVAILABLE = "N/A";
 export const OPEN_BRACKET = "(";
 export const CLOSE_BRACKET = ")";
+export const PIPE = "|";

@@ -8,6 +8,7 @@ import {
 import type {
   ApiResponse,
   NoContentResponse,
+  Result,
 } from "../types/api/common/api-response-types.ts";
 import type { Error } from "../types/api/common/api-errors-types.ts";
 import type {
@@ -19,16 +20,52 @@ import type {
 } from "../types/api/loads/load-api-types.ts";
 import { toIsoDate } from "../utils/global/date-utils.ts";
 import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
+import { createUpsertLoadRequest } from "../utils/api/planner/planner-api-utils.ts";
+import type {
+  LoadData,
+  LoadStatus,
+} from "../types/internal/planner/planner-types.ts";
 
 export const upsertLoad = async (
-  upsertLoadRequest: UpsertLoadRequest,
-): Promise<ApiResponse<UpsertLoadResponse, Error>> => {
-  try {
-    const response = await axios.put(LOADS_BASE_URL, upsertLoadRequest);
-    return response.data;
-  } catch (error: any) {
-    return handleApiErrors(error);
+  loadData: LoadData,
+  relationId: string,
+  loadStatus?: LoadStatus,
+): Promise<Result<UpsertLoadResponse>> => {
+  const upsertRequest = createUpsertLoadRequest(loadData, relationId);
+
+  if (loadStatus) {
+    upsertRequest.loadStatus = loadStatus;
   }
+
+  const upsertResponse = await upsertLoadApiCall(upsertRequest);
+
+  if (upsertResponse.error) {
+    return {
+      ok: false,
+      error: upsertResponse.error.message,
+    };
+  }
+
+  return {
+    ok: true,
+    data: upsertResponse.data!!,
+  };
+};
+
+export const ingestDocument = async (
+  file: File,
+): Promise<Result<GetLoadResponse>> => {
+  const ingestResponse = await ingestDocumentApiCall(file);
+  if (ingestResponse.error) {
+    return {
+      ok: false,
+      error: ingestResponse.error.message,
+    };
+  }
+  return {
+    ok: true,
+    data: ingestResponse.data!!,
+  };
 };
 
 export const getLoadData = async (
@@ -83,9 +120,27 @@ export const deleteLoadByUuid = async (
   }
 };
 
-export const ingestDocument = async (file: File) => {
+const ingestDocumentApiCall = async (
+  file: File,
+): Promise<ApiResponse<GetLoadResponse, Error>> => {
   const formData = new FormData();
   formData.append("file", file);
 
-  await axios.post(LOADS_DOCUMENTS, formData);
+  try {
+    const response = await axios.post(LOADS_DOCUMENTS, formData);
+    return response.data;
+  } catch (error: any) {
+    return handleApiErrors(error);
+  }
+};
+
+const upsertLoadApiCall = async (
+  upsertLoadRequest: UpsertLoadRequest,
+): Promise<ApiResponse<UpsertLoadResponse, Error>> => {
+  try {
+    const response = await axios.put(LOADS_BASE_URL, upsertLoadRequest);
+    return response.data;
+  } catch (error: any) {
+    return handleApiErrors(error);
+  }
 };

@@ -3,7 +3,7 @@ import type {
   CalendarBookFormHandler,
   DaysOffPeriodData,
   FormProps,
-  PlannerError,
+  SubmitSuccess,
 } from "../../../../../types/internal/planner/planner-types.ts";
 import { DateSelector } from "../../../../Common/Selector/DateSelector.tsx";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
@@ -16,16 +16,18 @@ export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
       useState<DaysOffPeriodData>(getInitialData(workforce, id, day));
     const context = useContext(DispatchingContext);
 
-    const submit = async () => {
+    const submit = async (): Promise<SubmitSuccess> => {
       const errorMessage = await context!!.upsertDaysOffPeriodFn(
         daysOffPeriodData,
         workforce.driver.uuid,
         workforce.relationId,
       );
-      return {
-        type: "ApiError",
-        message: errorMessage ?? undefined,
-      } as PlannerError;
+
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
+
+      return "close-modal";
     };
 
     useImperativeHandle(ref, () => ({

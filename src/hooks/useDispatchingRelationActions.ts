@@ -3,16 +3,12 @@ import type {
   DispatchingRelation,
   DriverWorkforce,
   LoadData,
-  LoadStatus,
   VehicleMaintenanceData,
 } from "../types/internal/planner/planner-types.ts";
-import { createUpsertLoadRequest } from "../utils/api/planner/planner-api-utils.ts";
-import { upsertLoad } from "../service/loadService.ts";
 import { toIsoDate, toNormalizedIsoDate } from "../utils/global/date-utils.ts";
 import {
-  fromApiLoadLocationToLoadLocationData,
+  mapLoadDataToDispatcherRelation,
   updateLoadsAfterDeletions,
-  upsertDriverLoadCallbackFunction,
 } from "../utils/planner/load-utils.ts";
 import type { UpsertVehicleMaintenanceRecordRequest } from "../types/api/vehicle-maintenance/vehicle-maintenance-api-request-types.ts";
 import {
@@ -38,50 +34,15 @@ export const useDispatchingRelationActions = (
   const upsertLoadFn = async (
     workforce: DriverWorkforce,
     loadData: LoadData,
-    loadStatus?: LoadStatus,
   ) => {
-    const upsertRequest = createUpsertLoadRequest(
-      loadData,
-      workforce.relationId,
-    );
-
-    if (loadStatus) {
-      upsertRequest.loadStatus = loadStatus;
-    }
-
-    const upsertResponse = await upsertLoad(upsertRequest);
-
-    if (upsertResponse.error) {
-      return upsertResponse.error.message;
-    }
-
-    const loadResponse = upsertResponse.data!!;
-    const upsertedLoadData: LoadData = {
-      id: loadResponse.loadUuid,
-      revenue: `${loadResponse.revenue}`,
-      miles: `${loadResponse.miles}`,
-      broker: loadResponse.broker,
-      representative: loadResponse.representative ?? undefined,
-      representativeContactNumber:
-        loadResponse.representativeContactNumber ?? undefined,
-      loadStatus: loadResponse.loadStatus,
-      startDate: toNormalizedIsoDate(loadResponse.startDate),
-      endDate: toNormalizedIsoDate(loadResponse.endDate),
-      locations: loadResponse.locations.map((location) =>
-        fromApiLoadLocationToLoadLocationData(location),
-      ),
-    };
-
     setDispatchingRelation((prevDispatcherLoadDataList) => {
-      return upsertDriverLoadCallbackFunction(
+      return mapLoadDataToDispatcherRelation(
         prevDispatcherLoadDataList,
         dispatchingRelationId,
-        upsertedLoadData,
+        loadData,
         workforce.driver,
       );
     });
-
-    return null;
   };
 
   const upsertVehicleMaintenanceRecordFn = async (

@@ -10,4 +10,6 @@ export type ApiResponse<T, E extends Error | GroupsErrorResponse> = {
   error?: E;
 };
 
+export type Result<T> = { ok: true; data: T } | { ok: false; error: string };
+
 export type NoContentResponse = {};

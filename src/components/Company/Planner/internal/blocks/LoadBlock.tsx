@@ -13,6 +13,7 @@ import type { ContextMenuActionItem } from "../../../../../types/internal/common
 import {
   deleteLoadByUuid,
   getLoadData,
+  upsertLoad,
 } from "../../../../../service/loadService.ts";
 import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
 import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
@@ -101,15 +102,27 @@ export const LoadBlock: React.FC<{
   const toast = useToast();
 
   const updateStatusFn = async (loadStatus: LoadStatus) => {
-    await context.upsertLoadFn(driverLoadData, load, loadStatus);
-  };
+    const upsertLoadResponse = await upsertLoad(
+      load,
+      driverLoadData.relationId,
+      loadStatus,
+    );
 
-  const deleteAction = async () => {
-    if (!load.id) {
+    if (!upsertLoadResponse.ok) {
+      toast.withErrorMessage(upsertLoadResponse.error);
       return;
     }
 
-    const data = await deleteLoadByUuid(load.id);
+    if (upsertLoadResponse.ok) {
+      const newLoadData = fromGetLoadResponseToLoadData(
+        upsertLoadResponse.data,
+      );
+      context.upsertLoadFn(driverLoadData, newLoadData);
+    }
+  };
+
+  const deleteAction = async () => {
+    const data = await deleteLoadByUuid(load.id!!);
     if (data.error) {
       toast.withErrorMessage(data.error.message);
       return;

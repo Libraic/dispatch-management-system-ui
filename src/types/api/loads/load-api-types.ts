@@ -5,10 +5,10 @@ import type { GetVehicleMaintenanceResponse } from "../vehicle-maintenance/vehic
 import type { GetDaysOffPeriodResponse } from "../days-off/days-off-api-response-types.ts";
 
 export type ApiLoadLocation = {
-  label: string;
-  date: string;
-  location: string;
-  order: number;
+  label?: string;
+  date?: string;
+  location?: string;
+  order?: number;
   time?: string;
 };
 
@@ -42,16 +42,16 @@ export type UpsertLoadResponse = {
 };
 
 export type GetLoadResponse = {
-  loadUuid: string;
-  revenue: number;
-  miles: number;
-  broker: string;
+  loadUuid?: string;
+  revenue?: number;
+  miles?: number;
+  broker?: string;
   representative?: string;
   representativeContactNumber?: string;
-  loadStatus: LoadStatus;
-  startDate: string;
-  endDate: string;
-  locations: ApiLoadLocation[];
+  loadStatus?: LoadStatus;
+  startDate?: string;
+  endDate?: string;
+  locations?: ApiLoadLocation[];
 };
 
 export type WorkforceData = {

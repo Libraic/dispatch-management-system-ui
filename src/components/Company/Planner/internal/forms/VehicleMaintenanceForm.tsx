@@ -3,7 +3,7 @@ import type {
   CalendarBookFormHandler,
   DriverWorkforce,
   FormProps,
-  PlannerError,
+  SubmitSuccess,
   VehicleMaintenanceData,
   VehicleMaintenanceErrors,
 } from "../../../../../types/internal/planner/planner-types.ts";
@@ -41,12 +41,10 @@ export const VehicleMaintenanceForm = forwardRef<
     getInitialData(workforce, id, day),
   );
   const context = useContext(DispatchingContext);
-  const submit = async () => {
+  const submit = async (): Promise<SubmitSuccess> => {
     if (shopData.location === BLANK_STRING) {
       setShopErrors({ locationError: LOCATION_REQUIRED });
-      return {
-        type: "InternalError",
-      } as PlannerError;
+      return "stay-open";
     }
 
     const errorMessage = await context!!.upsertVehicleMaintenanceRecordFn(
@@ -54,10 +52,12 @@ export const VehicleMaintenanceForm = forwardRef<
       workforce.driver.uuid,
       workforce.relationId,
     );
-    return {
-      type: "ApiError",
-      message: errorMessage ?? undefined,
-    } as PlannerError;
+
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+
+    return "close-modal";
   };
 
   useImperativeHandle(ref, () => ({

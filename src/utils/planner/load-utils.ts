@@ -18,7 +18,7 @@ import type {
 } from "../../types/api/loads/load-api-types.ts";
 import { hhmmToTime } from "../../types/internal/time/time-types.ts";
 
-export const upsertDriverLoadCallbackFunction = (
+export const mapLoadDataToDispatcherRelation = (
   prevDispatcherLoadDataList: DispatchingRelation[],
   dispatcherLoadDataIdentifier: string,
   newLoadDatum: LoadData,
@@ -143,20 +143,27 @@ export const updateLoadsAfterDeletions = (
 
 export const fromGetLoadResponseToLoadData = (
   loadResponse: GetLoadResponse,
+  day?: string,
 ): LoadData => {
+  const startDate = loadResponse.startDate
+    ? toNormalizedIsoDate(loadResponse.startDate)
+    : day
+      ? new Date(day)
+      : new Date();
+  const endDate = loadResponse.endDate
+    ? toNormalizedIsoDate(loadResponse.endDate)
+    : getNextDayFromCurrentDate(startDate);
   return {
     id: loadResponse.loadUuid,
     revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
     miles: `${loadResponse.miles ?? BLANK_STRING}`,
-    broker: loadResponse.broker,
+    broker: loadResponse.broker ?? BLANK_STRING,
     representative: loadResponse.representative ?? undefined,
     representativeContactNumber: loadResponse.representativeContactNumber,
-    loadStatus: loadResponse.loadStatus,
-    startDate: toNormalizedIsoDate(loadResponse.startDate),
-    endDate: toNormalizedIsoDate(loadResponse.endDate),
-    locations: loadResponse.locations.map((location) =>
-      fromApiLoadLocationToLoadLocationData(location),
-    ),
+    loadStatus: loadResponse.loadStatus ?? "Booked",
+    startDate: startDate,
+    endDate: endDate,
+    locations: fromApiLoadLocationsToLoadLocationsData(loadResponse.locations),
   };
 };
 
@@ -177,17 +184,28 @@ export const getBlankLoadData = (
   };
 };
 
-export const fromApiLoadLocationToLoadLocationData = (
-  location: ApiLoadLocation,
-): LoadLocationData => {
-  return {
-    uuid: generateUuid(),
-    label: location.label as LocationLabel,
-    date: new Date(location.date),
-    time: hhmmToTime(location.time),
-    location: location.location ?? BLANK_STRING,
-    order: location.order,
-  };
+export const fromApiLoadLocationsToLoadLocationsData = (
+  locations?: ApiLoadLocation[],
+): LoadLocationData[] => {
+  const loadLocations: LoadLocationData[] = [];
+  if (!locations) {
+    return loadLocations;
+  }
+
+  for (let i = 0; i < locations.length; i++) {
+    const location = locations[i];
+    const loadLocation = {
+      uuid: generateUuid(),
+      label: location.label as LocationLabel,
+      date: location.date ? new Date(location.date) : new Date(),
+      time: hhmmToTime(location.time),
+      location: location.location ?? BLANK_STRING,
+      order: location.order ?? i,
+    };
+    loadLocations.push(loadLocation);
+  }
+
+  return loadLocations;
 };
 
 export const getBlankLocation = (

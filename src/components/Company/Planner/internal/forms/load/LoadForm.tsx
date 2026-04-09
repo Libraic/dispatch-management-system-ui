@@ -1,89 +1,90 @@
-import {
-  forwardRef,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { forwardRef, useContext, useEffect, useImperativeHandle } from "react";
 import {
   type CalendarBookFormHandler,
   CalendarBookModalTypes,
   type FormProps,
-  type LoadData,
-  type LoadDataError,
-  type PlannerError,
+  type SubmitSuccess,
 } from "../../../../../../types/internal/planner/planner-types.ts";
 import { getErrorsIfPresent } from "../../../../../../utils/planner/load-error-utils.ts";
-import { createStateData } from "../../../../../../utils/global/props-utils.ts";
 import {
   getStartingPointLocation,
   ingestDocument,
+  upsertLoad,
 } from "../../../../../../service/loadService.ts";
 import { DispatchingContext } from "../../../../../../context/DispatchingContext.ts";
-import { getBlankLoadData } from "../../../../../../utils/planner/load-utils.ts";
+import {
+  fromGetLoadResponseToLoadData,
+  getBlankLoadData,
+} from "../../../../../../utils/planner/load-utils.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../../../tailwind/tailwind-font-vars.ts";
 import {
   HOVER_TEXT_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
 } from "../../../../../../tailwind/tailwind-colors-vars.ts";
-import { BLANK_STRING } from "../../../../../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  PIPE,
+} from "../../../../../../constants/common/global-constants.ts";
 import { ManualLoad } from "./ManualLoad.tsx";
 import { IngestionLoad } from "./IngestionLoad.tsx";
 import { MISSING_DOCUMENT_ERROR } from "../../../../../../constants/error/error-message-constants.ts";
+import { useLoadData } from "../../../../../../hooks/useLoadData.ts";
 
-type LoadCreationType = "Manual" | "Ingestion";
+export type LoadCreationType = "Manual" | "Ingestion";
 const loadCreationTypes: LoadCreationType[] = ["Ingestion", "Manual"];
 
 export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
   (loadFormProps, ref) => {
     const { day, workforce, id } = loadFormProps;
-    const initialLoadData =
-      id && workforce
-        ? workforce.loads.filter((load) => load.id === id)[0]
-        : getBlankLoadData(day!!);
-    const [loadDataErrors, setLoadDataErrors] = useState<LoadDataError>({});
-    const [file, setFile] = useState<File | null>(null);
-    const [loadCreationType, setLoadCreationType] =
-      useState<LoadCreationType>("Ingestion");
-    const [loadData, setLoadData] = useState<LoadData>(initialLoadData);
-    const loadStateData = createStateData(
-      loadData,
-      loadDataErrors,
-      setLoadData,
-    );
-    const context = useContext(DispatchingContext);
+    const loadCriteria = useLoadData(workforce, day, id);
+    const context = useContext(DispatchingContext)!!;
 
-    const submit = async () => {
-      if (loadCreationType === "Ingestion") {
-        if (!file) {
-          setLoadDataErrors({
+    const submit = async (): Promise<SubmitSuccess> => {
+      if (loadCriteria.loadCreationType === "Ingestion") {
+        if (!loadCriteria.file) {
+          loadCriteria.setLoadDataErrors({
             ingestionError: MISSING_DOCUMENT_ERROR,
           });
-          return {
-            type: "InternalError",
-          } as PlannerError;
-        } else {
-          await ingestDocument(file);
-        }
-      } else {
-        const loadErrors = getErrorsIfPresent(loadData);
-        if (Object.keys(loadErrors).length !== 0) {
-          setLoadDataErrors(loadErrors);
-          return {
-            type: "InternalError",
-          } as PlannerError;
+          return "stay-open";
         }
 
-        const errorMessage = await context!!.upsertLoadFn(workforce, loadData);
-        return {
-          type: "ApiError",
-          message: errorMessage ?? undefined,
-        } as PlannerError;
+        const response = await ingestDocument(loadCriteria.file);
+
+        if (!response.ok) {
+          throw new Error(response.error);
+        }
+
+        const ingestedLoadData = fromGetLoadResponseToLoadData(response.data);
+
+        loadCriteria.loadStateData.setData(ingestedLoadData);
+        loadCriteria.setLoadCreationType("Manual");
+
+        return "stay-open";
       }
 
-      return {
-        type: "NoError",
-      } as PlannerError;
+      const loadErrors = getErrorsIfPresent(loadCriteria.loadStateData.data);
+
+      if (Object.keys(loadErrors).length !== 0) {
+        loadCriteria.setLoadDataErrors(loadErrors);
+        return "stay-open";
+      }
+
+      const upsertLoadResponse = await upsertLoad(
+        loadCriteria.loadStateData.data,
+        workforce.relationId,
+      );
+
+      if (!upsertLoadResponse.ok) {
+        throw new Error(upsertLoadResponse.error);
+      }
+
+      const upsertedLoadData = fromGetLoadResponseToLoadData(
+        upsertLoadResponse.data,
+      );
+
+      context.upsertLoadFn(workforce, upsertedLoadData);
+
+      return "close-modal";
     };
 
     useImperativeHandle(ref, () => ({
@@ -97,13 +98,15 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
             if (data.data) {
               const location = data.data.location;
               if (location !== null) {
-                setLoadData(getBlankLoadData(day, location));
+                loadCriteria.loadStateData.setData(
+                  getBlankLoadData(day, location),
+                );
               }
             }
           },
         );
       }
-    }, [day, workforce.relationId]);
+    }, [day, loadCriteria.loadStateData, workforce.relationId]);
 
     return (
       <div>
@@ -114,32 +117,32 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
             <div
               className="flex flex-row"
               key={type}
-              onClick={() => setLoadCreationType(type)}
+              onClick={() => loadCriteria.setLoadCreationType(type)}
             >
               <p
-                className={`hover:cursor-pointer ${HOVER_TEXT_NORMAL_COLOR} ${loadCreationType === type ? TEXT_NORMAL_COLOR : "text-gray-400"}`}
+                className={`hover:cursor-pointer ${HOVER_TEXT_NORMAL_COLOR} ${loadCriteria.loadCreationType === type ? TEXT_NORMAL_COLOR : "text-gray-400"}`}
               >
                 {type}
               </p>
               <p className="mx-[1.25rem] text-gray-400">
                 {index !== CalendarBookModalTypes.length - 1
-                  ? "|"
+                  ? PIPE
                   : BLANK_STRING}
               </p>
             </div>
           ))}
         </div>
-        {loadCreationType === "Ingestion" ? (
+        {loadCriteria.loadCreationType === "Ingestion" ? (
           <IngestionLoad
-            file={file}
+            file={loadCriteria.file}
             setFile={(file: File) => {
-              setLoadDataErrors({});
-              setFile(file);
+              loadCriteria.setLoadDataErrors({});
+              loadCriteria.setFile(file);
             }}
-            errorMessage={loadDataErrors.ingestionError}
+            errorMessage={loadCriteria.loadStateData.error.ingestionError}
           />
         ) : (
-          <ManualLoad loadStateData={loadStateData} />
+          <ManualLoad loadStateData={loadCriteria.loadStateData} />
         )}
       </div>
     );

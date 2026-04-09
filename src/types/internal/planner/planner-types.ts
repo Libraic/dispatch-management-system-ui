@@ -16,10 +16,14 @@ export type LocationLabel =
   | "Starting Point"
   | "Ending Point";
 
-export type ErrorType = "ApiError" | "InternalError" | "NoError";
+export type ResponseType =
+  | "Api Error"
+  | "Internal Error"
+  | "No Error"
+  | "No Action";
 
-export interface PlannerError {
-  type: ErrorType;
+export interface PlannerResponse {
+  type: ResponseType;
   message?: string;
 }
 
@@ -102,8 +106,10 @@ export type DispatchingRelation = {
   workforceUnits: DriverWorkforce[];
 };
 
+export type SubmitSuccess = "close-modal" | "stay-open";
+
 export interface CalendarBookFormHandler {
-  submit: () => Promise<PlannerError>;
+  submit: () => Promise<SubmitSuccess>;
 }
 
 export interface FormProps {

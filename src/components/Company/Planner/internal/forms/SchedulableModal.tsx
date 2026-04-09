@@ -18,18 +18,23 @@ import {
   HOVER_TEXT_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
 } from "../../../../../tailwind/tailwind-colors-vars.ts";
-import { BLANK_STRING } from "../../../../../constants/common/global-constants.ts";
+import {
+  BLANK_STRING,
+  PIPE,
+} from "../../../../../constants/common/global-constants.ts";
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm.tsx";
 import { DaysOffForm } from "./DaysOffForm.tsx";
 import { Z_INDEX_MEDIUM_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
 import { useToast } from "../../../../../hooks/useToast.ts";
 import { ToastRenderer } from "../../../../Common/Toast/ToastRenderer.tsx";
+import { Spinner } from "../../../../Common/Spinner/Spinner.tsx";
 
 export const SchedulableModal: React.FC<{
   deactivate: () => void;
   props?: FormProps;
 }> = ({ deactivate, props }) => {
   const [closing, setClosing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<CalendarBookFormHandler>(null);
   const [modalType, setModalType] = useState<CalendarBookModalType>(
     props?.calendarBookModalType ?? "Load",
@@ -47,13 +52,20 @@ export const SchedulableModal: React.FC<{
   }, [deactivate]);
 
   const submitFn = useCallback(async () => {
-    const res = await formRef.current?.submit();
-    if (res?.type === "NoError") {
-      setClosing(true);
-      setTimeout(deactivate, 220);
-    } else if (res?.message) {
-      toast.withErrorMessage(res?.message);
+    setIsSubmitting(true);
+
+    try {
+      const result = await formRef.current?.submit();
+
+      if (result === "close-modal") {
+        setClosing(true);
+        setTimeout(deactivate, 220);
+      }
+    } catch (err) {
+      toast.withErrorMessage((err as Error).message);
     }
+
+    setIsSubmitting(false);
   }, [deactivate, toast]);
 
   useEffect(() => {
@@ -109,7 +121,11 @@ export const SchedulableModal: React.FC<{
               <div
                 className="flex flex-row"
                 key={type}
-                onClick={() => setModalType(type)}
+                onClick={() => {
+                  if (!isSubmitting) {
+                    setModalType(type);
+                  }
+                }}
               >
                 <p
                   className={`hover:cursor-pointer ${HOVER_TEXT_NORMAL_COLOR} ${modalType === type ? TEXT_NORMAL_COLOR : "text-gray-400"}`}
@@ -118,7 +134,7 @@ export const SchedulableModal: React.FC<{
                 </p>
                 <p className="mx-[1.25rem] text-gray-400">
                   {index !== CalendarBookModalTypes.length - 1
-                    ? "|"
+                    ? PIPE
                     : BLANK_STRING}
                 </p>
               </div>
@@ -126,8 +142,13 @@ export const SchedulableModal: React.FC<{
           </div>
         )}
         {forms[modalType]}
+        {isSubmitting && <Spinner />}
         <div className="flex flex-row items-center justify-center mb-[1.3rem] gap-x-10">
-          <SubmitButton actionText="Submit" action={submitFn} />
+          <SubmitButton
+            actionText="Submit"
+            action={submitFn}
+            isInteractable={!isSubmitting}
+          />
           <CancelButton actionText="Quit" action={quitFn} />
         </div>
       </div>
