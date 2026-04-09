@@ -96,7 +96,7 @@ export type DispatchingRelation = {
 };
 
 export interface CalendarBookFormHandler {
-  submit: () => Promise<boolean>;
+  submit: () => Promise<string | null>;
 }
 
 export interface FormProps {

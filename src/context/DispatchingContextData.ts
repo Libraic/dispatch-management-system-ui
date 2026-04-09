@@ -13,17 +13,17 @@ export type DispatchingContextData = {
     workforce: DriverWorkforce,
     loadData: LoadData,
     loadStatus?: LoadStatus,
-  ) => Promise<void>;
+  ) => Promise<string | null>;
   upsertVehicleMaintenanceRecordFn: (
     shop: VehicleMaintenanceData,
     driverId: string,
     relationId: string,
-  ) => void;
+  ) => Promise<string | null>;
   upsertDaysOffPeriodFn: (
     daysOffPeriodData: DaysOffPeriodData,
     driverId: string,
     relationId: string,
-  ) => void;
+  ) => Promise<string | null>;
   postLoadDeleteUpdateFn: (
     driver: DriverData,
     loadDataList: LoadData[],

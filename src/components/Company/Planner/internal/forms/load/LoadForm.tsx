@@ -58,7 +58,7 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
           setLoadDataErrors({
             ingestionError: MISSING_DOCUMENT_ERROR,
           });
-          return false;
+          return BLANK_STRING;
         } else {
           await ingestDocument(file);
         }
@@ -66,13 +66,13 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
         const loadErrors = getErrorsIfPresent(loadData);
         if (Object.keys(loadErrors).length !== 0) {
           setLoadDataErrors(loadErrors);
-          return false;
+          return BLANK_STRING;
         }
 
-        await context!!.upsertLoadDataFn(workforce, loadData);
+        return await context!!.upsertLoadDataFn(workforce, loadData);
       }
 
-      return true;
+      return null;
     };
 
     useImperativeHandle(ref, () => ({

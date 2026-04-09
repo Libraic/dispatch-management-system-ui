@@ -10,7 +10,6 @@ import type {
 } from "../../../../types/internal/planner/planner-types.ts";
 import { BLANK_SPACE } from "../../../../constants/common/global-constants.ts";
 import { upsertLoad } from "../../../../service/loadService.ts";
-import { useToast } from "../../../../hooks/useToast.ts";
 import {
   toIsoDate,
   toNormalizedIsoDate,
@@ -19,7 +18,6 @@ import type { DriverData } from "../../../../types/api/driver/driver-api-respons
 import { DispatcherRow } from "../internal/rows/DispatcherRow.tsx";
 import { PlannerWorkforceRow } from "../internal/rows/PlannerWorkforceRow.tsx";
 import { generateUuid } from "../../../../utils/global/general-utils.ts";
-import { ToastRenderer } from "../../../Common/Toast/ToastRenderer.tsx";
 import type { UpsertVehicleMaintenanceRecordRequest } from "../../../../types/api/vehicle-maintenance/vehicle-maintenance-api-request-types.ts";
 import { upsertVehicleMaintenanceRecord } from "../../../../service/vehicleMaintenanceService.ts";
 import { DispatchingContext } from "../../../../context/DispatchingContext.ts";
@@ -51,7 +49,6 @@ export const PlannerRow: React.FC<{
   const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
   const activator = useActivator(true);
   const dispatchingRelationId = dispatchingRelation.id;
-  const toast = useToast();
 
   const upsertLoadFn = async (
     workforce: DriverWorkforce,
@@ -69,10 +66,8 @@ export const PlannerRow: React.FC<{
 
     const upsertResponse = await upsertLoad(upsertRequest);
 
-    console.log("upsertResponse", upsertResponse);
     if (upsertResponse.error) {
-      toast.withErrorMessage(upsertResponse.error.message);
-      return;
+      return upsertResponse.error.message;
     }
 
     const loadResponse = upsertResponse.data!!;
@@ -100,6 +95,8 @@ export const PlannerRow: React.FC<{
         workforce.driver,
       );
     });
+
+    return null;
   };
 
   const upsertVehicleMaintenanceRecordFn = async (
@@ -117,8 +114,7 @@ export const PlannerRow: React.FC<{
 
     const upsertResponse = await upsertVehicleMaintenanceRecord(request);
     if (upsertResponse.error) {
-      toast.withErrorMessage(upsertResponse.error.message);
-      return;
+      return upsertResponse.error.message;
     }
 
     const data = upsertResponse.data!!;
@@ -137,6 +133,8 @@ export const PlannerRow: React.FC<{
         newVehicleMaintenanceData,
       ),
     );
+
+    return null;
   };
 
   const upsertDaysOffPeriodFn = async (
@@ -153,8 +151,7 @@ export const PlannerRow: React.FC<{
 
     const upsertResponse = await upsertDaysOffPeriod(request);
     if (upsertResponse.error) {
-      toast.withErrorMessage(upsertResponse.error.message);
-      return;
+      return upsertResponse.error.message;
     }
 
     const data = upsertResponse.data!!;
@@ -171,6 +168,8 @@ export const PlannerRow: React.FC<{
         newDaysOffPeriodData,
       ),
     );
+
+    return null;
   };
 
   const postVehicleMaintenanceRecordDeleteUpdateFn = (
@@ -240,7 +239,6 @@ export const PlannerRow: React.FC<{
             </div>
           ))}
       </DispatchingContext>
-      <ToastRenderer toast={toast} />
     </div>
   );
 };

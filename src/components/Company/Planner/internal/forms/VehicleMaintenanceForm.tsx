@@ -43,18 +43,17 @@ export const VehicleMaintenanceForm = forwardRef<
     getInitialData(workforce, id, day),
   );
   const context = useContext(DispatchingContext);
-  const submit = () => {
+  const submit = async () => {
     if (shopData.location === BLANK_STRING) {
       setShopErrors({ locationError: LOCATION_REQUIRED });
-      return false;
+      return BLANK_STRING;
     }
 
-    context!!.upsertVehicleMaintenanceRecordFn(
+    return await context!!.upsertVehicleMaintenanceRecordFn(
       shopData,
       workforce.driver.uuid,
       workforce.relationId,
     );
-    return true;
   };
 
   useImperativeHandle(ref, () => ({

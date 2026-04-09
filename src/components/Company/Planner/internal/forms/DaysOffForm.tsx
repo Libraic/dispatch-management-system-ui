@@ -15,13 +15,12 @@ export const DaysOffForm = forwardRef<CalendarBookFormHandler, FormProps>(
       useState<DaysOffPeriodData>(getInitialData(workforce, id, day));
     const context = useContext(DispatchingContext);
 
-    const submit = () => {
-      context!!.upsertDaysOffPeriodFn(
+    const submit = async () => {
+      return await context!!.upsertDaysOffPeriodFn(
         daysOffPeriodData,
         workforce.driver.uuid,
         workforce.relationId,
       );
-      return true;
     };
 
     useImperativeHandle(ref, () => ({

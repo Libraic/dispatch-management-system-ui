@@ -22,6 +22,8 @@ import { BLANK_STRING } from "../../../../../constants/common/global-constants.t
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm.tsx";
 import { DaysOffForm } from "./DaysOffForm.tsx";
 import { Z_INDEX_MEDIUM_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
+import { useToast } from "../../../../../hooks/useToast.ts";
+import { ToastRenderer } from "../../../../Common/Toast/ToastRenderer.tsx";
 
 export const SchedulableModal: React.FC<{
   deactivate: () => void;
@@ -37,6 +39,7 @@ export const SchedulableModal: React.FC<{
     Shop: <VehicleMaintenanceForm ref={formRef} {...props!!} />,
     "Days-off": <DaysOffForm ref={formRef} {...props!!} />,
   };
+  const toast = useToast();
 
   const quitFn = useCallback(() => {
     setClosing(true);
@@ -44,12 +47,14 @@ export const SchedulableModal: React.FC<{
   }, [deactivate]);
 
   const submitFn = useCallback(async () => {
-    const isSuccessful = await formRef.current?.submit();
-    if (isSuccessful) {
+    const res = await formRef.current?.submit();
+    if (res === null) {
       setClosing(true);
       setTimeout(deactivate, 220);
+    } else if (res !== undefined && res !== BLANK_STRING) {
+      toast.withErrorMessage(res);
     }
-  }, [deactivate]);
+  }, [deactivate, toast]);
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
@@ -126,6 +131,7 @@ export const SchedulableModal: React.FC<{
           <CancelButton actionText="Quit" action={quitFn} />
         </div>
       </div>
+      <ToastRenderer toast={toast} />
     </div>,
     document.body,
   );
