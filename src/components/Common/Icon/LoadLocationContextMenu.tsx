@@ -103,7 +103,10 @@ export const LoadLocationContextMenu: React.FC<{
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onContextMenu={contextMenu.open}
-        onClick={contextMenu.close}
+        onClick={() => {
+          setHovered(false);
+          contextMenu.close();
+        }}
       >
         <Svg
           activeColor="#4e71ff"
