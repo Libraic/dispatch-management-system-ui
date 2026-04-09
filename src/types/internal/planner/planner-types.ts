@@ -16,6 +16,13 @@ export type LocationLabel =
   | "Starting Point"
   | "Ending Point";
 
+export type ErrorType = "ApiError" | "InternalError" | "NoError";
+
+export interface PlannerError {
+  type: ErrorType;
+  message?: string;
+}
+
 export type Period = "AM" | "PM";
 
 export interface Time {
@@ -72,7 +79,7 @@ export type LoadDataError = {
 };
 
 export type VehicleMaintenanceErrors = {
-  locationError: string;
+  locationError?: string;
 };
 
 export type DriverWorkforce = {
@@ -96,7 +103,7 @@ export type DispatchingRelation = {
 };
 
 export interface CalendarBookFormHandler {
-  submit: () => Promise<string | null>;
+  submit: () => Promise<PlannerError>;
 }
 
 export interface FormProps {

@@ -48,11 +48,11 @@ export const SchedulableModal: React.FC<{
 
   const submitFn = useCallback(async () => {
     const res = await formRef.current?.submit();
-    if (res === null) {
+    if (res?.type === "NoError") {
       setClosing(true);
       setTimeout(deactivate, 220);
-    } else if (res !== undefined && res !== BLANK_STRING) {
-      toast.withErrorMessage(res);
+    } else if (res?.message) {
+      toast.withErrorMessage(res?.message);
     }
   }, [deactivate, toast]);
 

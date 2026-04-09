@@ -3,6 +3,7 @@ import type {
   CalendarBookFormHandler,
   DriverWorkforce,
   FormProps,
+  PlannerError,
   VehicleMaintenanceData,
   VehicleMaintenanceErrors,
 } from "../../../../../types/internal/planner/planner-types.ts";
@@ -15,7 +16,6 @@ import { BLANK_STRING } from "../../../../../constants/common/global-constants.t
 import { LOCATION_REQUIRED } from "../../../../../constants/error/error-message-constants.ts";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { getBlankVehicleMaintenanceData } from "../../../../../utils/planner/vehicle-maintenance-utils.ts";
-import { getBlankVehicleMaintenanceErrors } from "../../../../../utils/planner/vehicle-maintenance-errors-utils.ts";
 
 const getInitialData = (
   workforce: DriverWorkforce,
@@ -36,9 +36,7 @@ export const VehicleMaintenanceForm = forwardRef<
   FormProps
 >((vehicleMaintenanceProps, ref) => {
   const { workforce, day, id } = vehicleMaintenanceProps;
-  const [shopErrors, setShopErrors] = useState<VehicleMaintenanceErrors>(
-    getBlankVehicleMaintenanceErrors(),
-  );
+  const [shopErrors, setShopErrors] = useState<VehicleMaintenanceErrors>({});
   const [shopData, setShopData] = useState<VehicleMaintenanceData>(
     getInitialData(workforce, id, day),
   );
@@ -46,14 +44,20 @@ export const VehicleMaintenanceForm = forwardRef<
   const submit = async () => {
     if (shopData.location === BLANK_STRING) {
       setShopErrors({ locationError: LOCATION_REQUIRED });
-      return BLANK_STRING;
+      return {
+        type: "InternalError",
+      } as PlannerError;
     }
 
-    return await context!!.upsertVehicleMaintenanceRecordFn(
+    const errorMessage = await context!!.upsertVehicleMaintenanceRecordFn(
       shopData,
       workforce.driver.uuid,
       workforce.relationId,
     );
+    return {
+      type: "ApiError",
+      message: errorMessage ?? undefined,
+    } as PlannerError;
   };
 
   useImperativeHandle(ref, () => ({

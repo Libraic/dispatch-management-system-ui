@@ -9,7 +9,7 @@ import type {
 
 export type DispatchingContextData = {
   days: string[];
-  upsertLoadDataFn: (
+  upsertLoadFn: (
     workforce: DriverWorkforce,
     loadData: LoadData,
     loadStatus?: LoadStatus,

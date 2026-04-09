@@ -101,7 +101,7 @@ export const LoadBlock: React.FC<{
   const toast = useToast();
 
   const updateStatusFn = async (loadStatus: LoadStatus) => {
-    await context.upsertLoadDataFn(driverLoadData, load, loadStatus);
+    await context.upsertLoadFn(driverLoadData, load, loadStatus);
   };
 
   const deleteAction = async () => {

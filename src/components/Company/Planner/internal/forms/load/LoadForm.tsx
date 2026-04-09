@@ -11,6 +11,7 @@ import {
   type FormProps,
   type LoadData,
   type LoadDataError,
+  type PlannerError,
 } from "../../../../../../types/internal/planner/planner-types.ts";
 import { getErrorsIfPresent } from "../../../../../../utils/planner/load-error-utils.ts";
 import { createStateData } from "../../../../../../utils/global/props-utils.ts";
@@ -58,7 +59,9 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
           setLoadDataErrors({
             ingestionError: MISSING_DOCUMENT_ERROR,
           });
-          return BLANK_STRING;
+          return {
+            type: "InternalError",
+          } as PlannerError;
         } else {
           await ingestDocument(file);
         }
@@ -66,13 +69,21 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
         const loadErrors = getErrorsIfPresent(loadData);
         if (Object.keys(loadErrors).length !== 0) {
           setLoadDataErrors(loadErrors);
-          return BLANK_STRING;
+          return {
+            type: "InternalError",
+          } as PlannerError;
         }
 
-        return await context!!.upsertLoadDataFn(workforce, loadData);
+        const errorMessage = await context!!.upsertLoadFn(workforce, loadData);
+        return {
+          type: "ApiError",
+          message: errorMessage ?? undefined,
+        } as PlannerError;
       }
 
-      return null;
+      return {
+        type: "NoError",
+      } as PlannerError;
     };
 
     useImperativeHandle(ref, () => ({

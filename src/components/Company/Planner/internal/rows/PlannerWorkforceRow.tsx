@@ -9,10 +9,10 @@ import {
   PLANNER_TEXT_SIZE,
 } from "../../../../../constants/planner/planner-constants.ts";
 import { DriverRowMetadata } from "../DriverRowMetadata.tsx";
-import { LoadBlock } from "../blocks/LoadBlock.tsx";
-import { VehicleMaintenanceBlock } from "../blocks/VehicleMaintenanceBlock.tsx";
-import { DaysOffPeriodBlock } from "../blocks/DaysOffPeriodBlock.tsx";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
+import { LoadBlocksRenderer } from "./LoadBlocksRenderer.tsx";
+import { VehicleMaintenanceBlocksRenderer } from "./VehicleMaintenanceBlocksRenderer.tsx";
+import { DaysOffBlocksRenderer } from "./DaysOffBlocksRenderer.tsx";
 
 export const PlannerWorkforceRow: React.FC<{
   workforce: DriverWorkforce;
@@ -41,37 +41,9 @@ export const PlannerWorkforceRow: React.FC<{
             />
           ))}
         </div>
-        {workforce.loads.length > 0 && (
-          <div className="absolute inset-0 pointer-events-none">
-            {workforce.loads.map((load) => (
-              <LoadBlock key={load.id} driverLoadData={workforce} load={load} />
-            ))}
-          </div>
-        )}
-        {workforce.vehicleMaintenanceRecords.length > 0 && (
-          <div className="absolute inset-0 pointer-events-none">
-            {workforce.vehicleMaintenanceRecords.map(
-              (vehicleMaintenanceRecord) => (
-                <VehicleMaintenanceBlock
-                  key={vehicleMaintenanceRecord.id}
-                  workforce={workforce}
-                  vehicleMaintenanceData={vehicleMaintenanceRecord}
-                />
-              ),
-            )}
-          </div>
-        )}
-        {workforce.daysOffPeriods.length > 0 && (
-          <div className="absolute inset-0 pointer-events-none">
-            {workforce.daysOffPeriods.map((daysOffPeriod) => (
-              <DaysOffPeriodBlock
-                key={daysOffPeriod.id}
-                workforce={workforce}
-                daysOffPeriodData={daysOffPeriod}
-              />
-            ))}
-          </div>
-        )}
+        <LoadBlocksRenderer workforce={workforce} />
+        <VehicleMaintenanceBlocksRenderer workforce={workforce} />
+        <DaysOffBlocksRenderer workforce={workforce} />
       </div>
     </div>
   );
