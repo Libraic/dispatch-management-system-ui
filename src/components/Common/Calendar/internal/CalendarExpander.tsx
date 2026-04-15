@@ -1,11 +1,8 @@
-import chevronDownIcon from "../../../../assets/week-picker/chevron-down.svg";
-import chevronUpIcon from "../../../../assets/week-picker/chevron-up.svg";
-import chevronDownIconHovered from "../../../../assets/week-picker/chevron-down-hovered.svg";
-import chevronUpIconHovered from "../../../../assets/week-picker/chevron-up-hovered.svg";
 import * as React from "react";
 import { useState } from "react";
 import { CalendarExpanderDropdownList } from "./CalendarExpanderDropdownList.tsx";
 import { useOnClickOutside } from "../../../../hooks/useClickOutside.ts";
+import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const CalendarExpander: React.FC<{
   data: string[];
@@ -13,31 +10,25 @@ export const CalendarExpander: React.FC<{
   expanderRef: React.RefObject<HTMLDivElement | null>;
   onClick: (value: string) => void;
 }> = ({ data, selected, expanderRef, onClick }) => {
-  const [activeIcon, setActiveIcon] = useState(chevronDownIcon);
+  const [iconLabel, setIconLabel] = useState("keyboard_arrow_down");
   const [isExpanded, setIsExpanded] = useState(false);
   useOnClickOutside(expanderRef, () => {
-    setActiveIcon(chevronDownIcon);
+    setIconLabel("keyboard_arrow_down");
     setIsExpanded(false);
   });
   return (
     <div className="relative flex items-center" ref={expanderRef}>
-      <img
-        src={activeIcon}
-        onMouseEnter={() =>
-          setActiveIcon(
-            isExpanded ? chevronUpIconHovered : chevronDownIconHovered,
-          )
-        }
-        onMouseLeave={() =>
-          setActiveIcon(isExpanded ? chevronUpIcon : chevronDownIcon)
-        }
+      <div
+        className="w-[1.5rem] pt-[0.25rem] hover:cursor-pointer"
         onClick={() => {
-          setActiveIcon(isExpanded ? chevronDownIcon : chevronUpIcon);
+          setIconLabel(
+            !isExpanded ? "keyboard_control_key" : "keyboard_arrow_down",
+          );
           setIsExpanded((prev) => !prev);
         }}
-        alt="chevron-down"
-        className="w-[1.5rem] pt-[0.25rem] hover:cursor-pointer"
-      />
+      >
+        <GoogleIcon code={iconLabel} size={1.4} />
+      </div>
       <CalendarExpanderDropdownList
         isExpanded={isExpanded}
         selectedValue={selected}
@@ -45,7 +36,7 @@ export const CalendarExpander: React.FC<{
         onClick={(value) => {
           onClick(value);
           setIsExpanded(false);
-          setActiveIcon(chevronDownIcon);
+          setIconLabel("keyboard_arrow_down");
         }}
       />
     </div>

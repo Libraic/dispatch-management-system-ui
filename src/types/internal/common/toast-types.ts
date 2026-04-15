@@ -8,6 +8,7 @@ export type ToastTypeEnum = keyof typeof ToastTypeEnum;
 export type ToastData = {
   borderColor: string;
   backgroundColor: string;
-  icon: string;
+  iconCode: string;
+  svgColor: string;
   headerMessage: string;
 };

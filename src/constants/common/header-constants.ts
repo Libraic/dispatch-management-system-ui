@@ -30,7 +30,7 @@ export const DRIVERS_PAGE_HEADER = {
 
 export const TRUCKS_PAGE_HEADER = {
   header: "Trucks List",
-  subheader: "Manage your trucks",
+  subheader: "Manage your planner",
 };
 
 export const TRAILERS_PAGE_HEADER = {

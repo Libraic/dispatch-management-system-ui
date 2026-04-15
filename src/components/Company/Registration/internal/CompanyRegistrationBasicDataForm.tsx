@@ -1,4 +1,4 @@
-import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../../Common/InputForm/public/TextualInputField.tsx";
 import { setCompanyStringField } from "../../../../utils/company/company-registration-utils.ts";
 import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { useContext } from "react";
@@ -11,7 +11,7 @@ export const CompanyRegistrationBasicDataForm = () => {
   const setCompanyRegistrationData = context.setRegistrationData;
   return (
     <div className="flex flex-row gap-5.5 mb-10">
-      <TextualInputForm
+      <TextualInputField
         label="Name"
         placeholder="Alpha Expedition"
         inputFieldValue={companyRegistrationData.name}
@@ -21,7 +21,7 @@ export const CompanyRegistrationBasicDataForm = () => {
           setCompanyStringField(setCompanyRegistrationData, "name", companyName)
         }
       />
-      <TextualInputForm
+      <TextualInputField
         label="MC Number"
         placeholder="MC#02854"
         inputFieldValue={companyRegistrationData?.mcNumber ?? BLANK_STRING}
@@ -33,7 +33,7 @@ export const CompanyRegistrationBasicDataForm = () => {
           )
         }
       />
-      <TextualInputForm
+      <TextualInputField
         label="Address"
         placeholder="601 Shiloh Rd"
         inputFieldValue={companyRegistrationData?.address ?? BLANK_STRING}

@@ -13,7 +13,6 @@ import { useToast } from "../../../../../hooks/useToast.ts";
 import { useContextMenu } from "../../../../../hooks/useContextMenu.ts";
 import type { ContextMenuActionItem } from "../../../../../types/internal/common/context-menu-types.ts";
 import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
-import vehicleMaintenanceIcon from "../../../../../assets/planner/blocks/vehicle-maintenance.svg";
 import { getStartingPointAndWidthOfBlock } from "../../../../../utils/planner/planner-utils.ts";
 import {
   deleteVehicleMaintenanceRecordByUuid,
@@ -22,6 +21,7 @@ import {
 import { getDeleteOption } from "../../../../../utils/context-menu/context-menu-utils.ts";
 import { DispatchingContext } from "../../../../../context/DispatchingContext.ts";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "../../../../../utils/planner/vehicle-maintenance-utils.ts";
+import { GoogleIcon } from "../../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const VehicleMaintenanceBlock: React.FC<{
   workforce: DriverWorkforce;
@@ -110,14 +110,7 @@ export const VehicleMaintenanceBlock: React.FC<{
         `}
       >
         <div className="flex flex-row justify-between items-center gap-2 w-full">
-          <div>
-            <img
-              src={vehicleMaintenanceIcon}
-              alt="pickup"
-              className="w-6 h-6"
-            />
-          </div>
-
+          <GoogleIcon code="car_repair" size={1.5} />
           <div>
             <p
               className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#dd571c] ${SYSTEM_FONT_BOLD}`}

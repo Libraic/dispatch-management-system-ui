@@ -1,7 +1,6 @@
 import { TableHeader } from "../../Common/Table/public/TableHeader.tsx";
 import { TRUCK_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
 import { useParams } from "react-router-dom";
-import truckIcon from "../../../assets/company-menu/trucks-list.svg";
 import { TrucksTable } from "../../Truck/View/public/TrucksTable.tsx";
 import { useCallback, useEffect, useState } from "react";
 import type { TruckData } from "../../../types/api/truck/truck-api-response-types.ts";
@@ -10,6 +9,7 @@ import { PaginationBar } from "../../Common/Pagination/public/PaginationBar.tsx"
 import { Entity } from "../../../types/api/common/api-query-types.ts";
 import { TRUCKS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
+import { PLANNER_CODE } from "../../../features/planner/constants/ui.constants.ts";
 
 export const TrucksPage = () => {
   const { companyUuid } = useParams();
@@ -33,7 +33,7 @@ export const TrucksPage = () => {
         <TableHeader
           companyUuid={companyUuid!!}
           headerData={TRUCKS_PAGE_HEADER}
-          viewIcon={truckIcon}
+          iconCode={PLANNER_CODE}
           buttonSubroute={TRUCK_REGISTRATION}
           buttonLabel="Add Truck"
         />

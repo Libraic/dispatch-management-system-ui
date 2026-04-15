@@ -1,8 +1,8 @@
 import { setObjectStringField } from "../../../../../../utils/registration/registration-utils.ts";
 import { BLANK_STRING } from "../../../../../../constants/common/global-constants.ts";
 import React from "react";
-import { CurrencyInputForm } from "../../../../../Common/InputForm/public/CurrencyInputForm.tsx";
-import { NumericInputForm } from "../../../../../Common/InputForm/public/NumericInputForm.tsx";
+import { CurrencyInputField } from "../../../../../Common/InputForm/public/CurrencyInputField.tsx";
+import { NumericInputField } from "../../../../../Common/InputForm/public/NumericInputField.tsx";
 import { divideNumbersAsStrings } from "../../../../../../utils/global/number-utils.ts";
 import type {
   LoadData,
@@ -18,7 +18,7 @@ export const LoadFormRevenue: React.FC<{
   const rpm = divideNumbersAsStrings(revenue, miles);
   return (
     <div className="flex items-center flex-row gap-x-5">
-      <CurrencyInputForm
+      <CurrencyInputField
         label="Revenue"
         placeholder="100.25"
         inputFieldValue={revenue}
@@ -29,7 +29,7 @@ export const LoadFormRevenue: React.FC<{
         errorMessage={loadStateData.error.revenueError}
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
-      <NumericInputForm
+      <NumericInputField
         label="Miles"
         placeholder="300"
         inputFieldValue={miles}
@@ -40,7 +40,7 @@ export const LoadFormRevenue: React.FC<{
         errorMessage={loadStateData.error.milesError}
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
-      <NumericInputForm
+      <NumericInputField
         label="RPM"
         placeholder={BLANK_STRING}
         inputFieldValue={rpm}

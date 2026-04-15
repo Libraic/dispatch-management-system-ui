@@ -4,14 +4,15 @@ import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_LIGHT,
 } from "../../../../tailwind/tailwind-font-vars.ts";
+import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const TableName: React.FC<{
   headerData: PageHeaderData;
-  icon: string;
-}> = ({ headerData, icon }) => {
+  iconCode: string;
+}> = ({ headerData, iconCode }) => {
   return (
     <div className="flex flex-row items-center gap-x-[0.25rem]">
-      <img className="w-25 h-25" src={icon} alt="view-icon" />
+      <GoogleIcon code={iconCode} size={6} fontColor="#000" />
       <div className="flex flex-col">
         <p className={`${SYSTEM_FONT_BOLD} font-bold text-[1.5rem]`}>
           {headerData.header}

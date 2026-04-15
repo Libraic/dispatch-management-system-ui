@@ -1,4 +1,4 @@
-import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
 import {
   setObjectStringField,
   validateMandatoryField,
@@ -105,7 +105,7 @@ export const DispatcherRegistrationPage = () => {
       <div className="flex flex-col h-screen w-screen gap-y-[15rem]">
         <PageHeader headerInfo={DISPATCHER_REGISTRATION_HEADER} />
         <div className="flex items-center justify-center gap-x-[5rem]">
-          <TextualInputForm
+          <TextualInputField
             label="Name"
             placeholder={NAME_PLACEHOLDER}
             inputFieldValue={dispatcherRegistrationData.name}
@@ -119,7 +119,7 @@ export const DispatcherRegistrationPage = () => {
               )
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="Phone Number"
             placeholder={PHONE_NUMBER_PLACEHOLDER}
             inputFieldValue={dispatcherRegistrationData.phoneNumber}

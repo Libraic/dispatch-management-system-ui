@@ -1,4 +1,4 @@
-import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
 import { setTrailerDataField } from "../../../utils/trailer/trailer-utils.ts";
 import {
   BLANK_STRING,
@@ -18,7 +18,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
   return (
     <div className="flex items-center flex-col h-fit mt-[10rem]">
       <div className="flex flex-row gap-[3rem]">
-        <TextualInputForm
+        <TextualInputField
           label="Trailer Number"
           placeholder="R12-3456"
           inputFieldValue={trailerData.trailerNumber}
@@ -28,7 +28,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "trailerNumber", trailerNumber)
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="VIN Number"
           placeholder="1FTFW1E50JKC12345"
           inputFieldValue={trailerData.vinNumber}
@@ -38,7 +38,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "vinNumber", vinNumber)
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="Trailer Year"
           placeholder="2020"
           inputFieldValue={trailerData.trailerYear.toString()}
@@ -54,7 +54,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         />
       </div>
       <div className="flex flex-row gap-[3rem] items-center justify-center">
-        <TextualInputForm
+        <TextualInputField
           label="Trailer Make"
           placeholder="Great Dane"
           inputFieldValue={trailerData.trailerMake}
@@ -64,7 +64,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "trailerMake", trailerMake)
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="Equipment Type"
           placeholder="Flatbed"
           inputFieldValue={trailerData.equipmentType}
@@ -74,7 +74,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             setTrailerDataField(setTrailerData, "equipmentType", equipmentType)
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="Equipment Size (ft)"
           placeholder="48"
           inputFieldValue={trailerData.equipmentSize.toString()}
@@ -90,7 +90,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         />
       </div>
       <div className="flex flex-row gap-[3rem] items-center justify-center">
-        <TextualInputForm
+        <TextualInputField
           label="Pallet Capacity"
           placeholder="24"
           inputFieldValue={trailerData.palletCapacity.toString()}
@@ -104,7 +104,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             )
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="Max Weight (lbs)"
           placeholder="10000"
           inputFieldValue={trailerData.maxWeight.toString()}
@@ -118,7 +118,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
             )
           }
         />
-        <TextualInputForm
+        <TextualInputField
           label="Tire Size"
           placeholder="295/75R22.5"
           inputFieldValue={trailerData.tireSize}

@@ -106,7 +106,7 @@ export const LoadForm = forwardRef<CalendarBookFormHandler, FormProps>(
           },
         );
       }
-    }, [day, loadCriteria.loadStateData, workforce.relationId]);
+    }, [day, workforce.relationId]);
 
     return (
       <div>

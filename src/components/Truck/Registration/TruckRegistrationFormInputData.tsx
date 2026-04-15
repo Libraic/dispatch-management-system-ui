@@ -1,4 +1,4 @@
-import { TextualInputForm } from "../../Common/InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
 import { setTruckDataField } from "../../../utils/truck/truck-utils.ts";
 import {
   BLANK_STRING,
@@ -19,7 +19,7 @@ export const TruckRegistrationFormInputData: React.FC<{
     <div className="flex items-center flex-col h-fit mt-[10rem]">
       <div className="flex flex-col gap-y-5">
         <div className="flex flex-row gap-[3rem]">
-          <TextualInputForm
+          <TextualInputField
             label="Truck Number"
             placeholder="R12-3456"
             inputFieldValue={truckData.truckNumber}
@@ -29,7 +29,7 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "truckNumber", truckNumber)
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="VIN Number"
             placeholder="1FTFW1E50JKC12345"
             inputFieldValue={truckData.vinNumber}
@@ -39,7 +39,7 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "vinNumber", vinNumber)
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="Model"
             placeholder="Ford"
             inputFieldValue={truckData.model}
@@ -51,7 +51,7 @@ export const TruckRegistrationFormInputData: React.FC<{
           />
         </div>
         <div className="flex flex-row gap-[3rem] items-center justify-center">
-          <TextualInputForm
+          <TextualInputField
             label="Truck Year"
             placeholder="2025"
             inputFieldValue={truckData.truckYear.toString()}
@@ -65,7 +65,7 @@ export const TruckRegistrationFormInputData: React.FC<{
               )
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="Truck Make"
             placeholder="F-150"
             inputFieldValue={truckData.truckMake}
@@ -76,7 +76,7 @@ export const TruckRegistrationFormInputData: React.FC<{
           />
         </div>
         <div className="flex flex-row gap-[3rem] items-center justify-center">
-          <TextualInputForm
+          <TextualInputField
             label="Fuel Type"
             placeholder="Diesel"
             inputFieldValue={truckData.fuelType}
@@ -85,7 +85,7 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "fuelType", fuelType)
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="Color"
             placeholder="White"
             inputFieldValue={truckData.color}
@@ -94,7 +94,7 @@ export const TruckRegistrationFormInputData: React.FC<{
               setTruckDataField(setTruckData, "color", color)
             }
           />
-          <TextualInputForm
+          <TextualInputField
             label="Weight (lbs)"
             placeholder="10000"
             inputFieldValue={truckData.weight.toString()}

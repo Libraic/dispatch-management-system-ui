@@ -1,5 +1,3 @@
-import addFocusedIcon from "../../../../assets/planner/add-focused.svg";
-import addUnfocusedIcon from "../../../../assets/planner/add-unfocused.svg";
 import { IconButton } from "../../../Common/Button/IconButton.tsx";
 import type { StateData } from "../../../../types/internal/common/props-types.ts";
 import type {
@@ -9,6 +7,7 @@ import type {
 import React from "react";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
 import { getBlankLocation } from "../../../../utils/planner/load-utils.ts";
+import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const LoadLocationCreator: React.FC<{
   loadStateData: StateData<LoadData, LoadDataError>;
@@ -16,8 +15,7 @@ export const LoadLocationCreator: React.FC<{
   return (
     <div className="flex flex-row items-center gap-x-[1rem]">
       <IconButton
-        unfocusedResource={addUnfocusedIcon}
-        focusedResource={addFocusedIcon}
+        icon={<GoogleIcon code="add_circle" />}
         action={() => {
           loadStateData.setData((prevData) => ({
             ...prevData,

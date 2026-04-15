@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700');
 @import "tailwindcss";
 
 @theme {
@@ -17,7 +18,7 @@
 
     --color-light-blue: #4e71ff;
     --color-solid-blue: #3a59d1;
-    --color-error-red: #BF3131;
+    --color-error-red: #d32d2d;
     --color-light-grey: #f2f2f2;
     --color-solid-black: #212327;
 

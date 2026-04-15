@@ -11,6 +11,6 @@ export interface ContextMenuData {
 export interface ContextMenuActionItem {
   action: () => void;
   label: string;
-  svgPath: string;
+  icon: string;
   level?: number;
 }

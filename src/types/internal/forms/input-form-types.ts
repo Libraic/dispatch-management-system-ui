@@ -8,7 +8,6 @@ interface BaseInputFormData {
   saveInputData: (value: string) => void;
   isMandatory?: boolean;
   errorMessage?: string;
-  information?: string;
   onFocus?: () => void;
   tailwindProperties?: TailwindProperties;
 }

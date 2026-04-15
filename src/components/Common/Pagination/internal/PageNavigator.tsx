@@ -1,10 +1,8 @@
 import * as React from "react";
-import previousIcon from "../../../../assets/global/previous.svg";
-import nextIcon from "../../../../assets/global/next.svg";
-import previousIconFocused from "../../../../assets/global/previous-focused.svg";
-import nextIconFocused from "../../../../assets/global/next-focused.svg";
 import type { Pagination } from "../../../../types/internal/pagination/pagination-types.ts";
 import { PageMover } from "./PageMover.tsx";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 export const PageNavigator: React.FC<{
   pagination: Pagination;
@@ -33,14 +31,12 @@ export const PageNavigator: React.FC<{
   return (
     <div className="flex flex-row gap-x-4 items-center">
       <PageMover
-        activeIcon={previousIconFocused}
-        inactiveIcon={previousIcon}
+        icon={<KeyboardArrowLeftIcon />}
         label="Previous"
         action={getPrevious}
       />
       <PageMover
-        activeIcon={nextIconFocused}
-        inactiveIcon={nextIcon}
+        icon={<KeyboardArrowRightIcon />}
         label="Next"
         action={getNext}
       />

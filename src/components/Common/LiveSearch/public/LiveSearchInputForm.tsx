@@ -11,7 +11,7 @@ import {
   type LiveSearchInputFormProps,
 } from "../../../../types/internal/live-search/live-search-data.ts";
 import { usePagination } from "../../../../hooks/usePagination.ts";
-import { TextualInputForm } from "../../InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../InputForm/public/TextualInputField.tsx";
 import type { LiveSearchResult } from "../../../../types/api/common/api-response-types.ts";
 import { InputFormSearchResult } from "./InputFormSearchResult.tsx";
 import { DEFAULT_SIZE } from "../../../../constants/api/api-query-constants.ts";
@@ -90,7 +90,7 @@ export const LiveSearchInputForm = <D,>({
   return (
     <div>
       <div className={`flex flex-col gap-y-2 ${weight}`}>
-        <TextualInputForm
+        <TextualInputField
           ref={inputFormContainerRef}
           label={label}
           placeholder={placeholderText}

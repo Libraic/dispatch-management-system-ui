@@ -11,11 +11,11 @@ import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 
 export const CompanySidebarItem: React.FC<{
   label: string;
-  icon: string;
+  iconCode: string;
   sidebarState: SidebarState;
   baseRoute?: string;
   submenuData?: SubmenuData[];
-}> = ({ label, icon, sidebarState, baseRoute, submenuData }) => {
+}> = ({ label, iconCode, sidebarState, baseRoute, submenuData }) => {
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
   return (
@@ -32,7 +32,7 @@ export const CompanySidebarItem: React.FC<{
       >
         <CompanySidebarItemData
           label={label}
-          img={icon}
+          iconCode={iconCode}
           sidebarState={sidebarState}
           hasSubmenu={!!submenuData}
         />

@@ -3,29 +3,19 @@ import { useHoverPanel } from "../../../hooks/useHoverPanel.ts";
 import { HoverableDescription } from "../Typography/HoverableDescription.tsx";
 
 export const IconButton: React.FC<{
-  unfocusedResource: string;
-  focusedResource: string;
+  icon: React.ReactNode;
   action: () => void;
   information?: string;
-}> = ({ unfocusedResource, focusedResource, information, action }) => {
-  const [resource, setResource] = React.useState(unfocusedResource);
+}> = ({ icon, information, action }) => {
   const hoverPanelData = useHoverPanel(!!information);
   return (
-    <div className="relative inline-block">
-      <img
-        className="w-[2rem] cursor-pointer"
-        onMouseEnter={() => {
-          setResource(focusedResource);
-          hoverPanelData.handleMouseEnter();
-        }}
-        onMouseLeave={() => {
-          setResource(unfocusedResource);
-          hoverPanelData.handleMouseLeave();
-        }}
-        src={resource}
-        alt="add-record-unfocused"
-        onClick={action}
-      />
+    <div
+      className="relative hover:text-[#4e71ff] text-[#666666] hover:cursor-pointer flex flex-row items-center gap-x-1"
+      onMouseEnter={hoverPanelData.handleMouseEnter}
+      onMouseLeave={hoverPanelData.handleMouseLeave}
+      onClick={action}
+    >
+      {icon}
       {hoverPanelData.shouldDisplayMessage() && (
         <HoverableDescription message={information!!} />
       )}

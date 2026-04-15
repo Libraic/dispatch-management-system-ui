@@ -10,7 +10,7 @@ export const DRIVER_REGISTRATION = "/driver/registration";
 export const DRIVERS_VIEW = "/drivers";
 export const DISPATCHERS_VIEW = "/dispatchers";
 
-export const TRUCKS_VIEW = "/trucks";
+export const TRUCKS_VIEW = "/planner";
 export const TRUCK_REGISTRATION = `${TRUCKS_VIEW}/registration`;
 
 export const TRAILERS_VIEW = "/trailers";

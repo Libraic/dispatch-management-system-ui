@@ -3,7 +3,7 @@ import type {
   LoadData,
   LoadDataError,
 } from "../../../../../../types/internal/planner/planner-types.ts";
-import { TextualInputForm } from "../../../../../Common/InputForm/public/TextualInputForm.tsx";
+import { TextualInputField } from "../../../../../Common/InputForm/public/TextualInputField.tsx";
 import { setObjectStringField } from "../../../../../../utils/registration/registration-utils.ts";
 import { BLANK_STRING } from "../../../../../../constants/common/global-constants.ts";
 import type { StateData } from "../../../../../../types/internal/common/props-types.ts";
@@ -15,7 +15,7 @@ export const LoadFormBrokerData: React.FC<{
 }> = ({ loadStateData }) => {
   return (
     <div className="flex flex-row gap-x-5">
-      <TextualInputForm
+      <TextualInputField
         label="Broker"
         placeholder="Degiro"
         inputFieldValue={loadStateData.data.broker}
@@ -26,7 +26,7 @@ export const LoadFormBrokerData: React.FC<{
         errorMessage={loadStateData.error.brokerError}
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
-      <TextualInputForm
+      <TextualInputField
         label="Representative"
         placeholder="C. H. Robinson"
         inputFieldValue={loadStateData.data.representative ?? BLANK_STRING}
@@ -39,7 +39,7 @@ export const LoadFormBrokerData: React.FC<{
         }
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
-      <TextualInputForm
+      <TextualInputField
         label="Contact Number"
         placeholder={PHONE_NUMBER_PLACEHOLDER}
         inputFieldValue={

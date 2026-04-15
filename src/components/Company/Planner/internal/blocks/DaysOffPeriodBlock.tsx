@@ -10,7 +10,6 @@ import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
 } from "../../../../../tailwind/tailwind-font-vars.ts";
-import daysOffIcon from "../../../../../assets/planner/blocks/days-off.svg";
 import { SchedulableModal } from "../forms/SchedulableModal.tsx";
 import { ContextMenu } from "../../../../Common/ContextMenu/public/ContextMenu.tsx";
 import type {
@@ -23,6 +22,7 @@ import {
 } from "../../../../../service/daysOffService.ts";
 import { toIsoDate } from "../../../../../utils/global/date-utils.ts";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "../../../../../utils/planner/days-off-utils.ts";
+import { GoogleIcon } from "../../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const DaysOffPeriodBlock: React.FC<{
   workforce: DriverWorkforce;
@@ -109,8 +109,7 @@ export const DaysOffPeriodBlock: React.FC<{
         `}
       >
         <div className="flex flex-row items-center justify-between w-full">
-          <img src={daysOffIcon} alt="pickup" className="w-6 h-6" />
-
+          <GoogleIcon code="event_busy" size={1.5} />
           <div>
             <p
               className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-black ${SYSTEM_FONT_BOLD}`}

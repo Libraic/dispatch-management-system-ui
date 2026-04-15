@@ -5,16 +5,16 @@ import {
   SYSTEM_FONT_NORMAL,
 } from "../../../../tailwind/tailwind-font-vars.ts";
 import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
 import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
+import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const CompanySidebarItemData: React.FC<{
   label: string;
   sidebarState: SidebarState;
   hasSubmenu: boolean;
   route?: string;
-  img?: string;
-}> = ({ label, sidebarState, hasSubmenu, route, img }) => {
+  iconCode?: string;
+}> = ({ label, sidebarState, hasSubmenu, route, iconCode }) => {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
@@ -34,12 +34,10 @@ export const CompanySidebarItemData: React.FC<{
         }
       }}
     >
-      {img && (
-        <img
-          className={`w-8 h-8 ${sidebarState === "closed" ? "hover:bg-gray-200 rounded-[0.5rem]" : BLANK_STRING}`}
-          src={img}
-          alt="img-icon"
-        />
+      {iconCode && (
+        <div className="hover:bg-gray-200 rounded-[0.5rem]">
+          <GoogleIcon code={iconCode} weight={200} size={2} />
+        </div>
       )}
       {sidebarState === "closed" && isHovered && (
         <p

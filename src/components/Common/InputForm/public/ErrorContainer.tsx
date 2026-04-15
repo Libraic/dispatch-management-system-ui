@@ -1,5 +1,4 @@
 import * as React from "react";
-import errorIcon from "../../../../assets/global/error.svg";
 import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
 
 export const ErrorContainer: React.FC<{ errorMessage: string }> = ({
@@ -7,8 +6,9 @@ export const ErrorContainer: React.FC<{ errorMessage: string }> = ({
 }) => {
   return (
     <div className="flex flex-row items-center gap-x-1 mt-2 ml-3">
-      <img className="w-[1rem]" src={errorIcon} alt="error-icon" />
-      <p className={`${SYSTEM_FONT_NORMAL} text-error-red text-[0.85rem]`}>
+      <p
+        className={`${SYSTEM_FONT_NORMAL} tracking-tight text-error-red text-[0.85rem]`}
+      >
         {errorMessage}
       </p>
     </div>

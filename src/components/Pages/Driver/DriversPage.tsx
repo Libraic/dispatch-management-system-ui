@@ -6,7 +6,6 @@ import { DriversTable } from "../../Driver/View/public/DriversTable.tsx";
 import { TableHeader } from "../../Common/Table/public/TableHeader.tsx";
 import type { DriverData } from "../../../types/api/driver/driver-api-response-types.ts";
 import { DRIVER_REGISTRATION } from "../../../constants/route/internal-route-constants.ts";
-import driverIcon from "../../../assets/company-menu/drivers-black.svg";
 import { Entity } from "../../../types/api/common/api-query-types.ts";
 import { DRIVERS_PAGE_HEADER } from "../../../constants/common/header-constants.ts";
 import { SidebarWrapper } from "../../SidebarWrapper.tsx";
@@ -33,7 +32,7 @@ export const DriversPage = () => {
         <TableHeader
           companyUuid={companyUuid!!}
           headerData={DRIVERS_PAGE_HEADER}
-          viewIcon={driverIcon}
+          iconCode="badge"
           buttonSubroute={DRIVER_REGISTRATION}
           buttonLabel="Add Driver"
         />

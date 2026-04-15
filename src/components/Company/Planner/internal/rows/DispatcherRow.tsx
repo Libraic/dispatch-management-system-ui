@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BLANK_STRING } from "../../../../../constants/common/global-constants.ts";
-import chevronRightIcon from "../../../../../assets/planner/chevron-right.svg";
-import chevronDownIcon from "../../../../../assets/planner/chevron-down.svg";
 import type { DispatchingRelation } from "../../../../../types/internal/planner/planner-types.ts";
 import type { Activator } from "../../../../../hooks/useActivator.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../../tailwind/tailwind-font-vars.ts";
@@ -18,39 +15,34 @@ import {
 } from "../../../../../constants/planner/planner-constants.ts";
 import { formatPhoneNumber } from "../../../../../utils/global/input-form-utils.ts";
 import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../../tailwind/tailwind-layout-vars.ts";
+import { GoogleIcon } from "../../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
 
 export const DispatcherRow: React.FC<{
   dispatchingRelation: DispatchingRelation;
   expander: Activator;
 }> = ({ dispatchingRelation, expander }) => {
-  const [activeIcon, setActiveIcon] = useState(BLANK_STRING);
+  const [iconLabel, setIconLabel] = useState("chevron_right");
 
   useEffect(() => {
-    if (dispatchingRelation.workforceUnits.length === 0) {
-      setActiveIcon(BLANK_STRING);
-    } else {
-      const icon = expander.isActive() ? chevronDownIcon : chevronRightIcon;
-      setActiveIcon(icon);
-    }
-  }, [expander, dispatchingRelation.workforceUnits.length]);
+    const icon = expander.isActive() ? "keyboard_arrow_down" : "chevron_right";
+    setIconLabel(icon);
+  }, [expander]);
 
   const handleOnClickFn = () => {
-    setActiveIcon((prev) => {
-      return prev === chevronRightIcon ? chevronDownIcon : chevronRightIcon;
+    setIconLabel((prev) => {
+      return prev === "chevron_right" ? "keyboard_arrow_down" : "chevron_right";
     });
     expander.change();
   };
 
   return (
     <div className="relative flex flex-row w-full">
-      {activeIcon !== BLANK_STRING && (
-        <img
-          src={activeIcon}
-          alt="chevron-right"
-          className={`absolute w-7 h-7 ${Z_INDEX_NORMAL_PRECEDENCE} mt-[1.3rem] pr-[0.5rem] left-[0.5rem] hover:cursor-pointer`}
-          onClick={handleOnClickFn}
-        />
-      )}
+      <div
+        className={`absolute ${Z_INDEX_NORMAL_PRECEDENCE} mt-[1.5rem] left-[0.4rem] hover:cursor-pointer`}
+        onClick={handleOnClickFn}
+      >
+        <GoogleIcon code={iconLabel} size={1.5} />
+      </div>
       <div
         className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
       >

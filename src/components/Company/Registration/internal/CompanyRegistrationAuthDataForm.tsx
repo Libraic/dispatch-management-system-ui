@@ -1,11 +1,9 @@
-import { TextualInputForm } from "../../../Common/InputForm/public/TextualInputForm.tsx";
-import {
-  COMPANY_EMAIL_PLACEHOLDER,
-  PASSWORD_PLACEHOLDER,
-} from "../../../../constants/common/placeholder-constants.ts";
+import { TextualInputField } from "../../../Common/InputForm/public/TextualInputField.tsx";
+import { COMPANY_EMAIL_PLACEHOLDER } from "../../../../constants/common/placeholder-constants.ts";
 import { setCompanyStringField } from "../../../../utils/company/company-registration-utils.ts";
 import { useContext } from "react";
 import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
+import { PasswordInputField } from "../../../Common/InputForm/public/PasswordInputField.tsx";
 
 export const CompanyRegistrationAuthDataForm = () => {
   const context = useContext(CompanyRegistrationContext)!;
@@ -15,7 +13,7 @@ export const CompanyRegistrationAuthDataForm = () => {
 
   return (
     <div className="flex flex-row gap-5.5 mb-10">
-      <TextualInputForm
+      <TextualInputField
         label="E-mail"
         placeholder={COMPANY_EMAIL_PLACEHOLDER}
         inputFieldValue={companyRegistrationData.email}
@@ -25,9 +23,8 @@ export const CompanyRegistrationAuthDataForm = () => {
           setCompanyStringField(setCompanyRegistrationData, "email", value)
         }
       />
-      <TextualInputForm
+      <PasswordInputField
         label="Password"
-        placeholder={PASSWORD_PLACEHOLDER}
         inputFieldValue={companyRegistrationData.password}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.password}
@@ -35,9 +32,8 @@ export const CompanyRegistrationAuthDataForm = () => {
           setCompanyStringField(setCompanyRegistrationData, "password", value)
         }
       />
-      <TextualInputForm
+      <PasswordInputField
         label="Confirm Password"
-        placeholder={PASSWORD_PLACEHOLDER}
         inputFieldValue={companyRegistrationData.confirmPassword}
         isMandatory={true}
         errorMessage={companyRegistrationErrors.confirmPassword}

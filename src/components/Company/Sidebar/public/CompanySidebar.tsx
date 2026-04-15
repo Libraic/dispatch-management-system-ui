@@ -1,22 +1,26 @@
 import { CompanySidebarItem } from "../internal/CompanySidebarItem.tsx";
-import plannerUnhoveredIcon from "../../../../assets/company-menu/planner-unhovered.svg";
 import {
   DISPATCHERS_VIEW,
   DRIVERS_VIEW,
-  TRAILERS_VIEW,
   PLANNER,
+  TRAILERS_VIEW,
   TRUCKS_VIEW,
 } from "../../../../constants/route/internal-route-constants.ts";
 import { useParams } from "react-router-dom";
 import * as React from "react";
+import { useState } from "react";
 import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
 import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import addDriverIcon from "../../../../assets/company-menu/add-driver.svg";
-import addAssetIcon from "../../../../assets/company-menu/add-asset-icon.svg";
-import addDispatcherIcon from "../../../../assets/company-menu/add-dispatcher-icon.svg";
-import sidebarCloserIcon from "../../../../assets/company-menu/sidebar-closer.svg";
-import sidebarOpenerIcon from "../../../../assets/company-menu/sidebar-opener.svg";
-import dashboardIcon from "../../../../assets/company-menu/dashboard.svg";
+import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
+import {
+  ASSETS_ICON_CODE,
+  DASHBOARD_ICON_CODE,
+  DISPATCHERS_ICON_CODE,
+  DRIVERS_ICON_CODE,
+  PLANNER_ICON_CODE,
+  SIDEBAR_CLOSER_ICON_CODE,
+  SIDEBAR_OPENER_ICON_CODE,
+} from "../../../../features/companies/constants/ui.constants.ts";
 
 export const CompanySidebar: React.FC<{
   sidebarState: SidebarState;
@@ -24,8 +28,7 @@ export const CompanySidebar: React.FC<{
 }> = ({ sidebarState, setSidebarState }) => {
   const { companyUuid } = useParams();
   const baseRoute = `/dashboard/${companyUuid}`;
-  const [sidebarActiveIcon, setSidebarActiveIcon] =
-    React.useState(sidebarCloserIcon);
+  const [sidebarLabel, setSidebarLabel] = useState(SIDEBAR_OPENER_ICON_CODE);
   return (
     <div
       className={`${sidebarState === "open" ? "w-[12rem]" : "w-[4rem]"} py-5 border-r-1 border-gray-200 bg-[#f9f9f9] h-screen`}
@@ -36,48 +39,48 @@ export const CompanySidebar: React.FC<{
             Kovin Group
           </p>
         )}
-        <img
-          className="hover:bg-gray-200 rounded-[0.5rem] w-8 h-8"
+        <div
+          className="hover:bg-gray-200 rounded-[0.5rem] w-8 h-8 hover:cursor-pointer"
           onClick={() => {
             setSidebarState((prev) => (prev === "open" ? "closed" : "open"));
-            setSidebarActiveIcon((prev) =>
-              prev === sidebarCloserIcon
-                ? sidebarOpenerIcon
-                : sidebarCloserIcon,
+            setSidebarLabel((prev) =>
+              prev === SIDEBAR_OPENER_ICON_CODE
+                ? SIDEBAR_CLOSER_ICON_CODE
+                : SIDEBAR_OPENER_ICON_CODE,
             );
           }}
-          src={sidebarActiveIcon}
-          alt="img-icon"
-        />
+        >
+          <GoogleIcon code={sidebarLabel} size={2} weight={200} />
+        </div>
       </div>
       <CompanySidebarItem
         label="Dashboard"
-        icon={dashboardIcon}
+        iconCode={DASHBOARD_ICON_CODE}
         baseRoute={baseRoute}
         sidebarState={sidebarState}
       />
       <CompanySidebarItem
         label="Planner"
-        icon={plannerUnhoveredIcon}
+        iconCode={PLANNER_ICON_CODE}
         baseRoute={`${baseRoute}${PLANNER}`}
         sidebarState={sidebarState}
       />
       <CompanySidebarItem
         label="Drivers"
-        icon={addDriverIcon}
+        iconCode={DRIVERS_ICON_CODE}
         baseRoute={`${baseRoute}${DRIVERS_VIEW}`}
         sidebarState={sidebarState}
       />
       <CompanySidebarItem
         label="Dispatchers"
-        icon={addDispatcherIcon}
+        iconCode={DISPATCHERS_ICON_CODE}
         baseRoute={`${baseRoute}${DISPATCHERS_VIEW}`}
         sidebarState={sidebarState}
       />
       {sidebarState === "open" && (
         <CompanySidebarItem
           label="Assets"
-          icon={addAssetIcon}
+          iconCode={ASSETS_ICON_CODE}
           sidebarState={sidebarState}
           submenuData={[
             {
