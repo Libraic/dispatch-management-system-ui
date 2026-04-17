@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { TruckData } from "../../api/truck/truck-api-response-types.ts";
+import type { Renderable } from "./Renderable";
+import type { TruckData } from "#/types/api/truck/truck-api-response-types";
 
 export class Truck implements Renderable {
   uuid: string;

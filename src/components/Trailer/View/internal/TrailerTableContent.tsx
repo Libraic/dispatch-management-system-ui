@@ -1,13 +1,13 @@
-import { TableCell } from "../../../Common/Table/public/TableCell.tsx";
+import { TableCell } from "#/ui/Table/public/TableCell";
 import * as React from "react";
-import type { TrailerData } from "../../../../types/api/trailer/trailer-api-response-types.ts";
-import { TRAILERS_VIEW_COLUMNS_LAYOUT } from "../../../../constants/trailers/trailers-table-constants.ts";
+import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
+import { TRAILERS_VIEW_COLUMNS_LAYOUT } from "#/constants/trailers/trailers-table-constants";
 import {
   HOVER_BACKGROUND_NORMAL_COLOR,
   HOVER_BORDER_B_NORMAL_COLOR,
   ODD_BACKGROUND_LIGHT_GRAY,
-} from "../../../../tailwind/tailwind-colors-vars.ts";
-import { SYSTEM_FONT_NORMAL } from "../../../../tailwind/tailwind-font-vars.ts";
+} from "#/tailwind/tailwind-colors-vars";
+import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 
 export const TrailersTableContent: React.FC<{ trailers: TrailerData[] }> = ({
   trailers,

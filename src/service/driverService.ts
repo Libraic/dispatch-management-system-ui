@@ -1,21 +1,21 @@
 import axios from "axios";
-import { DRIVERS_BASE_URL } from "../constants/api/api-paths.ts";
-import type { CreateDriverRequest } from "../types/api/driver/driver-api-request-types.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
+import { DRIVERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
+import type { CreateDriverRequest } from "#/types/api/driver/driver-api-request-types";
+import { handleApiErrors } from "#/utils/api/api-common-error-utils";
 import {
   COMPANY_ID_QUERY_PARAM,
   JOIN_CLAUSE,
   PAGE,
   SIZE,
-} from "../constants/api/api-query-constants.ts";
-import { COLON } from "../constants/common/global-constants.ts";
-import type { DriverData } from "../types/api/driver/driver-api-response-types.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
+} from "#/shared/api/constants/apiQuery.constants";
+import { COLON } from "#/constants/common/global-constants";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
-import { DRIVERS_PAGE_SIZE } from "../constants/driver/drivers-table-constants.ts";
+} from "#/types/api/common/api-errors-types";
+import { DRIVERS_PAGE_SIZE } from "#/constants/driver/drivers-table-constants";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const saveDriver = async (
   createDriverRequest: CreateDriverRequest,

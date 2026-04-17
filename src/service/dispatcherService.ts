@@ -1,12 +1,12 @@
-import type { CreateDispatcherRequest } from "../types/api/dispatcher/dispatcher-api-request-types.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
+import type { CreateDispatcherRequest } from "#/types/api/dispatcher/dispatcher-api-request-types";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
+} from "#/types/api/common/api-errors-types";
 import axios from "axios";
-import { DISPATCHERS_BASE_URL } from "../constants/api/api-paths.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
+import { DISPATCHERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
+import { handleApiErrors } from "#/utils/api/api-common-error-utils";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const saveDispatcher = async (
   createDispatcherRequest: CreateDispatcherRequest,

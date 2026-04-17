@@ -1,5 +1,5 @@
-import { CompanyRegistrationInputForms } from "../internal/CompanyRegistrationInputForms.tsx";
-import { CompanyStartAndServiceDateSelector } from "../internal/CompanyStartAndServiceDateSelector.tsx";
+import { CompanyRegistrationInputForms } from "#/components/Company/Registration/internal/CompanyRegistrationInputForms";
+import { CompanyStartAndServiceDateSelector } from "#/components/Company/Registration/internal/CompanyStartAndServiceDateSelector";
 
 export const CompanyRegistrationForm = () => {
   return (

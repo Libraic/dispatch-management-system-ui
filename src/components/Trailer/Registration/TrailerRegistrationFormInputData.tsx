@@ -1,13 +1,10 @@
-import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
-import { setTrailerDataField } from "../../../utils/trailer/trailer-utils.ts";
-import {
-  BLANK_STRING,
-  ZERO,
-} from "../../../constants/common/global-constants.ts";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
+import { setTrailerDataField } from "#/utils/trailer/trailer-utils";
+import { BLANK_STRING, ZERO } from "#/constants/common/global-constants";
 import type {
   TrailerRegistrationData,
   TrailerRegistrationError,
-} from "../../../types/internal/trailer/trailer-registration-types.ts";
+} from "#/types/internal/trailer/trailer-registration-types";
 import * as React from "react";
 
 export const TrailerRegistrationFormInputData: React.FC<{

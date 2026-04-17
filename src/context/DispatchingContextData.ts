@@ -1,10 +1,10 @@
-import type { DriverData } from "../types/api/driver/driver-api-response-types.ts";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import type {
   DaysOffPeriodData,
   DriverWorkforce,
   LoadData,
   VehicleMaintenanceData,
-} from "../types/internal/planner/planner-types.ts";
+} from "#/types/internal/planner/planner-types";
 
 export type DispatchingContextData = {
   days: string[];

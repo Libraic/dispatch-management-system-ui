@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_NORMAL,
-} from "../../../../tailwind/tailwind-font-vars.ts";
-import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "../../../../tailwind/tailwind-layout-vars.ts";
-import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
+} from "#/tailwind/tailwind-font-vars";
+import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
 export const CompanySidebarItemData: React.FC<{
   label: string;

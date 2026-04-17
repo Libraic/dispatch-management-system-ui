@@ -1,9 +1,9 @@
 import type {
   TrailerRegistrationData,
   TrailerRegistrationError,
-} from "../../types/internal/trailer/trailer-registration-types.ts";
-import { getBlankTrailerRegistrationErrors } from "../../utils/trailer/trailer-utils.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/trailer/trailer-registration-types";
+import { getBlankTrailerRegistrationErrors } from "#/utils/trailer/trailer-utils";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   EQUIPMENT_SIZE_INVALID,
   EQUIPMENT_TYPE_IS_MANDATORY,
@@ -12,7 +12,7 @@ import {
   TRAILER_NUMBER_IS_MANDATORY,
   TRAILER_YEAR_INVALID,
   VIN_NUMBER_IS_MANDATORY,
-} from "../../constants/error/error-message-constants.ts";
+} from "#/constants/error/error-message-constants";
 
 export const validateTrailerRegistrationData = (
   data: TrailerRegistrationData,

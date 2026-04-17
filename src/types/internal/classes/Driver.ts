@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { DriverData } from "../../api/driver/driver-api-response-types.ts";
+import type { Renderable } from "./Renderable";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 
 export class Driver implements Renderable {
   name: string;

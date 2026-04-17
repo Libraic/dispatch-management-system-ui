@@ -1,5 +1,5 @@
-import type { VehicleMaintenanceErrors } from "../../types/internal/planner/planner-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import type { VehicleMaintenanceErrors } from "#/types/internal/planner/planner-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const getBlankVehicleMaintenanceErrors =
   (): VehicleMaintenanceErrors => {

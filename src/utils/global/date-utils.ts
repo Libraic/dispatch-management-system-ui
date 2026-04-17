@@ -1,7 +1,7 @@
-import { TRAILING_ZERO } from "../../constants/common/global-constants.ts";
-import type { DayOfMonth } from "../../types/internal/time/date-types.ts";
-import type { WeekIndexer } from "../../types/internal/calendar/calendar-types.ts";
-import { DEFAULT_LOCALE } from "../../constants/date/date-constants.ts";
+import { TRAILING_ZERO } from "#/constants/common/global-constants";
+import type { DayOfMonth } from "#/types/internal/time/date-types";
+import { DEFAULT_LOCALE } from "#/constants/date/date-constants";
+import type { WeekIndexer } from "#/ui/Calendar/public/Calendar/Calendar.types";
 
 export const getCurrentWeekDays = (): string[] => {
   const date = new Date();

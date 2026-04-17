@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import {
   Entity,
   type PaginationData,
-} from "../types/api/common/api-query-types.ts";
-import { DEFAULT_SIZE } from "../constants/api/api-query-constants.ts";
-import { getPaginationDetails } from "../service/paginationService.ts";
-import type { Pagination } from "../types/internal/pagination/pagination-types.ts";
+} from "#/types/api/common/api-query-types";
+import { DEFAULT_SIZE } from "#/shared/api/constants/apiQuery.constants";
+import { getPaginationDetails } from "#/service/paginationService";
+import type { Pagination } from "#/types/internal/pagination/pagination-types";
 
 export const usePagination = (
   entityType: Entity,

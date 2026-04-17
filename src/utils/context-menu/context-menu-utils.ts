@@ -1,5 +1,5 @@
-import type { ContextMenuActionItem } from "../../types/internal/common/context-menu-types.ts";
-import { type LoadStatus } from "../../types/internal/planner/planner-types.ts";
+import type { ContextMenuActionItem } from "#/types/internal/common/context-menu-types";
+import { type LoadStatus } from "#/types/internal/planner/planner-types";
 
 export const getDeleteOption = (action: () => void): ContextMenuActionItem => {
   return {

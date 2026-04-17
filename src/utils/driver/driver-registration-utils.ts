@@ -1,15 +1,12 @@
-import type {
-  DriverRegistrationData,
-  DriverRegistrationError,
-} from "../../types/internal/driver/driver-registration-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import type { DriverRegistrationData } from "#/types/internal/driver/driver-registration-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   getFirstCityOfStateByCountryIsoCode,
   getFirstStateOfCountryByIsoCode,
   USA_COUNTRY_ISO_CODE,
-} from "../location/location-utils.ts";
-import type { CreateDriverRequest } from "../../types/api/driver/driver-api-request-types.ts";
-import { cleanPhoneNumber } from "../global/input-form-utils.ts";
+} from "#/utils/location/location-utils";
+import type { CreateDriverRequest } from "#/types/api/driver/driver-api-request-types";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
 
 export const documentsStatuses = ["Work Permit", "Green Card", "Citizen"];
 export const driverPositions = ["Owner Operator", "Company Driver"];
@@ -36,17 +33,6 @@ export const getBlankDriverRegistrationData = (): DriverRegistrationData => {
       uuid: BLANK_STRING,
       name: BLANK_STRING,
     },
-  };
-};
-
-export const getBlankDriverRegistrationError = (): DriverRegistrationError => {
-  return {
-    firstName: BLANK_STRING,
-    lastName: BLANK_STRING,
-    phoneNumber: BLANK_STRING,
-    email: BLANK_STRING,
-    truckNumber: BLANK_STRING,
-    trailerNumber: BLANK_STRING,
   };
 };
 

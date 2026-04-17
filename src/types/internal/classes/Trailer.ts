@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { TrailerData } from "../../api/trailer/trailer-api-response-types.ts";
+import type { Renderable } from "./Renderable";
+import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
 
 export class Trailer implements Renderable {
   trailerNumber: string;

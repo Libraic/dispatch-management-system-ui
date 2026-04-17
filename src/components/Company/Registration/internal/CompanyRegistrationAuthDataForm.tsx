@@ -1,9 +1,9 @@
-import { TextualInputField } from "../../../Common/InputForm/public/TextualInputField.tsx";
-import { COMPANY_EMAIL_PLACEHOLDER } from "../../../../constants/common/placeholder-constants.ts";
-import { setCompanyStringField } from "../../../../utils/company/company-registration-utils.ts";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
+import { COMPANY_EMAIL_PLACEHOLDER } from "#/constants/common/placeholder-constants";
+import { setCompanyStringField } from "#/utils/company/company-registration-utils";
 import { useContext } from "react";
-import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
-import { PasswordInputField } from "../../../Common/InputForm/public/PasswordInputField.tsx";
+import { CompanyRegistrationContext } from "#/context/CompanyRegistrationContext";
+import { PasswordInputField } from "#/ui/InputField/components/public/PasswordInputField";
 
 export const CompanyRegistrationAuthDataForm = () => {
   const context = useContext(CompanyRegistrationContext)!;

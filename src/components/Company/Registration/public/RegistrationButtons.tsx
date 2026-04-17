@@ -1,5 +1,5 @@
-import { CancelButton } from "../../../Common/Button/CancelButton.tsx";
-import { SubmitButton } from "../../../Common/Button/SubmitButton.tsx";
+import { CancelButton } from "#/ui/Buttons/CancelButton";
+import { SubmitButton } from "#/ui/Buttons/SubmitButton";
 import * as React from "react";
 
 export const RegistrationButtons: React.FC<{

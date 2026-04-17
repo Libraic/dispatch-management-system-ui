@@ -1,8 +1,8 @@
-import type { DriverData } from "../driver/driver-api-response-types.ts";
-import type { DispatcherData } from "../dispatcher/dispatcher-api-response-types.ts";
-import type { LoadStatus } from "../../internal/planner/planner-types.ts";
-import type { GetVehicleMaintenanceResponse } from "../vehicle-maintenance/vehicle-maintenance-api-response-types.ts";
-import type { GetDaysOffPeriodResponse } from "../days-off/days-off-api-response-types.ts";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
+import type { DispatcherData } from "#/types/api/dispatcher/dispatcher-api-response-types";
+import type { LoadStatus } from "#/types/internal/planner/planner-types";
+import type { GetVehicleMaintenanceResponse } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
+import type { GetDaysOffPeriodResponse } from "#/types/api/days-off/days-off-api-response-types";
 
 export type ApiLoadLocation = {
   label?: string;

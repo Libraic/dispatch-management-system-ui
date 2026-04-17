@@ -1,15 +1,15 @@
-import { getBlankTruckRegistrationErrors } from "../../utils/truck/truck-utils.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import { getBlankTruckRegistrationErrors } from "#/utils/truck/truck-utils";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   TRUCK_NUMBER_IS_MANDATORY,
   TRUCK_WEIGHT_INVALID,
   TRUCK_YEAR_INVALID,
   VIN_NUMBER_IS_MANDATORY,
-} from "../../constants/error/error-message-constants.ts";
+} from "#/constants/error/error-message-constants";
 import type {
   TruckRegistrationData,
   TruckRegistrationError,
-} from "../../types/internal/truck/truck-registration-types.ts";
+} from "#/types/internal/truck/truck-registration-types";
 
 export const validateTruckRegistrationData = (
   data: TruckRegistrationData,

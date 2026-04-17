@@ -1,10 +1,10 @@
-import { NETWORK_ERROR } from "../../constants/error/error-message-constants.ts";
+import { NETWORK_ERROR } from "#/constants/error/error-message-constants";
 import type {
   Error,
   GroupsErrorResponse,
   ItemError,
-} from "../../types/api/common/api-errors-types.ts";
-import type { ApiResponse } from "../../types/api/common/api-response-types.ts";
+} from "#/types/api/common/api-errors-types";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const ERRORS_KEY = "errors";
 

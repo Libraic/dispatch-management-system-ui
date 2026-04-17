@@ -1,20 +1,20 @@
 import axios from "axios";
-import { TRUCKS_BASE_URL } from "../constants/api/api-paths.ts";
-import type { CreateTruckRequest } from "../types/api/truck/truck-api-request-types.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
-import type { TruckData } from "../types/api/truck/truck-api-response-types.ts";
+import { TRUCKS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
+import type { CreateTruckRequest } from "#/types/api/truck/truck-api-request-types";
+import type { TruckData } from "#/types/api/truck/truck-api-response-types";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
+} from "#/types/api/common/api-errors-types";
 import {
   COMPANY_ID_QUERY_PARAM,
   DEFAULT_SIZE,
   JOIN_CLAUSE,
   PAGE,
   SIZE,
-} from "../constants/api/api-query-constants.ts";
-import { COLON } from "../constants/common/global-constants.ts";
+} from "#/shared/api/constants/apiQuery.constants";
+import { COLON } from "#/constants/common/global-constants";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const saveTruck = async (
   createTruckRequest: CreateTruckRequest,

@@ -1,5 +1,5 @@
-import type { DispatcherData } from "../../api/dispatcher/dispatcher-api-response-types.ts";
-import type { DriverData } from "../../api/driver/driver-api-response-types.ts";
+import type { DispatcherData } from "#/types/api/dispatcher/dispatcher-api-response-types";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 
 export type LoadStatus =
   | "Booked"
@@ -15,17 +15,6 @@ export type LocationLabel =
   | "Delivery"
   | "Starting Point"
   | "Ending Point";
-
-export type ResponseType =
-  | "Api Error"
-  | "Internal Error"
-  | "No Error"
-  | "No Action";
-
-export interface PlannerResponse {
-  type: ResponseType;
-  message?: string;
-}
 
 export type Period = "AM" | "PM";
 
@@ -112,7 +101,7 @@ export interface CalendarBookFormHandler {
   submit: () => Promise<SubmitSuccess>;
 }
 
-export interface FormProps {
+export interface SchedulableFormProps {
   workforce: DriverWorkforce;
   calendarBookModalType?: CalendarBookModalType;
   day?: string;

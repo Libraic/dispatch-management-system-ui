@@ -1,11 +1,11 @@
-import { TableHead } from "../../../Common/Table/public/TableHead.tsx";
+import { TableHead } from "#/ui/Table/public/TableHead";
 import {
   TRUCKS_VIEW_COLUMNS,
   TRUCKS_VIEW_COLUMNS_LAYOUT,
-} from "../../../../constants/trucks/trucks-table-constants.ts";
+} from "#/constants/trucks/trucks-table-constants";
 import * as React from "react";
-import type { TruckData } from "../../../../types/api/truck/truck-api-response-types.ts";
-import { TrucksTableContent } from "../internal/TrucksTableContent.tsx";
+import type { TruckData } from "#/types/api/truck/truck-api-response-types";
+import { TrucksTableContent } from "#/components/Truck/View/internal/TrucksTableContent";
 
 export const TrucksTable: React.FC<{ trucks: TruckData[] }> = ({ trucks }) => {
   return (

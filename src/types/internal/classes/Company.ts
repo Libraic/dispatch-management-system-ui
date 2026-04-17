@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { CompanyData } from "../../api/company/company-api-response-types.ts";
+import type { Renderable } from "./Renderable";
+import type { CompanyData } from "#/types/api/company/company-api-response-types";
 
 export class Company implements Renderable {
   uuid: string;

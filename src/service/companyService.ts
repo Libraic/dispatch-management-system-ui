@@ -1,13 +1,13 @@
 import axios from "axios";
-import { COMPANIES_BASE_URL } from "../constants/api/api-paths.ts";
-import type { CreateCompanyRequest } from "../types/internal/company/company-registration-types.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
+import { COMPANIES_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
+import type { CreateCompanyRequest } from "#/types/internal/company/company-registration-types";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
-import type { CompanyData } from "../types/api/company/company-api-response-types.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
+} from "#/types/api/common/api-errors-types";
+import type { CompanyData } from "#/types/api/company/company-api-response-types";
+import { handleApiErrors } from "#/utils/api/api-common-error-utils";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const fetchCompanies = async (): Promise<CompanyData[] | undefined> => {
   try {

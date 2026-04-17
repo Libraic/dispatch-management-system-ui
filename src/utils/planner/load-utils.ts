@@ -1,22 +1,22 @@
-import type { DriverData } from "../../types/api/driver/driver-api-response-types.ts";
+import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import type {
   DispatchingRelation,
   DriverWorkforce,
   LoadData,
   LoadLocationData,
   LocationLabel,
-} from "../../types/internal/planner/planner-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/planner/planner-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   getNextDayFromCurrentDate,
   toNormalizedIsoDate,
-} from "../global/date-utils.ts";
-import { generateUuid } from "../global/general-utils.ts";
+} from "#/utils/global/date-utils";
+import { generateUuid } from "#/utils/global/general-utils";
 import type {
   ApiLoadLocation,
   GetLoadResponse,
-} from "../../types/api/loads/load-api-types.ts";
-import { hhmmToTime } from "../../types/internal/time/time-types.ts";
+} from "#/types/api/loads/load-api-types";
+import { hhmmToTime } from "#/types/internal/time/time-types";
 
 export const mapLoadDataToDispatcherRelation = (
   prevDispatcherLoadDataList: DispatchingRelation[],

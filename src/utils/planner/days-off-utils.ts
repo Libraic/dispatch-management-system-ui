@@ -2,10 +2,10 @@ import type {
   DaysOffPeriodData,
   DispatchingRelation,
   DriverWorkforce,
-} from "../../types/internal/planner/planner-types.ts";
-import { updateDriverField } from "./planner-utils.ts";
-import { toIsoDate, toNormalizedIsoDate } from "../global/date-utils.ts";
-import type { GetDaysOffPeriodResponse } from "../../types/api/days-off/days-off-api-response-types.ts";
+} from "#/types/internal/planner/planner-types";
+import { updateDriverField } from "./planner-utils";
+import { toIsoDate, toNormalizedIsoDate } from "#/utils/global/date-utils";
+import type { GetDaysOffPeriodResponse } from "#/types/api/days-off/days-off-api-response-types";
 
 export const changeDaysOffPeriodData = (
   prevDispatchingRelations: DispatchingRelation[],

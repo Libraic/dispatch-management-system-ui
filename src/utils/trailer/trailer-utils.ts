@@ -1,10 +1,10 @@
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
 import {
   type TrailerRegistrationData,
   type TrailerRegistrationError,
-} from "../../types/internal/trailer/trailer-registration-types.ts";
-import type { CreateTrailerRequest } from "../../types/api/trailer/trailer-api-request-types.ts";
+} from "#/types/internal/trailer/trailer-registration-types";
+import type { CreateTrailerRequest } from "#/types/api/trailer/trailer-api-request-types";
 
 export const getBlankTrailerRegistrationData = () => {
   return {

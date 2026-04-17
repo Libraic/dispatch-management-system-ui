@@ -1,8 +1,8 @@
 import type {
   DispatcherRegistrationData,
   DispatcherRegistrationErrorData,
-} from "../../types/internal/dispatcher/dispatcher-registration-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/dispatcher/dispatcher-registration-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const getBlankDispatcherRegistrationData =
   (): DispatcherRegistrationData => {

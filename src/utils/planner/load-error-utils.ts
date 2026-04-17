@@ -2,17 +2,17 @@ import type {
   LoadData,
   LoadDataError,
   LoadLocationError,
-} from "../../types/internal/planner/planner-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
-import { validatePhoneNumber } from "../registration/registration-utils.ts";
-import { cleanPhoneNumber } from "../global/input-form-utils.ts";
+} from "#/types/internal/planner/planner-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
+import { validatePhoneNumber } from "#/utils/registration/registration-utils";
 import {
   BROKER_REQUIRED_ERROR,
   LOCATION_REQUIRED,
   LOCATIONS_CHRONOLOGICAL_ORDER_ERROR,
   MILES_REQUIRED_ERROR,
   REVENUE_REQUIRED_ERROR,
-} from "../../constants/error/error-message-constants.ts";
+} from "#/constants/error/error-message-constants";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
 
 export const getErrorsIfPresent = (loadData: LoadData) => {
   const loadErrors: LoadDataError = {};

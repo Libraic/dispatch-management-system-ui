@@ -1,8 +1,8 @@
-import { TextualInputField } from "../../../Common/InputForm/public/TextualInputField.tsx";
-import { setCompanyStringField } from "../../../../utils/company/company-registration-utils.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
+import { setCompanyStringField } from "#/utils/company/company-registration-utils";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import { useContext } from "react";
-import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
+import { CompanyRegistrationContext } from "#/context/CompanyRegistrationContext";
 
 export const CompanyRegistrationBasicDataForm = () => {
   const context = useContext(CompanyRegistrationContext)!;

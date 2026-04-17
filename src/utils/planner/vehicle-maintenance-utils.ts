@@ -1,15 +1,15 @@
 import type {
   DispatchingRelation,
   VehicleMaintenanceData,
-} from "../../types/internal/planner/planner-types.ts";
-import { updateDriverField } from "./planner-utils.ts";
-import type { GetVehicleMaintenanceResponse } from "../../types/api/vehicle-maintenance/vehicle-maintenance-api-response-types.ts";
+} from "#/types/internal/planner/planner-types";
+import { updateDriverField } from "./planner-utils";
+import type { GetVehicleMaintenanceResponse } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
 import {
   normalizeDate,
   toIsoDate,
   toNormalizedIsoDate,
-} from "../global/date-utils.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/utils/global/date-utils";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const changeWorkforceVehicleMaintenanceData = (
   prevDispatchingRelations: DispatchingRelation[],

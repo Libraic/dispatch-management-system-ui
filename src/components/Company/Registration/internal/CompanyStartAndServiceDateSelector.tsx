@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { CompanyRegistrationContext } from "../../../../context/CompanyRegistrationContext.ts";
-import { DateSelector } from "../../../Common/Selector/DateSelector.tsx";
+import { CompanyRegistrationContext } from "#/context/CompanyRegistrationContext";
+import { DateSelectorField } from "#/ui/Selectors/DateSelectorField";
 
 export const CompanyStartAndServiceDateSelector = () => {
   const context = useContext(CompanyRegistrationContext)!;
@@ -8,7 +8,7 @@ export const CompanyStartAndServiceDateSelector = () => {
   const setRegistrationData = context.setRegistrationData;
   return (
     <div className="flex flex-row gap-x-10 items-center">
-      <DateSelector
+      <DateSelectorField
         label="Service Date"
         setDate={(date: Date) => {
           setRegistrationData((prevData) => ({
@@ -18,7 +18,7 @@ export const CompanyStartAndServiceDateSelector = () => {
         }}
         date={registrationData.serviceDate}
       />
-      <DateSelector
+      <DateSelectorField
         label="Start Date"
         setDate={(date: Date) => {
           setRegistrationData((prevData) => ({

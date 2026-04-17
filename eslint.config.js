@@ -5,6 +5,14 @@ import tseslint from "typescript-eslint";
 import unusedImports from "eslint-plugin-unused-imports";
 import prettierPlugin from "eslint-plugin-prettier";
 import prettierConfig from "eslint-config-prettier";
+import importPlugin from "eslint-plugin-import";
+import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
+import { noRelativeParentImports } from "./eslint-rules/no-relative-parent-imports.mjs";
+
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -24,6 +32,11 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
       "unused-imports": unusedImports, // ✅ FIXED
       prettier: prettierPlugin,
+      import: importPlugin,
+      "no-relative-import-paths": noRelativeImportPaths,
+      "local-rules": {
+        rules: { "no-relative-parent-imports": noRelativeParentImports },
+      },
     },
 
     rules: {
@@ -46,6 +59,29 @@ export default tseslint.config(
         },
       ],
       "prettier/prettier": "error",
+      "no-relative-import-paths/no-relative-import-paths": [
+        "error",
+        {
+          allowSameFolder: true,
+          rootDir: path.resolve(__dirname, "src"),
+          prefix: "#",
+        },
+      ],
+      "local-rules/no-relative-parent-imports": [
+        "error",
+        {
+          rootDir: path.resolve(__dirname, "src"),
+          prefix: "#",
+        },
+      ],
+    },
+
+    settings: {
+      "import/resolver": {
+        typescript: {
+          paths: true, // respect tsconfig paths like "#"
+        },
+      },
     },
   },
 

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
-import type { FieldRequirement } from "../../types/internal/common/props-types.ts";
+import { BLANK_STRING } from "#/constants/common/global-constants";
+import type { FieldRequirement } from "#/types/internal/common/props-types";
 
 export const setObjectStringField = <T>(
   setData: React.Dispatch<React.SetStateAction<T>>,

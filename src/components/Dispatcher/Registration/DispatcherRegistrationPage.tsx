@@ -1,41 +1,41 @@
-import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
 import {
   setObjectStringField,
   validateMandatoryField,
   validatePhoneNumber,
-} from "../../../utils/registration/registration-utils.ts";
+} from "#/utils/registration/registration-utils";
 import * as React from "react";
 import { useState } from "react";
-import { BLANK_STRING } from "../../../constants/common/global-constants.ts";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import { useNavigate, useParams } from "react-router-dom";
-import type { DispatcherRegistrationErrorData } from "../../../types/internal/dispatcher/dispatcher-registration-types.ts";
-import { SubmitButton } from "../../Common/Button/SubmitButton.tsx";
-import { CancelButton } from "../../Common/Button/CancelButton.tsx";
-import { DISPATCHER_REGISTRATION_HEADER } from "../../../constants/common/header-constants.ts";
-import { PageHeader } from "../../Common/Page/PageHeader.tsx";
-import { saveDispatcher } from "../../../service/dispatcherService.ts";
-import type { CreateDispatcherRequest } from "../../../types/api/dispatcher/dispatcher-api-request-types.ts";
-import type { ApiResponse } from "../../../types/api/common/api-response-types.ts";
+import type { DispatcherRegistrationErrorData } from "#/types/internal/dispatcher/dispatcher-registration-types";
+import { SubmitButton } from "#/ui/Buttons/SubmitButton";
+import { CancelButton } from "#/ui/Buttons/CancelButton";
+import { DISPATCHER_REGISTRATION_HEADER } from "#/constants/common/header-constants";
+import { PageHeader } from "#/ui/PageHeader/PageHeader";
+import { saveDispatcher } from "#/service/dispatcherService";
+import type { CreateDispatcherRequest } from "#/types/api/dispatcher/dispatcher-api-request-types";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../../../types/api/common/api-errors-types.ts";
-import { handleErrors } from "../../../utils/api/api-common-error-utils.ts";
-import { useToast } from "../../../hooks/useToast.ts";
-import { Toast } from "../../Common/Toast/Toast.tsx";
+} from "#/types/api/common/api-errors-types";
+import { handleErrors } from "#/utils/api/api-common-error-utils";
+import { useToast } from "#/ui/Toast/useToast";
+import { Toast } from "#/ui/Toast/ToastComponent/Toast";
 import {
   getBlankDispatcherRegistrationData,
   getBlankDispatcherRegistrationErrorData,
-} from "../../../utils/dispatcher/dispatcher-registration-utils.ts";
+} from "#/utils/dispatcher/dispatcher-registration-utils";
 import {
   NAME_PLACEHOLDER,
   PHONE_NUMBER_PLACEHOLDER,
-} from "../../../constants/common/placeholder-constants.ts";
+} from "#/constants/common/placeholder-constants";
+import { SidebarWrapper } from "#/components/SidebarWrapper";
 import {
   cleanPhoneNumber,
   formatPhoneNumber,
-} from "../../../utils/global/input-form-utils.ts";
-import { SidebarWrapper } from "../../SidebarWrapper.tsx";
+} from "#/shared/utils/inputField.formatter";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const DispatcherRegistrationPage = () => {
   const [dispatcherRegistrationData, setDispatcherRegistrationData] = useState(

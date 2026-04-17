@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { DispatcherData } from "../../api/dispatcher/dispatcher-api-response-types.ts";
+import type { Renderable } from "./Renderable";
+import type { DispatcherData } from "#/types/api/dispatcher/dispatcher-api-response-types";
 
 export class Dispatcher implements Renderable {
   uuid: string;

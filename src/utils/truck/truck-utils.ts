@@ -1,10 +1,10 @@
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
 import type {
   TruckRegistrationData,
   TruckRegistrationError,
-} from "../../types/internal/truck/truck-registration-types.ts";
-import type { CreateTruckRequest } from "../../types/api/truck/truck-api-request-types.ts";
+} from "#/types/internal/truck/truck-registration-types";
+import type { CreateTruckRequest } from "#/types/api/truck/truck-api-request-types";
 
 export const getBlankTruckRegistrationData = () => {
   return {

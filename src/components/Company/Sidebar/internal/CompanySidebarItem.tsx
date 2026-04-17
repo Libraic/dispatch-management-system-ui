@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CompanySidebarItemData } from "./CompanySidebarItemData.tsx";
-import { BACKGROUND_NORMAL_COLOR } from "../../../../tailwind/tailwind-colors-vars.ts";
+import { CompanySidebarItemData } from "./CompanySidebarItemData";
+import { BACKGROUND_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
 import type {
   SidebarState,
   SubmenuData,
-} from "../../../../types/internal/sidebar/sidebar-types.ts";
-import { BLANK_STRING } from "../../../../constants/common/global-constants.ts";
+} from "#/types/internal/sidebar/sidebar-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const CompanySidebarItem: React.FC<{
   label: string;

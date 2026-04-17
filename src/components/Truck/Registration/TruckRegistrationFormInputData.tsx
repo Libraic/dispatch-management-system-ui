@@ -1,14 +1,11 @@
-import { TextualInputField } from "../../Common/InputForm/public/TextualInputField.tsx";
-import { setTruckDataField } from "../../../utils/truck/truck-utils.ts";
-import {
-  BLANK_STRING,
-  ZERO,
-} from "../../../constants/common/global-constants.ts";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
+import { setTruckDataField } from "#/utils/truck/truck-utils";
+import { BLANK_STRING, ZERO } from "#/constants/common/global-constants";
 import * as React from "react";
 import type {
   TruckRegistrationData,
   TruckRegistrationError,
-} from "../../../types/internal/truck/truck-registration-types.ts";
+} from "#/types/internal/truck/truck-registration-types";
 
 export const TruckRegistrationFormInputData: React.FC<{
   truckData: TruckRegistrationData;

@@ -1,12 +1,12 @@
 import axios from "axios";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
-import type { SearchCriteria } from "../types/api/common/api-query-types.ts";
-import { LIKE_CLAUSE } from "../constants/api/api-query-constants.ts";
-import { BLANK_STRING, COLON } from "../constants/common/global-constants.ts";
+} from "#/types/api/common/api-errors-types";
+import type { SearchCriteria } from "#/types/api/common/api-query-types";
+import { LIKE_CLAUSE } from "#/shared/api/constants/apiQuery.constants";
+import { BLANK_STRING, COLON } from "#/constants/common/global-constants";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 const constructSearchCriteria = (
   defaultKey: string,

@@ -1,10 +1,10 @@
 import {
   Entity,
   type PaginationData,
-} from "../types/api/common/api-query-types.ts";
-import { DEFAULT_SIZE } from "../constants/api/api-query-constants.ts";
+} from "#/types/api/common/api-query-types";
+import { DEFAULT_SIZE } from "#/shared/api/constants/apiQuery.constants";
 import axios from "axios";
-import { PAGINATION_DETAILS } from "../constants/api/api-paths.ts";
+import { PAGINATION_DETAILS } from "#/shared/api/constants/apiPaths.constants";
 
 export const getPaginationDetails = async (
   entityType: Entity,

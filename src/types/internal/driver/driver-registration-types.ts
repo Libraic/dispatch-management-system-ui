@@ -34,10 +34,10 @@ export type DriverRegistrationData = {
 };
 
 export type DriverRegistrationError = {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  truckNumber: string;
-  trailerNumber: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  email?: string;
+  truckNumber?: string;
+  trailerNumber?: string;
 };

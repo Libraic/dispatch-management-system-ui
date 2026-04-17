@@ -1,11 +1,11 @@
-import { TableHead } from "../../../Common/Table/public/TableHead.tsx";
-import type { TrailerData } from "../../../../types/api/trailer/trailer-api-response-types.ts";
+import { TableHead } from "#/ui/Table/public/TableHead";
+import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
 import {
   TRAILERS_VIEW_COLUMNS,
   TRAILERS_VIEW_COLUMNS_LAYOUT,
-} from "../../../../constants/trailers/trailers-table-constants.ts";
+} from "#/constants/trailers/trailers-table-constants";
 import * as React from "react";
-import { TrailersTableContent } from "../internal/TrailerTableContent.tsx";
+import { TrailersTableContent } from "#/components/Trailer/View/internal/TrailerTableContent";
 
 export const TrailersTable: React.FC<{ trailers: TrailerData[] }> = ({
   trailers,

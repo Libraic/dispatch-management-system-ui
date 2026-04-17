@@ -2,18 +2,15 @@ import type {
   DispatchingRelation,
   DriverWorkforce,
   Time,
-} from "../../types/internal/planner/planner-types.ts";
-import { HYPHEN } from "../../constants/common/global-constants.ts";
-import {
-  DEFAULT_LOCALE,
-  WEEKDAYS,
-} from "../../constants/date/date-constants.ts";
-import { toIsoDate } from "../global/date-utils.ts";
+} from "#/types/internal/planner/planner-types";
+import { HYPHEN } from "#/constants/common/global-constants";
+import { DEFAULT_LOCALE, WEEKDAYS } from "#/constants/date/date-constants";
+import { toIsoDate } from "#/utils/global/date-utils";
 import {
   DAY_CELL_WIDTH,
   METADATA_WIDTH,
-} from "../../constants/planner/planner-constants.ts";
-import { timeToHHmm } from "../../types/internal/time/time-types.ts";
+} from "#/constants/planner/planner-constants";
+import { timeToHHmm } from "#/types/internal/time/time-types";
 
 export const updateDriverField = <K extends keyof DriverWorkforce>(
   prevDispatchingRelations: DispatchingRelation[],

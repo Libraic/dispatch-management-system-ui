@@ -1,20 +1,20 @@
 import axios from "axios";
-import { TRAILERS_BASE_URL } from "../constants/api/api-paths.ts";
+import { TRAILERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import type {
   Error,
   GroupsErrorResponse,
-} from "../types/api/common/api-errors-types.ts";
-import type { CreateTrailerRequest } from "../types/api/trailer/trailer-api-request-types.ts";
-import type { TrailerData } from "../types/api/trailer/trailer-api-response-types.ts";
-import type { ApiResponse } from "../types/api/common/api-response-types.ts";
+} from "#/types/api/common/api-errors-types";
+import type { CreateTrailerRequest } from "#/types/api/trailer/trailer-api-request-types";
+import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
 import {
   COMPANY_ID_QUERY_PARAM,
   DEFAULT_SIZE,
   JOIN_CLAUSE,
   PAGE,
   SIZE,
-} from "../constants/api/api-query-constants.ts";
-import { COLON } from "../constants/common/global-constants.ts";
+} from "#/shared/api/constants/apiQuery.constants";
+import { COLON } from "#/constants/common/global-constants";
+import type { ApiResponse } from "#/shared/types/api.types";
 
 export const saveTrailer = async (
   createTrailerRequest: CreateTrailerRequest,

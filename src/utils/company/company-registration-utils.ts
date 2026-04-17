@@ -1,10 +1,10 @@
 import type {
   CompanyRegistrationTypes,
   CreateCompanyRequest,
-} from "../../types/internal/company/company-registration-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/company/company-registration-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
-import { toIsoDate } from "../global/date-utils.ts";
+import { toIsoDate } from "#/utils/global/date-utils";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
   return {

@@ -2,7 +2,7 @@ import {
   BLANK_SPACE,
   BLANK_STRING,
   NOT_AVAILABLE,
-} from "../../constants/common/global-constants.ts";
+} from "#/constants/common/global-constants";
 
 export const getNameInitials = (name: string) => {
   if (name === BLANK_STRING) {

@@ -1,5 +1,5 @@
-import { CompanyRegistrationBasicDataForm } from "./CompanyRegistrationBasicDataForm.tsx";
-import { CompanyRegistrationAuthDataForm } from "./CompanyRegistrationAuthDataForm.tsx";
+import { CompanyRegistrationBasicDataForm } from "./CompanyRegistrationBasicDataForm";
+import { CompanyRegistrationAuthDataForm } from "./CompanyRegistrationAuthDataForm";
 
 export const CompanyRegistrationInputForms = () => {
   return (

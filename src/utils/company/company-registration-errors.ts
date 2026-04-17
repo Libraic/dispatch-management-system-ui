@@ -1,13 +1,13 @@
 import type {
   CompanyRegistrationTypes,
   CompanyRegistrationError,
-} from "../../types/internal/company/company-registration-types.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/company/company-registration-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   validateEmail,
   validateMandatoryField,
   validatePassword,
-} from "../registration/registration-utils.ts";
+} from "#/utils/registration/registration-utils";
 
 export const getBlankCompanyRegistrationErrors = () => {
   return {

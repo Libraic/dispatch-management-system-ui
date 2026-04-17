@@ -2,21 +2,20 @@ import {
   DRIVER_REGISTRATION_SECTIONS,
   type DriverRegistrationData,
   type DriverRegistrationError,
-} from "../../types/internal/driver/driver-registration-types.ts";
-import { getBlankDriverRegistrationError } from "../../utils/driver/driver-registration-utils.ts";
-import { BLANK_STRING } from "../../constants/common/global-constants.ts";
+} from "#/types/internal/driver/driver-registration-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   validateEmail,
   validateMandatoryField,
   validatePhoneNumber,
-} from "../../utils/registration/registration-utils.ts";
-import { ErroneousSections } from "../../types/internal/classes/ErroneousSections.ts";
-import { cleanPhoneNumber } from "../../utils/global/input-form-utils.ts";
+} from "#/utils/registration/registration-utils";
+import { ErroneousSections } from "#/types/internal/classes/ErroneousSections";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
 
 export const getDriverRegistrationErrors = (
   driverRegistrationData: DriverRegistrationData,
 ) => {
-  const driverRegistrationError = getBlankDriverRegistrationError();
+  const driverRegistrationError = {} as DriverRegistrationError;
   driverRegistrationError.firstName = validateMandatoryField(
     driverRegistrationData.firstName,
     "first name",

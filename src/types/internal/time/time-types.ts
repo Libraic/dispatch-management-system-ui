@@ -1,4 +1,4 @@
-import type { Period, Time } from "../planner/planner-types.ts";
+import type { Period, Time } from "#/types/internal/planner/planner-types";
 
 export const timeToHHmm = (time?: Time) => {
   if (!time) {

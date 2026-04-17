@@ -1,5 +1,5 @@
-import type { Renderable } from "./Renderable.ts";
-import type { GetCityAndStateResponse } from "../../api/city/city-api-responses.ts";
+import type { Renderable } from "./Renderable";
+import type { GetCityAndStateResponse } from "#/types/api/city/city-api-responses";
 
 export class City implements Renderable {
   zip: string;

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { BORDER_NORMAL_COLOR } from "../../tailwind/tailwind-colors-vars.ts";
+import { BORDER_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
 import {
   SYSTEM_FONT_BOLD,
   SYSTEM_FONT_LIGHT,
-} from "../../tailwind/tailwind-font-vars.ts";
+} from "#/tailwind/tailwind-font-vars";
 
 export const Option: React.FC<{
   icon: React.ReactNode;

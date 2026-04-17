@@ -1,17 +1,17 @@
-import { CompanySidebarItem } from "../internal/CompanySidebarItem.tsx";
+import { CompanySidebarItem } from "#/components/Company/Sidebar/internal/CompanySidebarItem";
 import {
   DISPATCHERS_VIEW,
   DRIVERS_VIEW,
   PLANNER,
   TRAILERS_VIEW,
   TRUCKS_VIEW,
-} from "../../../../constants/route/internal-route-constants.ts";
+} from "#/constants/route/internal-route-constants";
 import { useParams } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
-import type { SidebarState } from "../../../../types/internal/sidebar/sidebar-types.ts";
-import { SYSTEM_FONT_LIGHT } from "../../../../tailwind/tailwind-font-vars.ts";
-import { GoogleIcon } from "../../../../shared/components/GoogleIcon/GoogleIcon.tsx";
+import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
+import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
+import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import {
   ASSETS_ICON_CODE,
   DASHBOARD_ICON_CODE,
@@ -20,7 +20,7 @@ import {
   PLANNER_ICON_CODE,
   SIDEBAR_CLOSER_ICON_CODE,
   SIDEBAR_OPENER_ICON_CODE,
-} from "../../../../features/companies/constants/ui.constants.ts";
+} from "#/features/companies/constants/ui.constants";
 
 export const CompanySidebar: React.FC<{
   sidebarState: SidebarState;

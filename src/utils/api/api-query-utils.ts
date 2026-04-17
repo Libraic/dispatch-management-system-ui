@@ -1,7 +1,7 @@
 import {
   COMPANY_ID_QUERY_PARAM,
   JOIN_CLAUSE,
-} from "../../constants/api/api-query-constants.ts";
+} from "#/shared/api/constants/apiQuery.constants";
 
 export const joinByCompanyId = (companyUuid: string) => {
   return {

@@ -1,21 +1,18 @@
-import type {
-  ApiResponse,
-  NoContentResponse,
-} from "../types/api/common/api-response-types.ts";
-import type { Error } from "../types/api/common/api-errors-types.ts";
+import type { Error } from "#/types/api/common/api-errors-types";
 import axios from "axios";
 import {
   DAYS_OFF_BASE_URL,
   DAYS_OFF_RELATIONS_URL,
-} from "../constants/api/api-paths.ts";
-import { handleApiErrors } from "../utils/api/api-common-error-utils.ts";
-import { toIsoDate } from "../utils/global/date-utils.ts";
-import type { GetDispatchingDataResponse } from "../types/api/loads/load-api-types.ts";
-import type { UpsertDayOffPeriodRequest } from "../types/api/days-off/days-off-api-request-types.ts";
+} from "#/shared/api/constants/apiPaths.constants";
+import { handleApiErrors } from "#/utils/api/api-common-error-utils";
+import { toIsoDate } from "#/utils/global/date-utils";
+import type { GetDispatchingDataResponse } from "#/types/api/loads/load-api-types";
+import type { UpsertDayOffPeriodRequest } from "#/types/api/days-off/days-off-api-request-types";
 import type {
   GetDaysOffPeriodResponse,
   UpsertDaysOffPeriodResponse,
-} from "../types/api/days-off/days-off-api-response-types.ts";
+} from "#/types/api/days-off/days-off-api-response-types";
+import type { ApiResponse, NoContentResponse } from "#/shared/types/api.types";
 
 export const upsertDaysOffPeriod = async (
   request: UpsertDayOffPeriodRequest,
