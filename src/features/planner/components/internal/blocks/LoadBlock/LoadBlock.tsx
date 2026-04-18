@@ -1,7 +1,3 @@
-import {
-  type DriverWorkforce,
-  type LoadData,
-} from "#/types/internal/planner/planner-types";
 import React, { useContext } from "react";
 import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 import { useActivator } from "#/hooks/useActivator";
@@ -15,18 +11,21 @@ import {
 import { DispatchingContext } from "#/context/DispatchingContext";
 import { SchedulableModal } from "#/features/planner/components/internal/forms/SchedulableModal";
 import { LOAD_STATUS_COLORS } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.constants";
-import { LoadBlockDetails } from "#/features/planner/components/internal/blocks/LoadBlockDetails";
+import { LoadBlockDetails } from "#/features/planner/components/internal/blocks/LoadBlockDetails/LoadBlockDetails";
 import { useLoadPosition } from "#/features/planner/hooks/useLoadPosition";
 import { useLoadBlock } from "#/features/planner/hooks/useLoadBlock";
 import {
   getFirstPickUpLocation,
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
+import { Z_INDEX_LOW_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { useMode } from "#/features/planner/components/internal/blocks/LoadBlock/useMode";
+import type { LoadBlockProps } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.types";
 
-export const LoadBlock: React.FC<{
-  driverLoadData: DriverWorkforce;
-  load: LoadData;
-}> = ({ driverLoadData, load }) => {
+export const LoadBlock: React.FC<LoadBlockProps> = ({
+  driverLoadData,
+  load,
+}) => {
   const context = useContext(DispatchingContext)!;
   const { startingPoint, width } = useLoadPosition(load, context.days);
 
@@ -43,8 +42,11 @@ export const LoadBlock: React.FC<{
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
 
+  const { parentRef, childRef, mode, clicked, setClicked } = useMode();
+
   return (
     <div
+      ref={parentRef}
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
       onContextMenu={(e) => {
         if (!loadFormActivator.isActive()) {
@@ -54,17 +56,32 @@ export const LoadBlock: React.FC<{
       onClick={contextMenu.close}
       style={{
         left: `${startingPoint}rem`,
-        width: `${width}rem`,
+        width: clicked
+          ? mode !== "full"
+            ? "18rem"
+            : "fit-content"
+          : `${width}rem`,
       }}
     >
       <div
-        onDoubleClick={loadFormActivator.change}
+        onClick={() => {
+          if (clicked) {
+            setClicked(false);
+          } else if (mode !== "full") {
+            setClicked(true);
+          }
+        }}
+        onDoubleClick={() => {
+          setClicked(false);
+          loadFormActivator.change();
+        }}
         className={`
-          relative h-full mx-1 rounded-lg
+          relative h-full mx-1 rounded-lg w-full
           ${LOAD_STATUS_COLORS[load.loadStatus].backgroundColor}
           flex items-center justify-between px-3 shadow-sm
           cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis
           ${SYSTEM_FONT_NORMAL} text-[0.8rem]
+          ${clicked ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
         `}
       >
         <LoadBlockDetails
@@ -72,7 +89,8 @@ export const LoadBlock: React.FC<{
           load={load}
           startLocation={firstLocation.location}
           endLocation={lastLocation.location}
-          width={width}
+          childRef={childRef}
+          mode={mode}
         />
       </div>
 
