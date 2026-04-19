@@ -6,10 +6,6 @@ import {
   HOVER_BORDER_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
 } from "#/tailwind/tailwind-colors-vars";
-import {
-  SYSTEM_FONT_MEDIUM,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 
 type DriverRegistrationSectionProps = {
   sectionTitle: string;
@@ -54,11 +50,11 @@ export const DriverRegistrationSection: React.FC<
           ${textColor} hover:text-white transition-all ease-in duration-100
         `}
       >
-        <p className={`${SYSTEM_FONT_MEDIUM} text-[1rem]`}>{sectionIndex}</p>
+        <p className={`font-medium text-[1rem]`}>{sectionIndex}</p>
       </div>
       <p
         className={`
-          ${SYSTEM_FONT_NORMAL} text-standard-size text-center 
+          font-normal text-standard-size text-center 
           ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}
         `}
       >

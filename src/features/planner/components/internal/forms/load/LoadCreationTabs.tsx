@@ -1,5 +1,4 @@
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
-import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
 import { TEXT_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
 import { PIPE } from "#/constants/common/global-constants";
 import React from "react";
@@ -16,9 +15,7 @@ export const LoadCreationTabs: React.FC<LoadCreationTabsProps> = ({
   onChange,
 }) => {
   return (
-    <div
-      className={`flex justify-center items-center mb-[2rem] ${SYSTEM_FONT_LIGHT}`}
-    >
+    <div className={`flex justify-center items-center mb-[2rem] font-light`}>
       {loadCreationTypes.map((type, index) => (
         <div
           key={type}

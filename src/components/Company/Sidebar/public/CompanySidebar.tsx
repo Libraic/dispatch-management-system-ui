@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
-import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import {
   ASSETS_ICON_CODE,
@@ -35,9 +34,7 @@ export const CompanySidebar: React.FC<{
     >
       <div className="w-full flex items-center justify-between px-[0.7rem]">
         {sidebarState === "open" && (
-          <p className={`pl-1 ${SYSTEM_FONT_LIGHT} tracking-wide`}>
-            Kovin Group
-          </p>
+          <p className={`pl-1 font-light tracking-wide`}>Kovin Group</p>
         )}
         <div
           className="hover:bg-gray-200 rounded-[0.5rem] w-8 h-8 hover:cursor-pointer"

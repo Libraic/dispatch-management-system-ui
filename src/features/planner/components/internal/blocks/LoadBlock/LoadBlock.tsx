@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 import { useActivator } from "#/hooks/useActivator";
 import { useContextMenu } from "#/hooks/useContextMenu";
 import type { ContextMenuActionItem } from "#/types/internal/common/context-menu-types";
@@ -80,7 +79,7 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
           ${LOAD_STATUS_COLORS[load.loadStatus].backgroundColor}
           flex items-center justify-between shadow-sm
           cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis
-          ${SYSTEM_FONT_NORMAL} text-[0.8rem]
+          font-normal text-[0.8rem]
           ${clicked ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
           border-l-3 ${LOAD_STATUS_COLORS[load.loadStatus].borderColor}
         `}

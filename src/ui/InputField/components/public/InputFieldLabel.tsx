@@ -1,8 +1,4 @@
 import * as React from "react";
-import {
-  SYSTEM_FONT_LIGHT,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
 type InputFieldLabelProps = {
@@ -27,7 +23,7 @@ export const InputFieldLabel: React.FC<InputFieldLabelProps> = ({
     <label
       className={`
         absolute left-3 transition-all duration-200 ease-in-out 
-        ${isFocused ? SYSTEM_FONT_NORMAL : SYSTEM_FONT_LIGHT} text-xs ${textColor}
+        ${isFocused ? "font-normal" : "font-light"} text-xs ${textColor}
         -top-[0.55rem]
         flex items-center gap-x-1
       `}

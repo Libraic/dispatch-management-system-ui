@@ -1,8 +1,4 @@
 import React, { type FC, useCallback, useEffect, useRef } from "react";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_LIGHT,
-} from "#/tailwind/tailwind-font-vars";
 import { BORDER_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
 
 const ITEM_HEIGHT = 44;
@@ -198,7 +194,12 @@ export const Carousel: FC<DrumProps> = ({ items, selected, onChange }) => {
           return (
             <div
               key={flatIdx}
-              className={`flex items-center justify-center cursor-pointer h-[44px] ${isSelected ? SYSTEM_FONT_BOLD : SYSTEM_FONT_LIGHT} tracking-wide ${isSelected ? "text-black" : "text-[#757575]"}`}
+              className={`
+                flex items-center justify-center cursor-pointer h-[44px] 
+                ${isSelected ? "font-bold" : "font-light"} 
+                tracking-wide 
+                ${isSelected ? "text-black" : "text-[#757575]"}
+              `}
               style={{
                 fontSize: isSelected ? 22 : 18,
                 transition: "font-size 0.15s ease, color 0.15s ease",

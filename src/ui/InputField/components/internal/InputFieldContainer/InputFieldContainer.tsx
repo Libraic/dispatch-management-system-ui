@@ -1,7 +1,6 @@
 import { type ChangeEvent, forwardRef, useState } from "react";
 import { ErrorContainer } from "#/ui/ErrorContainer/ErrorContainer";
 import { BLANK_STRING } from "#/constants/common/global-constants";
-import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
 import { InputFieldLabel } from "#/ui/InputField/components/public/InputFieldLabel";
 import type { InputFieldContainerProps } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer.types";
 import { getInputTagNameFromLabel } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer.utils";
@@ -73,7 +72,7 @@ export const InputFieldContainer = forwardRef<
           <input
             disabled={isReadOnly}
             className={`
-              py-[1.15rem] leading-none ${SYSTEM_FONT_LIGHT} text-[0.85rem] 
+              py-[1.15rem] leading-none font-light text-[0.85rem] 
               bg-transparent rounded-sm border-none focus:outline-none w-[15rem] 
               ${isReadOnly && "cursor-not-allowed text-[#9ca3af]"}
             `}

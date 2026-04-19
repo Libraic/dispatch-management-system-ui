@@ -3,10 +3,6 @@ import {
   type VehicleMaintenanceData,
 } from "#/types/internal/planner/planner-types";
 import React, { useContext } from "react";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import { SchedulableModal } from "#/features/planner/components/internal/forms/SchedulableModal";
 import { useActivator } from "#/hooks/useActivator";
 import { useToast } from "#/ui/Toast/useToast";
@@ -106,18 +102,18 @@ export const VehicleMaintenanceBlock: React.FC<{
           overflow-hidden
           whitespace-nowrap
           text-ellipsis 
-          ${SYSTEM_FONT_NORMAL} text-[0.8rem]
+          font-normal text-[0.8rem]
         `}
       >
         <div className="flex flex-row justify-between items-center gap-2 w-full">
           <GoogleIcon code="car_repair" size={1.5} />
           <div>
             <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#dd571c] ${SYSTEM_FONT_BOLD}`}
+              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-[#dd571c] font-bold`}
             >
               Service
             </p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
+            <p className={`font-bold text-[0.7rem]`}>
               {vehicleMaintenanceData.location}
             </p>
           </div>

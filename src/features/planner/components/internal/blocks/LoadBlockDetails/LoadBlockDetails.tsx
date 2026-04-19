@@ -1,4 +1,3 @@
-import { SYSTEM_FONT_BOLD } from "#/tailwind/tailwind-font-vars";
 import React from "react";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import { BLANK_STRING } from "#/constants/common/global-constants";
@@ -41,9 +40,7 @@ export const LoadBlockDetails: React.FC<LoadBlockDetailsProps> = ({
           <GoogleIcon code="inventory_2" size={1.25} fontColor="#6b7280" />
           <div>
             <p className="text-center text-[0.6rem]">{load.broker}</p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>
-              {startLocation}
-            </p>
+            <p className={`font-bold text-[0.7rem]`}>{startLocation}</p>
           </div>
         </div>
 
@@ -63,7 +60,7 @@ export const LoadBlockDetails: React.FC<LoadBlockDetailsProps> = ({
               loadStatus={load.loadStatus}
               textColor={textColor}
             />
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.7rem]`}>{endLocation}</p>
+            <p className={`font-bold text-[0.7rem]`}>{endLocation}</p>
           </div>
         </div>
       </div>
@@ -74,11 +71,9 @@ export const LoadBlockDetails: React.FC<LoadBlockDetailsProps> = ({
             loadStatus={load.loadStatus}
             textColor={textColor}
           />
-          <span className={`truncate ${SYSTEM_FONT_BOLD}`}>
-            {startLocation}
-          </span>
+          <span className={`truncate font-bold`}>{startLocation}</span>
 
-          <span className={`truncate ${SYSTEM_FONT_BOLD}`}>{endLocation}</span>
+          <span className={`truncate font-bold`}>{endLocation}</span>
         </div>
       )}
 

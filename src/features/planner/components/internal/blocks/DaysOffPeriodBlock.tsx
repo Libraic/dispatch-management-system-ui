@@ -6,10 +6,6 @@ import { DispatchingContext } from "#/context/DispatchingContext";
 import { useContextMenu } from "#/hooks/useContextMenu";
 import type { ContextMenuActionItem } from "#/types/internal/common/context-menu-types";
 import { getDeleteOption } from "#/utils/context-menu/context-menu-utils";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import { SchedulableModal } from "#/features/planner/components/internal/forms/SchedulableModal";
 import { ContextMenu } from "#/ui/ContextMenu/public/ContextMenu";
 import type {
@@ -105,18 +101,18 @@ export const DaysOffPeriodBlock: React.FC<{
           overflow-hidden
           whitespace-nowrap
           text-ellipsis 
-          ${SYSTEM_FONT_NORMAL} text-[0.8rem]
+          font-normal text-[0.8rem]
         `}
       >
         <div className="flex flex-row items-center justify-between w-full">
           <GoogleIcon code="event_busy" size={1.5} />
           <div>
             <p
-              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-black ${SYSTEM_FONT_BOLD}`}
+              className={`text-center border-[0.05rem] rounded-[0.2rem] text-[0.6rem] text-black font-bold`}
             >
               Days Off
             </p>
-            <p className={`${SYSTEM_FONT_BOLD} text-[0.6rem]`}>
+            <p className={`font-bold text-[0.6rem]`}>
               {toIsoDate(daysOffPeriodData.startDate)}
             </p>
           </div>

@@ -6,7 +6,6 @@ import { INTERNAL_SERVER_ERROR } from "#/constants/error/error-message-constants
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
 import type { CompanyData } from "#/types/api/company/company-api-response-types";
 import { SidebarWrapper } from "#/components/SidebarWrapper";
-import { SYSTEM_FONT_BOLD } from "#/tailwind/tailwind-font-vars";
 
 export const CompanyDashboardPage = () => {
   const { companyUuid } = useParams();
@@ -31,7 +30,7 @@ export const CompanyDashboardPage = () => {
     <SidebarWrapper>
       <div>
         <div className="flex flex-col gap-y-2 items-center">
-          <p className={`${SYSTEM_FONT_BOLD} text-[2.3rem]`}>{company?.name}</p>
+          <p className={`font-bold text-[2.3rem]`}>{company?.name}</p>
         </div>
         <ToastRenderer toast={toast} />
       </div>

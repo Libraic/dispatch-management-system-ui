@@ -1,5 +1,4 @@
 import { type FC, useEffect, useRef, useState } from "react";
-import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 import { InputFieldLabel } from "#/ui/InputField/components/public/InputFieldLabel";
 import { TimeSelector } from "#/ui/TimePicker/internal/TimeSelector";
 import type { Time } from "#/types/internal/planner/planner-types";
@@ -94,7 +93,7 @@ export const TimePicker: FC<TimePickerProps> = ({ time, setTime, label }) => {
               <polyline points="12 6 12 12 16 14" />
             </svg>
             <span
-              className={`flex-1 ${SYSTEM_FONT_NORMAL} text-[0.85rem] tracking-[0.04em]`}
+              className={`flex-1 font-normal text-[0.85rem] tracking-[0.04em]`}
             >
               {`${time.hour}:${time.minute} ${time.period}`}
             </span>

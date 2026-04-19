@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 @theme {
-    --font-inter-tight: "Inter Tight", sans-serif;
+    --font-sans: "Inter Tight", sans-serif;
 
     --color-solid-purple: #6c3ef5;
     --color-normal-purple: #7949ff;

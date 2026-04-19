@@ -1,5 +1,4 @@
 import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
-import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
 import React from "react";
 import type { DriverWorkforce } from "#/types/internal/planner/planner-types";
 import {
@@ -20,7 +19,7 @@ export const DriverRowMetadata: React.FC<DriverRowMetadataProps> = ({
   return (
     <React.Fragment>
       <div
-        className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
+        className={`flex flex-col items-center justify-center font-light h-full border-x-1 border-b-1 ${TABLE_BORDER_BASE_COLOR}`}
       >
         <p>{driverLoadData.driver && driverLoadData.driver.fullName}</p>
         <p className="text-gray-500">

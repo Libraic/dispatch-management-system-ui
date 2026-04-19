@@ -8,10 +8,6 @@ import {
   LOAD_FORM_METADATA,
   type SchedulableFormProps,
 } from "#/types/internal/planner/planner-types";
-import {
-  SYSTEM_FONT_LIGHT,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import { LoadForm } from "./load/LoadForm";
 import {
   HOVER_TEXT_NORMAL_COLOR,
@@ -61,15 +57,13 @@ export const SchedulableModal: React.FC<{
           animate-[var(--animate-modal-enter)] ${closing ? "animate-[var(--animate-modal-exit)]" : ""}
         `}
       >
-        <p className={`${SYSTEM_FONT_NORMAL}`}>
-          {LOAD_FORM_METADATA[modalType].name}
-        </p>
-        <p className={`pb-[3rem] ${SYSTEM_FONT_LIGHT} text-[0.95rem]`}>
+        <p className={`font-normal`}>{LOAD_FORM_METADATA[modalType].name}</p>
+        <p className={`pb-[3rem] font-light text-[0.95rem]`}>
           {LOAD_FORM_METADATA[modalType].description}
         </p>
         {!props?.calendarBookModalType && (
           <div
-            className={`flex flex-row items-center justify-center mb-[2rem] ${SYSTEM_FONT_LIGHT} ml-[2rem] text-[0.85rem]`}
+            className={`flex flex-row items-center justify-center mb-[2rem] font-light ml-[2rem] text-[0.85rem]`}
           >
             {CalendarBookModalTypes.map((type, index) => (
               <div

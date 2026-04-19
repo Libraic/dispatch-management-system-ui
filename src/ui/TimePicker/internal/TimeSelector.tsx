@@ -2,10 +2,6 @@ import { Carousel } from "./Carousel";
 import { PeriodButton } from "./PeriodButton";
 import { type FC, type RefObject, useState } from "react";
 import { createPortal } from "react-dom";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import { Z_INDEX_HIGH_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
 import type { Period, Time } from "#/types/internal/planner/planner-types";
 
@@ -58,7 +54,7 @@ export const TimeSelector: FC<{
     >
       <div className="flex items-center justify-center mb-1">
         <Carousel items={HOURS} selected={hour} onChange={setHour} />
-        <p className={`${SYSTEM_FONT_NORMAL} text-[1.5rem] pb-1 px-0.5`}>:</p>
+        <p className={`font-normal text-[1.5rem] pb-1 px-0.5`}>:</p>
         <Carousel items={MINUTES} selected={minute} onChange={setMinute} />
       </div>
 
@@ -76,7 +72,7 @@ export const TimeSelector: FC<{
       <button
         type="button"
         onClick={handleDone}
-        className={`mt-3 w-full py-[11px] rounded-[12px] text-[13px] ${SYSTEM_FONT_BOLD} tracking-widest cursor-pointer transition-opacity duration-150 hover:opacity-85 border-0 hover:text-black text-system-gray`}
+        className={`mt-3 w-full py-[11px] rounded-[12px] text-[13px] font-bold tracking-widest cursor-pointer transition-opacity duration-150 hover:opacity-85 border-0 hover:text-black text-system-gray`}
       >
         DONE
       </button>

@@ -1,8 +1,3 @@
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_LIGHT,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import React, { useRef } from "react";
 import { ErrorContainer } from "#/ui/ErrorContainer/ErrorContainer";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
@@ -50,10 +45,8 @@ export const IngestionLoad: React.FC<{
   return (
     <div className="flex flex-col mb-[2rem] gap-y-[1.15rem]">
       <div className="flex justify-center items-center flex-col">
-        <p className={`${SYSTEM_FONT_BOLD} text-[1.2rem]`}>
-          Upload your Invoice
-        </p>
-        <p className={`${SYSTEM_FONT_LIGHT} text-[0.9rem]`}>
+        <p className={`font-bold text-[1.2rem]`}>Upload your Invoice</p>
+        <p className={`font-light text-[0.9rem]`}>
           The columns that present ambiguities/uncertainties will be left blank
         </p>
       </div>
@@ -65,10 +58,10 @@ export const IngestionLoad: React.FC<{
       >
         <GoogleIcon code="cloud_upload" size={2.5} />
         <div className="flex items-center justify-center flex-col">
-          <p className={`${SYSTEM_FONT_LIGHT} text-[0.9rem]`}>
+          <p className={`font-light text-[0.9rem]`}>
             Drag and drop your document or select from computer
           </p>
-          <p className={`${SYSTEM_FONT_LIGHT} text-[0.9rem] text-gray-400`}>
+          <p className={`font-light text-[0.9rem] text-gray-400`}>
             Supported files: .pdf
           </p>
         </div>
@@ -82,13 +75,11 @@ export const IngestionLoad: React.FC<{
         />
 
         {file && (
-          <p className={`text-sm ${SYSTEM_FONT_NORMAL}`}>
-            {truncateFileName(file.name)}
-          </p>
+          <p className={`text-sm font-normal`}>{truncateFileName(file.name)}</p>
         )}
 
         <div className="border border-gray-400 rounded-[0.3rem] py-1 px-3 hover:cursor-pointer hover:bg-light-blue hover:border-light-blue hover:text-white">
-          <p className={`${SYSTEM_FONT_NORMAL} text-[0.85rem]`}>Select file</p>
+          <p className={`font-normal text-[0.85rem]`}>Select file</p>
         </div>
         <div className="h-[1.5rem] flex items-center">
           {errorMessage && <ErrorContainer errorMessage={errorMessage} />}

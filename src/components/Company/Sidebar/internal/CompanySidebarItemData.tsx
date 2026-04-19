@@ -1,9 +1,5 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  SYSTEM_FONT_BOLD,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 import { Z_INDEX_NORMAL_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
@@ -41,14 +37,14 @@ export const CompanySidebarItemData: React.FC<{
       )}
       {sidebarState === "closed" && isHovered && (
         <p
-          className={`ml-[0.6rem] px-2 text-[0.8rem] ${Z_INDEX_NORMAL_PRECEDENCE} bg-black text-white ${SYSTEM_FONT_NORMAL} tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}
+          className={`ml-[0.6rem] px-2 text-[0.8rem] ${Z_INDEX_NORMAL_PRECEDENCE} bg-black text-white font-normal tracking-wide rounded-[0.2rem] inline-block whitespace-nowrap`}
         >
           {label}
         </p>
       )}
       {sidebarState === "open" && (
         <p
-          className={`text-[0.8rem] text-black ${isHovered || isClicked ? SYSTEM_FONT_BOLD : SYSTEM_FONT_NORMAL} tracking-wide`}
+          className={`text-[0.8rem] text-black ${isHovered || isClicked ? "font-bold" : "font-normal"} tracking-wide`}
         >
           {label}
         </p>

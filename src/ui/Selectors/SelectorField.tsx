@@ -1,9 +1,5 @@
 import { type ReactNode, useState } from "react";
 import { BORDER_SOLID_COLOR } from "#/tailwind/tailwind-colors-vars";
-import {
-  SYSTEM_FONT_LIGHT,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 
 type SelectFormData<T extends ReactNode, D extends string | number> = {
   initialValue: D;
@@ -22,9 +18,9 @@ export const SelectorField = <T extends ReactNode, D extends string | number>({
 
   return (
     <div className={`${borderColor}`}>
-      {label && <p className={`${SYSTEM_FONT_NORMAL} ml-2`}>{label}</p>}
+      {label && <p className={`font-normal ml-2`}>{label}</p>}
       <select
-        className={`flex items-center py-0.5 w-fit ${SYSTEM_FONT_LIGHT} text-standard-size bg-transparent rounded-[0.75rem] border-2 focus:outline-none focus:ring-0 text-center hover:cursor-pointer select-none ${borderColor} min-w-[8rem] min-h-[2.5rem]`}
+        className={`flex items-center py-0.5 w-fit font-light text-standard-size bg-transparent rounded-[0.75rem] border-2 focus:outline-none focus:ring-0 text-center hover:cursor-pointer select-none ${borderColor} min-w-[8rem] min-h-[2.5rem]`}
         value={initialValue}
         onFocus={() => setBorderColor(BORDER_SOLID_COLOR)}
         onBlur={() => setBorderColor("border-light-grey")}

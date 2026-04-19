@@ -7,7 +7,6 @@ import {
   HOVER_BORDER_B_NORMAL_COLOR,
   ODD_BACKGROUND_LIGHT_GRAY,
 } from "#/tailwind/tailwind-colors-vars";
-import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 
 export const TrucksTableContent: React.FC<{ trucks: TruckData[] }> = ({
   trucks,
@@ -17,7 +16,7 @@ export const TrucksTableContent: React.FC<{ trucks: TruckData[] }> = ({
       {trucks.map((truck, index) => (
         <div
           key={index}
-          className={`grid items-center ${TRUCKS_VIEW_COLUMNS_LAYOUT} ${ODD_BACKGROUND_LIGHT_GRAY} h-[2.75rem] ${SYSTEM_FONT_NORMAL} text-[0.85rem] px-[2rem] ${HOVER_BACKGROUND_NORMAL_COLOR} ${HOVER_BORDER_B_NORMAL_COLOR} hover:text-white w-[100%]`}
+          className={`grid items-center ${TRUCKS_VIEW_COLUMNS_LAYOUT} ${ODD_BACKGROUND_LIGHT_GRAY} h-[2.75rem] font-normal text-[0.85rem] px-[2rem] ${HOVER_BACKGROUND_NORMAL_COLOR} ${HOVER_BORDER_B_NORMAL_COLOR} hover:text-white w-[100%]`}
         >
           <TableCell data={truck.truckNumber} />
           <TableCell data={truck.vinNumber} />

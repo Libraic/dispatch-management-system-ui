@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { DispatchingRelation } from "#/types/internal/planner/planner-types";
 import type { Activator } from "#/hooks/useActivator";
-import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
 import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
 import {
   PLANNER_GRID_LAYOUT,
@@ -47,7 +46,7 @@ export const DispatcherRow: React.FC<{
         className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
       >
         <div
-          className={`flex flex-col items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-x-1 ${TABLE_BORDER_BASE_COLOR} hover:cursor-pointer select-none`}
+          className={`flex flex-col items-center justify-center font-light h-full border-x-1 ${TABLE_BORDER_BASE_COLOR} hover:cursor-pointer select-none`}
           onClick={handleOnClickFn}
         >
           <p>
@@ -60,17 +59,17 @@ export const DispatcherRow: React.FC<{
           </p>
         </div>
         <div
-          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center font-light h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatCurrency(dispatchingRelation.totalRevenue)}
         </div>
         <div
-          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center font-light h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatNumber(dispatchingRelation.totalMiles)}
         </div>
         <div
-          className={`flex items-center justify-center ${SYSTEM_FONT_LIGHT} h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
+          className={`flex items-center justify-center font-light h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
           {formatCurrency(
             divide(

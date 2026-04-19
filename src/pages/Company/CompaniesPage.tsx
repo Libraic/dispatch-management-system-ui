@@ -10,10 +10,6 @@ import {
 import { BackButton } from "#/ui/Buttons/BackButton";
 import type { CompanyData } from "#/types/api/company/company-api-response-types";
 import { HOVER_BACKGROUND_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
-import {
-  SYSTEM_FONT_LIGHT,
-  SYSTEM_FONT_NORMAL,
-} from "#/tailwind/tailwind-font-vars";
 
 export const CompaniesPage = () => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);
@@ -33,7 +29,7 @@ export const CompaniesPage = () => {
     <div className="w-screen flex flex-col items-center mt-10">
       <BackButton url={LANDING} />
       <div
-        className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] ${SYSTEM_FONT_NORMAL} rounded-[0.3rem] px-[3rem] mt-6`}
+        className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-normal rounded-[0.3rem] px-[3rem] mt-6`}
       >
         <div className="flex items-center">
           <input type="checkbox" className="w-4 h-4 cursor-pointer" />
@@ -47,7 +43,7 @@ export const CompaniesPage = () => {
 
       {companies.map((company, index) => (
         <div
-          className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white ${HOVER_BACKGROUND_NORMAL_COLOR} text-left ${SYSTEM_FONT_LIGHT} px-[3rem] rounded-[0.3rem] even:bg-[#f6f6f6]`}
+          className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white ${HOVER_BACKGROUND_NORMAL_COLOR} text-left font-light px-[3rem] rounded-[0.3rem] even:bg-[#f6f6f6]`}
           key={index}
           onClick={() =>
             navigate(`/dashboard/${encodeURIComponent(company.uuid)}`)

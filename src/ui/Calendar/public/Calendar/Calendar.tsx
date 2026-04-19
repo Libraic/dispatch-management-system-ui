@@ -9,7 +9,6 @@ import { CalendarTimeUnitSelector } from "#/ui/Calendar/internal/CalendarTimeUni
 import { CalendarBody } from "#/ui/Calendar/internal/CalendarBody";
 import { useOnClickOutside } from "#/hooks/useClickOutside";
 import type { DayOfMonth } from "#/types/internal/time/date-types";
-import { SYSTEM_FONT_NORMAL } from "#/tailwind/tailwind-font-vars";
 import type {
   CalendarProps,
   CalendarTimeline,
@@ -65,7 +64,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         left: `${left}px`,
       }}
       onClick={(e) => e.stopPropagation()}
-      className={`absolute z-9999 bg-white/20 backdrop-blur-lg w-[17.25rem] h-fit border-[0.08rem] border-gray-300 rounded-[0.35rem] px-2 py-1 ${SYSTEM_FONT_NORMAL}`}
+      className={`absolute z-9999 bg-white/20 backdrop-blur-lg w-[17.25rem] h-fit border-[0.08rem] border-gray-300 rounded-[0.35rem] px-2 py-1 font-normal`}
     >
       <div className="flex flex-row items-center gap-x-10 text-[0.9rem]">
         <CalendarTimeUnitSelector
