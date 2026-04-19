@@ -24,7 +24,7 @@ export const Option: React.FC<{
       {icon}
       <div>
         <p className={`text-[1rem] font-bold`}>{header}</p>
-        <p className={`text-standard-size font-light`}>{description}</p>
+        <p className="text-[0.9rem] font-light">{description}</p>
       </div>
     </div>
   );

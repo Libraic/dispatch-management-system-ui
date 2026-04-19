@@ -20,7 +20,7 @@ export const SelectorField = <T extends ReactNode, D extends string | number>({
     <div className={`${borderColor}`}>
       {label && <p className={`font-normal ml-2`}>{label}</p>}
       <select
-        className={`flex items-center py-0.5 w-fit font-light text-standard-size bg-transparent rounded-[0.75rem] border-2 focus:outline-none focus:ring-0 text-center hover:cursor-pointer select-none ${borderColor} min-w-[8rem] min-h-[2.5rem]`}
+        className={`flex items-center py-0.5 w-fit font-light text-[0.9rem] bg-transparent rounded-[0.75rem] border-2 focus:outline-none focus:ring-0 text-center hover:cursor-pointer select-none ${borderColor} min-w-[8rem] min-h-[2.5rem]`}
         value={initialValue}
         onFocus={() => setBorderColor(BORDER_SOLID_COLOR)}
         onBlur={() => setBorderColor("border-light-grey")}

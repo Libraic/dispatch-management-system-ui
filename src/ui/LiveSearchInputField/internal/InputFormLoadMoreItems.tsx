@@ -14,7 +14,7 @@ export const InputFormLoadMoreItems: React.FC<InputFormLoadMoreItemsProps> = ({
     <div>
       {pagination.getSize() < pagination.getNumberOfRecords() && (
         <div
-          className={`hover:cursor-pointer ${HOVER_TEXT_SOLID_COLOR} text-standard-size font-normal`}
+          className={`hover:cursor-pointer ${HOVER_TEXT_SOLID_COLOR} text-[0.9rem] font-normal`}
           onClick={pagination.increaseSize}
         >
           {LOAD_MORE_ELEMENTS}

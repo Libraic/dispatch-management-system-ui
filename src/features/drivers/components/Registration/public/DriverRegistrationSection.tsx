@@ -54,7 +54,7 @@ export const DriverRegistrationSection: React.FC<
       </div>
       <p
         className={`
-          font-normal text-standard-size text-center 
+          font-normal text-[0.9rem] text-center 
           ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}
         `}
       >

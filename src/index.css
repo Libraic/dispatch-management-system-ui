@@ -5,16 +5,8 @@
 @theme {
     --font-sans: "Inter Tight", sans-serif;
 
-    --color-solid-purple: #6c3ef5;
-    --color-normal-purple: #7949ff;
-    --color-light-purple: #9370ff;
-    --color-diluted-purple: #f1ecff;
-
     --color-solid-gray: #3b3b3b;
     --color-light-gray: #f4f4fb;
-
-    /* Matrix Board Colors */
-    --color-standard-bg: #f4effa;
 
     --color-light-blue: #4e71ff;
     --color-solid-blue: #3a59d1;
@@ -25,9 +17,6 @@
     --color-system-gray: #757575;
 
     --color-pale-blue: #c4d1f3;
-    --color-blue-grey: #f5f7fc;
-
-    --text-standard-size: 0.9rem;
 
     --animate-modal-enter: modal-enter 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
     --animate-modal-exit: modal-exit 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
