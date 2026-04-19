@@ -33,7 +33,6 @@ export const PlannerWorkforceRow: React.FC<{
           {Array.from({ length: 14 }).map((_, index) => (
             <PlannerCalendarCell
               key={index}
-              day={days[index]}
               formProps={{
                 day: days[index],
                 workforce: workforce,
