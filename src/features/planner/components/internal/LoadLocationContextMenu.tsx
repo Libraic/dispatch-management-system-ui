@@ -9,6 +9,7 @@ import { useContextMenu } from "#/hooks/useContextMenu";
 import { createPortal } from "react-dom";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import { LoadContext } from "#/features/planner/context/LoadContext";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 const iconsResources: Record<LocationLabel, string> = {
   "Pick Up": "box",
@@ -88,7 +89,12 @@ export const LoadLocationContextMenu: React.FC<{
   return (
     <div>
       <div onContextMenu={contextMenu.open} onClick={() => contextMenu.close()}>
-        <div className="flex items-center justify-center text-[#6b7280] hover:text-[#4e71ff]">
+        <div
+          className={`
+            flex items-center justify-center text-[#6b7280] 
+            ${loadLocation.label === "Pick Up" || loadLocation.label === "Delivery" ? "hover:text-[#4e71ff]" : BLANK_STRING}
+          `}
+        >
           <GoogleIcon code={iconCode} size={2} weight={300} />
         </div>
         {contextMenu.isActive() &&

@@ -17,6 +17,7 @@ import type {
   GetLoadResponse,
 } from "#/types/api/loads/load-api-types";
 import { hhmmToTime } from "#/types/internal/time/time-types";
+import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
 
 export const mapLoadDataToDispatcherRelation = (
   prevDispatcherLoadDataList: DispatchingRelation[],
@@ -144,6 +145,7 @@ export const updateLoadsAfterDeletions = (
 export const fromGetLoadResponseToLoadData = (
   loadResponse: GetLoadResponse,
   day?: string,
+  loadCreationType?: LoadCreationType,
 ): LoadData => {
   const startDate = loadResponse.startDate
     ? toNormalizedIsoDate(loadResponse.startDate)
@@ -163,7 +165,11 @@ export const fromGetLoadResponseToLoadData = (
     loadStatus: loadResponse.loadStatus ?? "Booked",
     startDate: startDate,
     endDate: endDate,
-    locations: fromApiLoadLocationsToLoadLocationsData(loadResponse.locations),
+    locations: fromApiLoadLocationsToLoadLocationsData(
+      loadResponse.locations,
+      day,
+      loadCreationType,
+    ),
   };
 };
 
@@ -186,21 +192,43 @@ export const getBlankLoadData = (
 
 export const fromApiLoadLocationsToLoadLocationsData = (
   locations?: ApiLoadLocation[],
+  day?: string,
+  loadCreationType?: LoadCreationType,
 ): LoadLocationData[] => {
   const loadLocations: LoadLocationData[] = [];
-  if (!locations) {
+  if (!locations || locations.length === 0) {
+    if (loadCreationType === "Ingestion") {
+      return getInitialLoadLocations(day ? new Date(day) : new Date());
+    }
+
     return loadLocations;
   }
 
   for (let i = 0; i < locations.length; i++) {
     const location = locations[i];
+    if (
+      loadCreationType === "Ingestion" &&
+      i === 0 &&
+      location.label !== "Starting Point"
+    ) {
+      const startingPoint = getBlankLocation(
+        new Date(location.date ?? new Date()),
+        loadLocations.length,
+        "Starting Point",
+        location.location,
+      );
+      loadLocations.push(startingPoint);
+    }
+
     const loadLocation = {
       uuid: generateUuid(),
       label: location.label as LocationLabel,
       date: location.date ? new Date(location.date) : new Date(),
       time: hhmmToTime(location.time),
       location: location.location ?? BLANK_STRING,
-      order: location.order ?? i,
+      // The locations are coming sorted from API, so we can use the length of the array as the order,
+      // without having to normalize the order if we added a starting point.
+      order: loadLocations.length,
     };
     loadLocations.push(loadLocation);
   }

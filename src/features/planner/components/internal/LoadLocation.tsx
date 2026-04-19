@@ -13,6 +13,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { TimePicker } from "#/ui/TimePicker/public/TimePicker";
 import { LoadContext } from "#/features/planner/context/LoadContext";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 type LoadLocationProps = {
   loadLocation: LoadLocationData;
@@ -61,7 +62,11 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
 
   return (
     <div
-      className={`flex flex-row gap-x-5 items-center cursor-grab active:cursor-grabbing`}
+      className={`
+        flex flex-row gap-x-5 items-center 
+        ${isDeliveryOrPickUp ? "cursor-grab" : BLANK_STRING} 
+        ${isDeliveryOrPickUp ? "active:cursor-grabbing" : BLANK_STRING}
+      `}
       ref={isDeliveryOrPickUp ? setNodeRef : undefined}
       style={isDeliveryOrPickUp ? style : undefined}
       {...(isDeliveryOrPickUp ? attributes : {})}

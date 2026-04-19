@@ -51,7 +51,11 @@ export function useLoadForm(
       throw new Error(response.error.message);
     }
 
-    const ingestedLoadData = fromGetLoadResponseToLoadData(response.data);
+    const ingestedLoadData = fromGetLoadResponseToLoadData(
+      response.data,
+      undefined,
+      "Ingestion",
+    );
 
     setLoadData(ingestedLoadData);
     setLoadCreationType("Manual");
