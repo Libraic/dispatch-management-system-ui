@@ -76,12 +76,13 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
           loadFormActivator.change();
         }}
         className={`
-          relative h-full mx-1 rounded-lg w-full
+          relative h-full mx-1 rounded-r-lg rounded-l-[0.2rem] w-full
           ${LOAD_STATUS_COLORS[load.loadStatus].backgroundColor}
           flex items-center justify-between px-3 shadow-sm
           cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis
           ${SYSTEM_FONT_NORMAL} text-[0.8rem]
           ${clicked ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
+          border-l-3 ${LOAD_STATUS_COLORS[load.loadStatus].borderColor}
         `}
       >
         <LoadBlockDetails
