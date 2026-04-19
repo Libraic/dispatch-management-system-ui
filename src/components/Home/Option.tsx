@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { BORDER_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { BORDER_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 export const Option: React.FC<{
   icon: React.ReactNode;

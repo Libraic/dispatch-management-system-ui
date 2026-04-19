@@ -6,7 +6,7 @@ import {
   USA_COUNTRY_ISO_CODE,
 } from "#/utils/location/location-utils";
 import type { CreateDriverRequest } from "#/types/api/driver/driver-api-request-types";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const documentsStatuses = ["Work Permit", "Green Card", "Citizen"];
 export const driverPositions = ["Owner Operator", "Company Driver"];

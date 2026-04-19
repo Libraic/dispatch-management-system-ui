@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { setObjectStringField } from "#/utils/registration/registration-utils";
 import { PHONE_NUMBER_PLACEHOLDER } from "#/constants/common/placeholder-constants";
 import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegistrationContext";
-import { formatPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { formatPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const DriverBasicInfoSection = () => {
   const context = useContext(DriverRegistrationContext)!;

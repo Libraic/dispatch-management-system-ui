@@ -10,7 +10,7 @@ import {
   validatePhoneNumber,
 } from "#/utils/registration/registration-utils";
 import { ErroneousSections } from "#/types/internal/classes/ErroneousSections";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const getDriverRegistrationErrors = (
   driverRegistrationData: DriverRegistrationData,

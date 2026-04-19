@@ -6,7 +6,7 @@ import {
   HOVER_BACKGROUND_NORMAL_COLOR,
   HOVER_BORDER_B_NORMAL_COLOR,
   ODD_BACKGROUND_LIGHT_GRAY,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 
 export const TrucksTableContent: React.FC<{ trucks: TruckData[] }> = ({
   trucks,

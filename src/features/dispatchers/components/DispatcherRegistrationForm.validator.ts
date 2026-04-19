@@ -6,7 +6,7 @@ import {
   validateMandatoryField,
   validatePhoneNumber,
 } from "#/utils/registration/registration-utils";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const validateDispatcherRegistrationData = (
   dispatcherRegistrationData: DispatcherRegistrationData,

@@ -1,8 +1,8 @@
 import React from "react";
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { PLANNER_GRID_LAYOUT } from "#/constants/planner/planner-constants";
 import { BLANK_STRING } from "#/constants/common/global-constants";
-import { Z_INDEX_LOW_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_LOW_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { isoDaysToPlannerHeaderDays } from "#/features/planner/components/public/PlannerHeader/PlannerHeader.utils";
 
 type PlannerHeaderProps = {

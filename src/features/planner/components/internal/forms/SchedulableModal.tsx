@@ -12,11 +12,11 @@ import { LoadForm } from "./load/LoadForm";
 import {
   HOVER_TEXT_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 import { BLANK_STRING, PIPE } from "#/constants/common/global-constants";
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm";
 import { DaysOffForm } from "./DaysOffForm";
-import { Z_INDEX_MEDIUM_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_MEDIUM_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { Spinner } from "#/ui/Spinner/Spinner";
 import { useModalEffect } from "#/features/planner/hooks/useModalEffect";
 import { useSchedulableParams } from "#/features/planner/hooks/useSchedulableParams";

@@ -17,7 +17,7 @@ import {
   getFirstPickUpLocation,
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
-import { Z_INDEX_LOW_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_LOW_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { useMode } from "#/features/planner/components/internal/blocks/LoadBlock/useMode";
 import type { LoadBlockProps } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.types";
 

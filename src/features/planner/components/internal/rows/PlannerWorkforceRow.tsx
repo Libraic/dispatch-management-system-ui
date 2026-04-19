@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import type { DriverWorkforce } from "#/types/internal/planner/planner-types";
 import { PlannerCalendarCell } from "#/features/planner/components/internal/PlannerCalendarCell";
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import clsx from "clsx";
 import {
   PLANNER_GRID_LAYOUT,

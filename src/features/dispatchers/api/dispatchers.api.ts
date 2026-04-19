@@ -2,7 +2,7 @@ import type { DispatcherRegistrationData } from "#/types/internal/dispatcher/dis
 import type { ApiError, Result } from "#/shared/types/api.types";
 import type { UpsertLoadResponse } from "#/types/api/loads/load-api-types";
 import type { CreateDispatcherRequest } from "#/types/api/dispatcher/dispatcher-api-request-types";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 import axios from "axios";
 import { DISPATCHERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";

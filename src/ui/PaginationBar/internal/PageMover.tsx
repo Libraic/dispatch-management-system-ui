@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   HOVER_BACKGROUND_NORMAL_COLOR,
   HOVER_BORDER_NORMAL_COLOR,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 
 type PageMoverProps = {
   icon: React.ReactNode;

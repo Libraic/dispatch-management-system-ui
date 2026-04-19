@@ -1,5 +1,5 @@
 import React, { type FC, useCallback, useEffect, useRef } from "react";
-import { BORDER_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { BORDER_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 const ITEM_HEIGHT = 44;
 const VISIBLE_ITEMS = 5;

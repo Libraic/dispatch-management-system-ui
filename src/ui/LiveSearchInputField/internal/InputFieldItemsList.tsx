@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HOVER_TEXT_SOLID_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { HOVER_TEXT_SOLID_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import type { Renderable } from "#/types/internal/classes/Renderable";
 
 type InputFieldItemsListProps = {

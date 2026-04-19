@@ -12,7 +12,7 @@ import {
   MILES_REQUIRED_ERROR,
   REVENUE_REQUIRED_ERROR,
 } from "#/constants/error/error-message-constants";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const getErrorsIfPresent = (loadData: LoadData) => {
   const loadErrors: LoadDataError = {};

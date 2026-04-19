@@ -3,7 +3,7 @@ import {
   BORDER_SOLID_COLOR,
   HOVER_BACKGROUND_SOLID_COLOR,
   HOVER_BORDER_SOLID_COLOR,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 
 type SubmitButtonProps = {
   actionText: string;

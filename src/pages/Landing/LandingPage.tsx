@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { HOME } from "#/constants/route/internal-route-constants";
 import { Gradient } from "#/ui/Gradient/Gradient";
-import { BORDER_SOLID_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { BORDER_SOLID_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 export const LandingPage = () => {
   const navigate = useNavigate();

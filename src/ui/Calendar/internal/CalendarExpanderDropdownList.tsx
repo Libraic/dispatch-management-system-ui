@@ -1,7 +1,7 @@
 import {
   BACKGROUND_PALE_BLUE,
   HOVER_BACKGROUND_PALE_BLUE,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 import * as React from "react";
 
 type CalendarExpanderDropdownListProps = {

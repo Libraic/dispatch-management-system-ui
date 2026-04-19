@@ -14,7 +14,7 @@ import { ZERO } from "#/constants/common/global-constants";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "#/utils/planner/vehicle-maintenance-utils";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "#/utils/planner/days-off-utils";
 import { v4 as uuidv4 } from "uuid";
-import { cleanPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 import { timeToHHmm } from "#/types/internal/time/time-types";
 import { fromGetLoadResponseToLoadData } from "#/features/planner/utils/loads.utils";
 

@@ -4,7 +4,7 @@ import {
   PHONE_NUMBER_PLACEHOLDER,
 } from "#/constants/common/placeholder-constants";
 import { setObjectStringField } from "#/utils/registration/registration-utils";
-import { formatPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { formatPhoneNumber } from "#/shared/utils/inputField.utils";
 import * as React from "react";
 import type {
   DispatcherRegistrationData,

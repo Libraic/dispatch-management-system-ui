@@ -5,7 +5,7 @@ import {
 } from "#/constants/planner/planner-constants";
 import { toIsoDate } from "#/utils/global/date-utils";
 import { BLANK_SPACE } from "#/constants/common/global-constants";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 
 export const TimelineCursor: FC<{ days: string[] }> = ({ days }) => {
   const lineRef = useRef<HTMLDivElement>(null);

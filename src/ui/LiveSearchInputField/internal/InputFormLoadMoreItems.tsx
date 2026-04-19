@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Pagination } from "#/types/internal/pagination/pagination-types";
-import { HOVER_TEXT_SOLID_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { HOVER_TEXT_SOLID_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { LOAD_MORE_ELEMENTS } from "#/constants/common/global-constants";
 
 type InputFormLoadMoreItemsProps = {

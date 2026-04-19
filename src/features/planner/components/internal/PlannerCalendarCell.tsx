@@ -5,7 +5,7 @@ import { SchedulableModal } from "./forms/SchedulableModal";
 import { useToast } from "#/ui/Toast/useToast";
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
 import { PLANNER_ROW_HEIGHT } from "#/constants/planner/planner-constants";
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 type PlannerCalendarCellProps = {
   formProps: SchedulableFormProps;

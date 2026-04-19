@@ -1,5 +1,5 @@
 import React from "react";
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 type DriverRowCellContainerProps = {
   value: string;

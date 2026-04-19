@@ -3,7 +3,7 @@ import { TextualInputField } from "#/ui/InputField/components/public/TextualInpu
 import { setObjectStringField } from "#/utils/registration/registration-utils";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { PHONE_NUMBER_PLACEHOLDER } from "#/constants/common/placeholder-constants";
-import { formatPhoneNumber } from "#/shared/utils/inputField.formatter";
+import { formatPhoneNumber } from "#/shared/utils/inputField.utils";
 import { LoadContext } from "#/features/planner/context/LoadContext";
 
 export const LoadFormBrokerData = () => {

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import type { DispatchingRelation } from "#/types/internal/planner/planner-types";
 import type { Activator } from "#/hooks/useActivator";
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import {
   PLANNER_GRID_LAYOUT,
   PLANNER_ROW_HEIGHT,
   PLANNER_TEXT_SIZE,
 } from "#/constants/planner/planner-constants";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import {
   formatCurrency,
   formatNumber,
   formatPhoneNumber,
-} from "#/shared/utils/inputField.formatter";
+} from "#/shared/utils/inputField.utils";
 import { divide } from "#/shared/utils/number.utils";
 
 export const DispatcherRow: React.FC<{

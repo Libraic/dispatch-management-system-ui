@@ -2,7 +2,7 @@ import { Carousel } from "./Carousel";
 import { PeriodButton } from "./PeriodButton";
 import { type FC, type RefObject, useState } from "react";
 import { createPortal } from "react-dom";
-import { Z_INDEX_HIGH_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_HIGH_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import type { Period, Time } from "#/types/internal/planner/planner-types";
 
 const HOURS: string[] = Array.from({ length: 12 }, (_, i) =>

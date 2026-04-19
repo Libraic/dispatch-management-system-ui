@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from "react";
-import { BORDER_SOLID_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { BORDER_SOLID_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 type SelectFormData<T extends ReactNode, D extends string | number> = {
   initialValue: D;

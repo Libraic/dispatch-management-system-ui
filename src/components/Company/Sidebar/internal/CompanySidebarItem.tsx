@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanySidebarItemData } from "./CompanySidebarItemData";
-import { BACKGROUND_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { BACKGROUND_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import type {
   SidebarState,
   SubmenuData,

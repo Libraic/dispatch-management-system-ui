@@ -1,11 +1,11 @@
-import { TABLE_BORDER_BASE_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import React from "react";
 import type { DriverWorkforce } from "#/types/internal/planner/planner-types";
 import {
   formatCurrency,
   formatNumber,
   formatPhoneNumber,
-} from "#/shared/utils/inputField.formatter";
+} from "#/shared/utils/inputField.utils";
 import { divide } from "#/shared/utils/number.utils";
 import { DriverRowCellContainer } from "#/features/planner/components/internal/DriverRowCellContainer";
 

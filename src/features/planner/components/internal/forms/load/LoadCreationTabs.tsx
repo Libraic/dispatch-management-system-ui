@@ -1,5 +1,5 @@
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
-import { TEXT_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { TEXT_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { PIPE } from "#/constants/common/global-constants";
 import React from "react";
 

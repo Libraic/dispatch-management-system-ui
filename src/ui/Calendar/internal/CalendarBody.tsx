@@ -3,7 +3,7 @@ import {
   BORDER_PALE_BLUE,
   HOVER_BACKGROUND_PALE_BLUE,
   TEXT_SOLID_GRAY,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 import * as React from "react";
 import {
   type CalendarUnitType,

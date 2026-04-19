@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
+import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
 export const CompanySidebarItemData: React.FC<{

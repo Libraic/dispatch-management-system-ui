@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BACKGROUND_NORMAL_COLOR,
   HOVER_BACKGROUND_SOLID_COLOR,
-} from "#/tailwind/tailwind-colors-vars";
+} from "#/shared/constants/tailwind/tailwindColors.constants";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
 type NavigableButtonProps = {

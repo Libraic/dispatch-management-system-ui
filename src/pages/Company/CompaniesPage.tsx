@@ -9,7 +9,7 @@ import {
 } from "#/utils/company/companies-list-utils";
 import { BackButton } from "#/ui/Buttons/BackButton";
 import type { CompanyData } from "#/types/api/company/company-api-response-types";
-import { HOVER_BACKGROUND_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { HOVER_BACKGROUND_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 
 export const CompaniesPage = () => {
   const [companies, setCompanies] = useState<CompanyData[]>([]);

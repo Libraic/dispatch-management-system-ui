@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { Z_INDEX_HIGH_PRECEDENCE } from "#/tailwind/tailwind-layout-vars";
-import { BORDER_NORMAL_COLOR } from "#/tailwind/tailwind-colors-vars";
+import { Z_INDEX_HIGH_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { BORDER_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import type { Period } from "#/types/internal/planner/planner-types";
 
 type PeriodButtonProps = {
