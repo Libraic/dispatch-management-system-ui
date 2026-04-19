@@ -30,6 +30,7 @@ export interface LoadLocationData {
   date: Date;
   location: string;
   order: number;
+  address?: string;
   time?: Time;
 }
 

@@ -10,6 +10,7 @@ export type ApiLoadLocation = {
   location?: string;
   order?: number;
   time?: string;
+  address?: string;
 };
 
 export type UpsertLoadRequest = {
@@ -69,5 +70,5 @@ export type GetDispatchingDataResponse = {
 
 export interface GetLoadStartingPointResponse {
   location: string;
-  time: string;
+  address?: string;
 }

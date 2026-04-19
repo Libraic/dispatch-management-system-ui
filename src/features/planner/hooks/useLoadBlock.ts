@@ -1,4 +1,3 @@
-import { fromGetLoadResponseToLoadData } from "#/utils/planner/load-utils";
 import {
   deleteLoadByUuid,
   getLoadData,
@@ -12,6 +11,7 @@ import type {
   LoadData,
   LoadStatus,
 } from "#/types/internal/planner/planner-types";
+import { fromGetLoadResponseToLoadData } from "#/features/planner/utils/loads.utils";
 
 export function useLoadBlock(load: LoadData, driverLoadData: DriverWorkforce) {
   const context = useContext(DispatchingContext)!;

@@ -4,10 +4,6 @@ import type {
   SubmitSuccess,
 } from "#/types/internal/planner/planner-types";
 import {
-  fromGetLoadResponseToLoadData,
-  getBlankLoadData,
-} from "#/utils/planner/load-utils";
-import {
   getStartingPointLocation,
   ingestDocument,
   upsertLoad,
@@ -17,6 +13,11 @@ import { MISSING_DOCUMENT_ERROR } from "#/constants/error/error-message-constant
 import { DispatchingContext } from "#/context/DispatchingContext";
 import { useLoadData } from "#/features/planner/hooks/useLoadData";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
+import type { LocationDetails } from "#/features/planner/types/location.types";
+import {
+  fromGetLoadResponseToLoadData,
+  getBlankLoadData,
+} from "#/features/planner/utils/loads.utils";
 
 export function useLoadForm(
   loadFormProps: SchedulableFormProps,
@@ -110,7 +111,11 @@ export function useLoadForm(
         return;
       }
 
-      setLoadData(getBlankLoadData(day, response.data.location));
+      const locationDetails: LocationDetails = {
+        location: response.data.location,
+        address: response.data.address,
+      };
+      setLoadData(getBlankLoadData(day, locationDetails));
     };
 
     fetchData().then(() => {});

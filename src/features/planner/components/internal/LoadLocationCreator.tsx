@@ -1,9 +1,9 @@
 import { IconButton } from "#/ui/Buttons/IconButton";
 import { useContext } from "react";
 import { SYSTEM_FONT_LIGHT } from "#/tailwind/tailwind-font-vars";
-import { getBlankLocation } from "#/utils/planner/load-utils";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import { LoadContext } from "#/features/planner/context/LoadContext";
+import { getBlankLocation } from "#/features/planner/utils/location.utils";
 
 export const LoadLocationCreator = () => {
   const loadContext = useContext(LoadContext)!!;

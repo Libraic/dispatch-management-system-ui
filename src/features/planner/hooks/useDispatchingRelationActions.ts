@@ -6,10 +6,6 @@ import type {
   VehicleMaintenanceData,
 } from "#/types/internal/planner/planner-types";
 import { toIsoDate, toNormalizedIsoDate } from "#/utils/global/date-utils";
-import {
-  mapLoadDataToDispatcherRelation,
-  updateLoadsAfterDeletions,
-} from "#/utils/planner/load-utils";
 import type { UpsertVehicleMaintenanceRecordRequest } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-request-types";
 import {
   changeWorkforceVehicleMaintenanceData,
@@ -24,6 +20,10 @@ import {
 } from "#/utils/planner/days-off-utils";
 import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import React from "react";
+import {
+  toLoadDataToDispatcherRelation,
+  updateLoadsAfterDeletions,
+} from "#/features/planner/utils/loads.utils";
 
 export const useDispatchingRelationActions = (
   dispatchingRelationId: string,
@@ -36,7 +36,7 @@ export const useDispatchingRelationActions = (
     loadData: LoadData,
   ) => {
     setDispatchingRelation((prevDispatcherLoadDataList) => {
-      return mapLoadDataToDispatcherRelation(
+      return toLoadDataToDispatcherRelation(
         prevDispatcherLoadDataList,
         dispatchingRelationId,
         loadData,

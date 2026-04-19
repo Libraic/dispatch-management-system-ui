@@ -14,6 +14,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { TimePicker } from "#/ui/TimePicker/public/TimePicker";
 import { LoadContext } from "#/features/planner/context/LoadContext";
 import { BLANK_STRING } from "#/constants/common/global-constants";
+import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
 
 type LoadLocationProps = {
   loadLocation: LoadLocationData;
@@ -97,6 +98,24 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
         isMandatory={true}
         errorMessage={errorMessages?.locationError}
         tailwindProperties={{ width: "w-[14.2rem]" }}
+      />
+      <TextualInputField
+        label="Address"
+        placeholder="742 Evergreen Terrace"
+        inputFieldValue={loadLocation.address ?? BLANK_STRING}
+        saveInputData={(address: string) => {
+          loadContext.setLoadData((prevData) => ({
+            ...prevData,
+            locations: prevData.locations.map((location) =>
+              loadLocation.uuid !== location.uuid
+                ? location
+                : {
+                    ...location,
+                    address: address,
+                  },
+            ),
+          }));
+        }}
       />
       <DateSelectorField
         label={dateLabel}

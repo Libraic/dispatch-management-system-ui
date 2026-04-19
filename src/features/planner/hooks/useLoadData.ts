@@ -1,4 +1,3 @@
-import { getBlankLoadData } from "#/utils/planner/load-utils";
 import { useState } from "react";
 import type {
   DriverWorkforce,
@@ -6,6 +5,7 @@ import type {
   LoadDataError,
 } from "#/types/internal/planner/planner-types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
+import { getBlankLoadData } from "#/features/planner/utils/loads.utils";
 
 export const useLoadData = (
   workforce: DriverWorkforce,
