@@ -81,9 +81,10 @@ export const getStartingPointAndWidthOfBlock = (
   );
   const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
   const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
+  // These delta values are used to simulate some sort of padding
   return {
-    startingPoint: leftRem,
-    width: widthRem,
+    startingPoint: leftRem + 0.1,
+    width: widthRem - 0.2,
   };
 };
 
