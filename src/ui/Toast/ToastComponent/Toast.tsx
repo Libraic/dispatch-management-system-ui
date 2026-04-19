@@ -45,7 +45,9 @@ export const Toast: React.FC<ToastProps> = ({ message, type }) => {
         <div
           className={`
             ${closeIconBackground} rounded-full p-1  w-6 h-6 
-            hover:cursor-pointer transition-transform duration-200 ease-in-out hover:scale-140`}
+            hover:cursor-pointer transition-transform duration-200 ease-in-out hover:scale-140
+            flex items-center justify-center
+          `}
           onMouseEnter={() =>
             setCloseIconBackground(toastStyle.backgroundColor)
           }

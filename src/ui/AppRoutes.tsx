@@ -26,7 +26,7 @@ import { TrailersPage } from "#/pages/Trailer/TrailersPage";
 import { LandingPage } from "#/pages/Landing/LandingPage";
 import { HomePage } from "#/pages/Home/HomePage";
 import { PlannerPage } from "#/features/planner/pages/PlannerPage";
-import { DispatcherRegistrationPage } from "#/components/Dispatcher/Registration/DispatcherRegistrationPage";
+import { DispatcherRegistrationPage } from "#/features/dispatchers/pages/DispatcherRegistrationPage";
 
 export const AppRoutes = () => {
   return (

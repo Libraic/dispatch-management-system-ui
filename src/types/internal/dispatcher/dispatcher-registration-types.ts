@@ -4,6 +4,6 @@ export type DispatcherRegistrationData = {
 };
 
 export type DispatcherRegistrationErrorData = {
-  name: string;
-  phoneNumber: string;
+  name?: string;
+  phoneNumber?: string;
 };
