@@ -12,7 +12,7 @@ import {
   LOCATIONS_CHRONOLOGICAL_ORDER_ERROR,
   MILES_REQUIRED_ERROR,
   REVENUE_REQUIRED_ERROR,
-} from "#/constants/error/error-message-constants";
+} from "#/features/planner/constants/validationMessages.constants";
 import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const getErrorsIfPresent = (loadData: LoadData) => {
@@ -56,7 +56,7 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
     locationErrors.set(currentLocation.uuid, locationError);
   }
 
-  if (Object.keys(locationErrors).length !== 0) {
+  if (locationErrors.size !== 0) {
     loadErrors.locationsErrors = locationErrors;
   }
 

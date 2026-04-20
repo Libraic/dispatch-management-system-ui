@@ -13,9 +13,9 @@ import { Entity } from "#/types/api/common/api-query-types";
 import { City } from "#/types/internal/classes/City";
 import { DateSelectorField } from "#/ui/Selectors/DateSelectorField";
 import { BLANK_STRING } from "#/constants/common/global-constants";
-import { LOCATION_REQUIRED } from "#/constants/error/error-message-constants";
 import { DispatchingContext } from "#/context/DispatchingContext";
 import { getBlankVehicleMaintenanceData } from "#/utils/planner/vehicle-maintenance-utils";
+import { LOCATION_REQUIRED } from "#/features/planner/constants/validationMessages.constants";
 
 const getInitialData = (
   workforce: DriverWorkforce,

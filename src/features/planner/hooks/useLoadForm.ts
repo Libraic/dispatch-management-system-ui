@@ -9,7 +9,6 @@ import {
   upsertLoad,
 } from "#/features/planner/api/loads.api";
 import { getErrorsIfPresent } from "#/features/planner/utils/loadsErrors.utils";
-import { MISSING_DOCUMENT_ERROR } from "#/constants/error/error-message-constants";
 import { DispatchingContext } from "#/context/DispatchingContext";
 import { useLoadData } from "#/features/planner/hooks/useLoadData";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
@@ -18,6 +17,7 @@ import {
   fromGetLoadResponseToLoadData,
   getBlankLoadData,
 } from "#/features/planner/utils/loads.utils";
+import { MISSING_DOCUMENT_ERROR } from "#/features/planner/constants/validationMessages.constants";
 
 export function useLoadForm(
   loadFormProps: SchedulableFormProps,
