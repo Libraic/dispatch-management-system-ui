@@ -1,6 +1,6 @@
 import type { DispatcherRegistrationData } from "#/types/internal/dispatcher/dispatcher-registration-types";
 import type { ApiError, Result } from "#/shared/types/api.types";
-import type { UpsertLoadResponse } from "#/types/api/loads/load-api-types";
+import type { UpsertLoadResponse } from "#/features/planner/types/load.api.types";
 import type { CreateDispatcherRequest } from "#/types/api/dispatcher/dispatcher-api-request-types";
 import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 import axios from "axios";

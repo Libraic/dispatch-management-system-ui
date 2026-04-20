@@ -10,7 +10,7 @@ import type {
   GetVehicleMaintenanceResponse,
   UpsertVehicleMaintenanceRecordResponse,
 } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
-import type { GetDispatchingDataResponse } from "#/types/api/loads/load-api-types";
+import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
 import { toIsoDate } from "#/utils/global/date-utils";
 import type { ApiResponse, NoContentResponse } from "#/shared/types/api.types";
 

@@ -30,10 +30,12 @@ export const DriverRowMetadata: React.FC<DriverRowMetadataProps> = ({
       <DriverRowCellContainer
         value={formatCurrency(driverLoadData.totalRevenue)}
       />
-      <DriverRowCellContainer value={formatNumber(driverLoadData.totalMiles)} />
+      <DriverRowCellContainer
+        value={formatNumber(driverLoadData.totalLoadedMiles)}
+      />
       <DriverRowCellContainer
         value={formatCurrency(
-          divide(driverLoadData.totalRevenue, driverLoadData.totalMiles),
+          divide(driverLoadData.totalRevenue, driverLoadData.totalLoadedMiles),
         )}
       />
     </React.Fragment>

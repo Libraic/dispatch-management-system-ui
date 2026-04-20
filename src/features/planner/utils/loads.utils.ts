@@ -15,7 +15,7 @@ import {
 } from "#/utils/global/date-utils";
 import type { LocationDetails } from "#/features/planner/types/location.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
-import type { GetLoadResponse } from "#/types/api/loads/load-api-types";
+import type { GetLoadResponse } from "#/features/planner/types/load.api.types";
 import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 
 export const toLoadDataToDispatcherRelation = (
@@ -49,14 +49,14 @@ export const toLoadDataToDispatcherRelation = (
               !(loadEndDate < startDateObject || endDateObject < loadStartDate)
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.miles);
+              driverTotalMiles += parseFloat(loadDatum.loadedMiles);
             }
           }
 
           newDriverLoadDataList.push({
             ...workforce,
             totalRevenue: driverTotalRevenue,
-            totalMiles: driverTotalMiles,
+            totalLoadedMiles: driverTotalMiles,
             driver: driver,
             loads: loads,
           });
@@ -66,12 +66,12 @@ export const toLoadDataToDispatcherRelation = (
       let dispatcherTotalMiles = 0;
       let dispatcherTotalRevenue = 0;
       for (const driverLoadDatum of newDriverLoadDataList) {
-        dispatcherTotalMiles += driverLoadDatum.totalMiles;
+        dispatcherTotalMiles += driverLoadDatum.totalLoadedMiles;
         dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
       }
       newDispatcherLoadDataList.push({
         ...prevDispatcherLoadData,
-        totalMiles: dispatcherTotalMiles,
+        totalLoadedMiles: dispatcherTotalMiles,
         totalRevenue: dispatcherTotalRevenue,
         workforceUnits: newDriverLoadDataList,
       });
@@ -109,14 +109,14 @@ export const updateLoadsAfterDeletions = (
               )
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.miles);
+              driverTotalMiles += parseFloat(loadDatum.loadedMiles);
             }
           }
 
           newDriverLoadDataList.push({
             ...currentDriverLoadData,
             totalRevenue: driverTotalRevenue,
-            totalMiles: driverTotalMiles,
+            totalLoadedMiles: driverTotalMiles,
             driver: driver,
             loads: newLoadData,
           });
@@ -126,12 +126,12 @@ export const updateLoadsAfterDeletions = (
       let dispatcherTotalMiles = 0;
       let dispatcherTotalRevenue = 0;
       for (const driverLoadDatum of newDriverLoadDataList) {
-        dispatcherTotalMiles += driverLoadDatum.totalMiles;
+        dispatcherTotalMiles += driverLoadDatum.totalLoadedMiles;
         dispatcherTotalRevenue += driverLoadDatum.totalRevenue;
       }
       newDispatcherLoadDataList.push({
         ...prevDispatcherLoadData,
-        totalMiles: dispatcherTotalMiles,
+        totalLoadedMiles: dispatcherTotalMiles,
         totalRevenue: dispatcherTotalRevenue,
         workforceUnits: newDriverLoadDataList,
       });
@@ -157,7 +157,7 @@ export const fromGetLoadResponseToLoadData = (
   return {
     id: loadResponse.loadUuid,
     revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
-    miles: `${loadResponse.miles ?? BLANK_STRING}`,
+    loadedMiles: `${loadResponse.loadedMiles ?? BLANK_STRING}`,
     broker: loadResponse.broker ?? BLANK_STRING,
     representative: loadResponse.representative ?? undefined,
     representativeContactNumber: loadResponse.representativeContactNumber,
@@ -183,7 +183,7 @@ export const getBlankLoadData = (
     startDate: startDate,
     endDate: endDate,
     revenue: BLANK_STRING,
-    miles: BLANK_STRING,
+    loadedMiles: BLANK_STRING,
     loadStatus: "Dispatched",
     locations: getInitialLoadLocations(startDate, locationDetails),
   };

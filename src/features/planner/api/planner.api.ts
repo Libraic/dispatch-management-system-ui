@@ -1,5 +1,5 @@
 import type { ApiError, Result } from "#/shared/types/api.types";
-import type { GetDispatchingDataResponse } from "#/types/api/loads/load-api-types";
+import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
 import { toIsoDate } from "#/utils/global/date-utils";
 import axios from "axios";
 import { PLANNING_BASE_URL } from "#/shared/api/constants/apiPaths.constants";

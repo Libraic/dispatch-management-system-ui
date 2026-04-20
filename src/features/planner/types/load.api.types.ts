@@ -16,8 +16,9 @@ export type ApiLoadLocation = {
 export type UpsertLoadRequest = {
   loadUuid?: string;
   relationUuid?: string;
-  revenue?: number;
-  miles?: number;
+  revenue?: string;
+  loadedMiles?: string;
+  emptyMiles?: string;
   broker?: string;
   pickUpLocation?: string;
   deliveryLocation?: string;
@@ -34,7 +35,8 @@ export type UpsertLoadResponse = {
   startDate: string;
   endDate: string;
   revenue: number;
-  miles: number;
+  loadedMiles: number;
+  emptyMiles: number;
   broker: string;
   representative: string;
   representativeContactNumber: string;
@@ -45,7 +47,8 @@ export type UpsertLoadResponse = {
 export type GetLoadResponse = {
   loadUuid?: string;
   revenue?: number;
-  miles?: number;
+  loadedMiles?: number;
+  emptyMiles?: number;
   broker?: string;
   representative?: string;
   representativeContactNumber?: string;

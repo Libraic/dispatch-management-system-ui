@@ -6,7 +6,7 @@ import type {
   GetLoadResponse,
   GetLoadStartingPointResponse,
   UpsertLoadResponse,
-} from "#/types/api/loads/load-api-types";
+} from "#/features/planner/types/load.api.types";
 import axios from "axios";
 import {
   LOADS_BASE_URL,

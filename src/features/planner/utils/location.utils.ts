@@ -7,7 +7,7 @@ import { generateUuid } from "#/utils/global/general-utils";
 import { hhmmToTime } from "#/types/internal/time/time-types";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { getNextDayFromCurrentDate } from "#/utils/global/date-utils";
-import type { ApiLoadLocation } from "#/types/api/loads/load-api-types";
+import type { ApiLoadLocation } from "#/features/planner/types/load.api.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
 
 export const fromApiLoadLocationsToLoadLocationsData = (

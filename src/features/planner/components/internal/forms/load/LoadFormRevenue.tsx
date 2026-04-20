@@ -9,8 +9,8 @@ import { LoadContext } from "#/features/planner/context/LoadContext";
 export const LoadFormRevenue = () => {
   const loadContext = useContext(LoadContext)!!;
   const revenue = loadContext.loadData.revenue ?? BLANK_STRING;
-  const miles = loadContext.loadData.miles ?? BLANK_STRING;
-  const rpm = divideNumbersAsStrings(revenue, miles);
+  const loadedMiles = loadContext.loadData.loadedMiles ?? BLANK_STRING;
+  const rpm = divideNumbersAsStrings(revenue, loadedMiles);
   return (
     <div className="flex items-center flex-row gap-x-5">
       <CurrencyInputField
@@ -25,14 +25,32 @@ export const LoadFormRevenue = () => {
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
       <NumericInputField
-        label="Miles"
+        label="Loaded Miles"
         placeholder="300"
-        inputFieldValue={miles}
-        saveInputData={(miles: string) =>
-          setObjectStringField(loadContext.setLoadData, "miles", miles)
+        inputFieldValue={loadedMiles}
+        saveInputData={(loadedMiles: string) =>
+          setObjectStringField(
+            loadContext.setLoadData,
+            "loadedMiles",
+            loadedMiles,
+          )
         }
         isMandatory={true}
-        errorMessage={loadContext.loadDataErrors.milesError}
+        errorMessage={loadContext.loadDataErrors.loadedMilesError}
+        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+      />
+      <NumericInputField
+        label="Empty Miles"
+        placeholder="30"
+        inputFieldValue={loadContext.loadData.emptyMiles ?? BLANK_STRING}
+        saveInputData={(emptyMiles: string) =>
+          setObjectStringField(
+            loadContext.setLoadData,
+            "emptyMiles",
+            emptyMiles,
+          )
+        }
+        errorMessage={loadContext.loadDataErrors.emptyMilesError}
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
       />
       <NumericInputField

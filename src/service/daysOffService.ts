@@ -6,7 +6,7 @@ import {
 } from "#/shared/api/constants/apiPaths.constants";
 import { handleApiErrors } from "#/utils/api/api-common-error-utils";
 import { toIsoDate } from "#/utils/global/date-utils";
-import type { GetDispatchingDataResponse } from "#/types/api/loads/load-api-types";
+import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
 import type { UpsertDayOffPeriodRequest } from "#/types/api/days-off/days-off-api-request-types";
 import type {
   GetDaysOffPeriodResponse,

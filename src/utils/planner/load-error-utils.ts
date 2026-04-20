@@ -19,8 +19,8 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
   if (loadData.revenue === BLANK_STRING) {
     loadErrors.revenueError = REVENUE_REQUIRED_ERROR;
   }
-  if (loadData.miles === BLANK_STRING) {
-    loadErrors.milesError = MILES_REQUIRED_ERROR;
+  if (loadData.loadedMiles === BLANK_STRING) {
+    loadErrors.loadedMilesError = MILES_REQUIRED_ERROR;
   }
   if (loadData.broker === BLANK_STRING) {
     loadErrors.brokerError = BROKER_REQUIRED_ERROR;

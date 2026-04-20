@@ -66,7 +66,7 @@ export const DispatcherRow: React.FC<{
         <div
           className={`flex items-center justify-center font-light h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
         >
-          {formatNumber(dispatchingRelation.totalMiles)}
+          {formatNumber(dispatchingRelation.totalLoadedMiles)}
         </div>
         <div
           className={`flex items-center justify-center font-light h-full border-r-1 ${TABLE_BORDER_BASE_COLOR}`}
@@ -74,7 +74,7 @@ export const DispatcherRow: React.FC<{
           {formatCurrency(
             divide(
               dispatchingRelation.totalRevenue,
-              dispatchingRelation.totalMiles,
+              dispatchingRelation.totalLoadedMiles,
             ),
           )}
         </div>

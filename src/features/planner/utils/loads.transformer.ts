@@ -2,7 +2,7 @@ import type {
   ApiLoadLocation,
   GetDispatchingDataResponse,
   UpsertLoadRequest,
-} from "#/types/api/loads/load-api-types";
+} from "#/features/planner/types/load.api.types";
 import type {
   DispatchingRelation,
   DriverWorkforce,
@@ -29,11 +29,11 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
   for (const getDriverLoadResponse of getDriverLoadsResponses) {
     const driverLoadDataList: DriverWorkforce[] = [];
     let totalRevenue = 0.0;
-    let totalMiles = 0.0;
+    let totalLoadedMiles = 0.0;
     for (const driverLoadData of getDriverLoadResponse.workforceData) {
       const loads: LoadData[] = [];
       let driverTotalRevenue = 0.0;
-      let driverTotalMiles = 0.0;
+      let driverTotalLoadedMiles = 0.0;
       for (const loadDatum of driverLoadData.loads) {
         const mappedLoadDatum = fromGetLoadResponseToLoadData(loadDatum);
         loads.push(mappedLoadDatum);
@@ -44,7 +44,7 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
           )
         ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
-          driverTotalMiles += loadDatum.miles ?? ZERO;
+          driverTotalLoadedMiles += loadDatum.loadedMiles ?? ZERO;
         }
       }
       const vehicleMaintenanceRecords =
@@ -61,12 +61,12 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
       );
 
       totalRevenue += driverTotalRevenue;
-      totalMiles += driverTotalMiles;
+      totalLoadedMiles += driverTotalLoadedMiles;
       driverLoadDataList.push({
         relationId: driverLoadData.relationUuid,
         driver: driverLoadData.driver,
         totalRevenue: driverTotalRevenue,
-        totalMiles: driverTotalMiles,
+        totalLoadedMiles: driverTotalLoadedMiles,
         loads: loads,
         vehicleMaintenanceRecords: vehicleMaintenanceRecords,
         daysOffPeriods: daysOffPeriodData,
@@ -76,7 +76,7 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
     dispatchingRelations.push({
       id: uuidv4(),
       dispatcher: getDriverLoadResponse.dispatcher,
-      totalMiles: totalMiles,
+      totalLoadedMiles: totalLoadedMiles,
       totalRevenue: totalRevenue,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
@@ -97,8 +97,9 @@ export const toUpsertLoadRequest = (
   return {
     loadUuid: loadData.id,
     relationUuid: relationId,
-    revenue: loadData.revenue ? parseFloat(loadData.revenue) : ZERO,
-    miles: loadData.miles ? parseFloat(loadData.miles) : ZERO,
+    revenue: loadData.revenue,
+    loadedMiles: loadData.loadedMiles,
+    emptyMiles: loadData.emptyMiles,
     broker: loadData.broker,
     representative: loadData.representative,
     representativeContactNumber: representativeContactNumber,

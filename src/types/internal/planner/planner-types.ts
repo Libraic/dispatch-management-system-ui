@@ -42,7 +42,8 @@ export interface WorkforceActionData {
 
 export interface LoadData extends WorkforceActionData {
   revenue: string;
-  miles: string;
+  loadedMiles: string;
+  emptyMiles?: string;
   broker: string;
   loadStatus: LoadStatus;
   locations: LoadLocationData[];
@@ -63,7 +64,8 @@ export interface LoadLocationError {
 
 export type LoadDataError = {
   revenueError?: string;
-  milesError?: string;
+  loadedMilesError?: string;
+  emptyMilesError?: string;
   brokerError?: string;
   pickUpLocationError?: string;
   deliveryLocationError?: string;
@@ -80,7 +82,7 @@ export type DriverWorkforce = {
   relationId: string;
   driver: DriverData;
   totalRevenue: number;
-  totalMiles: number;
+  totalLoadedMiles: number;
   loads: LoadData[];
   vehicleMaintenanceRecords: VehicleMaintenanceData[];
   daysOffPeriods: DaysOffPeriodData[];
@@ -92,7 +94,7 @@ export type DispatchingRelation = {
   startDate: Date;
   endDate: Date;
   totalRevenue: number;
-  totalMiles: number;
+  totalLoadedMiles: number;
   workforceUnits: DriverWorkforce[];
 };
 
