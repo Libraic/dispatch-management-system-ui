@@ -7,6 +7,7 @@ import { BLANK_STRING } from "#/constants/common/global-constants";
 import { validatePhoneNumber } from "#/utils/registration/registration-utils";
 import {
   BROKER_REQUIRED_ERROR,
+  LOAD_NUMBER_REQUIRED_ERROR,
   LOCATION_REQUIRED,
   LOCATIONS_CHRONOLOGICAL_ORDER_ERROR,
   MILES_REQUIRED_ERROR,
@@ -16,6 +17,10 @@ import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 
 export const getErrorsIfPresent = (loadData: LoadData) => {
   const loadErrors: LoadDataError = {};
+
+  if (loadData.loadNumber === BLANK_STRING) {
+    loadErrors.loadNumberError = LOAD_NUMBER_REQUIRED_ERROR;
+  }
   if (loadData.revenue === BLANK_STRING) {
     loadErrors.revenueError = REVENUE_REQUIRED_ERROR;
   }

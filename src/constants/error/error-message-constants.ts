@@ -1,28 +1,28 @@
 export const INTERNAL_SERVER_ERROR =
-  "An internal server error occurred. Please try again later.";
+  "An internal server error occurred. Please try again later";
 export const NETWORK_ERROR =
-  "A network error has occurred. Please try again later.";
+  "A network error has occurred. Please try again later";
 
 // Truck
-export const TRUCK_NUMBER_IS_MANDATORY = "The planner number cannot be empty.";
-export const VIN_NUMBER_IS_MANDATORY = "The VIN number cannot be empty.";
-export const TRUCK_YEAR_INVALID = "The planner year is not valid.";
-export const TRUCK_WEIGHT_INVALID = "The planner weight is not valid.";
+export const TRUCK_NUMBER_IS_MANDATORY = "The planner number cannot be empty";
+export const VIN_NUMBER_IS_MANDATORY = "The VIN number cannot be empty";
+export const TRUCK_YEAR_INVALID = "The planner year is not valid";
+export const TRUCK_WEIGHT_INVALID = "The planner weight is not valid";
 
 // Trailer
-export const TRAILER_NUMBER_IS_MANDATORY =
-  "The trailer number cannot be empty.";
-export const TRAILER_YEAR_INVALID = "The trailer year is not valid.";
+export const TRAILER_NUMBER_IS_MANDATORY = "The trailer number cannot be empty";
+export const TRAILER_YEAR_INVALID = "The trailer year is not valid";
 export const EQUIPMENT_TYPE_IS_MANDATORY =
   "The equipment type cannot be empty.";
 export const EQUIPMENT_SIZE_INVALID = "The equipment size is not valid.";
 export const PALLET_CAPACITY_INVALID = "The pallet capacity is not valid.";
 export const MAX_WEIGHT_INVALID = "The max weight is not valid.";
 
-export const REVENUE_REQUIRED_ERROR = "Revenue is required.";
-export const MILES_REQUIRED_ERROR = "Miles is required.";
-export const BROKER_REQUIRED_ERROR = "Broker is required.";
-export const LOCATION_REQUIRED = "Location is required.";
+export const LOAD_NUMBER_REQUIRED_ERROR = "Load number is required";
+export const REVENUE_REQUIRED_ERROR = "Revenue is required";
+export const MILES_REQUIRED_ERROR = "Miles is required";
+export const BROKER_REQUIRED_ERROR = "Broker is required";
+export const LOCATION_REQUIRED = "Location is required";
 export const LOCATIONS_CHRONOLOGICAL_ORDER_ERROR =
-  "Locations must be in chronological order.";
-export const MISSING_DOCUMENT_ERROR = "You must upload a document.";
+  "Locations must be in chronological order";
+export const MISSING_DOCUMENT_ERROR = "You must upload a document";

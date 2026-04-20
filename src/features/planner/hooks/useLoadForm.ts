@@ -8,7 +8,7 @@ import {
   ingestDocument,
   upsertLoad,
 } from "#/features/planner/api/loads.api";
-import { getErrorsIfPresent } from "#/utils/planner/load-error-utils";
+import { getErrorsIfPresent } from "#/features/planner/utils/loadsErrors.utils";
 import { MISSING_DOCUMENT_ERROR } from "#/constants/error/error-message-constants";
 import { DispatchingContext } from "#/context/DispatchingContext";
 import { useLoadData } from "#/features/planner/hooks/useLoadData";

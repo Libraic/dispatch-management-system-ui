@@ -41,6 +41,7 @@ export interface WorkforceActionData {
 }
 
 export interface LoadData extends WorkforceActionData {
+  loadNumber: string;
   revenue: string;
   loadedMiles: string;
   emptyMiles?: string;
@@ -63,6 +64,7 @@ export interface LoadLocationError {
 }
 
 export type LoadDataError = {
+  loadNumberError?: string;
   revenueError?: string;
   loadedMilesError?: string;
   emptyMilesError?: string;

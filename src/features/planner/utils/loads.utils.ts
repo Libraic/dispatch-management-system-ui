@@ -156,8 +156,10 @@ export const fromGetLoadResponseToLoadData = (
     : getNextDayFromCurrentDate(startDate);
   return {
     id: loadResponse.loadUuid,
+    loadNumber: loadResponse.loadNumber ?? BLANK_STRING,
     revenue: `${loadResponse.revenue ?? BLANK_STRING}`,
     loadedMiles: `${loadResponse.loadedMiles ?? BLANK_STRING}`,
+    emptyMiles: loadResponse.emptyMiles?.toString(),
     broker: loadResponse.broker ?? BLANK_STRING,
     representative: loadResponse.representative ?? undefined,
     representativeContactNumber: loadResponse.representativeContactNumber,
@@ -179,6 +181,7 @@ export const getBlankLoadData = (
   const startDate = new Date(day);
   const endDate = getNextDayFromCurrentDate(startDate);
   return {
+    loadNumber: BLANK_STRING,
     broker: BLANK_STRING,
     startDate: startDate,
     endDate: endDate,

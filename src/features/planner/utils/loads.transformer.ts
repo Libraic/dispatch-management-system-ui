@@ -96,6 +96,7 @@ export const toUpsertLoadRequest = (
     : undefined;
   return {
     loadUuid: loadData.id,
+    loadNumber: loadData.loadNumber,
     relationUuid: relationId,
     revenue: loadData.revenue,
     loadedMiles: loadData.loadedMiles,
