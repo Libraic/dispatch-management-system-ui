@@ -20,6 +20,8 @@ import {
 import { Z_INDEX_LOW_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { useMode } from "#/features/planner/components/internal/blocks/LoadBlock/useMode";
 import type { LoadBlockProps } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.types";
+import { LoadBlockTooltipRenderer } from "#/features/planner/components/internal/blocks/LoadBlockTooltip/LoadBlockTooltipRenderer";
+import { useTooltip } from "#/features/planner/components/internal/blocks/LoadBlockTooltip/useTooltip";
 
 export const LoadBlock: React.FC<LoadBlockProps> = ({
   driverLoadData,
@@ -41,18 +43,29 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
 
-  const { parentRef, childRef, mode, clicked, setClicked } = useMode();
+  const { modeRef, childRef, mode, clicked, setClicked } = useMode();
+
+  const { tooltipRef, handleMouseEnter, handleMouseLeave, tooltipPos } =
+    useTooltip();
 
   return (
     <div
-      ref={parentRef}
+      ref={(el) => {
+        modeRef.current = el;
+        tooltipRef.current = el;
+      }}
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onContextMenu={(e) => {
         if (!loadFormActivator.isActive()) {
           contextMenu.open(e);
         }
       }}
-      onClick={contextMenu.close}
+      onClick={() => {
+        contextMenu.close();
+        handleMouseLeave();
+      }}
       style={{
         left: `${startingPoint}rem`,
         width: clicked
@@ -93,6 +106,14 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
           mode={mode}
         />
       </div>
+
+      <LoadBlockTooltipRenderer
+        tooltipPos={tooltipPos}
+        load={load}
+        firstLocation={firstLocation}
+        lastLocation={lastLocation}
+        driverFullName={driverLoadData.driver.fullName}
+      />
 
       {loadFormActivator.isActive() && (
         <SchedulableModal

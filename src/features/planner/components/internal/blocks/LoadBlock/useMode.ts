@@ -3,18 +3,18 @@ import type { DisplayMode } from "#/features/planner/components/internal/blocks/
 import { useOnClickOutside } from "#/hooks/useClickOutside";
 
 export const useMode = () => {
-  const parentRef = useRef<HTMLDivElement | null>(null);
+  const modeRef = useRef<HTMLDivElement | null>(null);
   const childRef = useRef<HTMLDivElement | null>(null);
   const [clicked, setClicked] = useState(false);
-  useOnClickOutside(parentRef, () => setClicked(false));
+  useOnClickOutside(modeRef, () => setClicked(false));
 
   const [mode, setMode] = useState<DisplayMode>("full");
 
   useEffect(() => {
-    if (!parentRef.current || !childRef.current) return;
+    if (!modeRef.current || !childRef.current) return;
 
     const observer = new ResizeObserver(() => {
-      const containerWidth = parentRef.current!.offsetWidth;
+      const containerWidth = modeRef.current!.offsetWidth;
       const fullWidth = childRef.current!.scrollWidth;
 
       if (fullWidth <= containerWidth) {
@@ -28,13 +28,13 @@ export const useMode = () => {
       }
     });
 
-    observer.observe(parentRef.current);
+    observer.observe(modeRef.current);
 
     return () => observer.disconnect();
   }, []);
 
   return {
-    parentRef,
+    modeRef: modeRef,
     childRef,
     mode,
     clicked,

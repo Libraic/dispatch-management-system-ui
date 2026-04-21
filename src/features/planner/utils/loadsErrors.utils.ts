@@ -53,7 +53,10 @@ export const getErrorsIfPresent = (loadData: LoadData) => {
     if (currentLocation.location === BLANK_STRING) {
       locationError.locationError = LOCATION_REQUIRED;
     }
-    locationErrors.set(currentLocation.uuid, locationError);
+
+    if (Object.keys(locationError).length !== 0) {
+      locationErrors.set(currentLocation.uuid, locationError);
+    }
   }
 
   if (locationErrors.size !== 0) {
