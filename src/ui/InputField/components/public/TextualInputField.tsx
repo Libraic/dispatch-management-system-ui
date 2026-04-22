@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { InputFieldContainer } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer";
+import { InputField } from "#/ui/InputField/components/internal/InputFieldContainer/InputField";
 import type { BaseInputFieldProps } from "#/ui/InputField/types/InputField.types";
 
 interface TextualInputFieldProps extends BaseInputFieldProps {}
@@ -24,7 +24,7 @@ export const TextualInputField = forwardRef<
     ref,
   ) => {
     return (
-      <InputFieldContainer
+      <InputField
         label={label}
         placeholder={placeholder}
         inputFieldValue={inputFieldValue}

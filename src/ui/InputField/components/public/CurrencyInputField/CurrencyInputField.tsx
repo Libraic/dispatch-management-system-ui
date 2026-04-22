@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BLANK_STRING, DOLLAR_SIGN } from "#/constants/common/global-constants";
-import { InputFieldContainer } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer";
+import { InputField } from "#/ui/InputField/components/internal/InputFieldContainer/InputField";
 import { formatStringNumber } from "#/ui/InputField/utils/InputField.utils";
 import { sanitizeCurrency } from "#/ui/InputField/components/public/CurrencyInputField/CurrencyInputField.utils";
 import type { TailwindProperties } from "#/types/internal/style";
@@ -28,7 +28,7 @@ export const CurrencyInputField: React.FC<CurrencyInputFieldProps> = ({
   tailwindProperties,
 }) => {
   return (
-    <InputFieldContainer
+    <InputField
       label={label}
       placeholder={placeholder}
       inputFieldValue={

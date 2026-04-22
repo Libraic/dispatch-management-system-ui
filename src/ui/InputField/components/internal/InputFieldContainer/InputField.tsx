@@ -5,10 +5,7 @@ import { InputFieldLabel } from "#/ui/InputField/components/public/InputFieldLab
 import type { InputFieldContainerProps } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer.types";
 import { getInputTagNameFromLabel } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer.utils";
 
-export const InputFieldContainer = forwardRef<
-  HTMLDivElement,
-  InputFieldContainerProps
->(
+export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
   (
     {
       label,
@@ -78,7 +75,8 @@ export const InputFieldContainer = forwardRef<
             disabled={isReadOnly}
             className={`
               py-[1.15rem] leading-none font-light text-[0.85rem] 
-              bg-transparent rounded-sm border-none focus:outline-none w-[15rem] 
+              bg-transparent rounded-sm border-none focus:outline-none w-full
+              ${!isFocused ? "truncate" : BLANK_STRING}
               ${isReadOnly && "cursor-not-allowed text-[#9ca3af]"}
             `}
             inputMode={inputMode}

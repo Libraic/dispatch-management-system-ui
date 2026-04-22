@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputFieldContainer } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer";
+import { InputField } from "#/ui/InputField/components/internal/InputFieldContainer/InputField";
 import { sanitizeNumber } from "#/ui/InputField/components/public/NumericInputField/NumericInputField.utils";
 import { formatStringNumber } from "#/ui/InputField/utils/InputField.utils";
 import type { TailwindProperties } from "#/types/internal/style";
@@ -29,7 +29,7 @@ export const NumericInputField: React.FC<NumericInputFieldProps> = ({
   isReadOnly,
 }) => {
   return (
-    <InputFieldContainer
+    <InputField
       label={label}
       placeholder={placeholder}
       inputFieldValue={formatStringNumber(inputFieldValue)}

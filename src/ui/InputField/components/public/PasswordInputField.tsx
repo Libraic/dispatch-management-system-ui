@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputFieldContainer } from "#/ui/InputField/components/internal/InputFieldContainer/InputFieldContainer";
+import { InputField } from "#/ui/InputField/components/internal/InputFieldContainer/InputField";
 import { PASSWORD_PLACEHOLDER } from "#/constants/common/placeholder-constants";
 
 type PasswordInputFieldProps = {
@@ -21,7 +21,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
   saveInputData,
 }) => {
   return (
-    <InputFieldContainer
+    <InputField
       label={label}
       placeholder={PASSWORD_PLACEHOLDER}
       inputFieldValue={inputFieldValue}
