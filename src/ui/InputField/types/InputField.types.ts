@@ -9,4 +9,6 @@ export interface BaseInputFieldProps {
   errorMessage?: string;
   onFocus?: () => void;
   tailwindProperties?: TailwindProperties;
+  formatter?: (value: string) => string;
+  validator?: (value: string) => boolean;
 }

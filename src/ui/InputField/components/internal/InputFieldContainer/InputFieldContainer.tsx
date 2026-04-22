@@ -23,6 +23,8 @@ export const InputFieldContainer = forwardRef<
       inputPreprocessor,
       tailwindProperties,
       isReadOnly,
+      formatter,
+      validator,
     },
     ref,
   ) => {
@@ -35,10 +37,13 @@ export const InputFieldContainer = forwardRef<
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const input = inputPreprocessor
-        ? inputPreprocessor(e.target.value)
-        : e.target.value;
-      saveInputData(input);
+      const isValid = !validator || (validator && validator(e.target.value));
+      if (isValid) {
+        const input = inputPreprocessor
+          ? inputPreprocessor(e.target.value)
+          : e.target.value;
+        saveInputData(input);
+      }
     };
 
     const borderColor = errorMessage
@@ -81,7 +86,7 @@ export const InputFieldContainer = forwardRef<
             autoComplete="off"
             name={getInputTagNameFromLabel(label)}
             placeholder={inputFieldPlaceholder}
-            value={inputFieldValue}
+            value={formatter ? formatter(inputFieldValue) : inputFieldValue}
             onFocus={handleFocus}
             onBlur={() => setIsFocused(false)}
             onChange={handleChange}

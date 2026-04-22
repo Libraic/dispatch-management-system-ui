@@ -3,7 +3,10 @@ import { TextualInputField } from "#/ui/InputField/components/public/TextualInpu
 import { setObjectStringField } from "#/utils/registration/registration-utils";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { PHONE_NUMBER_PLACEHOLDER } from "#/constants/common/placeholder-constants";
-import { formatPhoneNumber } from "#/shared/utils/inputField.utils";
+import {
+  formatPhoneNumber,
+  isPhoneNumberValid,
+} from "#/shared/utils/inputField.utils";
 import { LoadContext } from "#/features/planner/context/LoadContext";
 
 export const LoadFormBrokerData = () => {
@@ -44,9 +47,11 @@ export const LoadFormBrokerData = () => {
           setObjectStringField(
             loadContext.setLoadData,
             "representativeContactNumber",
-            formatPhoneNumber(representativeContactNumber),
+            representativeContactNumber,
           )
         }
+        formatter={formatPhoneNumber}
+        validator={isPhoneNumberValid}
         tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
         errorMessage={
           loadContext.loadDataErrors.representativeContactNumberError

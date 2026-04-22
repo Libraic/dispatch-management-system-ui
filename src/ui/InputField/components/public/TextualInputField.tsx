@@ -18,6 +18,8 @@ export const TextualInputField = forwardRef<
       errorMessage,
       saveInputData,
       tailwindProperties,
+      formatter,
+      validator,
     },
     ref,
   ) => {
@@ -33,6 +35,8 @@ export const TextualInputField = forwardRef<
         errorMessage={errorMessage}
         onFocus={onFocus}
         tailwindProperties={tailwindProperties}
+        formatter={formatter}
+        validator={validator}
         ref={ref}
       />
     );

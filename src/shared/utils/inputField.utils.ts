@@ -12,7 +12,18 @@ export const cleanPhoneNumber = (phoneNumber: string) => {
   return phoneNumber.replace(/[()\s-]/g, BLANK_STRING);
 };
 
-export const formatPhoneNumber = (phoneNumber: string) => {
+export const isPhoneNumberValid = (phoneNumber: string) => {
+  const sanitizedPhoneNumber = cleanPhoneNumber(phoneNumber);
+  return (
+    sanitizedPhoneNumber.length <= 10 && /^\d*$/.test(sanitizedPhoneNumber)
+  );
+};
+
+export const formatPhoneNumber = (phoneNumber?: string) => {
+  if (!phoneNumber) {
+    return BLANK_STRING;
+  }
+
   const wasParenthesisRemoved =
     phoneNumber.indexOf(OPEN_BRACKET) === 0 &&
     phoneNumber.indexOf(CLOSE_BRACKET) < 0;
