@@ -3,28 +3,32 @@ import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { PLANNER_HEADER } from "#/constants/common/header-constants";
 import { useParams } from "react-router-dom";
 import { PlannerRow } from "#/features/planner/components/public/PlannerRow";
-import { PlannerMenu } from "#/features/planner/components/public/PlannerMenu";
+import { PlannerMenu } from "#/features/planner/components/public/PlannerMenu/PlannerMenu";
 import { PLANNER_VERTICAL_MARGIN } from "#/constants/planner/planner-constants";
-import { SidebarWrapper } from "#/components/SidebarWrapper";
 import { TimelineCursor } from "#/features/planner/components/internal/TimelineCursor";
 import { usePlanner } from "#/features/planner/hooks/usePlanner";
+import React from "react";
 
 export const PlannerPage = () => {
   const companyId = useParams().companyUuid!;
   const {
     days,
+    timezone,
     dispatchingRelations,
     setDispatchingRelations,
     extractWeekFromCalendar,
   } = usePlanner(companyId);
 
   return (
-    <SidebarWrapper>
+    <React.Fragment>
       <PageHeader headerInfo={PLANNER_HEADER} />
       <div className={`flex flex-col mx-[3rem] ${PLANNER_VERTICAL_MARGIN}`}>
-        <PlannerMenu extractWeekFromCalendar={extractWeekFromCalendar} />
+        <PlannerMenu
+          extractWeekFromCalendar={extractWeekFromCalendar}
+          timezone={timezone.value}
+        />
         <div className="relative flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
-          <TimelineCursor days={days} />
+          <TimelineCursor days={days} timeZone={timezone.value} />
           <PlannerHeader days={days} />
           {dispatchingRelations.map((dispatchingRelation) => (
             <PlannerRow
@@ -36,6 +40,6 @@ export const PlannerPage = () => {
           ))}
         </div>
       </div>
-    </SidebarWrapper>
+    </React.Fragment>
   );
 };

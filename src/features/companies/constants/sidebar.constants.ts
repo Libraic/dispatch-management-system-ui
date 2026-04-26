@@ -5,3 +5,4 @@ export const PLANNER_ICON_CODE = "event_upcoming";
 export const DRIVERS_ICON_CODE = "drive_eta";
 export const DISPATCHERS_ICON_CODE = "support_agent";
 export const ASSETS_ICON_CODE = "inventory_2";
+export const SETTINGS_ICON_CODE = "settings";

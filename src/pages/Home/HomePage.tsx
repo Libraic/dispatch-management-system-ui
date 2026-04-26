@@ -1,8 +1,5 @@
 import { Option } from "#/components/Home/Option";
-import {
-  COMPANIES_LIST,
-  COMPANY_REGISTRATION,
-} from "#/constants/route/internal-route-constants";
+import { COMPANIES_LIST, COMPANY_REGISTRATION } from "#/shared/routes/routes";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
 export const HomePage = () => {

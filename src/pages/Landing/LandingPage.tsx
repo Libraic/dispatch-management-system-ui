@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { HOME } from "#/constants/route/internal-route-constants";
+import { HOME } from "#/shared/routes/routes";
 import { Gradient } from "#/ui/Gradient/Gradient";
 import { BORDER_SOLID_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 

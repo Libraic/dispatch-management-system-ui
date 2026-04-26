@@ -22,7 +22,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
     <div className="flex items-center justify-between flex-row">
       <TableName headerData={headerData} iconCode={iconCode} />
       <NavigableButton
-        navigationAddress={`/dashboard/${companyUuid}${buttonSubroute}`}
+        navigationAddress={`/${companyUuid}${buttonSubroute}`}
         label={buttonLabel}
         iconCode="add"
       />

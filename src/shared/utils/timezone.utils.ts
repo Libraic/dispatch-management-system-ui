@@ -1,0 +1,67 @@
+import {
+  DEFAULT_TIMEZONE_DATA,
+  US_TIMEZONES,
+} from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
+import { DEFAULT_LOCALE } from "#/constants/date/date-constants";
+
+export const getTimezoneDataByValue = (value: string) => {
+  for (const timezoneData of US_TIMEZONES) {
+    if (timezoneData.value === value) {
+      return timezoneData;
+    }
+  }
+
+  return DEFAULT_TIMEZONE_DATA;
+};
+
+export const getTimezoneDataByLabel = (label: string) => {
+  for (const timezoneData of US_TIMEZONES) {
+    if (timezoneData.label === label) {
+      return timezoneData;
+    }
+  }
+
+  return DEFAULT_TIMEZONE_DATA;
+};
+
+export const getZonedDateParts = (
+  timezone: string,
+  date: Date = new Date(),
+) => {
+  const parts = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+
+  const map = Object.fromEntries(
+    parts
+      .filter((part) => part.type !== "literal")
+      .map((part) => [part.type, part.value]),
+  );
+
+  return {
+    year: Number(map.year),
+    month: Number(map.month),
+    day: Number(map.day),
+    hour: Number(map.hour),
+    minute: Number(map.minute),
+    second: Number(map.second),
+  };
+};
+
+export const getZonedIsoDate = (date: Date, timezone: string) => {
+  const { year, month, day } = getZonedDateParts(timezone, date);
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+};
+
+export const getDayProgress = (date: Date, timezone: string) => {
+  const { hour, minute, second } = getZonedDateParts(timezone, date);
+
+  return (hour * 3600 + minute * 60 + second) / 86400;
+};

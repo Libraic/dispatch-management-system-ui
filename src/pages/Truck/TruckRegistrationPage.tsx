@@ -19,10 +19,7 @@ import type {
   TruckRegistrationData,
   TruckRegistrationError,
 } from "#/types/internal/truck/truck-registration-types";
-import {
-  DASHBOARD,
-  TRUCKS_VIEW,
-} from "#/constants/route/internal-route-constants";
+import { DASHBOARD, TRUCKS_VIEW } from "#/shared/routes/routes";
 
 export const TruckRegistrationPage = () => {
   const [truckData, setTruckData] = useState<TruckRegistrationData>(

@@ -10,6 +10,7 @@ export const PAGINATION_DETAILS = CORE_URL + "/pagination";
  * Company-related API paths.
  */
 export const COMPANIES_BASE_URL = BASE_URL + "/companies";
+export const COMPANIES_SETTINGS_URL = "/settings";
 
 /**
  * Driver-related API paths.

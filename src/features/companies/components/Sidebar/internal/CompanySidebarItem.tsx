@@ -9,13 +9,21 @@ import type {
 } from "#/types/internal/sidebar/sidebar-types";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 
-export const CompanySidebarItem: React.FC<{
+type CompanySidebarItemProps = {
   label: string;
   iconCode: string;
   sidebarState: SidebarState;
-  baseRoute?: string;
+  route?: string;
   submenuData?: SubmenuData[];
-}> = ({ label, iconCode, sidebarState, baseRoute, submenuData }) => {
+};
+
+export const CompanySidebarItem: React.FC<CompanySidebarItemProps> = ({
+  label,
+  iconCode,
+  sidebarState,
+  route,
+  submenuData,
+}) => {
   const navigate = useNavigate();
   const [isSubmenuActive, setIsSubmenuActive] = useState(false);
   return (
@@ -23,8 +31,8 @@ export const CompanySidebarItem: React.FC<{
       <div
         className={`${isSubmenuActive ? "bg-[#f2f2f2]" : "bg-[#f9f9f9]"} ${sidebarState === "open" ? "hover:bg-gray-200" : BLANK_STRING} rounded-[0.5rem]`}
         onClick={() => {
-          if (baseRoute) {
-            navigate(baseRoute);
+          if (route) {
+            navigate(route);
           } else {
             setIsSubmenuActive((prev) => !prev);
           }

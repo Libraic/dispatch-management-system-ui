@@ -1,5 +1,5 @@
 import React, { type ReactNode, useState } from "react";
-import { CompanySidebar } from "./Company/Sidebar/public/CompanySidebar";
+import { CompanySidebar } from "#/features/companies/components/Sidebar/public/CompanySidebar";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 

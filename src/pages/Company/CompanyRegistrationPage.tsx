@@ -11,7 +11,7 @@ import type {
 } from "#/types/internal/company/company-registration-types";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { useNavigate } from "react-router-dom";
-import { LANDING } from "#/constants/route/internal-route-constants";
+import { LANDING } from "#/shared/routes/routes";
 import {
   getBlankCompanyRegistrationErrors,
   getCompanyRegistrationErrors,

@@ -19,7 +19,7 @@ import { CancelButton } from "#/ui/Buttons/CancelButton";
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
 import { useToast } from "#/ui/Toast/useToast";
 import { useNavigate, useParams } from "react-router-dom";
-import { TRAILERS_VIEW } from "#/constants/route/internal-route-constants";
+import { TRAILERS_VIEW } from "#/shared/routes/routes";
 
 export const TrailerRegistrationPage = () => {
   const [trailerErrorData, setTrailerErrorData] =

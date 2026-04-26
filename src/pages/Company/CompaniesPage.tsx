@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchCompanies } from "#/service/companyService";
 import { useNavigate } from "react-router-dom";
-import { LANDING } from "#/constants/route/internal-route-constants";
+import { DASHBOARD, LANDING } from "#/shared/routes/routes";
 import {
   getNameInitials,
   getPropertySafe,
@@ -46,7 +46,7 @@ export const CompaniesPage = () => {
           className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white ${HOVER_BACKGROUND_NORMAL_COLOR} text-left font-light px-[3rem] rounded-[0.3rem] even:bg-[#f6f6f6]`}
           key={index}
           onClick={() =>
-            navigate(`/dashboard/${encodeURIComponent(company.uuid)}`)
+            navigate(`/${encodeURIComponent(company.uuid)}${DASHBOARD}`)
           }
         >
           <div className="flex items-center">

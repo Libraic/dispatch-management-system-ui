@@ -7,11 +7,18 @@ import { getCurrentWeekDays } from "#/utils/global/date-utils";
 import { getSchedulableDataByCompanyUuidAndStartAndEndDate } from "#/features/planner/api/planner.api";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
 import { fromGetDriverLoadsResponsesToDispatcherLoadDataList } from "#/features/planner/utils/loads.transformer";
+import { getSettings } from "#/features/companies/api/companies.api";
+import {
+  DEFAULT_TIMEZONE_DATA,
+  type TimezoneData,
+} from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
+import { getTimezoneDataByValue } from "#/shared/utils/timezone.utils";
 
 export function usePlanner(companyId: string) {
   const [activeWeek, setActiveWeek] = useState(getCurrentWeekDays());
   const [dispatchingRelations, setDispatchingRelations] =
     useState<DispatchingRelation[]>(EMPTY_ARRAY);
+  const [timezone, setTimezone] = useState<TimezoneData>(DEFAULT_TIMEZONE_DATA);
 
   const days = getWeekWithDayAndMonth(activeWeek);
 
@@ -46,6 +53,14 @@ export function usePlanner(companyId: string) {
       );
 
       setDispatchingRelations(relations);
+
+      const settings = await getSettings(companyId);
+      if (!settings.ok) {
+        showToast(settings.error.message);
+        return;
+      }
+
+      setTimezone(getTimezoneDataByValue(settings.data.timezone));
     };
 
     fetchData().then(() => {});
@@ -53,6 +68,7 @@ export function usePlanner(companyId: string) {
 
   return {
     days,
+    timezone,
     dispatchingRelations,
     setDispatchingRelations,
     extractWeekFromCalendar,
