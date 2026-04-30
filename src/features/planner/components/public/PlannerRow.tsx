@@ -11,6 +11,7 @@ import { useDispatchingRelationActions } from "#/features/planner/hooks/useDispa
 
 type PlannerRowProps = {
   days: string[];
+  timezone: string;
   dispatchingRelation: DispatchingRelation;
   setDispatchingRelation: React.Dispatch<
     React.SetStateAction<DispatchingRelation[]>
@@ -21,6 +22,7 @@ export const PlannerRow: React.FC<PlannerRowProps> = ({
   days,
   dispatchingRelation,
   setDispatchingRelation,
+  timezone,
 }) => {
   const updatedDays = days.map((day) => day.split(BLANK_SPACE)[1]);
   const activator = useActivator(true);
@@ -40,6 +42,7 @@ export const PlannerRow: React.FC<PlannerRowProps> = ({
 
   const dispatchingContextData: DispatchingContextData = {
     days: updatedDays,
+    timezone,
     upsertLoadFn,
     upsertVehicleMaintenanceRecordFn,
     upsertDaysOffPeriodFn,

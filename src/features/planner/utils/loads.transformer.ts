@@ -118,5 +118,6 @@ const toApiLoadLocations = (
     order: location.order,
     time: timeToHHmm(location.time),
     address: location.address,
+    timezone: location.timezone,
   }));
 };

@@ -5,11 +5,13 @@ export class City implements Renderable {
   zip: string;
   city: string;
   state: string;
+  timezone: string;
 
   constructor(response: GetCityAndStateResponse) {
     this.zip = response.zip;
     this.city = response.city;
     this.state = response.state;
+    this.timezone = response.timezone;
   }
 
   renderOnList(): string {

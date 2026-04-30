@@ -11,6 +11,7 @@ import {
   METADATA_WIDTH,
 } from "#/constants/planner/planner-constants";
 import { timeToHHmm } from "#/types/internal/time/time-types";
+import { Temporal } from "@js-temporal/polyfill";
 
 export const updateDriverField = <K extends keyof DriverWorkforce>(
   prevDispatchingRelations: DispatchingRelation[],
@@ -56,12 +57,6 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
   });
 };
 
-const getBlockCoverage = (time: Time) => {
-  const isoTime = timeToHHmm(time)!!;
-  const [hours, minutes] = isoTime.split(":").map(Number);
-  return (hours * 60 + minutes) / 1440.0;
-};
-
 export const getStartingPointAndWidthOfBlock = (
   startDate: Date,
   endDate: Date,
@@ -91,4 +86,54 @@ export const getStartingPointAndWidthOfBlock = (
 const getDayIndex = (date: Date, days: string[]): number => {
   const target = toIsoDate(date);
   return days.findIndex((d) => d === target);
+};
+
+const getBlockCoverage = (time: Time) => {
+  const isoTime = timeToHHmm(time)!!;
+  const [hours, minutes] = isoTime.split(":").map(Number);
+  return (hours * 60 + minutes) / 1440.0;
+};
+
+export const getZonedStartingPointAndWidthOfBlock = (
+  startDate: Temporal.ZonedDateTime,
+  endDate: Temporal.ZonedDateTime,
+  days: string[],
+) => {
+  const startBlockCoverage = getZonedBlockCoverage(startDate);
+  const endBlockCoverage = 1 - getZonedBlockCoverage(endDate);
+
+  const startIndex = getZonedDayIndex(startDate, days);
+  const endIndex = getZonedDayIndex(endDate, days);
+
+  const clampedStart = Math.abs(
+    Math.max(startIndex === -1 ? 0 : startIndex, 0) + startBlockCoverage,
+  );
+
+  const clampedEnd = Math.abs(
+    Math.min(endIndex === -1 ? 13 : endIndex, 13) - endBlockCoverage,
+  );
+
+  const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
+  const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
+
+  return {
+    startingPoint: leftRem + 0.1,
+    width: widthRem - 0.2,
+  };
+};
+
+const getZonedDayIndex = (
+  zdt: Temporal.ZonedDateTime,
+  days: string[],
+): number => {
+  const target = `${zdt.year.toString().padStart(4, "0")}-${zdt.month
+    .toString()
+    .padStart(2, "0")}-${zdt.day.toString().padStart(2, "0")}`;
+
+  return days.findIndex((d) => d === target);
+};
+
+const getZonedBlockCoverage = (zdt: Temporal.ZonedDateTime) => {
+  const minutes = zdt.hour * 60 + zdt.minute;
+  return minutes / 1440;
 };

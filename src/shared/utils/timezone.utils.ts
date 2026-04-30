@@ -3,6 +3,8 @@ import {
   US_TIMEZONES,
 } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
 import { DEFAULT_LOCALE } from "#/constants/date/date-constants";
+import type { Time } from "#/types/internal/planner/planner-types";
+import { Temporal } from "@js-temporal/polyfill";
 
 export const getTimezoneDataByValue = (value: string) => {
   for (const timezoneData of US_TIMEZONES) {
@@ -58,6 +60,32 @@ export const getZonedDateParts = (
 export const getZonedIsoDate = (date: Date, timezone: string) => {
   const { year, month, day } = getZonedDateParts(timezone, date);
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+};
+
+export const to24Hour = (time?: Time): number => {
+  if (!time) return 0;
+  const hour12 = Number(time.hour);
+  if (time.period === "AM") {
+    return hour12 === 12 ? 0 : hour12;
+  }
+
+  return hour12 === 12 ? 12 : hour12 + 12;
+};
+
+export const toZonedDateTime = (date: Date, timezone: string, time?: Time) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = time ? to24Hour(time) : 0;
+  const minute = time ? Number(time.minute) : 0;
+  return Temporal.ZonedDateTime.from({
+    timeZone: timezone,
+    year: year,
+    month: month,
+    day: day,
+    hour: hour,
+    minute: minute,
+  });
 };
 
 export const getDayProgress = (date: Date, timezone: string) => {

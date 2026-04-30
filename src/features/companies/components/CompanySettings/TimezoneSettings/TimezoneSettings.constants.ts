@@ -1,4 +1,7 @@
-export const DEFAULT_TIMEZONE_DATA = { label: "UTC (Default)", value: "UTC" };
+export const DEFAULT_TIMEZONE_DATA = {
+  label: "Eastern Time (ET)",
+  value: "America/New_York",
+};
 
 export interface TimezoneData {
   label: string;
@@ -7,7 +10,6 @@ export interface TimezoneData {
 
 export const US_TIMEZONES: TimezoneData[] = [
   DEFAULT_TIMEZONE_DATA,
-  { label: "Eastern Time (ET)", value: "America/New_York" },
   { label: "Central Time (CT)", value: "America/Chicago" },
   { label: "Mountain Time (MT)", value: "America/Denver" },
   { label: "Pacific Time (PT)", value: "America/Los_Angeles" },

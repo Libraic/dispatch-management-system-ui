@@ -8,6 +8,7 @@ import type {
 
 export type DispatchingContextData = {
   days: string[];
+  timezone: string;
   upsertLoadFn: (workforce: DriverWorkforce, loadData: LoadData) => void;
   upsertVehicleMaintenanceRecordFn: (
     shop: VehicleMaintenanceData,

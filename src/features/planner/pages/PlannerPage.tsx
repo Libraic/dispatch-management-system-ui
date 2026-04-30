@@ -33,6 +33,7 @@ export const PlannerPage = () => {
           {dispatchingRelations.map((dispatchingRelation) => (
             <PlannerRow
               key={dispatchingRelation.id}
+              timezone={timezone.value}
               days={days}
               dispatchingRelation={dispatchingRelation}
               setDispatchingRelation={setDispatchingRelations}

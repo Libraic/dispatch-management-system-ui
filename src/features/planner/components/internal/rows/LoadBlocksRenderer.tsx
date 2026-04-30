@@ -2,9 +2,9 @@ import { LoadBlock } from "#/features/planner/components/internal/blocks/LoadBlo
 import React from "react";
 import type { DriverWorkforce } from "#/types/internal/planner/planner-types";
 
-export const LoadBlocksRenderer: React.FC<{ workforce: DriverWorkforce }> = ({
-  workforce,
-}) => {
+export const LoadBlocksRenderer: React.FC<{
+  workforce: DriverWorkforce;
+}> = ({ workforce }) => {
   return (
     <React.Fragment>
       {workforce.loads.length > 0 && (

@@ -28,7 +28,11 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
   load,
 }) => {
   const context = useContext(DispatchingContext)!;
-  const { startingPoint, width } = useLoadPosition(load, context.days);
+  const { startingPoint, width } = useLoadPosition(
+    load,
+    context.days,
+    context.timezone,
+  );
 
   const { updateStatus, deleteLoad } = useLoadBlock(load, driverLoadData);
 

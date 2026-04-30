@@ -1,19 +1,32 @@
 import type { LoadData } from "#/types/internal/planner/planner-types";
-import { getStartingPointAndWidthOfBlock } from "#/utils/planner/planner-utils";
+import { getZonedStartingPointAndWidthOfBlock } from "#/utils/planner/planner-utils";
 import {
   getFirstPickUpLocation,
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
+import { toZonedDateTime } from "#/shared/utils/timezone.utils";
 
-export function useLoadPosition(load: LoadData, days: string[]) {
+export function useLoadPosition(
+  load: LoadData,
+  days: string[],
+  timezone: string,
+) {
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
-
-  return getStartingPointAndWidthOfBlock(
+  const startZonedDateTime = toZonedDateTime(
     firstLocation.date,
-    lastLocation.date,
-    days,
+    firstLocation.timezone,
     firstLocation.time,
+  ).withTimeZone(timezone);
+  const endZonedDateTime = toZonedDateTime(
+    lastLocation.date,
+    lastLocation.timezone,
     lastLocation.time,
+  ).withTimeZone(timezone);
+
+  return getZonedStartingPointAndWidthOfBlock(
+    startZonedDateTime.withTimeZone(timezone),
+    endZonedDateTime.withTimeZone(timezone),
+    days,
   );
 }

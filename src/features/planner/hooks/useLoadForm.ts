@@ -113,6 +113,7 @@ export function useLoadForm(
 
       const locationDetails: LocationDetails = {
         location: response.data.location,
+        timezone: response.data.timezone,
         address: response.data.address,
       };
       setLoadData(getBlankLoadData(day, locationDetails));

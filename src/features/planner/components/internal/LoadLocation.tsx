@@ -88,6 +88,7 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
                 ? location
                 : {
                     ...location,
+                    timezone: (city as City).timezone,
                     location: city.renderOnForm(),
                   },
             ),

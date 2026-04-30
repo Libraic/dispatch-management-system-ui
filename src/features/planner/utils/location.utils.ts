@@ -9,6 +9,7 @@ import { BLANK_STRING } from "#/constants/common/global-constants";
 import { getNextDayFromCurrentDate } from "#/utils/global/date-utils";
 import type { ApiLoadLocation } from "#/features/planner/types/load.api.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
+import { DEFAULT_TIMEZONE_DATA } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
 
 export const fromApiLoadLocationsToLoadLocationsData = (
   locations?: ApiLoadLocation[],
@@ -53,6 +54,7 @@ export const fromApiLoadLocationsToLoadLocationsData = (
       // without having to normalize the order if we added a starting point.
       order: loadLocations.length,
       address: location.address,
+      timezone: location.timezone ?? DEFAULT_TIMEZONE_DATA.value,
     };
     loadLocations.push(loadLocation);
   }
@@ -74,6 +76,7 @@ export const getBlankLocation = (
     location: locationDetails?.location ?? BLANK_STRING,
     order: order,
     address: locationDetails?.address,
+    timezone: locationDetails?.timezone ?? DEFAULT_TIMEZONE_DATA.value,
   };
 };
 
