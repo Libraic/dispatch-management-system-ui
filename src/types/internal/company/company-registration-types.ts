@@ -24,4 +24,5 @@ export type CreateCompanyRequest = {
   address: string | null;
   serviceDate: string | null;
   startDate: string;
+  timezone: string;
 };

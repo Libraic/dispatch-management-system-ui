@@ -5,6 +5,7 @@ import type {
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
 import { toIsoDate } from "#/utils/global/date-utils";
+import { DEFAULT_TIMEZONE_DATA } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
   return {
@@ -41,5 +42,6 @@ export const createCreateCompanyRequestFromCompanyRegistrationData = (
     address: companyRegistrationData.address ?? null,
     serviceDate: toIsoDate(companyRegistrationData.serviceDate),
     startDate: toIsoDate(companyRegistrationData.startDate),
+    timezone: DEFAULT_TIMEZONE_DATA.value,
   };
 };
