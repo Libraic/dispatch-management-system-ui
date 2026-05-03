@@ -22,7 +22,7 @@ export const LoadFormRevenue = () => {
         }
         isMandatory={true}
         errorMessage={loadContext.loadDataErrors.revenueError}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
       <NumericInputField
         label="Loaded Miles"
@@ -37,7 +37,7 @@ export const LoadFormRevenue = () => {
         }
         isMandatory={true}
         errorMessage={loadContext.loadDataErrors.loadedMilesError}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
       <NumericInputField
         label="Empty Miles"
@@ -51,14 +51,14 @@ export const LoadFormRevenue = () => {
           )
         }
         errorMessage={loadContext.loadDataErrors.emptyMilesError}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
       <NumericInputField
         label="RPM"
         placeholder={BLANK_STRING}
         inputFieldValue={rpm}
         saveInputData={() => {}}
-        tailwindProperties={{ maxWeight: "max-w-[11rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11rem]" }}
         isReadOnly={true}
       />
     </div>

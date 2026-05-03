@@ -20,7 +20,7 @@ export const LoadMetadata = () => {
         }
         isMandatory={true}
         errorMessage={loadContext.loadDataErrors.loadNumberError}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
     </div>
   );

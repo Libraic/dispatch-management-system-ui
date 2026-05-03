@@ -64,7 +64,7 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
   return (
     <div
       className={`
-        flex flex-row gap-x-5 items-center 
+        flex flex-row gap-x-5 items-center
         ${isDeliveryOrPickUp ? "cursor-grab" : BLANK_STRING} 
         ${isDeliveryOrPickUp ? "active:cursor-grabbing" : BLANK_STRING}
       `}
@@ -73,7 +73,7 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
       {...(isDeliveryOrPickUp ? attributes : {})}
       {...(isDeliveryOrPickUp ? listeners : {})}
     >
-      <div className="mb-[2.8rem]">
+      <div>
         <LoadLocationContextMenu loadLocation={loadLocation} />
       </div>
       <LiveSearchInputField

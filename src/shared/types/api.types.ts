@@ -5,6 +5,16 @@ import type {
 
 export interface ApiError {
   message: string;
+  type: ErrorType;
+  errors?: Record<string, string>;
+}
+
+export type ErrorType = "VALIDATION" | "GENERAL" | "SYSTEM";
+
+export interface HandleApiErrorOptions<TFieldErrors> {
+  error: ApiError;
+  setFieldErrors?: (errors: TFieldErrors) => void;
+  showToast: (message: string) => void;
 }
 
 export type LiveSearchResult<T> = {

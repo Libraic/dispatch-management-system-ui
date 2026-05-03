@@ -10,6 +10,7 @@ import {
   DRIVERS_VIEW,
   HOME,
   LANDING,
+  LOGIN,
   PLANNER,
   SETTINGS,
   TRAILER_REGISTRATION,
@@ -31,12 +32,14 @@ import { PlannerPage } from "#/features/planner/pages/PlannerPage";
 import { DispatcherRegistrationPage } from "#/features/dispatchers/pages/DispatcherRegistrationPage";
 import { SettingsPage } from "#/features/companies/pages/SettingsPage";
 import { AppLayout } from "#/templates/AppLayout";
+import { LoginPage } from "#/features/authentication/pages/LoginPage";
 
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={LANDING} element={<LandingPage />} />
+        <Route path={LOGIN} element={<LoginPage />} />
         <Route path={HOME} element={<HomePage />} />
         <Route
           path={COMPANY_REGISTRATION}

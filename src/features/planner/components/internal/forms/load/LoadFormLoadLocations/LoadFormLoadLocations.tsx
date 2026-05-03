@@ -39,7 +39,7 @@ export const LoadFormLoadLocations = () => {
         strategy={verticalListSortingStrategy}
       >
         <div className="flex flex-col mb-[1.5rem] gap-y-[1rem]">
-          <div className="flex flex-col gap-x-5 pt-5">
+          <div className="flex flex-col gap-x-5 gap-y-3 pt-5">
             {locations.map((location) => (
               <LoadLocation key={location.uuid} loadLocation={location} />
             ))}

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { InputField } from "#/ui/InputField/components/internal/InputFieldContainer/InputField";
 import { PASSWORD_PLACEHOLDER } from "#/constants/common/placeholder-constants";
+import type { TailwindProperties } from "#/types/internal/style";
 
 type PasswordInputFieldProps = {
   label: string;
@@ -10,6 +11,7 @@ type PasswordInputFieldProps = {
   errorMessage?: string;
   information?: string;
   onFocus?: () => void;
+  tailwindProperties?: TailwindProperties;
 };
 
 export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
@@ -19,6 +21,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
   onFocus,
   errorMessage,
   saveInputData,
+  tailwindProperties,
 }) => {
   return (
     <InputField
@@ -31,6 +34,7 @@ export const PasswordInputField: React.FC<PasswordInputFieldProps> = ({
       isMandatory={isMandatory}
       errorMessage={errorMessage}
       onFocus={onFocus}
+      tailwindProperties={tailwindProperties}
     />
   );
 };

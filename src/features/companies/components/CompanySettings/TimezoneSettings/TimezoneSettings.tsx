@@ -19,7 +19,7 @@ export const TimezoneSettings: React.FC<TimezoneSettingsProps> = ({
         setElement={(timezone: string) => setTimezone(timezone)}
         label="Timezone"
         tailwindProperties={{
-          maxWeight: "w-[12rem]",
+          maxWidth: "w-[12rem]",
         }}
       />
     </div>

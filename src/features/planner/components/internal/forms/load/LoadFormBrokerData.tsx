@@ -22,7 +22,7 @@ export const LoadFormBrokerData = () => {
         }
         isMandatory={true}
         errorMessage={loadContext.loadDataErrors.brokerError}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
       <TextualInputField
         label="Representative"
@@ -35,7 +35,7 @@ export const LoadFormBrokerData = () => {
             representative,
           )
         }
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
       />
       <TextualInputField
         label="Contact Number"
@@ -52,7 +52,7 @@ export const LoadFormBrokerData = () => {
         }
         formatter={formatPhoneNumber}
         validator={isPhoneNumberValid}
-        tailwindProperties={{ maxWeight: "max-w-[11.40rem]" }}
+        tailwindProperties={{ maxWidth: "max-w-[11.40rem]" }}
         errorMessage={
           loadContext.loadDataErrors.representativeContactNumberError
         }

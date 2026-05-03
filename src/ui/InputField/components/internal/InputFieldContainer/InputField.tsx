@@ -55,12 +55,17 @@ export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
         : BLANK_STRING;
 
     return (
-      <div className={`flex flex-col min-h-[6.5rem]`}>
+      <div
+        className={`
+        flex flex-col 
+        ${tailwindProperties?.minHeight ?? "min-h-[6.5rem]"}
+      `}
+      >
         <div
           ref={ref}
           className={`
             relative px-5 border-2 bg-white rounded-[2rem] 
-            ${tailwindProperties?.maxWeight || "max-w-[20rem]"} 
+            ${tailwindProperties?.width || "max-w-[20rem]"} 
             ${borderColor}
           `}
         >
