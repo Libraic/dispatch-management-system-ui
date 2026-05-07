@@ -5,7 +5,6 @@ import type {
 } from "#/types/internal/planner/planner-types";
 import { HYPHEN } from "#/constants/common/global-constants";
 import { DEFAULT_LOCALE, WEEKDAYS } from "#/constants/date/date-constants";
-import { toIsoDate } from "#/utils/global/date-utils";
 import {
   DAY_CELL_WIDTH,
   METADATA_WIDTH,
@@ -58,34 +57,37 @@ export const getWeekWithDayAndMonth = (week: string[]) => {
 };
 
 export const getStartingPointAndWidthOfBlock = (
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
   days: string[],
   startTime?: Time,
   endTime?: Time,
 ) => {
   const startBlockCoverage = startTime ? getBlockCoverage(startTime) : 0;
   const endBlockCoverage = endTime ? 1 - getBlockCoverage(endTime) : 0;
+
   const startIndex = getDayIndex(startDate, days);
   const endIndex = getDayIndex(endDate, days);
+
   const clampedStart = Math.abs(
     Math.max(startIndex === -1 ? 0 : startIndex, 0) + startBlockCoverage,
   );
+
   const clampedEnd = Math.abs(
     Math.min(endIndex === -1 ? 13 : endIndex, 13) - endBlockCoverage,
   );
+
   const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
   const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
-  // These delta values are used to simulate some sort of padding
+
   return {
     startingPoint: leftRem + 0.1,
     width: widthRem - 0.2,
   };
 };
 
-const getDayIndex = (date: Date, days: string[]): number => {
-  const target = toIsoDate(date);
-  return days.findIndex((d) => d === target);
+const getDayIndex = (date: string, days: string[]): number => {
+  return days.findIndex((d) => d === date);
 };
 
 const getBlockCoverage = (time: Time) => {

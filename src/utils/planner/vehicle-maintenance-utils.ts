@@ -4,11 +4,7 @@ import type {
 } from "#/types/internal/planner/planner-types";
 import { updateDriverField } from "./planner-utils";
 import type { GetVehicleMaintenanceResponse } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
-import {
-  normalizeDate,
-  toIsoDate,
-  toNormalizedIsoDate,
-} from "#/utils/global/date-utils";
+import { getCurrentDay } from "#/utils/global/date-utils";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const changeWorkforceVehicleMaintenanceData = (
@@ -47,8 +43,8 @@ export const fromGetVehicleMaintenanceRecordToVehicleMaintenanceData = (
 ): VehicleMaintenanceData => {
   return {
     id: vehicleMaintenanceRecord.vehicleMaintenanceRecordUuid,
-    startDate: toNormalizedIsoDate(vehicleMaintenanceRecord.startDate),
-    endDate: toNormalizedIsoDate(vehicleMaintenanceRecord.endDate),
+    startDate: vehicleMaintenanceRecord.startDate,
+    endDate: vehicleMaintenanceRecord.endDate,
     location: vehicleMaintenanceRecord.location,
   };
 };
@@ -56,10 +52,10 @@ export const fromGetVehicleMaintenanceRecordToVehicleMaintenanceData = (
 export const getBlankVehicleMaintenanceData = (
   day?: string,
 ): VehicleMaintenanceData => {
-  const startDate = day ? new Date(day) : new Date(toIsoDate(new Date()));
+  const startDate = day ?? getCurrentDay();
   return {
-    startDate: normalizeDate(startDate),
-    endDate: normalizeDate(startDate),
+    startDate: startDate,
+    endDate: startDate,
     location: BLANK_STRING,
   };
 };

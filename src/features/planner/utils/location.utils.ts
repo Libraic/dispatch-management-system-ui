@@ -6,7 +6,10 @@ import type { LocationDetails } from "#/features/planner/types/location.types";
 import { generateUuid } from "#/utils/global/general-utils";
 import { hhmmToTime } from "#/types/internal/time/time-types";
 import { BLANK_STRING } from "#/constants/common/global-constants";
-import { getNextDayFromCurrentDate } from "#/utils/global/date-utils";
+import {
+  getCurrentDay,
+  getNextDayFromCurrentDate,
+} from "#/utils/global/date-utils";
 import type { ApiLoadLocation } from "#/features/planner/types/load.api.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
 import { DEFAULT_TIMEZONE_DATA } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
@@ -19,7 +22,7 @@ export const fromApiLoadLocationsToLoadLocationsData = (
   const loadLocations: LoadLocationData[] = [];
   if (!locations || locations.length === 0) {
     if (loadCreationType === "Ingestion") {
-      return getInitialLoadLocations(day ? new Date(day) : new Date());
+      return getInitialLoadLocations(day ?? getCurrentDay());
     }
 
     return loadLocations;
@@ -33,7 +36,7 @@ export const fromApiLoadLocationsToLoadLocationsData = (
       location.label !== "Starting Point"
     ) {
       const startingPoint = getBlankLocation(
-        new Date(location.date ?? new Date()),
+        location.date ?? getCurrentDay(),
         loadLocations.length,
         "Starting Point",
         {
@@ -47,7 +50,7 @@ export const fromApiLoadLocationsToLoadLocationsData = (
     const loadLocation: LoadLocationData = {
       uuid: generateUuid(),
       label: location.label as LocationLabel,
-      date: location.date ? new Date(location.date) : new Date(),
+      date: location.date ?? getCurrentDay(),
       time: hhmmToTime(location.time),
       location: location.location ?? BLANK_STRING,
       // The locations are coming sorted from API, so we can use the length of the array as the order,
@@ -63,7 +66,7 @@ export const fromApiLoadLocationsToLoadLocationsData = (
 };
 
 export const getBlankLocation = (
-  date: Date,
+  date: string,
   order: number,
   label?: LocationLabel,
   locationDetails?: LocationDetails,
@@ -81,21 +84,16 @@ export const getBlankLocation = (
 };
 
 export const getInitialLoadLocations = (
-  date: Date,
+  date: string,
   locationDetails?: LocationDetails,
 ): LoadLocationData[] => {
   const startingPoint = getBlankLocation(
-    new Date(date),
+    date,
     0,
     "Starting Point",
     locationDetails,
   );
-  const pickUpLocation = getBlankLocation(
-    new Date(date),
-    1,
-    "Pick Up",
-    locationDetails,
-  );
+  const pickUpLocation = getBlankLocation(date, 1, "Pick Up", locationDetails);
   const deliveryLocation = getBlankLocation(
     getNextDayFromCurrentDate(date),
     2,

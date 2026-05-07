@@ -10,8 +10,8 @@ import {
 } from "#/features/planner/utils/location.utils";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
+  getCurrentDay,
   getNextDayFromCurrentDate,
-  toNormalizedIsoDate,
 } from "#/utils/global/date-utils";
 import type { LocationDetails } from "#/features/planner/types/location.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
@@ -147,12 +147,10 @@ export const fromGetLoadResponseToLoadData = (
   loadCreationType?: LoadCreationType,
 ): LoadData => {
   const startDate = loadResponse.startDate
-    ? toNormalizedIsoDate(loadResponse.startDate)
-    : day
-      ? new Date(day)
-      : new Date();
+    ? loadResponse.startDate
+    : (day ?? getCurrentDay());
   const endDate = loadResponse.endDate
-    ? toNormalizedIsoDate(loadResponse.endDate)
+    ? loadResponse.endDate
     : getNextDayFromCurrentDate(startDate);
   return {
     id: loadResponse.loadUuid,
@@ -178,7 +176,7 @@ export const getBlankLoadData = (
   day: string,
   locationDetails?: LocationDetails,
 ): LoadData => {
-  const startDate = new Date(day);
+  const startDate = day;
   const endDate = getNextDayFromCurrentDate(startDate);
   return {
     loadNumber: BLANK_STRING,

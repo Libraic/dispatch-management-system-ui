@@ -4,7 +4,7 @@ import type {
   DriverWorkforce,
 } from "#/types/internal/planner/planner-types";
 import { updateDriverField } from "./planner-utils";
-import { toIsoDate, toNormalizedIsoDate } from "#/utils/global/date-utils";
+import { getCurrentDay } from "#/utils/global/date-utils";
 import type { GetDaysOffPeriodResponse } from "#/types/api/days-off/days-off-api-response-types";
 
 export const changeDaysOffPeriodData = (
@@ -43,8 +43,8 @@ export const fromGetDaysOffPeriodResponseToDaysOffPeriodData = (
 ): DaysOffPeriodData => {
   return {
     id: getDaysOffPeriodResponse.daysOffPeriodId,
-    startDate: toNormalizedIsoDate(getDaysOffPeriodResponse.startDate),
-    endDate: toNormalizedIsoDate(getDaysOffPeriodResponse.endDate),
+    startDate: getDaysOffPeriodResponse.startDate,
+    endDate: getDaysOffPeriodResponse.endDate,
   };
 };
 
@@ -54,9 +54,8 @@ export const getInitialData = (
   day?: string,
 ): DaysOffPeriodData => {
   if (!id) {
-    const startDate = day ? new Date(day) : new Date(toIsoDate(new Date()));
-    const endDate = new Date(startDate);
-    return { id, startDate, endDate };
+    const date = day ?? getCurrentDay();
+    return { id, startDate: date, endDate: date };
   }
 
   const dayOffPeriod = workforce.daysOffPeriods.filter(
@@ -64,7 +63,7 @@ export const getInitialData = (
   )[0];
   return {
     id: dayOffPeriod.id,
-    startDate: new Date(dayOffPeriod.startDate),
-    endDate: new Date(dayOffPeriod.endDate),
+    startDate: dayOffPeriod.startDate,
+    endDate: dayOffPeriod.endDate,
   };
 };

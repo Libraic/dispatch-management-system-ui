@@ -9,7 +9,6 @@ import type {
   LoadData,
   LoadLocationData,
 } from "#/types/internal/planner/planner-types";
-import { toIsoDate, toNormalizedIsoDate } from "#/utils/global/date-utils";
 import { ZERO } from "#/constants/common/global-constants";
 import { fromGetVehicleMaintenanceRecordToVehicleMaintenanceData } from "#/utils/planner/vehicle-maintenance-utils";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "#/utils/planner/days-off-utils";
@@ -24,8 +23,6 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
   endDate: string,
 ) => {
   const dispatchingRelations: DispatchingRelation[] = [];
-  const startDateObject = toNormalizedIsoDate(startDate);
-  const endDateObject = toNormalizedIsoDate(endDate);
   for (const getDriverLoadResponse of getDriverLoadsResponses) {
     const driverLoadDataList: DriverWorkforce[] = [];
     let totalRevenue = 0.0;
@@ -39,8 +36,8 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
         loads.push(mappedLoadDatum);
         if (
           !(
-            mappedLoadDatum.endDate < startDateObject ||
-            endDateObject < mappedLoadDatum.startDate
+            mappedLoadDatum.endDate < startDate ||
+            endDate < mappedLoadDatum.startDate
           )
         ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
@@ -78,8 +75,8 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
       dispatcher: getDriverLoadResponse.dispatcher,
       totalLoadedMiles: totalLoadedMiles,
       totalRevenue: totalRevenue,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      startDate: startDate,
+      endDate: endDate,
       workforceUnits: driverLoadDataList,
     });
   }
@@ -113,7 +110,7 @@ const toApiLoadLocations = (
 ): ApiLoadLocation[] => {
   return locations.map((location) => ({
     label: location.label,
-    date: toIsoDate(location.date),
+    date: location.date,
     location: location.location,
     order: location.order,
     time: timeToHHmm(location.time),

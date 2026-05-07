@@ -5,7 +5,6 @@ import type {
   LoadData,
   VehicleMaintenanceData,
 } from "#/types/internal/planner/planner-types";
-import { toIsoDate, toNormalizedIsoDate } from "#/utils/global/date-utils";
 import type { UpsertVehicleMaintenanceRecordRequest } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-request-types";
 import {
   changeWorkforceVehicleMaintenanceData,
@@ -54,8 +53,8 @@ export const useDispatchingRelationActions = (
       vehicleMaintenanceRecordUuid: vehicleMaintenanceData.id,
       relationId: relationId,
       location: vehicleMaintenanceData.location,
-      startDate: toIsoDate(vehicleMaintenanceData.startDate),
-      endDate: toIsoDate(vehicleMaintenanceData.endDate),
+      startDate: vehicleMaintenanceData.startDate,
+      endDate: vehicleMaintenanceData.endDate,
     };
 
     const upsertResponse = await upsertVehicleMaintenanceRecord(request);
@@ -67,8 +66,8 @@ export const useDispatchingRelationActions = (
     const newVehicleMaintenanceData: VehicleMaintenanceData = {
       id: data.vehicleMaintenanceRecordUuid,
       location: data.location,
-      startDate: toNormalizedIsoDate(data.startDate),
-      endDate: toNormalizedIsoDate(data.endDate),
+      startDate: data.startDate,
+      endDate: data.endDate,
     };
 
     setDispatchingRelation((prevDispatcherLoadDataList) =>
@@ -91,8 +90,8 @@ export const useDispatchingRelationActions = (
     const request: UpsertDayOffPeriodRequest = {
       daysOffPeriodId: daysOffPeriodData.id,
       relationId: relationId,
-      startDate: toIsoDate(daysOffPeriodData.startDate),
-      endDate: toIsoDate(daysOffPeriodData.endDate),
+      startDate: daysOffPeriodData.startDate,
+      endDate: daysOffPeriodData.endDate,
     };
 
     const upsertResponse = await upsertDaysOffPeriod(request);
@@ -103,8 +102,8 @@ export const useDispatchingRelationActions = (
     const data = upsertResponse.data!!;
     const newDaysOffPeriodData: DaysOffPeriodData = {
       id: data.daysOffPeriodId,
-      startDate: toNormalizedIsoDate(data.startDate),
-      endDate: toNormalizedIsoDate(data.endDate),
+      startDate: data.startDate,
+      endDate: data.endDate,
     };
     setDispatchingRelation((prevDispatcherLoadDataList) =>
       changeDaysOffPeriodData(

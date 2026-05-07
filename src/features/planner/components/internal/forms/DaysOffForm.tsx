@@ -42,7 +42,7 @@ export const DaysOffForm = forwardRef<
       <div className="flex flex-row gap-x-5">
         <DateSelectorField
           label="Start Date"
-          setDate={(date: Date) => {
+          setDate={(date: string) => {
             setDaysOffPeriodData((prevData) => ({
               ...prevData,
               startDate: date,
@@ -52,7 +52,7 @@ export const DaysOffForm = forwardRef<
         />
         <DateSelectorField
           label="End Date"
-          setDate={(date: Date) => {
+          setDate={(date: string) => {
             setDaysOffPeriodData((prevData) => ({
               ...prevData,
               endDate: date,

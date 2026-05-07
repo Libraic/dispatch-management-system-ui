@@ -27,7 +27,7 @@ export interface Time {
 export interface LoadLocationData {
   uuid: string;
   label: LocationLabel;
-  date: Date;
+  date: string;
   location: string;
   order: number;
   timezone: string;
@@ -37,8 +37,8 @@ export interface LoadLocationData {
 
 export interface WorkforceActionData {
   id?: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
 
 export interface LoadData extends WorkforceActionData {
@@ -94,8 +94,8 @@ export type DriverWorkforce = {
 export type DispatchingRelation = {
   id: string;
   dispatcher: DispatcherData;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   totalRevenue: number;
   totalLoadedMiles: number;
   workforceUnits: DriverWorkforce[];

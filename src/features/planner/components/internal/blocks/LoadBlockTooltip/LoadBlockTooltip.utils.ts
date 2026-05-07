@@ -4,7 +4,6 @@ import type {
 } from "#/types/internal/planner/planner-types";
 import { divideNumbersAsStrings } from "#/shared/utils/number.utils";
 import { formatPhoneNumber } from "#/shared/utils/inputField.utils";
-import { toIsoDate } from "#/utils/global/date-utils";
 
 export const getLoadBlockTooltipData = (
   driverFullName: string,
@@ -31,9 +30,9 @@ export const getLoadBlockTooltipData = (
     );
   }
   data.set("Pick Up Location", firstLocation.location);
-  data.set("Pick Up Date", toIsoDate(firstLocation.date));
+  data.set("Pick Up Date", firstLocation.date);
   data.set("Delivery Location", lastLocation.location);
-  data.set("Delivery Date", toIsoDate(lastLocation.date));
+  data.set("Delivery Date", lastLocation.date);
 
   return data;
 };

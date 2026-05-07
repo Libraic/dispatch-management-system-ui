@@ -7,8 +7,8 @@ import { ErrorContainer } from "#/ui/ErrorContainer/ErrorContainer";
 
 type DateSelectorFieldProps = {
   label: string;
-  date: Date;
-  setDate: (date: Date) => void;
+  date: string;
+  setDate: (date: string) => void;
   errorMessage?: string;
 };
 
@@ -19,19 +19,13 @@ export const DateSelectorField: React.FC<DateSelectorFieldProps> = ({
   errorMessage,
 }) => {
   const [value, setValue] = React.useState<Dayjs | null>(
-    dayjs()
-      .set("date", date.getDate())
-      .set("month", date.getMonth())
-      .set("year", date.getFullYear()),
+    date ? dayjs(date) : null,
   );
 
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
-
     if (newValue) {
-      const date = new Date(newValue.year(), newValue.month(), newValue.date());
-      setDate(date);
-      console.log(date);
+      setDate(newValue.format("YYYY-MM-DD"));
     }
   };
 

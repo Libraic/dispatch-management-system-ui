@@ -91,7 +91,7 @@ export const LoadLocationContextMenu: React.FC<{
       <div onContextMenu={contextMenu.open} onClick={() => contextMenu.close()}>
         <div
           className={`
-            flex items-center justify-center text-[#6b7280] 
+            flex items-center justify-center mb-[2.8rem] text-[#6b7280] 
             ${loadLocation.label === "Pick Up" || loadLocation.label === "Delivery" ? "hover:text-[#4e71ff]" : BLANK_STRING}
           `}
         >

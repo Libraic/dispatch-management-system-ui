@@ -16,12 +16,7 @@ export const LoadLocationCreator = () => {
             locations: [
               ...prevData.locations,
               getBlankLocation(
-                new Date(
-                  prevData.locations[
-                    prevData.locations.length - 1
-                  ].date.getTime() +
-                    24 * 60 * 60 * 1000,
-                ),
+                prevData.locations[prevData.locations.length - 1].date,
                 prevData.locations.length,
               ),
             ],

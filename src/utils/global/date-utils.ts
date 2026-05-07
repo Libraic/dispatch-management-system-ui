@@ -2,6 +2,7 @@ import { TRAILING_ZERO } from "#/constants/common/global-constants";
 import type { DayOfMonth } from "#/types/internal/time/date-types";
 import { DEFAULT_LOCALE } from "#/constants/date/date-constants";
 import type { WeekIndexer } from "#/ui/Calendar/public/Calendar/Calendar.types";
+import dayjs from "dayjs";
 
 export const getCurrentWeekDays = (): string[] => {
   const date = new Date();
@@ -81,8 +82,12 @@ export const toIsoDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-export const getNextDayFromCurrentDate = (date: Date): Date => {
-  return new Date(date.getTime() + 24 * 60 * 60 * 1000);
+export const getNextDayFromCurrentDate = (date: string): string => {
+  return dayjs(date).add(1, "day").format("YYYY-MM-DD");
+};
+
+export const getCurrentDay = (): string => {
+  return dayjs().format("YYYY-MM-DD");
 };
 
 export const normalizeDate = (date: Date): Date => {

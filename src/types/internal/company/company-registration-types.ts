@@ -5,8 +5,8 @@ export type CompanyRegistrationTypes = {
   email: string;
   password: string;
   confirmPassword: string;
-  serviceDate: Date;
-  startDate: Date;
+  serviceDate: string;
+  startDate: string;
 };
 
 export type CompanyRegistrationError = {

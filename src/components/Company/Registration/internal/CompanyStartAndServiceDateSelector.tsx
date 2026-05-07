@@ -10,7 +10,7 @@ export const CompanyStartAndServiceDateSelector = () => {
     <div className="flex flex-row gap-x-10 items-center">
       <DateSelectorField
         label="Service Date"
-        setDate={(date: Date) => {
+        setDate={(date: string) => {
           setRegistrationData((prevData) => ({
             ...prevData,
             serviceDate: date,
@@ -20,7 +20,7 @@ export const CompanyStartAndServiceDateSelector = () => {
       />
       <DateSelectorField
         label="Start Date"
-        setDate={(date: Date) => {
+        setDate={(date: string) => {
           setRegistrationData((prevData) => ({
             ...prevData,
             startDate: date,

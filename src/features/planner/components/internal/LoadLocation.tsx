@@ -121,7 +121,7 @@ export const LoadLocation: React.FC<LoadLocationProps> = ({ loadLocation }) => {
       <DateSelectorField
         label={dateLabel}
         date={loadLocation.date}
-        setDate={(date: Date) => {
+        setDate={(date: string) => {
           loadContext.setLoadData((prevData) => ({
             ...prevData,
             locations: prevData.locations.map((location) =>

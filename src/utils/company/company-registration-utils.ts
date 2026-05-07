@@ -4,7 +4,7 @@ import type {
 } from "#/types/internal/company/company-registration-types";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
-import { toIsoDate } from "#/utils/global/date-utils";
+import { getCurrentDay } from "#/utils/global/date-utils";
 import { DEFAULT_TIMEZONE_DATA } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
 
 export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
@@ -13,8 +13,8 @@ export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
     email: BLANK_STRING,
     password: BLANK_STRING,
     confirmPassword: BLANK_STRING,
-    serviceDate: new Date(),
-    startDate: new Date(),
+    serviceDate: getCurrentDay(),
+    startDate: getCurrentDay(),
   };
 };
 
@@ -40,8 +40,8 @@ export const createCreateCompanyRequestFromCompanyRegistrationData = (
     email: companyRegistrationData.email,
     mcNumber: companyRegistrationData.mcNumber ?? null,
     address: companyRegistrationData.address ?? null,
-    serviceDate: toIsoDate(companyRegistrationData.serviceDate),
-    startDate: toIsoDate(companyRegistrationData.startDate),
+    serviceDate: companyRegistrationData.serviceDate,
+    startDate: companyRegistrationData.startDate,
     timezone: DEFAULT_TIMEZONE_DATA.value,
   };
 };

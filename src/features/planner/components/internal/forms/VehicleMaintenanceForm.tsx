@@ -85,7 +85,7 @@ export const VehicleMaintenanceForm = forwardRef<
       <div className="flex flex-row gap-x-5">
         <DateSelectorField
           label="Start Date"
-          setDate={(date: Date) => {
+          setDate={(date: string) => {
             setShopData((prevData) => ({
               ...prevData,
               startDate: date,
@@ -95,7 +95,7 @@ export const VehicleMaintenanceForm = forwardRef<
         />
         <DateSelectorField
           label="End Date"
-          setDate={(date: Date) => {
+          setDate={(date: string) => {
             setShopData((prevData) => ({
               ...prevData,
               endDate: date,

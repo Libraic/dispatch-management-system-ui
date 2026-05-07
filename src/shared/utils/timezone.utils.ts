@@ -72,19 +72,23 @@ export const to24Hour = (time?: Time): number => {
   return hour12 === 12 ? 12 : hour12 + 12;
 };
 
-export const toZonedDateTime = (date: Date, timezone: string, time?: Time) => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+export const toZonedDateTime = (
+  date: string,
+  timezone: string,
+  time?: Time,
+) => {
+  const [year, month, day] = date.split("-").map(Number);
+
   const hour = time ? to24Hour(time) : 0;
   const minute = time ? Number(time.minute) : 0;
+
   return Temporal.ZonedDateTime.from({
     timeZone: timezone,
-    year: year,
-    month: month,
-    day: day,
-    hour: hour,
-    minute: minute,
+    year,
+    month,
+    day,
+    hour,
+    minute,
   });
 };
 

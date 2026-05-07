@@ -16,7 +16,6 @@ import {
   deleteDaysOffPeriodByUuid,
   getDaysOffPeriodData,
 } from "#/service/daysOffService";
-import { toIsoDate } from "#/utils/global/date-utils";
 import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "#/utils/planner/days-off-utils";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
@@ -113,7 +112,7 @@ export const DaysOffPeriodBlock: React.FC<{
               Days Off
             </p>
             <p className={`font-bold text-[0.6rem]`}>
-              {toIsoDate(daysOffPeriodData.startDate)}
+              {daysOffPeriodData.startDate}
             </p>
           </div>
         </div>
