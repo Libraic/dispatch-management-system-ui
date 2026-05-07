@@ -27,13 +27,12 @@ export const DateSelectorField: React.FC<DateSelectorFieldProps> = ({
 
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
-    const date = new Date();
+
     if (newValue) {
-      date.setDate(newValue.date());
-      date.setMonth(newValue.month());
-      date.setFullYear(newValue.year());
+      const date = new Date(newValue.year(), newValue.month(), newValue.date());
+      setDate(date);
+      console.log(date);
     }
-    setDate(date);
   };
 
   return (
