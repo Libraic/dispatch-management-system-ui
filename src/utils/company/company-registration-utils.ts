@@ -1,13 +1,13 @@
 import type {
-  CompanyRegistrationTypes,
+  CompanyRegistrationData,
   CreateCompanyRequest,
-} from "#/types/internal/company/company-registration-types";
+} from "#/types/internal/company/company-registration-data";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import * as React from "react";
 import { getCurrentDay } from "#/utils/global/date-utils";
 import { DEFAULT_TIMEZONE_DATA } from "#/features/companies/components/CompanySettings/TimezoneSettings/TimezoneSettings.constants";
 
-export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
+export const getBlankCompanyRegistrationData = (): CompanyRegistrationData => {
   return {
     name: BLANK_STRING,
     email: BLANK_STRING,
@@ -20,9 +20,9 @@ export const getBlankCompanyRegistrationData = (): CompanyRegistrationTypes => {
 
 export const setCompanyStringField = (
   setCompanyRegistrationData: React.Dispatch<
-    React.SetStateAction<CompanyRegistrationTypes>
+    React.SetStateAction<CompanyRegistrationData>
   >,
-  fieldName: keyof CompanyRegistrationTypes,
+  fieldName: keyof CompanyRegistrationData,
   fieldValue: string,
 ) => {
   setCompanyRegistrationData((prev) => ({
@@ -32,7 +32,7 @@ export const setCompanyStringField = (
 };
 
 export const createCreateCompanyRequestFromCompanyRegistrationData = (
-  companyRegistrationData: CompanyRegistrationTypes,
+  companyRegistrationData: CompanyRegistrationData,
 ): CreateCompanyRequest => {
   return {
     name: companyRegistrationData.name,

@@ -6,8 +6,9 @@ import {
 } from "#/constants/trailers/trailers-table-constants";
 import * as React from "react";
 import { TrailersTableContent } from "#/components/Trailer/View/internal/TrailerTableContent";
+import type { Page } from "#/shared/types/api.types";
 
-export const TrailersTable: React.FC<{ trailers: TrailerData[] }> = ({
+export const TrailersTable: React.FC<{ trailers: Page<TrailerData> }> = ({
   trailers,
 }) => {
   return (

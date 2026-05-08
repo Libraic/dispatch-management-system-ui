@@ -16,7 +16,7 @@ export const DriverEmploymentDetailsSection = () => {
     <div className="flex flex-col gap-y-20">
       <div className="flex flex-row gap-x-20 justify-center">
         <SelectorField
-          label="Documents Status"
+          label="Docs Status"
           initialValue={driverRegistrationData.documentsStatus}
           data={documentsStatuses}
           setElement={(documentsStatus: string) =>
@@ -25,6 +25,7 @@ export const DriverEmploymentDetailsSection = () => {
               documentsStatus: documentsStatus,
             })
           }
+          tailwindProperties={{ width: "w-[10rem]" }}
         />
         <SelectorField
           label="Position"

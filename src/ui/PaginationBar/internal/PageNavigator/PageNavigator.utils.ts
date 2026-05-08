@@ -1,4 +1,4 @@
-import type { Pagination } from "#/types/internal/pagination/pagination-types";
+import type { Pagination } from "#/shared/hooks/usePagination";
 
 export const getPreviousPage = (
   pagination: Pagination,

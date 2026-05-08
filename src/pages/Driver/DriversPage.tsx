@@ -1,29 +1,31 @@
-import { useCallback, useEffect, useState } from "react";
-import { getDrivers } from "#/service/driverService";
 import { useParams } from "react-router-dom";
 import { PaginationBar } from "#/ui/PaginationBar/public/PaginationBar";
 import { DriversTable } from "#/features/drivers/components/View/public/DriversTable";
 import { TableHeader } from "#/ui/Table/public/TableHeader";
 import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import { DRIVER_REGISTRATION } from "#/shared/routes/routes";
-import { Entity } from "#/types/api/common/api-query-types";
 import { DRIVERS_PAGE_HEADER } from "#/constants/common/header-constants";
+import { usePagination } from "#/shared/hooks/usePagination";
+import type { DriversTableContextData } from "#/features/drivers/context/context.types";
+import { DriversTableContext } from "#/features/drivers/context/DriversTableContext";
+import { getDrivers } from "#/features/drivers/api/drivers.api";
+import { usePage } from "#/shared/hooks/usePage";
+import { useCallback } from "react";
 
 export const DriversPage = () => {
-  const [drivers, setDrivers] = useState<DriverData[]>([]);
-
   const { companyUuid } = useParams();
-  useEffect(() => {
-    getDrivers(companyUuid!!).then((data) => setDrivers(data));
-  }, [companyUuid]);
-
-  const fetchDriversBasedOnPage = useCallback(
-    async (pageNumber: number) => {
-      const drivers = await getDrivers(companyUuid!!, pageNumber);
-      setDrivers(drivers);
-    },
+  const fetchDrivers = useCallback(
+    (pageNumber?: number) => getDrivers(companyUuid!, pageNumber),
     [companyUuid],
   );
+  const { data, loadPage } = usePage<DriverData>(fetchDrivers);
+  const pagination = usePagination(data.page);
+
+  const context: DriversTableContextData = {
+    pagination,
+    drivers: data,
+    fetchFn: loadPage,
+  };
 
   return (
     <div className="flex flex-col justify-center gap-y-[1.5rem] mx-[4rem]">
@@ -34,12 +36,10 @@ export const DriversPage = () => {
         buttonSubroute={DRIVER_REGISTRATION}
         buttonLabel="Add Driver"
       />
-      <DriversTable drivers={drivers} />
-      <PaginationBar
-        joinableEntityId={companyUuid!!}
-        entityType={Entity.DRIVER}
-        fetchFn={fetchDriversBasedOnPage}
-      />
+      <DriversTableContext value={context}>
+        <DriversTable />
+      </DriversTableContext>
+      <PaginationBar pagination={pagination} fetchFn={loadPage} />
     </div>
   );
 };

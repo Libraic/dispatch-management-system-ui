@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Pagination } from "#/types/internal/pagination/pagination-types";
+import type { Pagination } from "#/shared/hooks/usePagination";
 
 type PageSelectorProps = {
   pagination: Pagination;

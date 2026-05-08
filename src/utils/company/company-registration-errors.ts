@@ -1,7 +1,7 @@
 import type {
-  CompanyRegistrationTypes,
+  CompanyRegistrationData,
   CompanyRegistrationError,
-} from "#/types/internal/company/company-registration-types";
+} from "#/types/internal/company/company-registration-data";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import {
   validateEmail,
@@ -19,7 +19,7 @@ export const getBlankCompanyRegistrationErrors = () => {
 };
 
 export const getCompanyRegistrationErrors = (
-  companyRegistrationData: CompanyRegistrationTypes,
+  companyRegistrationData: CompanyRegistrationData,
 ): CompanyRegistrationError => {
   const errors: CompanyRegistrationError = getBlankCompanyRegistrationErrors();
 

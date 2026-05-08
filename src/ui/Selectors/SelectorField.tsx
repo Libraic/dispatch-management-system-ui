@@ -29,8 +29,8 @@ export const SelectorField = <T extends ReactNode, D extends string | number>({
       />
       <select
         className={`
-          flex items-center py-0.5 
-          ${tailwindProperties?.maxWidth || "w-fit"} 
+          flex items-center py-0.5 px-2
+          ${tailwindProperties?.width || "w-fit"} 
           bg-transparent rounded-[0.75rem] 
           border-2 focus:outline-none focus:ring-0 
           text-center font-light text-[0.9rem] 

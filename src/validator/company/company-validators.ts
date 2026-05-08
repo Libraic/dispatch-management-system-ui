@@ -1,4 +1,4 @@
-import type { CompanyRegistrationError } from "#/types/internal/company/company-registration-types";
+import type { CompanyRegistrationError } from "#/types/internal/company/company-registration-data";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const validateCompanyRegistration = (

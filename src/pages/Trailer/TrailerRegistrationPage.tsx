@@ -6,7 +6,6 @@ import {
 import {
   getBlankTrailerRegistrationData,
   getBlankTrailerRegistrationErrors,
-  getCreateTrailerRequest,
 } from "#/utils/trailer/trailer-utils";
 import { TrailerRegistrationFormInputData } from "#/components/Trailer/Registration/TrailerRegistrationFormInputData";
 import { TRAILER_CREATION_HEADER } from "#/constants/common/header-constants";
@@ -14,7 +13,7 @@ import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { SubmitButton } from "#/ui/Buttons/SubmitButton";
 import { handleErrors } from "#/utils/api/api-common-error-utils";
 import { validateTrailerRegistrationData } from "#/validator/trailer/trailer-validators";
-import { saveTrailer } from "#/service/trailerService";
+import { saveTrailer } from "#/features/trailers/api/trailers.api";
 import { CancelButton } from "#/ui/Buttons/CancelButton";
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
 import { useToast } from "#/ui/Toast/useToast";
@@ -51,11 +50,7 @@ export const TrailerRegistrationPage = () => {
               return;
             }
 
-            const createTrailerRequest = getCreateTrailerRequest(
-              trailerData,
-              companyUuid!!,
-            );
-            const response = await saveTrailer(createTrailerRequest);
+            const response = await saveTrailer(trailerData, companyUuid!!);
             const errors = handleErrors(
               response,
               getBlankTrailerRegistrationErrors,

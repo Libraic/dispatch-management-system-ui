@@ -1,4 +1,4 @@
-export type CompanyRegistrationTypes = {
+export type CompanyRegistrationData = {
   name: string;
   mcNumber?: string;
   address?: string;

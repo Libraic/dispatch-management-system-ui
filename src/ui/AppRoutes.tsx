@@ -19,7 +19,7 @@ import {
   TRUCKS_VIEW,
 } from "#/shared/routes/routes";
 import { CompaniesPage } from "#/pages/Company/CompaniesPage";
-import { CompanyDashboardPage } from "#/pages/Company/CompanyDashboardPage";
+import { DashboardPage } from "#/pages/Company/DashboardPage";
 import { DriverRegistrationPage } from "#/pages/Driver/DriverRegistrationPage";
 import { DriversPage } from "#/pages/Driver/DriversPage";
 import { TrailerRegistrationPage } from "#/pages/Trailer/TrailerRegistrationPage";
@@ -50,7 +50,7 @@ export const AppRoutes = () => {
         <Route element={<AppLayout />}>
           <Route
             path={`${COMPANY_BASE_ROUTE}${DASHBOARD}`}
-            element={<CompanyDashboardPage />}
+            element={<DashboardPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${PLANNER}`}

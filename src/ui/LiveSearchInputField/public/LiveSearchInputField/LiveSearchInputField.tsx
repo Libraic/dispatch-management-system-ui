@@ -3,16 +3,14 @@ import { BLANK_STRING, EMPTY_ARRAY } from "#/constants/common/global-constants";
 import type { Renderable } from "#/types/internal/classes/Renderable";
 import { useLiveSearch } from "#/ui/LiveSearchInputField/public/LiveSearchInputField/useLiveSearch";
 import { useUnfocus } from "#/hooks/useUnfocus";
-import { usePagination } from "#/hooks/usePagination";
 import { TextualInputField } from "#/ui/InputField/components/public/TextualInputField";
 import { InputFieldSearchResult } from "#/ui/LiveSearchInputField/internal/InputFieldSearchResult";
-import { DEFAULT_SIZE } from "#/shared/api/constants/apiQuery.constants";
 import type { TailwindProperties } from "#/types/internal/style";
 import {
   LIVE_SEARCH_ENDPOINTS,
   type LiveSearchInputFieldProps,
 } from "#/ui/LiveSearchInputField/public/LiveSearchInputField/LiveSearchInputField.types";
-import type { LiveSearchResult } from "#/shared/types/api.types";
+import type { Page } from "#/shared/types/api.types";
 
 /**
  * An input form that uses live search to retrieve data from an endpoint.
@@ -40,8 +38,6 @@ export const LiveSearchInputField = <D,>({
   entityType,
   errorMessage,
   isMandatory,
-  joinableEntityId,
-  joinableEntityName,
   saveData,
   cleanData,
   constructor,
@@ -54,27 +50,22 @@ export const LiveSearchInputField = <D,>({
   const [items, setItems] = useState<Renderable[]>([]);
   const [isLiveSearchActive, setIsLiveSearchActive] = useState(false);
   const [placeholderText, setPlaceholderText] = useState(placeholder);
-  const pagination = usePagination(
-    entityType,
-    DEFAULT_SIZE,
-    joinableEntityId,
-    joinableEntityName,
-  );
   const endpoint = LIVE_SEARCH_ENDPOINTS[entityType].endpoint;
   const searchField = LIVE_SEARCH_ENDPOINTS[entityType].searchField;
-  const data: LiveSearchResult<D> = useLiveSearch(
+  const data: Page<D> = useLiveSearch(
     endpoint,
     searchField,
     query,
     isLiveSearchActive,
-    pagination.getSize(),
     customSearchCriteria,
   );
 
   const weight = tailwindProperties?.width ?? "w-fit";
 
   useEffect(() => {
-    setItems(data.items.map((item) => new constructor(item) as Renderable));
+    if (data && data.content) {
+      setItems(data.content.map((item) => new constructor(item) as Renderable));
+    }
   }, [data, constructor]);
 
   const inputFormContainerRef = useRef<HTMLDivElement>(null);
@@ -113,7 +104,6 @@ export const LiveSearchInputField = <D,>({
         <InputFieldSearchResult
           ref={liveSearchDivRef}
           items={items}
-          pagination={pagination}
           onItemSelected={(item: Renderable) => {
             setQuery(item.renderOnForm());
             saveData(item);

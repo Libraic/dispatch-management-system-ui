@@ -1,7 +1,6 @@
 import {
   getBlankTruckRegistrationData,
   getBlankTruckRegistrationErrors,
-  getCreateTruckRequest,
 } from "#/utils/truck/truck-utils";
 import { useState } from "react";
 import { TRUCK_CREATION_HEADER } from "#/constants/common/header-constants";
@@ -9,7 +8,7 @@ import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { TruckRegistrationFormInputData } from "#/components/Truck/Registration/TruckRegistrationFormInputData";
 import { SubmitButton } from "#/ui/Buttons/SubmitButton";
 import { validateTruckRegistrationData } from "#/validator/truck/truck-validators";
-import { saveTruck } from "#/service/truckService";
+import { saveTruck } from "#/features/trucks/api/trucks.api";
 import { handleErrors } from "#/utils/api/api-common-error-utils";
 import { CancelButton } from "#/ui/Buttons/CancelButton";
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
@@ -50,11 +49,7 @@ export const TruckRegistrationPage = () => {
               return;
             }
 
-            const createTruckRequest = getCreateTruckRequest(
-              truckData,
-              companyUuid!!,
-            );
-            const response = await saveTruck(createTruckRequest);
+            const response = await saveTruck(truckData, companyUuid!!);
             const errors = handleErrors(
               response,
               getBlankTruckRegistrationErrors,

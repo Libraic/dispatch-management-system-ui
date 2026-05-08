@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { debounce } from "lodash";
-import { getData } from "#/service/liveSearchService";
+import { getContent } from "#/ui/LiveSearchInputField/api/liveSearch.api";
 import { DEBOUNCING_TIME } from "#/constants/common/global-constants";
 import type { SearchCriteria } from "#/types/api/common/api-query-types";
-import type { Error } from "#/types/api/common/api-errors-types";
-import type { ApiResponse, LiveSearchResult } from "#/shared/types/api.types";
-
-const getItems = <T>(result: ApiResponse<T[], Error>) => {
-  return result.error !== null
-    ? { items: [], error: result.error!.message }
-    : { items: result.data ?? [], error: null };
-};
+import type { Page } from "#/shared/types/api.types";
+import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
+import { getEmptyPage } from "#/shared/utils/api.utils";
+import { ToastContext } from "#/ui/Toast/context/ToastContext";
 
 export const useLiveSearch = <T>(
   endpoint: string,
   searchField: string,
   searchValue: string,
   isLiveSearchActive: boolean,
-  size: number,
   defaultSearchCriteria?: SearchCriteria[],
-): LiveSearchResult<T> => {
-  const [items, setItems] = useState<LiveSearchResult<T>>({
-    items: [],
-    error: null,
-  });
+): Page<T> => {
+  const [items, setItems] = useState<Page<T>>(getEmptyPage());
+  const { showToast } = useContext(ToastContext);
   useEffect(() => {
     const debounced = debounce((value: string) => {
-      getData<T[], Error>(
+      getContent<T>(
         endpoint,
         searchField,
         value,
-        size,
+        DEFAULT_PAGE_SIZE,
         defaultSearchCriteria,
-      ).then((result) => setItems(getItems(result)));
+      ).then((result) => {
+        if (!result.ok) {
+          showToast(result.error.message);
+          return;
+        }
+
+        setItems(result.data);
+      });
     }, DEBOUNCING_TIME);
 
     if (isLiveSearchActive) {
@@ -46,7 +46,7 @@ export const useLiveSearch = <T>(
     searchField,
     defaultSearchCriteria,
     isLiveSearchActive,
-    size,
+    showToast,
   ]);
 
   return items;

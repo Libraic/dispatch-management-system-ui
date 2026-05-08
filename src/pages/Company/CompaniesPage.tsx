@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { fetchCompanies } from "#/service/companyService";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD, LANDING } from "#/shared/routes/routes";
 import {
@@ -8,20 +6,14 @@ import {
   getSpentDays,
 } from "#/utils/company/companies-list-utils";
 import { BackButton } from "#/ui/Buttons/BackButton";
-import type { CompanyData } from "#/types/api/company/company-api-response-types";
 import { HOVER_BACKGROUND_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
+import { getCompanies } from "#/features/companies/api/companies.api";
+import { usePage } from "#/shared/hooks/usePage";
+import type { CompanyData } from "#/types/api/company/company-api-response-types";
 
 export const CompaniesPage = () => {
-  const [companies, setCompanies] = useState<CompanyData[]>([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchCompanies().then((data) => {
-      if (data) {
-        setCompanies(data);
-      }
-    });
-  }, []);
+  const { data } = usePage<CompanyData>(getCompanies);
 
   const columnsLayout = "grid-cols-[10%_15%_30%_15%_15%_15%]";
 
@@ -41,7 +33,7 @@ export const CompaniesPage = () => {
         <div className="flex items-center">Spent</div>
       </div>
 
-      {companies.map((company, index) => (
+      {data.content.map((company, index) => (
         <div
           className={`w-[80%] h-[3.5rem] grid ${columnsLayout} hover:cursor-pointer hover:text-white ${HOVER_BACKGROUND_NORMAL_COLOR} text-left font-light px-[3rem] rounded-[0.3rem] even:bg-[#f6f6f6]`}
           key={index}

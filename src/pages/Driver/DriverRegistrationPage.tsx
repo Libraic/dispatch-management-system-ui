@@ -8,10 +8,7 @@ import { DriverBasicInfoSection } from "#/features/drivers/components/Registrati
 import * as React from "react";
 import { useState } from "react";
 import { DriverAssignmentsSection } from "#/features/drivers/components/Registration/public/DriverAssignmentsSection";
-import {
-  createCreateDriverRequestFromDriverRegistrationData,
-  getBlankDriverRegistrationData,
-} from "#/utils/driver/driver-registration-utils";
+import { getBlankDriverRegistrationData } from "#/utils/driver/driver-registration-utils";
 import {
   getDriverRegistrationErrors,
   getErroneousSection,
@@ -20,9 +17,7 @@ import { SubmitButton } from "#/ui/Buttons/SubmitButton";
 import { CancelButton } from "#/ui/Buttons/CancelButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { DriverEmploymentDetailsSection } from "#/features/drivers/components/Registration/public/DriverEmploymentDetailsSection";
-import type { RegistrationContextData } from "#/types/internal/context/context-types";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
-import { saveDriver } from "#/service/driverService";
 import { useToast } from "#/ui/Toast/useToast";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { Toast } from "#/ui/Toast/ToastComponent/Toast";
@@ -37,6 +32,8 @@ import type {
 } from "#/types/api/common/api-errors-types";
 import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegistrationContext";
 import type { ApiResponse } from "#/shared/types/api.types";
+import { saveDriver } from "#/features/drivers/api/drivers.api";
+import type { RegistrationContextData } from "#/features/drivers/context/context.types";
 
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -100,12 +97,7 @@ export const DriverRegistrationPage = () => {
       sectionsHandler.setErrors(erroneousSections.getErroneousSections());
     } else {
       sectionsHandler.clearErrors();
-      const createDriverRequest =
-        createCreateDriverRequestFromDriverRegistrationData(
-          driverRegistrationData,
-          companyUuid!,
-        );
-      const response = await saveDriver(createDriverRequest);
+      const response = await saveDriver(driverRegistrationData, companyUuid!!);
       processErrors(response, registrationErrors);
     }
   };

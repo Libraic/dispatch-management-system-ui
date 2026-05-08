@@ -20,7 +20,7 @@ export const DRIVERS_BASE_URL = BASE_URL + "/drivers";
 /**
  * Truck-related API paths.
  */
-export const TRUCKS_BASE_URL = BASE_URL + "/planner";
+export const TRUCKS_BASE_URL = BASE_URL + "/trucks";
 
 /**
  * Trailer-related API paths.

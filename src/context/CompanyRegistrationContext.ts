@@ -1,11 +1,11 @@
 import { createContext } from "react";
-import type { RegistrationContextData } from "#/types/internal/context/context-types";
 import type {
-  CompanyRegistrationTypes,
+  CompanyRegistrationData,
   CompanyRegistrationError,
-} from "#/types/internal/company/company-registration-types";
+} from "#/types/internal/company/company-registration-data";
+import type { RegistrationContextData } from "#/features/drivers/context/context.types";
 
 export const CompanyRegistrationContext = createContext<
-  | RegistrationContextData<CompanyRegistrationTypes, CompanyRegistrationError>
+  | RegistrationContextData<CompanyRegistrationData, CompanyRegistrationError>
   | undefined
 >(undefined);

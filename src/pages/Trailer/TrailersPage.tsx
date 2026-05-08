@@ -1,30 +1,25 @@
 import { useParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
 import { TableHeader } from "#/ui/Table/public/TableHeader";
 import { TRAILER_REGISTRATION } from "#/shared/routes/routes";
 import { PaginationBar } from "#/ui/PaginationBar/public/PaginationBar";
-import { Entity } from "#/types/api/common/api-query-types";
 import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
-import { getTrailers } from "#/service/trailerService";
 import { TrailersTable } from "#/components/Trailer/View/public/TrailersTable";
 import { TRAILERS_PAGE_HEADER } from "#/constants/common/header-constants";
 import { TRAILERS_CODE } from "#/features/trailers/constants/ui.constants";
+import { usePagination } from "#/shared/hooks/usePagination";
+import { usePage } from "#/shared/hooks/usePage";
+import { getTrailers } from "#/features/trailers/api/trailers.api";
+import { useCallback } from "react";
 
 export const TrailersPage = () => {
   const { companyUuid } = useParams();
-  const [trailers, setTrailers] = useState<TrailerData[]>([]);
-
-  useEffect(() => {
-    getTrailers(companyUuid!!).then((data) => setTrailers(data));
-  }, [companyUuid]);
-
-  const fetchTrailersBasedOnPage = useCallback(
-    async (pageNumber: number) => {
-      const trailers = await getTrailers(companyUuid!!, pageNumber);
-      setTrailers(trailers);
-    },
+  const fetchTrailers = useCallback(
+    (pageNumber?: number) => getTrailers(companyUuid!, pageNumber),
     [companyUuid],
   );
+
+  const { data, loadPage } = usePage<TrailerData>(fetchTrailers);
+  const pagination = usePagination(data.page);
 
   return (
     <div className="flex flex-col justify-center gap-y-[1.5rem] mx-[4rem]">
@@ -35,12 +30,8 @@ export const TrailersPage = () => {
         buttonSubroute={TRAILER_REGISTRATION}
         buttonLabel="Add Trailer"
       />
-      <TrailersTable trailers={trailers} />
-      <PaginationBar
-        joinableEntityId={companyUuid!!}
-        entityType={Entity.TRAILER}
-        fetchFn={fetchTrailersBasedOnPage}
-      />
+      <TrailersTable trailers={data} />
+      <PaginationBar pagination={pagination} fetchFn={loadPage} />
     </div>
   );
 };

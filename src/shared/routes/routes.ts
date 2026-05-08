@@ -12,7 +12,7 @@ export const DRIVERS_VIEW = "/drivers";
 export const DISPATCHERS_VIEW = "/dispatchers";
 export const SETTINGS = "/settings";
 
-export const TRUCKS_VIEW = "/planner";
+export const TRUCKS_VIEW = "/trucks";
 export const TRUCK_REGISTRATION = `${TRUCKS_VIEW}/registration`;
 
 export const TRAILERS_VIEW = "/trailers";

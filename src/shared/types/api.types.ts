@@ -30,3 +30,15 @@ export type ApiResponse<T, E extends Error | GroupsErrorResponse> = {
 export type Result<T, E> = { ok: true; data: T } | { ok: false; error: E };
 
 export type NoContentResponse = {};
+
+export interface PageDetails {
+  size: number; // How many items per page
+  number: number; // The page number
+  totalElements: number;
+  totalPages: number;
+}
+
+export interface Page<T> {
+  content: T[];
+  page: PageDetails;
+}
