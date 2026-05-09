@@ -1,8 +1,8 @@
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import type { DispatcherData } from "#/types/api/dispatcher/dispatcher-api-response-types";
 import type { LoadStatus } from "#/types/internal/planner/planner-types";
 import type { GetVehicleMaintenanceResponse } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
 import type { GetDaysOffPeriodResponse } from "#/types/api/days-off/days-off-api-response-types";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export type ApiLoadLocation = {
   label?: string;

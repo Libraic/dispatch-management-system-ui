@@ -1,5 +1,5 @@
 import type { DispatcherData } from "#/types/api/dispatcher/dispatcher-api-response-types";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export type LoadStatus =
   | "Booked"

@@ -6,14 +6,16 @@ import {
   HOVER_BORDER_NORMAL_COLOR,
   TEXT_NORMAL_COLOR,
 } from "#/shared/constants/tailwind/tailwindColors.constants";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 type DriverRegistrationSectionProps = {
   sectionTitle: string;
   sectionIndex: number;
   isLast: boolean;
-  isWithErrors: boolean;
+  hasErrors: boolean;
   isActive: boolean;
-  activateSection: (section: string) => void;
+  isFocused: boolean;
+  focusSection: (section: string) => void;
 };
 
 export const DriverRegistrationSection: React.FC<
@@ -22,40 +24,47 @@ export const DriverRegistrationSection: React.FC<
   sectionTitle,
   sectionIndex,
   isLast,
-  isWithErrors,
+  hasErrors,
   isActive,
-  activateSection,
+  isFocused,
+  focusSection,
 }) => {
   const textColor = !isActive
-    ? isWithErrors
-      ? "text-error-red"
-      : TEXT_NORMAL_COLOR
-    : "text-white";
-  const backgroundColor = isActive
-    ? isWithErrors
-      ? "bg-error-red"
-      : BACKGROUND_NORMAL_COLOR
-    : "bg-white";
+    ? "text-gray-400"
+    : isFocused
+      ? "text-white"
+      : hasErrors
+        ? "text-error-red"
+        : TEXT_NORMAL_COLOR;
+  const backgroundColor = !isActive
+    ? "bg-white"
+    : isFocused
+      ? hasErrors
+        ? "bg-error-red"
+        : BACKGROUND_NORMAL_COLOR
+      : "bg-white";
   return (
     <>
       <div
-        onClick={() => activateSection(sectionTitle)}
+        onClick={() => focusSection(sectionTitle)}
         className={`
           flex justify-center items-center w-9 h-9 
-          rounded-[50%] border-[0.1rem] cursor-pointer 
-          ${isWithErrors ? "border-error-red" : BORDER_NORMAL_COLOR} 
-          ${isWithErrors ? "hover:border-error-red" : HOVER_BORDER_NORMAL_COLOR} 
+          rounded-[50%] border-[0.1rem] select-none
+          ${!isActive ? BLANK_STRING : "cursor-pointer"}
+          ${hasErrors ? "border-error-red" : isActive ? BORDER_NORMAL_COLOR : "border-gray-400"} 
+          ${!isActive ? "hover:border-gray-400" : hasErrors ? "hover:border-error-red" : HOVER_BORDER_NORMAL_COLOR} 
           ${backgroundColor} 
-          ${isWithErrors ? "hover:bg-error-red" : HOVER_BACKGROUND_NORMAL_COLOR} 
-          ${textColor} hover:text-white transition-all ease-in duration-100
+          ${!isActive ? "bg-white" : hasErrors ? "hover:bg-error-red" : HOVER_BACKGROUND_NORMAL_COLOR} 
+          ${!isActive ? "text-gray-400" : textColor} 
+          ${!isActive ? "hover-text-gray-400" : "hover:text-white"}
         `}
       >
         <p className={`font-medium text-[1rem]`}>{sectionIndex}</p>
       </div>
       <p
         className={`
-          font-normal text-[0.9rem] text-center 
-          ${isWithErrors ? "text-error-red" : TEXT_NORMAL_COLOR}
+          font-normal text-[0.9rem] text-center select-none
+          ${!isActive ? "text-gray-400" : hasErrors ? "text-error-red" : TEXT_NORMAL_COLOR}
         `}
       >
         {sectionTitle}
@@ -64,7 +73,7 @@ export const DriverRegistrationSection: React.FC<
         <div
           className={`
             w-[8rem] border-[0.063rem]  
-            ${isWithErrors ? "border-error-red" : BORDER_NORMAL_COLOR}
+            ${!isActive ? "border-gray-400" : hasErrors ? "border-error-red" : BORDER_NORMAL_COLOR}
           `}
         ></div>
       )}

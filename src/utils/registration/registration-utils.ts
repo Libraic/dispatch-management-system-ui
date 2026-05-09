@@ -13,9 +13,12 @@ export const setObjectStringField = <T>(
   }));
 };
 
-export const validateEmail = (value: string, isMandatory: boolean): string => {
-  if (value === BLANK_STRING) {
-    return isMandatory ? "The e-mail is required" : BLANK_STRING;
+export const validateEmail = (
+  value: string | undefined,
+  isMandatory: boolean,
+) => {
+  if (!value || value === BLANK_STRING) {
+    return isMandatory ? "The e-mail is required" : undefined;
   }
 
   const parts = value.split("@");
@@ -28,11 +31,16 @@ export const validateEmail = (value: string, isMandatory: boolean): string => {
     return "The domain of the e-mail is invalid";
   }
 
-  return BLANK_STRING;
+  return undefined;
 };
 
-export const validateMandatoryField = (value: string, fieldName: string) => {
-  return value === BLANK_STRING ? `The ${fieldName} is required.` : "";
+export const validateMandatoryField = (
+  value: string | undefined,
+  fieldName: string,
+) => {
+  return !value || value === BLANK_STRING
+    ? `The ${fieldName} is required.`
+    : undefined;
 };
 
 export const validatePassword = (password: string, confirmPassword: string) => {
@@ -56,22 +64,16 @@ export const validatePassword = (password: string, confirmPassword: string) => {
 };
 
 export const validatePhoneNumber = (
-  value: string,
+  value: string | undefined,
   fieldRequirement: FieldRequirement,
   fieldName?: string,
 ) => {
   if (fieldRequirement === "mandatory") {
     const fieldNameToDisplay = fieldName ? fieldName : "phone number";
-    const mandatoryFieldValidation = validateMandatoryField(
-      value,
-      fieldNameToDisplay,
-    );
-    if (mandatoryFieldValidation !== BLANK_STRING) {
-      return mandatoryFieldValidation;
-    }
+    return validateMandatoryField(value, fieldNameToDisplay);
   }
 
-  if (value !== BLANK_STRING && value.length !== 10) {
+  if (value && value !== BLANK_STRING && value.length !== 10) {
     return "The format is invalid.";
   }
 

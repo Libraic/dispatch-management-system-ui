@@ -7,9 +7,8 @@ import type {
 import axios from "axios";
 import { DRIVERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";
-import { createCreateDriverRequestFromDriverRegistrationData } from "#/utils/driver/driver-registration-utils";
-import type { DriverRegistrationData } from "#/types/internal/driver/driver-registration-types";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
+import { createCreateDriverRequestFromDriverRegistrationData } from "#/features/drivers/mappers/driverRegistration.mapper";
+import type { DriverRegistrationData } from "#/features/drivers/components/Registration/types/driverRegistration.types";
 import {
   COMPANY_ID_QUERY_PARAM,
   JOIN_CLAUSE,
@@ -18,6 +17,7 @@ import {
 } from "#/shared/api/constants/apiQuery.constants";
 import { COLON } from "#/constants/common/global-constants";
 import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export const saveDriver = async (
   driverRegistrationData: DriverRegistrationData,

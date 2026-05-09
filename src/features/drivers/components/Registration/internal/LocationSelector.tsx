@@ -5,10 +5,11 @@ import {
   USA_COUNTRY_ISO_CODE,
 } from "#/utils/location/location-utils";
 import { useLocationSelector } from "#/features/drivers/hooks/useLocationSelector";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 type LocationSelectorProps = {
-  currentState: string;
-  currentCity: string;
+  currentState?: string;
+  currentCity?: string;
   setState: (state: string) => void;
   setCity: (city: string) => void;
 };
@@ -19,9 +20,11 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   setState,
   setCity,
 }) => {
+  const state = currentState ?? BLANK_STRING;
+  const city = currentCity ?? BLANK_STRING;
   const { states, cities, onStateChange, onCityChange } = useLocationSelector(
     USA_COUNTRY_ISO_CODE,
-    currentState,
+    state,
     setCity,
   );
 
@@ -29,14 +32,14 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
     <div className="flex flex-row gap-x-20 justify-center">
       <SelectorField
         label="State"
-        initialValue={currentState}
+        initialValue={state}
         data={states.map(renderStateByNameAndIsoCode)}
         setElement={(state) => onStateChange(state, setState)}
       />
 
       <SelectorField
         label="City"
-        initialValue={currentCity}
+        initialValue={city}
         data={cities.map((city) => city.name)}
         setElement={onCityChange}
       />

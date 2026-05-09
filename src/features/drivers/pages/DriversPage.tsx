@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { PaginationBar } from "#/ui/PaginationBar/public/PaginationBar";
 import { DriversTable } from "#/features/drivers/components/View/public/DriversTable";
 import { TableHeader } from "#/ui/Table/public/TableHeader";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import { DRIVER_REGISTRATION } from "#/shared/routes/routes";
 import { DRIVERS_PAGE_HEADER } from "#/constants/common/header-constants";
 import { usePagination } from "#/shared/hooks/usePagination";
@@ -11,6 +10,7 @@ import { DriversTableContext } from "#/features/drivers/context/DriversTableCont
 import { getDrivers } from "#/features/drivers/api/drivers.api";
 import { usePage } from "#/shared/hooks/usePage";
 import { useCallback } from "react";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export const DriversPage = () => {
   const { companyUuid } = useParams();

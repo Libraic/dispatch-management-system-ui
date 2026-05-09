@@ -3,9 +3,13 @@ import { useContext } from "react";
 import {
   documentsStatuses,
   driverPositions,
-} from "#/utils/driver/driver-registration-utils";
-import { LocationSelector } from "#/features/drivers/components/Registration/internal/LocationSelector";
+} from "#/features/drivers/mappers/driverRegistration.mapper";
 import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegistrationContext";
+import { LiveSearchInputField } from "#/ui/LiveSearchInputField/public/LiveSearchInputField/LiveSearchInputField";
+import type { Renderable } from "#/types/internal/classes/Renderable";
+import { City } from "#/types/internal/classes/City";
+import { Entity } from "#/types/api/common/api-query-types";
+import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const DriverEmploymentDetailsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
@@ -39,21 +43,19 @@ export const DriverEmploymentDetailsSection = () => {
           }
         />
       </div>
-      <LocationSelector
-        currentState={driverRegistrationData.state}
-        currentCity={driverRegistrationData.city}
-        setState={(state: string) =>
-          setDriverRegistrationData((prev) => ({
-            ...prev,
-            state,
-          }))
+      <LiveSearchInputField
+        label="Location"
+        placeholder="Los Angeles, CA"
+        value={driverRegistrationData.location ?? BLANK_STRING}
+        saveData={(location: Renderable) =>
+          setDriverRegistrationData({
+            ...driverRegistrationData,
+            location: location.renderOnForm(),
+          })
         }
-        setCity={(city: string) =>
-          setDriverRegistrationData((prev) => ({
-            ...prev,
-            city,
-          }))
-        }
+        entityType={Entity.CITY}
+        constructor={City}
+        tailwindProperties={{ width: "w-[14.2rem]" }}
       />
     </div>
   );

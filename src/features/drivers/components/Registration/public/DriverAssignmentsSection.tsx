@@ -12,6 +12,7 @@ import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegi
 export const DriverAssignmentsSection = () => {
   const context = useContext(DriverRegistrationContext)!;
   const driverRegistrationData = context.registrationData;
+  const driverRegistrationError = context.registrationDataError;
   const setDriverRegistrationData = context.setRegistrationData;
   const joinableEntityId = context.joinableEntityId!!;
   return (
@@ -19,7 +20,9 @@ export const DriverAssignmentsSection = () => {
       <LiveSearchInputField
         label="Dispatcher"
         placeholder={"John Doe"}
-        value={driverRegistrationData.dispatcherAssignmentData.name}
+        value={
+          driverRegistrationData.dispatcherAssignmentData?.name ?? BLANK_STRING
+        }
         entityType={Entity.DISPATCHER}
         joinableEntityId={joinableEntityId}
         joinableEntityName="company"
@@ -35,19 +38,21 @@ export const DriverAssignmentsSection = () => {
         cleanData={() =>
           setDriverRegistrationData({
             ...driverRegistrationData,
-            dispatcherAssignmentData: {
-              uuid: BLANK_STRING,
-              name: BLANK_STRING,
-            },
+            dispatcherAssignmentData: undefined,
           })
         }
+        isMandatory={true}
+        errorMessage={driverRegistrationError.dispatcher}
         constructor={Dispatcher}
         customSearchCriteria={[joinByCompanyId(joinableEntityId)]}
       />
       <LiveSearchInputField
         label="Truck"
         placeholder={"RK-2021"}
-        value={driverRegistrationData.truckAssignmentData.truckNumber}
+        value={
+          driverRegistrationData.truckAssignmentData?.truckNumber ??
+          BLANK_STRING
+        }
         entityType={Entity.TRUCK}
         joinableEntityId={joinableEntityId}
         joinableEntityName="company"
@@ -63,10 +68,7 @@ export const DriverAssignmentsSection = () => {
         cleanData={() =>
           setDriverRegistrationData({
             ...driverRegistrationData,
-            truckAssignmentData: {
-              truckNumber: BLANK_STRING,
-              truckUuid: BLANK_STRING,
-            },
+            truckAssignmentData: undefined,
           })
         }
         constructor={Truck}
@@ -75,7 +77,10 @@ export const DriverAssignmentsSection = () => {
       <LiveSearchInputField
         label="Trailer"
         placeholder={"TK-2013"}
-        value={driverRegistrationData.trailerAssignmentData.trailerNumber}
+        value={
+          driverRegistrationData.trailerAssignmentData?.trailerNumber ??
+          BLANK_STRING
+        }
         entityType={Entity.TRAILER}
         joinableEntityId={joinableEntityId}
         joinableEntityName="company"
@@ -91,10 +96,7 @@ export const DriverAssignmentsSection = () => {
         cleanData={() =>
           setDriverRegistrationData({
             ...driverRegistrationData,
-            trailerAssignmentData: {
-              trailerUuid: BLANK_STRING,
-              trailerNumber: BLANK_STRING,
-            },
+            trailerAssignmentData: undefined,
           })
         }
         constructor={Trailer}

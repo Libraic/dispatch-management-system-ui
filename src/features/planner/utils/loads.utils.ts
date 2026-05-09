@@ -16,7 +16,7 @@ import {
 import type { LocationDetails } from "#/features/planner/types/location.types";
 import type { LoadCreationType } from "#/features/planner/components/internal/forms/load/LoadForm";
 import type { GetLoadResponse } from "#/features/planner/types/load.api.types";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export const toLoadDataToDispatcherRelation = (
   prevDispatcherLoadDataList: DispatchingRelation[],

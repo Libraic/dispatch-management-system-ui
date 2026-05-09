@@ -20,8 +20,8 @@ import {
 } from "#/shared/routes/routes";
 import { CompaniesPage } from "#/pages/Company/CompaniesPage";
 import { DashboardPage } from "#/pages/Company/DashboardPage";
-import { DriverRegistrationPage } from "#/pages/Driver/DriverRegistrationPage";
-import { DriversPage } from "#/pages/Driver/DriversPage";
+import { DriverRegistrationPage } from "#/features/drivers/pages/DriverRegistrationPage";
+import { DriversPage } from "#/features/drivers/pages/DriversPage";
 import { TrailerRegistrationPage } from "#/pages/Trailer/TrailerRegistrationPage";
 import { TrucksPage } from "#/pages/Truck/TrucksPage";
 import { TruckRegistrationPage } from "#/pages/Truck/TruckRegistrationPage";

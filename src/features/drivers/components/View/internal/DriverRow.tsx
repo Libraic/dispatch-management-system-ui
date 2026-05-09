@@ -6,7 +6,6 @@ import {
 } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { TableCell } from "#/ui/Table/public/TableCell";
 import { type FC, Fragment, useContext } from "react";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import { ContextMenu } from "#/ui/ContextMenu/public/ContextMenu";
 import { getDeleteOption } from "#/utils/context-menu/context-menu-utils";
 import type { ContextMenuActionItem } from "#/types/internal/common/context-menu-types";
@@ -14,6 +13,7 @@ import { useContextMenu } from "#/hooks/useContextMenu";
 import { deleteDriverById } from "#/features/drivers/api/drivers.api";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
 import { DriversTableContext } from "#/features/drivers/context/DriversTableContext";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 type DriverRowProps = {
   driver: DriverData;

@@ -2,38 +2,35 @@ import {
   DRIVER_REGISTRATION_SECTIONS,
   type DriverRegistrationData,
   type DriverRegistrationError,
-} from "#/types/internal/driver/driver-registration-types";
+} from "#/features/drivers/components/Registration/types/driverRegistration.types";
 import { DriverRegistrationSection } from "#/features/drivers/components/Registration/public/DriverRegistrationSection";
 import { DriverBasicInfoSection } from "#/features/drivers/components/Registration/public/DriverBasicInfoSection";
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DriverAssignmentsSection } from "#/features/drivers/components/Registration/public/DriverAssignmentsSection";
-import { getBlankDriverRegistrationData } from "#/utils/driver/driver-registration-utils";
 import {
   getDriverRegistrationErrors,
-  getErroneousSection,
-} from "#/validator/driver/driver-registration-validatiors";
+  getErroneousSections,
+} from "#/features/drivers/validators/driverRegistration.validator";
 import { SubmitButton } from "#/ui/Buttons/SubmitButton";
 import { CancelButton } from "#/ui/Buttons/CancelButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { DriverEmploymentDetailsSection } from "#/features/drivers/components/Registration/public/DriverEmploymentDetailsSection";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
-import { useToast } from "#/ui/Toast/useToast";
-import { BLANK_STRING } from "#/constants/common/global-constants";
-import { Toast } from "#/ui/Toast/ToastComponent/Toast";
-import { handleErrors } from "#/utils/api/api-common-error-utils";
 import { useSections } from "#/hooks/useSections";
 import { DRIVER_REGISTRATION_HEADER } from "#/constants/common/header-constants";
 import { DRIVERS_VIEW } from "#/shared/routes/routes";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
-import type {
-  Error,
-  GroupsErrorResponse,
-} from "#/types/api/common/api-errors-types";
+
 import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegistrationContext";
-import type { ApiResponse } from "#/shared/types/api.types";
 import { saveDriver } from "#/features/drivers/api/drivers.api";
 import type { RegistrationContextData } from "#/features/drivers/context/context.types";
+import { ToastContext } from "#/ui/Toast/context/ToastContext";
+import type { ApiError } from "#/shared/types/api.types";
+import { handleApiError } from "#/shared/api/utils/api.utils";
+import {
+  documentsStatuses,
+  driverPositions,
+} from "#/features/drivers/mappers/driverRegistration.mapper";
 
 const sections = Object.values(DRIVER_REGISTRATION_SECTIONS);
 const sectionComponents: Record<string, React.ReactNode> = {
@@ -46,7 +43,10 @@ export const DriverRegistrationPage = () => {
   const sectionsHandler = useSections(sections);
   const { companyUuid } = useParams();
   const [driverRegistrationData, setDriverRegistrationData] =
-    useState<DriverRegistrationData>(getBlankDriverRegistrationData());
+    useState<DriverRegistrationData>({
+      documentsStatus: documentsStatuses[0],
+      position: driverPositions[0],
+    });
   const [driverRegistrationErrors, setDriverRegistrationErrors] =
     useState<DriverRegistrationError>({});
   const registrationContextData: RegistrationContextData<
@@ -58,47 +58,48 @@ export const DriverRegistrationPage = () => {
     registrationDataError: driverRegistrationErrors,
     joinableEntityId: companyUuid!!,
   };
-  const activeSectionComponent =
-    sectionComponents[sectionsHandler.getActiveSection()];
-  const toast = useToast();
+  const { showToast } = useContext(ToastContext);
 
   const baseRoute = `/${companyUuid}${DRIVERS_VIEW}`;
   const navigate = useNavigate();
 
-  const processErrors = (
-    response: ApiResponse<DriverData, Error | GroupsErrorResponse>,
-    registrationErrors: DriverRegistrationError,
-  ) => {
-    const errors = handleErrors(
-      response,
-      () => ({}) as DriverRegistrationError,
-      () => false,
-    );
-    if (errors == null) {
-      navigate(baseRoute);
-    } else if (!Array.isArray(errors)) {
-      const e = errors as Error;
-      toast.withErrorMessage(e.message);
-    } else {
-      setDriverRegistrationErrors(errors as DriverRegistrationError);
-      const err = getErroneousSection(sections, registrationErrors);
-      sectionsHandler.setErrors(err.getErroneousSections());
-    }
-  };
+  const submitButtonLabel = sectionsHandler.areAllSectionsActivated()
+    ? "Submit"
+    : "Next";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const registrationErrors = getDriverRegistrationErrors(
-      driverRegistrationData,
-    );
+    const { erroneousSections, registrationErrors } =
+      getDriverRegistrationErrors(
+        driverRegistrationData,
+        sectionsHandler.getActiveSections(),
+      );
     setDriverRegistrationErrors(registrationErrors);
-    const erroneousSections = getErroneousSection(sections, registrationErrors);
-    if (erroneousSections.hasErroneousSection()) {
-      sectionsHandler.setErrors(erroneousSections.getErroneousSections());
-    } else {
-      sectionsHandler.clearErrors();
-      const response = await saveDriver(driverRegistrationData, companyUuid!!);
-      processErrors(response, registrationErrors);
+    sectionsHandler.setErrors(erroneousSections);
+    if (erroneousSections.length === 0) {
+      if (!sectionsHandler.areAllSectionsActivated()) {
+        sectionsHandler.activateOrFocusNextSection();
+      } else {
+        const response = await saveDriver(
+          driverRegistrationData,
+          companyUuid!!,
+        );
+
+        if (response.ok) {
+          navigate(baseRoute);
+          return;
+        }
+
+        const error = response.error as ApiError;
+        handleApiError({
+          error: error,
+          setFieldErrors: setDriverRegistrationErrors,
+          showToast,
+        });
+        sectionsHandler.setErrors(
+          getErroneousSections(driverRegistrationErrors),
+        );
+      }
     }
   };
 
@@ -113,28 +114,22 @@ export const DriverRegistrationPage = () => {
                 sectionTitle={section}
                 sectionIndex={index + 1}
                 isLast={index < sections.length - 1}
-                isWithErrors={sectionsHandler.isSectionWithErrors(section)}
+                hasErrors={sectionsHandler.isSectionWithErrors(section)}
                 isActive={sectionsHandler.isSectionActive(section)}
-                activateSection={sectionsHandler.activateSection}
+                isFocused={sectionsHandler.isSectionFocused(section)}
+                focusSection={sectionsHandler.focusSection}
               />
             </div>
           ))}
         </div>
         <DriverRegistrationContext value={registrationContextData}>
-          {activeSectionComponent}
+          {sectionComponents[sectionsHandler.getFocusedSection()]}
         </DriverRegistrationContext>
       </div>
       <div className="flex flex-row items-center justify-center w-screen mb-15 gap-x-10">
-        <SubmitButton actionText="Submit" action={handleSubmit} />
+        <SubmitButton actionText={submitButtonLabel} action={handleSubmit} />
         <CancelButton actionText="Quit" action={() => navigate(baseRoute)} />
       </div>
-      {toast.getMessage() !== BLANK_STRING && (
-        <Toast
-          key={toast.getIdentifier()}
-          message={toast.getMessage()}
-          type={toast.getOperationResult()}
-        />
-      )}
     </div>
   );
 };

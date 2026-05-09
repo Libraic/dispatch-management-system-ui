@@ -1,25 +1,24 @@
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { BORDER_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import type { TailwindProperties } from "#/types/internal/style";
 import { InputFieldLabel } from "#/ui/InputField/components/public/InputFieldLabel";
 
-type SelectFormData<T extends ReactNode, D extends string | number> = {
-  initialValue: D;
-  data: T[];
+type SelectFormData<D extends string | number> = {
+  initialValue?: D;
+  data: D[];
   setElement: (value: string) => void;
   label: string;
   tailwindProperties?: TailwindProperties;
 };
 
-export const SelectorField = <T extends ReactNode, D extends string | number>({
+export const SelectorField = <D extends string | number>({
   initialValue,
   data,
   setElement,
   label,
   tailwindProperties,
-}: SelectFormData<T, D>) => {
+}: SelectFormData<D>) => {
   const [borderColor, setBorderColor] = useState("border-light-grey");
-
   return (
     <div className={`relative ${borderColor}`}>
       <InputFieldLabel

@@ -3,7 +3,7 @@ import type { TailwindProperties } from "#/types/internal/style";
 export interface BaseInputFieldProps {
   label: string;
   placeholder: string;
-  inputFieldValue: string;
+  inputFieldValue?: string;
   saveInputData: (value: string) => void;
   isMandatory?: boolean;
   errorMessage?: string;

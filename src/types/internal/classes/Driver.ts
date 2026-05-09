@@ -1,5 +1,5 @@
 import type { Renderable } from "./Renderable";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export class Driver implements Renderable {
   name: string;
@@ -20,11 +20,5 @@ export class Driver implements Renderable {
 
   getUuid(): string {
     return this.uuid;
-  }
-
-  getTruckData(): string {
-    return `
-      N/A
-    `;
   }
 }

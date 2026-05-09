@@ -1,7 +1,7 @@
 import React from "react";
 import type { Pagination } from "#/shared/hooks/usePagination";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import type { Page } from "#/shared/types/api.types";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export interface DriversTableContextData {
   pagination: Pagination;

@@ -50,7 +50,7 @@ export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
         : "border-light-grey";
 
     const inputFieldPlaceholder =
-      !isFocused && (inputFieldValue === BLANK_STRING || !inputFieldValue)
+      !isFocused && (!inputFieldValue || inputFieldValue === BLANK_STRING)
         ? placeholder
         : BLANK_STRING;
 
@@ -89,7 +89,13 @@ export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
             autoComplete="off"
             name={getInputTagNameFromLabel(label)}
             placeholder={inputFieldPlaceholder}
-            value={formatter ? formatter(inputFieldValue) : inputFieldValue}
+            value={
+              inputFieldValue
+                ? formatter
+                  ? formatter(inputFieldValue)
+                  : inputFieldValue
+                : BLANK_STRING
+            }
             onFocus={handleFocus}
             onBlur={() => setIsFocused(false)}
             onChange={handleChange}

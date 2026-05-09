@@ -1,33 +1,53 @@
 import { useState } from "react";
 
 export type SectionsHandler = {
-  activateSection: (section: string) => void;
-  getActiveSection: () => string;
-  getSectionsWithErrors: () => Map<string, boolean>;
-  setErrors: (errors: Map<string, boolean>) => void;
-  isSectionWithErrors: (section: string) => boolean;
+  getActiveSections: () => string[];
+  areAllSectionsActivated: () => boolean;
+  activateOrFocusNextSection: () => void;
   isSectionActive: (section: string) => boolean;
+  focusSection: (section: string) => void;
+  getFocusedSection: () => string;
+  isSectionFocused: (section: string) => boolean;
+  isSectionWithErrors: (section: string) => boolean;
+  setErrors: (errors: string[]) => void;
   clearErrors: () => void;
 };
 
 export const useSections = (sections: string[]): SectionsHandler => {
-  const [activeSection, setActiveSection] = useState<string>(sections[0]);
-  const [sectionsWithErrors, setSectionsWithErrors] = useState<
-    Map<string, boolean>
-  >(new Map<string, boolean>());
+  const [focusedSection, setFocusedSection] = useState<string>(sections[0]);
+  const [activatedSections, setActivatedSections] = useState<string[]>([
+    sections[0],
+  ]);
+  const [sectionsWithErrors, setSectionsWithErrors] = useState<string[]>([]);
   return {
-    activateSection: (section: string) => setActiveSection(section),
-    getActiveSection: () => activeSection,
-    getSectionsWithErrors: () => sectionsWithErrors,
-    setErrors: (errors: Map<string, boolean>) => {
-      if (errors.size !== 0) {
-        setActiveSection(errors.keys().next().value!);
+    getActiveSections: () => activatedSections,
+    areAllSectionsActivated: () => activatedSections.length === sections.length,
+    activateOrFocusNextSection: () => {
+      const index = sections.indexOf(focusedSection);
+      if (index + 1 < sections.length) {
+        const nextSection = sections[index + 1];
+        if (!activatedSections.includes(nextSection)) {
+          setActivatedSections([...activatedSections, nextSection]);
+        }
+        setFocusedSection(nextSection);
+      }
+    },
+    focusSection: (section: string) => {
+      if (activatedSections.includes(section)) {
+        setFocusedSection(section);
+      }
+    },
+    getFocusedSection: () => focusedSection,
+    setErrors: (errors: string[]) => {
+      if (errors.length !== 0) {
+        setFocusedSection(errors[0]);
       }
       setSectionsWithErrors(errors);
     },
     isSectionWithErrors: (section: string) =>
-      sectionsWithErrors.get(section) ?? false,
-    isSectionActive: (section: string) => activeSection === section,
-    clearErrors: () => setSectionsWithErrors(new Map<string, boolean>()),
+      sectionsWithErrors.indexOf(section) >= 0,
+    isSectionActive: (section: string) => activatedSections.includes(section),
+    isSectionFocused: (section: string) => focusedSection === section,
+    clearErrors: () => setSectionsWithErrors([]),
   };
 };

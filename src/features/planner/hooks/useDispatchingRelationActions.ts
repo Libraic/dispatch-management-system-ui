@@ -17,12 +17,12 @@ import {
   changeDaysOffPeriodData,
   updateDaysOffPeriodsAfterDeletions,
 } from "#/utils/planner/days-off-utils";
-import type { DriverData } from "#/types/api/driver/driver-api-response-types";
 import React from "react";
 import {
   toLoadDataToDispatcherRelation,
   updateLoadsAfterDeletions,
 } from "#/features/planner/utils/loads.utils";
+import type { DriverData } from "#/features/drivers/api/api.types";
 
 export const useDispatchingRelationActions = (
   dispatchingRelationId: string,
