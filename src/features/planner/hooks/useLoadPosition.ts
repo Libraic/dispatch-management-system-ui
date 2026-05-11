@@ -5,6 +5,7 @@ import {
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
 import { toZonedDateTime } from "#/shared/utils/timezone.utils";
+import { getCurrentDay } from "#/utils/global/date-utils";
 
 export function useLoadPosition(
   load: LoadData,
@@ -14,7 +15,7 @@ export function useLoadPosition(
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
   const startZonedDateTime = toZonedDateTime(
-    firstLocation.date,
+    firstLocation.date ?? getCurrentDay(),
     firstLocation.timezone,
     firstLocation.time,
   ).withTimeZone(timezone);

@@ -73,7 +73,7 @@ export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
             label={label}
             isFocused={isFocused}
             isMandatory={isMandatory}
-            isError={errorMessage !== undefined && errorMessage !== null}
+            isError={Boolean(errorMessage)}
           />
 
           <input

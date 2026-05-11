@@ -2,16 +2,13 @@ import { getBlankCompanyRegistrationData } from "#/utils/company/company-registr
 import * as React from "react";
 import { useState } from "react";
 import type {
-  CompanyRegistrationError,
   CompanyRegistrationData,
+  CompanyRegistrationError,
 } from "#/types/internal/company/company-registration-data";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { useNavigate } from "react-router-dom";
 import { COMPANIES_LIST, LANDING } from "#/shared/routes/routes";
-import {
-  getBlankCompanyRegistrationErrors,
-  getCompanyRegistrationErrors,
-} from "#/utils/company/company-registration-errors";
+import { getCompanyRegistrationErrors } from "#/utils/company/company-registration-errors";
 import { useToast } from "#/ui/Toast/useToast";
 import {
   handleErrors,
@@ -19,7 +16,6 @@ import {
 } from "#/utils/api/api-common-error-utils";
 import { COMPANY_REGISTRATION_HEADER } from "#/constants/common/header-constants";
 import type { Error } from "#/types/api/common/api-errors-types";
-import { validateCompanyRegistration } from "#/validator/company/company-validators";
 import { CompanyRegistrationContext } from "#/context/CompanyRegistrationContext";
 import { ToastRenderer } from "#/ui/Toast/ToastRenderer";
 import { RegistrationButtons } from "#/components/Company/Registration/public/RegistrationButtons";
@@ -31,7 +27,7 @@ export const CompanyRegistrationPage = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
     useState<CompanyRegistrationData>(getBlankCompanyRegistrationData());
   const [companyRegistrationErrors, setCompanyRegistrationErrors] =
-    useState<CompanyRegistrationError>(getBlankCompanyRegistrationErrors());
+    useState<CompanyRegistrationError>({});
   const navigate = useNavigate();
   const toast = useToast();
   const registrationContextData: RegistrationContextData<
@@ -47,14 +43,14 @@ export const CompanyRegistrationPage = () => {
     e.preventDefault();
     const errors = getCompanyRegistrationErrors(companyRegistrationData);
     setCompanyRegistrationErrors(errors);
-    if (validateCompanyRegistration(errors)) {
+    if (Object.keys(errors).length > 0) {
       return;
     }
 
     const companyData = await saveCompany(companyRegistrationData);
     const apiErrors = handleErrors(
       companyData,
-      getBlankCompanyRegistrationErrors,
+      () => ({}),
       () => false,
     );
     if (apiErrors == null) {

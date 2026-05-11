@@ -3,8 +3,6 @@
  */
 export const HOST = import.meta.env.VITE_API_HOST;
 export const BASE_URL = HOST + "/api";
-export const CORE_URL = BASE_URL + "/core";
-export const PAGINATION_DETAILS = CORE_URL + "/pagination";
 
 /**
  * Company-related API paths.

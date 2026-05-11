@@ -63,7 +63,6 @@ export const saveCompany = async (
     createCreateCompanyRequestFromCompanyRegistrationData(
       companyRegistrationData,
     );
-
   try {
     const response = await axios.post(COMPANIES_BASE_URL, createCompanyRequest);
     return {
