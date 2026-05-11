@@ -7,7 +7,6 @@ import {
   validatePhoneNumber,
 } from "#/utils/registration/registration-utils";
 import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
-import { BLANK_STRING } from "#/constants/common/global-constants";
 
 export const validateDispatcherRegistrationData = (
   dispatcherRegistrationData: DispatcherRegistrationData,
@@ -17,7 +16,7 @@ export const validateDispatcherRegistrationData = (
     dispatcherRegistrationData.name,
     "name",
   );
-  if (nameValidation !== BLANK_STRING) {
+  if (nameValidation) {
     errors.name = nameValidation;
   }
 
@@ -26,7 +25,7 @@ export const validateDispatcherRegistrationData = (
     "mandatory",
     "phone number",
   );
-  if (phoneNumberValidation !== BLANK_STRING) {
+  if (phoneNumberValidation) {
     errors.phoneNumber = phoneNumberValidation;
   }
 
