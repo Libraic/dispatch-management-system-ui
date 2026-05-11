@@ -5,7 +5,6 @@ import {
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
 import { toZonedDateTime } from "#/shared/utils/timezone.utils";
-import { getCurrentDay } from "#/utils/global/date-utils";
 
 export function useLoadPosition(
   load: LoadData,
@@ -14,20 +13,32 @@ export function useLoadPosition(
 ) {
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
-  const startZonedDateTime = toZonedDateTime(
-    firstLocation.date ?? getCurrentDay(),
+
+  const weekStart = days[0];
+  const weekEnd = days[days.length - 1];
+
+  const startsBeforeWeek = firstLocation.date < weekStart;
+  const endsAfterWeek = lastLocation.date > weekEnd;
+
+  const actualStart = toZonedDateTime(
+    firstLocation.date,
     firstLocation.timezone,
     firstLocation.time,
   ).withTimeZone(timezone);
-  const endZonedDateTime = toZonedDateTime(
+
+  const actualEnd = toZonedDateTime(
     lastLocation.date,
     lastLocation.timezone,
     lastLocation.time,
   ).withTimeZone(timezone);
 
-  return getZonedStartingPointAndWidthOfBlock(
-    startZonedDateTime.withTimeZone(timezone),
-    endZonedDateTime.withTimeZone(timezone),
-    days,
-  );
+  const clippedStart = startsBeforeWeek
+    ? actualStart.startOfDay()
+    : actualStart;
+
+  const clippedEnd = endsAfterWeek
+    ? actualEnd.startOfDay().add({ days: 1 }).subtract({ milliseconds: 1 })
+    : actualEnd;
+
+  return getZonedStartingPointAndWidthOfBlock(clippedStart, clippedEnd, days);
 }

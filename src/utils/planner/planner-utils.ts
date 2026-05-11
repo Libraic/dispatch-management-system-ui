@@ -102,7 +102,7 @@ export const getZonedStartingPointAndWidthOfBlock = (
   days: string[],
 ) => {
   const startBlockCoverage = getZonedBlockCoverage(startDate);
-  const endBlockCoverage = 1 - getZonedBlockCoverage(endDate);
+  const endBlockCoverage = getZonedBlockCoverage(endDate);
 
   const startIndex = getZonedDayIndex(startDate, days);
   const endIndex = getZonedDayIndex(endDate, days);
@@ -112,11 +112,11 @@ export const getZonedStartingPointAndWidthOfBlock = (
   );
 
   const clampedEnd = Math.abs(
-    Math.min(endIndex === -1 ? 13 : endIndex, 13) - endBlockCoverage,
+    Math.min(endIndex === -1 ? 13 : endIndex, 13) + endBlockCoverage,
   );
 
   const leftRem = METADATA_WIDTH + clampedStart * DAY_CELL_WIDTH;
-  const widthRem = (clampedEnd - clampedStart + 1) * DAY_CELL_WIDTH;
+  const widthRem = (clampedEnd - clampedStart) * DAY_CELL_WIDTH;
 
   return {
     startingPoint: leftRem + 0.1,
