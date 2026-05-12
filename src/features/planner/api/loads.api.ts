@@ -19,7 +19,6 @@ import type {
   NoContentResponse,
   Result,
 } from "#/shared/types/api.types";
-import { toIsoDate } from "#/utils/global/date-utils";
 import { getApiError } from "#/shared/api/utils/api.utils";
 import { toUpsertLoadRequest } from "#/features/planner/utils/loads.transformer";
 
@@ -60,13 +59,13 @@ export const deleteLoadByUuid = async (
 
 export const getLoadData = async (
   relationId: string,
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
 ): Promise<Result<GetLoadResponse[], ApiError>> => {
   const url = LOADS_RELATIONS_URL + `/${relationId}`;
   const params = {
-    startDate: toIsoDate(startDate),
-    endDate: toIsoDate(endDate),
+    startDate,
+    endDate,
   };
   try {
     const response = await axios.get(url, {
@@ -99,12 +98,12 @@ export const ingestDocument = async (
 
 export const getStartingPointLocation = async (
   relationUuid: string,
-  date: Date,
+  date: string,
 ): Promise<Result<GetLoadStartingPointResponse, ApiError>> => {
   const url =
     LOADS_RELATIONS_URL + `/${relationUuid}` + LOADS_STARTING_POINT_PATH;
   const params = {
-    date: toIsoDate(date),
+    date,
   };
   try {
     const response = await axios.get(url, {

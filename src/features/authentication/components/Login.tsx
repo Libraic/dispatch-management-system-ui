@@ -27,6 +27,27 @@ export const Login = () => {
   const { showToast } = useContext(ToastContext);
   const navigate = useNavigate();
 
+  const login = async () => {
+    const errors = validateLoginData(loginData);
+    setLoginErrors(errors);
+    if (Object.keys(errors).length !== 0) {
+      return;
+    }
+
+    const response = await authenticateUser(loginData);
+    if (!response.ok) {
+      const error = response.error;
+      handleApiError({
+        error: error,
+        setFieldErrors: setLoginErrors,
+        showToast,
+      });
+      return;
+    }
+
+    navigate(HOME);
+  };
+
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <div className="font-black mb-[3rem] text-[1.35rem]">
@@ -63,26 +84,7 @@ export const Login = () => {
       <div className="flex flex-col w-[15rem] my-5">
         <SubmitButton
           actionText="Login"
-          action={async () => {
-            const errors = validateLoginData(loginData);
-            setLoginErrors(errors);
-            if (Object.keys(errors).length !== 0) {
-              return;
-            }
-
-            const response = await authenticateUser(loginData);
-            if (!response.ok) {
-              const error = response.error;
-              handleApiError({
-                error: error,
-                setFieldErrors: setLoginErrors,
-                showToast,
-              });
-              return;
-            }
-
-            navigate(HOME);
-          }}
+          action={login}
           tailwindProperties={{
             borderColor: BORDER_NORMAL_COLOR,
             backgroundColor: BACKGROUND_NORMAL_COLOR,

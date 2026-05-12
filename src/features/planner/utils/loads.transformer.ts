@@ -41,7 +41,9 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
           shouldConsiderRevenueAndMiles(startDate, endDate, loadDatum.startDate)
         ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
-          driverTotalLoadedMiles += loadDatum.loadedMiles ?? ZERO;
+          const loadedMiles = loadDatum.loadedMiles ?? ZERO;
+          const emptyMiles = loadDatum.emptyMiles ?? ZERO;
+          driverTotalLoadedMiles += loadedMiles + emptyMiles;
         }
       }
       const vehicleMaintenanceRecords =

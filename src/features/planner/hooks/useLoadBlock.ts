@@ -41,13 +41,10 @@ export function useLoadBlock(load: LoadData, driverLoadData: DriverWorkforce) {
       return;
     }
 
-    const startDate = new Date(context.days[0]);
-    const endDate = new Date(context.days[context.days.length - 1]);
-
     const reload = await getLoadData(
       driverLoadData.relationId,
-      startDate,
-      endDate,
+      context.days[0],
+      context.days[context.days.length - 1],
     );
 
     if (!reload.ok) {

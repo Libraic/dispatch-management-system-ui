@@ -11,7 +11,6 @@ import type {
   UpsertVehicleMaintenanceRecordResponse,
 } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
 import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
-import { toIsoDate } from "#/utils/global/date-utils";
 import type { ApiResponse, NoContentResponse } from "#/shared/types/api.types";
 
 export const upsertVehicleMaintenanceRecord = async (
@@ -27,13 +26,13 @@ export const upsertVehicleMaintenanceRecord = async (
 
 export const getVehicleMaintenanceData = async (
   relationId: string,
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
 ): Promise<ApiResponse<GetVehicleMaintenanceResponse[], Error>> => {
   const url = VEHICLE_MAINTENANCE_RELATIONS_URL + `/${relationId}`;
   const params = {
-    startDate: toIsoDate(startDate),
-    endDate: toIsoDate(endDate),
+    startDate,
+    endDate,
   };
   try {
     const response = await axios.get(url, {

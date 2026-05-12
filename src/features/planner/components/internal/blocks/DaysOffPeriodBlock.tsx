@@ -45,12 +45,10 @@ export const DaysOffPeriodBlock: React.FC<{
       return;
     }
 
-    const startDate = new Date(days[0]);
-    const endDate = new Date(days[days.length - 1]);
     const getDaysOffPeriodResponses = await getDaysOffPeriodData(
       workforce.relationId,
-      startDate,
-      endDate,
+      days[0],
+      days[days.length - 1],
     );
     if (getDaysOffPeriodResponses.error) {
       toast.withErrorMessage(getDaysOffPeriodResponses.error.message);

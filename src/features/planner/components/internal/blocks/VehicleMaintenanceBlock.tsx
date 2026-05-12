@@ -47,12 +47,10 @@ export const VehicleMaintenanceBlock: React.FC<{
       return;
     }
 
-    const startDate = new Date(days[0]);
-    const endDate = new Date(days[days.length - 1]);
     const getVehicleMaintenanceDataResponse = await getVehicleMaintenanceData(
       workforce.relationId,
-      startDate,
-      endDate,
+      days[0],
+      days[days.length - 1],
     );
     if (getVehicleMaintenanceDataResponse.error) {
       toast.withErrorMessage(getVehicleMaintenanceDataResponse.error.message);

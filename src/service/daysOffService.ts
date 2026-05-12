@@ -5,7 +5,6 @@ import {
   DAYS_OFF_RELATIONS_URL,
 } from "#/shared/api/constants/apiPaths.constants";
 import { handleApiErrors } from "#/utils/api/api-common-error-utils";
-import { toIsoDate } from "#/utils/global/date-utils";
 import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
 import type { UpsertDayOffPeriodRequest } from "#/types/api/days-off/days-off-api-request-types";
 import type {
@@ -27,13 +26,13 @@ export const upsertDaysOffPeriod = async (
 
 export const getDaysOffPeriodData = async (
   relationId: string,
-  startDate: Date,
-  endDate: Date,
+  startDate: string,
+  endDate: string,
 ): Promise<ApiResponse<GetDaysOffPeriodResponse[], Error>> => {
   const url = DAYS_OFF_RELATIONS_URL + `/${relationId}`;
   const params = {
-    startDate: toIsoDate(startDate),
-    endDate: toIsoDate(endDate),
+    startDate,
+    endDate,
   };
   try {
     const response = await axios.get(url, {

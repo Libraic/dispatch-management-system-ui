@@ -51,7 +51,11 @@ export const toLoadDataToDispatcherRelation = (
               )
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.loadedMiles);
+              const loadedMiles = parseFloat(loadDatum.loadedMiles);
+              const emptyMiles = loadDatum.emptyMiles
+                ? parseFloat(loadDatum.emptyMiles)
+                : 0;
+              driverTotalMiles += loadedMiles + emptyMiles;
             }
           }
 
@@ -112,7 +116,11 @@ export const updateLoadsAfterDeletions = (
               )
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
-              driverTotalMiles += parseFloat(loadDatum.loadedMiles);
+              const loadedMiles = parseFloat(loadDatum.loadedMiles);
+              const emptyMiles = loadDatum.emptyMiles
+                ? parseFloat(loadDatum.emptyMiles)
+                : 0;
+              driverTotalMiles += loadedMiles + emptyMiles;
             }
           }
 

@@ -103,7 +103,7 @@ export function useLoadForm(
 
       const response = await getStartingPointLocation(
         workforce.relationId,
-        new Date(day),
+        day,
       );
 
       if (!response.ok) {
