@@ -1,13 +1,23 @@
-import { BLANK_STRING, ZERO } from "#/constants/common/global-constants";
+import { ZERO } from "#/constants/common/global-constants";
 
-export const divideNumbersAsStrings = (a: string, b: string): string => {
-  if (a === BLANK_STRING || b === BLANK_STRING) {
+export const divideNumbersAsStrings = (a?: string, b?: string): string => {
+  if (!a || !b) {
     return "0";
   }
 
-  const num1 = parseFloat(a);
-  const num2 = parseFloat(b);
+  const num1 = a ? parseFloat(a) : 0;
+  const num2 = b ? parseFloat(b) : 0;
+  if (num2 === 0) {
+    return "0";
+  }
+
   return divide(num1, num2).toString();
+};
+
+export const addNumbersAsStrings = (a?: string, b?: string): string => {
+  const num1 = a ? parseFloat(a) : 0;
+  const num2 = b ? parseFloat(b) : 0;
+  return (num1 + num2).toString();
 };
 
 export const divide = (

@@ -15,7 +15,10 @@ import { fromGetDaysOffPeriodResponseToDaysOffPeriodData } from "#/utils/planner
 import { v4 as uuidv4 } from "uuid";
 import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
 import { timeToHHmm } from "#/types/internal/time/time-types";
-import { fromGetLoadResponseToLoadData } from "#/features/planner/utils/loads.utils";
+import {
+  fromGetLoadResponseToLoadData,
+  shouldConsiderRevenueAndMiles,
+} from "#/features/planner/utils/loads.utils";
 
 export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
   getDriverLoadsResponses: GetDispatchingDataResponse[],
@@ -35,10 +38,7 @@ export const fromGetDriverLoadsResponsesToDispatcherLoadDataList = (
         const mappedLoadDatum = fromGetLoadResponseToLoadData(loadDatum);
         loads.push(mappedLoadDatum);
         if (
-          !(
-            mappedLoadDatum.endDate < startDate ||
-            endDate < mappedLoadDatum.startDate
-          )
+          shouldConsiderRevenueAndMiles(startDate, endDate, loadDatum.startDate)
         ) {
           driverTotalRevenue += loadDatum.revenue ?? ZERO;
           driverTotalLoadedMiles += loadDatum.loadedMiles ?? ZERO;

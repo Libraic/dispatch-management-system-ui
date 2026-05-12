@@ -3,14 +3,19 @@ import { BLANK_STRING } from "#/constants/common/global-constants";
 import { useContext } from "react";
 import { CurrencyInputField } from "#/ui/InputField/components/public/CurrencyInputField/CurrencyInputField";
 import { NumericInputField } from "#/ui/InputField/components/public/NumericInputField/NumericInputField";
-import { divideNumbersAsStrings } from "#/shared/utils/number.utils";
+import {
+  addNumbersAsStrings,
+  divideNumbersAsStrings,
+} from "#/shared/utils/number.utils";
 import { LoadContext } from "#/features/planner/context/LoadContext";
 
 export const LoadFormRevenue = () => {
   const loadContext = useContext(LoadContext)!!;
   const revenue = loadContext.loadData.revenue ?? BLANK_STRING;
   const loadedMiles = loadContext.loadData.loadedMiles ?? BLANK_STRING;
-  const rpm = divideNumbersAsStrings(revenue, loadedMiles);
+  const emptyMiles = loadContext.loadData.emptyMiles ?? BLANK_STRING;
+  const totalMiles = addNumbersAsStrings(loadedMiles, emptyMiles);
+  const rpm = divideNumbersAsStrings(revenue, totalMiles);
   return (
     <div className="flex items-center flex-row gap-x-5">
       <CurrencyInputField

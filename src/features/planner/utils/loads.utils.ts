@@ -43,10 +43,12 @@ export const toLoadDataToDispatcherRelation = (
           const startDateObject = prevDispatcherLoadData.startDate;
           const endDateObject = prevDispatcherLoadData.endDate;
           for (const loadDatum of loads) {
-            const loadStartDate = loadDatum.startDate;
-            const loadEndDate = loadDatum.endDate;
             if (
-              !(loadEndDate < startDateObject || endDateObject < loadStartDate)
+              shouldConsiderRevenueAndMiles(
+                startDateObject,
+                endDateObject,
+                loadDatum.startDate,
+              )
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
               driverTotalMiles += parseFloat(loadDatum.loadedMiles);
@@ -100,12 +102,13 @@ export const updateLoadsAfterDeletions = (
           let driverTotalMiles = 0;
           let driverTotalRevenue = 0;
           for (const loadDatum of newLoadData) {
-            const startDateObject = prevDispatcherLoadData.startDate;
-            const endDateObject = prevDispatcherLoadData.endDate;
+            const weekStart = prevDispatcherLoadData.startDate;
+            const weekEnd = prevDispatcherLoadData.endDate;
             if (
-              !(
-                loadDatum.endDate < startDateObject ||
-                endDateObject < loadDatum.startDate
+              shouldConsiderRevenueAndMiles(
+                weekStart,
+                weekEnd,
+                loadDatum.startDate,
               )
             ) {
               driverTotalRevenue += parseFloat(loadDatum.revenue);
@@ -208,4 +211,12 @@ export const getLastDeliveryLocation = (locations: LoadLocationData[]) => {
   }
 
   return undefined;
+};
+
+export const shouldConsiderRevenueAndMiles = (
+  weekStart: string,
+  weekEnd: string,
+  loadStart?: string,
+) => {
+  return loadStart && loadStart >= weekStart && loadStart <= weekEnd;
 };
