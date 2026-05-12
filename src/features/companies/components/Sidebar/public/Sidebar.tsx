@@ -1,18 +1,18 @@
 import { useParams } from "react-router-dom";
 import * as React from "react";
-import { useState } from "react";
+import { type FC, useState } from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 import { SIDEBAR_OPENER_ICON_CODE } from "#/features/companies/constants/sidebar.constants";
-import { CompanySidebarPrimaryActions } from "#/features/companies/components/Sidebar/internal/CompanySidebarPrimaryActions";
+import { SidebarPrimaryActions } from "#/features/companies/components/Sidebar/internal/SidebarPrimaryActions";
 import { CompanySidebarSystemActions } from "#/features/companies/components/Sidebar/internal/CompanySidebarSystemActions";
 import { CompanySidebarToggler } from "#/features/companies/components/Sidebar/internal/CompanySidebarToggler";
 
-type CompanySidebarProps = {
+type SidebarProps = {
   sidebarState: SidebarState;
   setSidebarState: React.Dispatch<React.SetStateAction<SidebarState>>;
 };
 
-export const CompanySidebar: React.FC<CompanySidebarProps> = ({
+export const Sidebar: FC<SidebarProps> = ({
   sidebarState,
   setSidebarState,
 }) => {
@@ -35,7 +35,7 @@ export const CompanySidebar: React.FC<CompanySidebarProps> = ({
           setSidebarLabel={setSidebarLabel}
           sidebarLabel={sidebarLabel}
         />
-        <CompanySidebarPrimaryActions
+        <SidebarPrimaryActions
           sidebarState={sidebarState}
           baseRoute={baseRoute}
         />

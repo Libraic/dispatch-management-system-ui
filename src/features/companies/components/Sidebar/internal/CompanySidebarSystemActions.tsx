@@ -1,9 +1,10 @@
-import { CompanySidebarItem } from "#/features/companies/components/Sidebar/internal/CompanySidebarItem";
+import { SidebarItem } from "#/features/companies/components/Sidebar/internal/SidebarItem";
 import {
+  COMPANIES_ICON_CODE,
   LOGOUT_ICON_CODE,
   SETTINGS_ICON_CODE,
 } from "#/features/companies/constants/sidebar.constants";
-import { LANDING, SETTINGS } from "#/shared/routes/routes";
+import { COMPANIES_LIST, LANDING, SETTINGS } from "#/shared/routes/routes";
 import React from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 
@@ -17,16 +18,22 @@ export const CompanySidebarSystemActions: React.FC<
 > = ({ sidebarState, baseRoute }) => {
   return (
     <div>
-      <CompanySidebarItem
-        label="Log Out"
-        iconCode={LOGOUT_ICON_CODE}
-        route={LANDING}
+      <SidebarItem
+        label="Companies"
+        iconCode={COMPANIES_ICON_CODE}
+        route={COMPANIES_LIST}
         sidebarState={sidebarState}
       />
-      <CompanySidebarItem
+      <SidebarItem
         label="Settings"
         iconCode={SETTINGS_ICON_CODE}
         route={`${baseRoute}${SETTINGS}`}
+        sidebarState={sidebarState}
+      />
+      <SidebarItem
+        label="Log Out"
+        iconCode={LOGOUT_ICON_CODE}
+        route={LANDING}
         sidebarState={sidebarState}
       />
     </div>

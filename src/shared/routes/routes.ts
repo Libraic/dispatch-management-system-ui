@@ -5,7 +5,7 @@ export const DASHBOARD = "/dashboard";
 
 export const COMPANY_BASE_ROUTE = "/:companyUuid";
 export const COMPANY_REGISTRATION = "/company/registration";
-export const COMPANIES_LIST = "/company/all";
+export const COMPANIES_LIST = "/companies";
 export const PLANNER = "/planner";
 export const DRIVER_REGISTRATION = "/driver/registration";
 export const DRIVERS_VIEW = "/drivers";

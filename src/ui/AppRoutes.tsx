@@ -18,7 +18,7 @@ import {
   TRUCK_REGISTRATION,
   TRUCKS_VIEW,
 } from "#/shared/routes/routes";
-import { CompaniesPage } from "#/pages/Company/CompaniesPage";
+import { CompaniesPage } from "#/features/companies/pages/CompaniesPage";
 import { DashboardPage } from "#/pages/Company/DashboardPage";
 import { DriverRegistrationPage } from "#/features/drivers/pages/DriverRegistrationPage";
 import { DriversPage } from "#/features/drivers/pages/DriversPage";

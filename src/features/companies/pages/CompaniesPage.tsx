@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD, LANDING } from "#/shared/routes/routes";
+import { DASHBOARD } from "#/shared/routes/routes";
 import {
   getNameInitials,
   getPropertySafe,
   getSpentDays,
 } from "#/utils/company/companies-list-utils";
-import { BackButton } from "#/ui/Buttons/BackButton";
+import { HomeButton } from "#/features/companies/components/Companies/HomeButton";
 import { HOVER_BACKGROUND_NORMAL_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { getCompanies } from "#/features/companies/api/companies.api";
 import { usePage } from "#/shared/hooks/usePage";
@@ -19,7 +19,7 @@ export const CompaniesPage = () => {
 
   return (
     <div className="w-screen flex flex-col items-center mt-10">
-      <BackButton url={LANDING} />
+      <HomeButton />
       <div
         className={`w-[80%] h-[2.5rem] grid ${columnsLayout} text-left bg-[#ebebeb] font-normal rounded-[0.3rem] px-[3rem] mt-6`}
       >
