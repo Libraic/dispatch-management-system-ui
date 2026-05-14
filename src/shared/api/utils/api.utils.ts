@@ -29,8 +29,9 @@ export function handleApiError<TFieldErrors extends Record<string, string>>({
 }: HandleApiErrorOptions<TFieldErrors>) {
   if (error.type === "VALIDATION" && error.errors && setFieldErrors) {
     setFieldErrors(error.errors as TFieldErrors);
-    return;
+    return error.errors as TFieldErrors;
   }
 
   showToast(error.message);
+  return null;
 }

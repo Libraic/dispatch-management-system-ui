@@ -26,7 +26,6 @@ import { saveDriver } from "#/features/drivers/api/drivers.api";
 import type { RegistrationContextData } from "#/features/drivers/context/context.types";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
 import type { ApiError } from "#/shared/types/api.types";
-import { handleApiError } from "#/shared/api/utils/api.utils";
 import {
   documentsStatuses,
   driverPositions,
@@ -91,14 +90,13 @@ export const DriverRegistrationPage = () => {
         }
 
         const error = response.error as ApiError;
-        handleApiError({
-          error: error,
-          setFieldErrors: setDriverRegistrationErrors,
-          showToast,
-        });
-        sectionsHandler.setErrors(
-          getErroneousSections(driverRegistrationErrors),
-        );
+        const validationErrors = error.errors;
+        if (error.type === "VALIDATION" && validationErrors) {
+          setDriverRegistrationErrors(validationErrors);
+          sectionsHandler.setErrors(getErroneousSections(validationErrors));
+        } else {
+          showToast(error.message);
+        }
       }
     }
   };
