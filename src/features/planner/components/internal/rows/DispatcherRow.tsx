@@ -7,7 +7,6 @@ import {
   PLANNER_ROW_HEIGHT,
   PLANNER_TEXT_SIZE,
 } from "#/constants/planner/planner-constants";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 import {
   formatCurrency,
@@ -37,7 +36,7 @@ export const DispatcherRow: React.FC<{
   return (
     <div className="relative flex flex-row w-full">
       <div
-        className={`absolute ${Z_INDEX_NORMAL_PRECEDENCE} mt-[1.5rem] left-[0.4rem] hover:cursor-pointer`}
+        className={`absolute mt-[1.5rem] left-[0.4rem] hover:cursor-pointer`}
         onClick={handleOnClickFn}
       >
         <GoogleIcon code={iconLabel} size={1.5} />

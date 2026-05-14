@@ -46,7 +46,7 @@ export const TimelineCursor: FC<TimelineCursorProps> = ({ days, timeZone }) => {
   return (
     <div
       ref={lineRef}
-      className={`absolute top-0 bottom-0 w-0.5 bg-red-500/70 pointer-events-none ${Z_INDEX_NORMAL_PRECEDENCE}`}
+      className={`absolute top-0 h-full w-0.5 bg-red-500/70 pointer-events-none ${Z_INDEX_NORMAL_PRECEDENCE}`}
     />
   );
 };

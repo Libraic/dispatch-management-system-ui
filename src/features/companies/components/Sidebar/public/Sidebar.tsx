@@ -24,7 +24,7 @@ export const Sidebar: FC<SidebarProps> = ({
       className={`
         flex justify-between flex-col 
         ${sidebarState === "open" ? "w-[12rem]" : "w-[4rem]"} 
-        py-5 h-screen
+        py-5 h-full
         border-r-1 border-gray-200 bg-[#f9f9f9]
       `}
     >

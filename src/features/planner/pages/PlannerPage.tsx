@@ -27,18 +27,22 @@ export const PlannerPage = () => {
           extractWeekFromCalendar={extractWeekFromCalendar}
           timezone={timezone.value}
         />
-        <div className="relative flex flex-col max-h-[70vh] hide-scrollbar overflow-y-auto">
-          <TimelineCursor days={days} timeZone={timezone.value} />
-          <PlannerHeader days={days} />
-          {dispatchingRelations.map((dispatchingRelation) => (
-            <PlannerRow
-              key={dispatchingRelation.id}
-              timezone={timezone.value}
-              days={days}
-              dispatchingRelation={dispatchingRelation}
-              setDispatchingRelation={setDispatchingRelations}
-            />
-          ))}
+        <div className="relative max-h-[80vh] hide-scrollbar overflow-y-auto">
+          <div className="relative flex flex-col min-h-full">
+            <TimelineCursor days={days} timeZone={timezone.value} />
+
+            <PlannerHeader days={days} />
+
+            {dispatchingRelations.map((dispatchingRelation) => (
+              <PlannerRow
+                key={dispatchingRelation.id}
+                timezone={timezone.value}
+                days={days}
+                dispatchingRelation={dispatchingRelation}
+                setDispatchingRelation={setDispatchingRelations}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </React.Fragment>

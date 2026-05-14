@@ -9,16 +9,17 @@ export const SidebarWrapper: React.FC<{ children: ReactNode }> = ({
   const [sidebarState, setSidebarState] = useState<SidebarState>("closed");
 
   return (
-    <div className="h-screen w-screen flex">
+    <div className="h-screen w-screen flex justify-between">
       <div
         className={`
           relative
+          h-[100vh]
           ${sidebarState === "open" ? "w-[10vw]" : "w-[2vw]"}
           transition-[width]
           duration-300
           ease-[cubic-bezier(0.4,0,0.2,1)]
           will-change-[width]
-          flex-shrink-0
+          
           ${Z_INDEX_NORMAL_PRECEDENCE}
         `}
       >
