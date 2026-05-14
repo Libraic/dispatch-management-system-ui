@@ -39,6 +39,8 @@ export const SchedulableModal: React.FC<{
 
   return createPortal(
     <div
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={(e) => e.stopPropagation()}
       className={`
         flex w-screen h-screen items-start justify-center overflow-y-auto py-[2.5rem] 
         ${Z_INDEX_MEDIUM_PRECEDENCE} 

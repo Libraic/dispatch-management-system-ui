@@ -5,8 +5,8 @@ import { useOnClickOutside } from "#/hooks/useClickOutside";
 export const useMode = () => {
   const modeRef = useRef<HTMLDivElement | null>(null);
   const childRef = useRef<HTMLDivElement | null>(null);
-  const [clicked, setClicked] = useState(false);
-  useOnClickOutside(modeRef, () => setClicked(false));
+  const [isExpanded, setIsExpanded] = useState(false);
+  useOnClickOutside(modeRef, () => setIsExpanded(false));
 
   const [mode, setMode] = useState<DisplayMode>("full");
 
@@ -37,7 +37,7 @@ export const useMode = () => {
     modeRef: modeRef,
     childRef,
     mode,
-    clicked,
-    setClicked,
+    isExpanded,
+    setIsExpanded,
   };
 };

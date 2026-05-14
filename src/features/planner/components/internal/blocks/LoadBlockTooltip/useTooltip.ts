@@ -1,37 +1,34 @@
 import { useRef, useState } from "react";
+import { useOnClickOutside } from "#/hooks/useClickOutside";
 
 export const useTooltip = () => {
   const [tooltipPos, setTooltipPos] = useState<{
     top: number;
     left: number;
   } | null>(null);
-  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const tooltipRef = useRef<HTMLDivElement | null>(null); // rename if parentRef is already taken by useMode()
+  const blockRef = useRef<HTMLDivElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  useOnClickOutside(blockRef, () => setTooltipPos(null), [tooltipRef]);
 
-  const handleMouseEnter = () => {
-    hoverTimerRef.current = setTimeout(() => {
-      if (tooltipRef.current) {
-        const rect = tooltipRef.current.getBoundingClientRect();
-        setTooltipPos({
-          top: rect.bottom + 4, // 4px gap below the block
-          left: rect.left + 16, // 16px offset to the right
-        });
-      }
-    }, 1000);
+  const openTooltip = () => {
+    if (blockRef.current) {
+      const rect = blockRef.current.getBoundingClientRect();
+      setTooltipPos({
+        top: rect.bottom + 4,
+        left: rect.left + 16,
+      });
+    }
   };
 
-  const handleMouseLeave = () => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current);
-      hoverTimerRef.current = null;
-    }
+  const closeTooltip = () => {
     setTooltipPos(null);
   };
 
   return {
-    tooltipRef: tooltipRef,
-    handleMouseEnter,
-    handleMouseLeave,
+    blockRef,
+    tooltipRef,
+    openTooltip,
+    closeTooltip,
     tooltipPos,
   };
 };

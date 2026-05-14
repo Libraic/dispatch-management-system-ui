@@ -47,32 +47,42 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
   const firstLocation = getFirstPickUpLocation(load.locations)!;
   const lastLocation = getLastDeliveryLocation(load.locations)!;
 
-  const { modeRef, childRef, mode, clicked, setClicked } = useMode();
+  const { modeRef, childRef, mode, isExpanded, setIsExpanded } = useMode();
 
-  const { tooltipRef, handleMouseEnter, handleMouseLeave, tooltipPos } =
+  const { blockRef, tooltipRef, openTooltip, closeTooltip, tooltipPos } =
     useTooltip();
 
   return (
     <div
       ref={(el) => {
+        blockRef.current = el;
         modeRef.current = el;
-        tooltipRef.current = el;
       }}
       className="absolute top-2 h-[3.6rem] pointer-events-auto"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onClick={() => {
+        if (contextMenu.isActive()) {
+          contextMenu.close();
+        }
+
+        if (tooltipPos === null) {
+          openTooltip();
+        } else {
+          closeTooltip();
+        }
+      }}
+      onDoubleClick={() => {
+        closeTooltip();
+        setIsExpanded(false);
+        loadFormActivator.change();
+      }}
       onContextMenu={(e) => {
         if (!loadFormActivator.isActive()) {
           contextMenu.open(e);
         }
       }}
-      onClick={() => {
-        contextMenu.close();
-        handleMouseLeave();
-      }}
       style={{
         left: `${startingPoint}rem`,
-        width: clicked
+        width: isExpanded
           ? mode !== "full"
             ? "18rem"
             : "fit-content"
@@ -80,16 +90,13 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
       }}
     >
       <div
-        onClick={() => {
-          if (clicked) {
-            setClicked(false);
-          } else if (mode !== "full") {
-            setClicked(true);
+        onMouseEnter={() => {
+          if (mode !== "full") {
+            setIsExpanded(true);
           }
         }}
-        onDoubleClick={() => {
-          setClicked(false);
-          loadFormActivator.change();
+        onMouseLeave={() => {
+          setIsExpanded(false);
         }}
         className={`
           relative h-full px-3 rounded-r-lg rounded-l-[0.2rem] w-full
@@ -97,7 +104,7 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
           flex items-center justify-between shadow-sm
           cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis
           font-normal text-[0.8rem]
-          ${clicked ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
+          ${isExpanded ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
           border-l-3 ${LOAD_STATUS_COLORS[load.loadStatus].borderColor}
         `}
       >
@@ -112,6 +119,7 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
       </div>
 
       <LoadBlockTooltipRenderer
+        tooltipRef={tooltipRef}
         tooltipPos={tooltipPos}
         load={load}
         firstLocation={firstLocation}

@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { LoadBlockTooltip } from "#/features/planner/components/internal/blocks/LoadBlockTooltip/LoadBlockTooltip";
 import { LOAD_STATUS_COLORS } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.constants";
-import React from "react";
+import React, { type RefObject } from "react";
 import type {
   LoadData,
   LoadLocationData,
@@ -17,11 +17,19 @@ type LoadBlockTooltipRendererProps = {
   firstLocation: LoadLocationData;
   lastLocation: LoadLocationData;
   driverFullName: string;
+  tooltipRef: RefObject<HTMLDivElement | null>;
 };
 
 export const LoadBlockTooltipRenderer: React.FC<
   LoadBlockTooltipRendererProps
-> = ({ tooltipPos, load, firstLocation, lastLocation, driverFullName }) => {
+> = ({
+  tooltipPos,
+  load,
+  firstLocation,
+  lastLocation,
+  driverFullName,
+  tooltipRef,
+}) => {
   const data = getLoadBlockTooltipData(
     driverFullName,
     load,
@@ -33,7 +41,8 @@ export const LoadBlockTooltipRenderer: React.FC<
     tooltipPos &&
     createPortal(
       <div
-        className="fixed z-[9999] pointer-events-none"
+        className="fixed z-[10000]"
+        ref={tooltipRef}
         style={{ top: tooltipPos.top, left: tooltipPos.left }}
       >
         <LoadBlockTooltip
