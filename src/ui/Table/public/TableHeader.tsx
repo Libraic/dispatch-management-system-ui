@@ -7,8 +7,8 @@ type TableHeaderProps = {
   companyUuid: string;
   headerData: PageHeaderData;
   iconCode: string;
-  buttonSubroute: string;
-  buttonLabel: string;
+  buttonSubroute?: string;
+  buttonLabel?: string;
 };
 
 export const TableHeader: React.FC<TableHeaderProps> = ({
@@ -21,11 +21,13 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
   return (
     <div className="flex items-center justify-between flex-row">
       <TableName headerData={headerData} iconCode={iconCode} />
-      <NavigableButton
-        navigationAddress={`/${companyUuid}${buttonSubroute}`}
-        label={buttonLabel}
-        iconCode="add"
-      />
+      {buttonSubroute && buttonLabel && (
+        <NavigableButton
+          navigationAddress={`/${companyUuid}${buttonSubroute}`}
+          label={buttonLabel}
+          iconCode="add"
+        />
+      )}
     </div>
   );
 };

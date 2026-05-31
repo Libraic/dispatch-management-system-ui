@@ -10,6 +10,7 @@ import type {
 import axios from "axios";
 import {
   LOADS_BASE_URL,
+  LOADS_COLUMNS,
   LOADS_DOCUMENTS,
   LOADS_RELATIONS_URL,
   LOADS_STARTING_POINT_PATH,
@@ -17,10 +18,19 @@ import {
 import type {
   ApiError,
   NoContentResponse,
+  Page,
   Result,
 } from "#/shared/types/api.types";
 import { getApiError } from "#/shared/api/utils/api.utils";
 import { toUpsertLoadRequest } from "#/features/planner/utils/loads.transformer";
+import {
+  COMPANY_ID_QUERY_PARAM,
+  PAGE,
+  SIZE,
+} from "#/shared/api/constants/apiQuery.constants";
+import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
+import type { Load } from "#/features/loads/components/View/view.types";
+import type { Column } from "#/shared/types/view.types";
 
 export const upsertLoad = async (
   loadData: LoadData,
@@ -109,6 +119,43 @@ export const getStartingPointLocation = async (
     const response = await axios.get(url, {
       params: params,
     });
+    return {
+      ok: true,
+      data: response.data,
+    };
+  } catch (error: any) {
+    return getApiError(error);
+  }
+};
+
+export const getLoads = async (
+  companyUuid: string,
+  page?: number,
+): Promise<Result<Page<Load>, ApiError>> => {
+  const params = {
+    [COMPANY_ID_QUERY_PARAM]: companyUuid,
+    [SIZE]: DEFAULT_PAGE_SIZE,
+    ...(page !== undefined && { [PAGE]: page }),
+  };
+
+  try {
+    const response = await axios.get(LOADS_BASE_URL, {
+      params: params,
+    });
+    return {
+      ok: true,
+      data: response.data,
+    };
+  } catch (error: any) {
+    return getApiError(error);
+  }
+};
+
+export const getLoadsColumns = async (): Promise<
+  Result<Column[], ApiError>
+> => {
+  try {
+    const response = await axios.get(LOADS_COLUMNS);
     return {
       ok: true,
       data: response.data,

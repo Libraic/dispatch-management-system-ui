@@ -15,8 +15,8 @@ export const TrucksTable: React.FC<{ trucks: Page<TruckData> }> = ({
     <div className="h-[30rem]">
       <div className="flex flex-col text-solid-black">
         <TableHead
-          columnsLayout={TRUCKS_VIEW_COLUMNS_LAYOUT}
-          listColumns={TRUCKS_VIEW_COLUMNS}
+          layout={TRUCKS_VIEW_COLUMNS_LAYOUT}
+          columns={TRUCKS_VIEW_COLUMNS}
         />
         <TrucksTableContent trucks={trucks} />
       </div>

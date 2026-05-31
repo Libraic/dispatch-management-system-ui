@@ -19,7 +19,7 @@ import { DriverEmploymentDetailsSection } from "#/features/drivers/components/Re
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
 import { useSections } from "#/hooks/useSections";
 import { DRIVER_REGISTRATION_HEADER } from "#/constants/common/header-constants";
-import { DRIVERS_VIEW } from "#/shared/routes/routes";
+import { DRIVERS } from "#/shared/routes/routes";
 
 import { DriverRegistrationContext } from "#/features/drivers/context/DriverRegistrationContext";
 import { saveDriver } from "#/features/drivers/api/drivers.api";
@@ -59,7 +59,7 @@ export const DriverRegistrationPage = () => {
   };
   const { showToast } = useContext(ToastContext);
 
-  const baseRoute = `/${companyUuid}${DRIVERS_VIEW}`;
+  const baseRoute = `/${companyUuid}${DRIVERS}`;
   const navigate = useNavigate();
 
   const submitButtonLabel = sectionsHandler.areAllSectionsActivated()

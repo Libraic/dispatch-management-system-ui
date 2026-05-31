@@ -1,8 +1,18 @@
-import * as React from "react";
-import { NOT_AVAILABLE } from "#/constants/common/global-constants";
+import type { FC } from "react";
+import {
+  BLANK_STRING,
+  NOT_AVAILABLE,
+} from "#/constants/common/global-constants";
 
-type TableCellProps = { data: string | number };
+type TableCellProps = {
+  data?: string | number;
+  styles?: string;
+};
 
-export const TableCell: React.FC<TableCellProps> = ({ data }) => {
-  return <div className="truncate min-w-0">{data ?? NOT_AVAILABLE}</div>;
+export const TableCell: FC<TableCellProps> = ({ data, styles }) => {
+  return (
+    <div className={`truncate min-w-0 ${styles ?? BLANK_STRING}`}>
+      {data ?? NOT_AVAILABLE}
+    </div>
+  );
 };

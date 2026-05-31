@@ -23,7 +23,9 @@ export const NavigableButton: React.FC<NavigableButtonProps> = ({
       onClick={() => navigate(navigationAddress)}
       className={`flex flex-row items-center font-normal px-3 py-1 rounded-[0.25rem] hover:cursor-pointer ${BACKGROUND_NORMAL_COLOR} ${HOVER_BACKGROUND_SOLID_COLOR} text-white text-[0.85rem] hover:border-none gap-x-[0.5rem]`}
     >
-      <GoogleIcon code={iconCode} size={1.62} fontColor="#fff" />
+      <div>
+        <GoogleIcon code={iconCode} size={1.62} fontColor="#fff" />
+      </div>
       <p>{label}</p>
     </div>
   );

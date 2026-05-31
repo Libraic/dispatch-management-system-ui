@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { PaginationBar } from "#/ui/PaginationBar/public/PaginationBar";
-import { DriversTable } from "#/features/drivers/components/View/public/DriversTable";
+import { DriversTable } from "#/features/drivers/components/View/public/DriversTable/DriversTable";
 import { TableHeader } from "#/ui/Table/public/TableHeader";
 import { DRIVER_REGISTRATION } from "#/shared/routes/routes";
 import { DRIVERS_PAGE_HEADER } from "#/constants/common/header-constants";

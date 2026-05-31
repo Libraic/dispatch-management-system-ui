@@ -15,8 +15,8 @@ export const TrailersTable: React.FC<{ trailers: Page<TrailerData> }> = ({
     <div className="h-[30rem]">
       <div className="flex flex-col text-solid-black">
         <TableHead
-          columnsLayout={TRAILERS_VIEW_COLUMNS_LAYOUT}
-          listColumns={TRAILERS_VIEW_COLUMNS}
+          layout={TRAILERS_VIEW_COLUMNS_LAYOUT}
+          columns={TRAILERS_VIEW_COLUMNS}
         />
         <TrailersTableContent trailers={trailers} />
       </div>

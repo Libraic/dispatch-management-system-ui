@@ -1,38 +1,38 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CompanyRegistrationPage } from "#/pages/Company/CompanyRegistrationPage";
+import { RegistrationPage } from "#/features/companies/pages/RegistrationPage";
 import {
   COMPANIES_LIST,
   COMPANY_BASE_ROUTE,
   COMPANY_REGISTRATION,
   DASHBOARD,
-  DISPATCHERS_VIEW,
+  DISPATCHERS,
   DRIVER_REGISTRATION,
-  DRIVERS_VIEW,
+  DRIVERS,
   HOME,
   LANDING,
+  LOADS,
   LOGIN,
   PLANNER,
   SETTINGS,
   TRAILER_REGISTRATION,
-  TRAILERS_VIEW,
+  TRAILERS,
   TRUCK_REGISTRATION,
-  TRUCKS_VIEW,
+  TRUCKS,
 } from "#/shared/routes/routes";
 import { CompaniesPage } from "#/features/companies/pages/CompaniesPage";
-import { DashboardPage } from "#/pages/Company/DashboardPage";
+import { DashboardPage } from "#/features/companies/pages/DashboardPage";
 import { DriverRegistrationPage } from "#/features/drivers/pages/DriverRegistrationPage";
 import { DriversPage } from "#/features/drivers/pages/DriversPage";
-import { TrailerRegistrationPage } from "#/pages/Trailer/TrailerRegistrationPage";
-import { TrucksPage } from "#/pages/Truck/TrucksPage";
-import { TruckRegistrationPage } from "#/pages/Truck/TruckRegistrationPage";
-import { TrailersPage } from "#/pages/Trailer/TrailersPage";
-import { LandingPage } from "#/pages/Landing/LandingPage";
-import { HomePage } from "#/pages/Home/HomePage";
+import { TrucksPage } from "#/features/trucks/pages/TrucksPage";
+import { TrailersPage } from "#/features/trailers/pages/TrailersPage";
+import { LandingPage } from "#/features/landing/pages/LandingPage";
+import { HomePage } from "#/features/home/pages/HomePage";
 import { PlannerPage } from "#/features/planner/pages/PlannerPage";
 import { DispatcherRegistrationPage } from "#/features/dispatchers/pages/DispatcherRegistrationPage";
 import { SettingsPage } from "#/features/companies/pages/SettingsPage";
 import { AppLayout } from "#/templates/AppLayout";
 import { LoginPage } from "#/features/authentication/pages/LoginPage";
+import { LoadsPage } from "#/features/loads/pages/LoadsPage";
 
 export const AppRoutes = () => {
   return (
@@ -41,10 +41,7 @@ export const AppRoutes = () => {
         <Route path={LANDING} element={<LandingPage />} />
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={HOME} element={<HomePage />} />
-        <Route
-          path={COMPANY_REGISTRATION}
-          element={<CompanyRegistrationPage />}
-        />
+        <Route path={COMPANY_REGISTRATION} element={<RegistrationPage />} />
         <Route path={COMPANIES_LIST} element={<CompaniesPage />} />
 
         <Route element={<AppLayout />}>
@@ -57,11 +54,15 @@ export const AppRoutes = () => {
             element={<PlannerPage />}
           />
           <Route
-            path={`${COMPANY_BASE_ROUTE}${DRIVERS_VIEW}`}
+            path={`${COMPANY_BASE_ROUTE}${LOADS}`}
+            element={<LoadsPage />}
+          />
+          <Route
+            path={`${COMPANY_BASE_ROUTE}${DRIVERS}`}
             element={<DriversPage />}
           />
           <Route
-            path={`${COMPANY_BASE_ROUTE}${DISPATCHERS_VIEW}`}
+            path={`${COMPANY_BASE_ROUTE}${DISPATCHERS}`}
             element={<DispatcherRegistrationPage />}
           />
           <Route
@@ -69,20 +70,20 @@ export const AppRoutes = () => {
             element={<DriverRegistrationPage />}
           />
           <Route
-            path={`${COMPANY_BASE_ROUTE}${TRUCKS_VIEW}`}
+            path={`${COMPANY_BASE_ROUTE}${TRUCKS}`}
             element={<TrucksPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRUCK_REGISTRATION}`}
-            element={<TruckRegistrationPage />}
+            element={<RegistrationPage />}
           />
           <Route
-            path={`${COMPANY_BASE_ROUTE}${TRAILERS_VIEW}`}
+            path={`${COMPANY_BASE_ROUTE}${TRAILERS}`}
             element={<TrailersPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRAILER_REGISTRATION}`}
-            element={<TrailerRegistrationPage />}
+            element={<RegistrationPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${SETTINGS}`}

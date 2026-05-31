@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { type FC, useState } from "react";
 import { Toast } from "#/ui/Toast/ToastComponent/Toast";
 import type { ToastType } from "#/ui/Toast/types";
 import { ToastContext } from "./context/ToastContext";
@@ -13,7 +13,7 @@ type ToastProviderProps = {
   children: React.ReactNode;
 };
 
-export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
+export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
   const [toast, setToast] = useState<ToastData>(null);
 
   const showToast = (message: string, type?: ToastType) => {

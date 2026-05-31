@@ -18,9 +18,9 @@ import type {
   TruckRegistrationData,
   TruckRegistrationError,
 } from "#/types/internal/truck/truck-registration-types";
-import { DASHBOARD, TRUCKS_VIEW } from "#/shared/routes/routes";
+import { DASHBOARD, TRUCKS } from "#/shared/routes/routes";
 
-export const TruckRegistrationPage = () => {
+export const RegistrationPage = () => {
   const [truckData, setTruckData] = useState<TruckRegistrationData>(
     getBlankTruckRegistrationData(),
   );
@@ -29,7 +29,7 @@ export const TruckRegistrationPage = () => {
   );
   const toastData = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `${DASHBOARD}/${companyUuid}${TRUCKS_VIEW}`;
+  const baseRoute = `${DASHBOARD}/${companyUuid}${TRUCKS}`;
   const navigate = useNavigate();
   return (
     <>

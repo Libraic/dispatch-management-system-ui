@@ -10,11 +10,11 @@ export type Activator = {
 /**
  * A custom hook that provides activation state management functionality.
  *
- * This hook allows components to manage a boolean "active" state and provides utility
+ * This hook allows ui to manage a boolean "active" state and provides utility
  * methods to query, activate, deactivate, or toggle the state. This is useful for
- * components that have to be rendered/hidden based on a certain condition, eliminating
+ * ui that have to be rendered/hidden based on a certain condition, eliminating
  * the boilerplate code required to manage this state, as well as minimizing
- * the number of parameters that need to be passed to child components.
+ * the number of parameters that need to be passed to child ui.
  *
  * @returns {Activator} An object with methods for managing the active state:
  * - `isActive`: Returns a boolean indicating if the state is active.

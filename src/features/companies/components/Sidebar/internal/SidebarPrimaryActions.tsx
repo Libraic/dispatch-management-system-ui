@@ -4,15 +4,17 @@ import {
   DASHBOARD_ICON_CODE,
   DISPATCHERS_ICON_CODE,
   DRIVERS_ICON_CODE,
+  LOADS_ICON_CODE,
   PLANNER_ICON_CODE,
 } from "#/features/companies/constants/sidebar.constants";
 import {
   DASHBOARD,
-  DISPATCHERS_VIEW,
-  DRIVERS_VIEW,
+  DISPATCHERS,
+  DRIVERS,
+  LOADS,
   PLANNER,
-  TRAILERS_VIEW,
-  TRUCKS_VIEW,
+  TRAILERS,
+  TRUCKS,
 } from "#/shared/routes/routes";
 import { type FC } from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
@@ -41,15 +43,21 @@ export const SidebarPrimaryActions: FC<CompanySidebarFeaturesProps> = ({
         sidebarState={sidebarState}
       />
       <SidebarItem
+        label="Loads"
+        iconCode={LOADS_ICON_CODE}
+        route={`${baseRoute}${LOADS}`}
+        sidebarState={sidebarState}
+      />
+      <SidebarItem
         label="Drivers"
         iconCode={DRIVERS_ICON_CODE}
-        route={`${baseRoute}${DRIVERS_VIEW}`}
+        route={`${baseRoute}${DRIVERS}`}
         sidebarState={sidebarState}
       />
       <SidebarItem
         label="Dispatchers"
         iconCode={DISPATCHERS_ICON_CODE}
-        route={`${baseRoute}${DISPATCHERS_VIEW}`}
+        route={`${baseRoute}${DISPATCHERS}`}
         sidebarState={sidebarState}
       />
       {sidebarState === "open" && (
@@ -60,11 +68,11 @@ export const SidebarPrimaryActions: FC<CompanySidebarFeaturesProps> = ({
           submenuData={[
             {
               label: "Trucks",
-              route: `${baseRoute}${TRUCKS_VIEW}`,
+              route: `${baseRoute}${TRUCKS}`,
             },
             {
               label: "Trailers",
-              route: `${baseRoute}${TRAILERS_VIEW}`,
+              route: `${baseRoute}${TRAILERS}`,
             },
           ]}
         />

@@ -28,6 +28,11 @@ export const DRIVERS_PAGE_HEADER = {
   subheader: "Manage your drivers",
 };
 
+export const LOADS_PAGE_HEADER = {
+  header: "Loads List",
+  subheader: "Manage your loads",
+};
+
 export const TRUCKS_PAGE_HEADER = {
   header: "Trucks List",
   subheader: "Manage your planner",

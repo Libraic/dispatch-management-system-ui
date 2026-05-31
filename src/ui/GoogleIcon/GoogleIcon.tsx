@@ -11,7 +11,7 @@ export const GoogleIcon: React.FC<GoogleIconProps> = ({
   const finalSize = size ? `${size}rem` : "2rem";
   return (
     <span
-      className="material-symbols-outlined"
+      className="material-symbols-outlined items-center flex mt-1"
       style={{
         fontVariationSettings: `'wght' ${finalWeight}`,
         fontSize: finalSize,

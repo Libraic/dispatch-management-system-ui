@@ -1,9 +1,11 @@
-export const TRAILERS_VIEW_COLUMNS = [
-  "Trailer Number",
-  "VIN Number",
-  "Trailer Year",
-  "Equipment Type",
-  "Trailer Make",
+import type { Column } from "#/shared/types/view.types";
+
+export const TRAILERS_VIEW_COLUMNS: Column[] = [
+  { key: "trailerNumber", label: "Trailer Number" },
+  { key: "vinNumber", label: "VIN Number" },
+  { key: "trailerYear", label: "Trailer Year" },
+  { key: "equipmentType", label: "Equipment Type" },
+  { key: "trailerMake", label: "Trailer Make" },
 ];
 
 export const TRAILERS_VIEW_COLUMNS_LAYOUT =

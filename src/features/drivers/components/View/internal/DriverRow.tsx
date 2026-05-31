@@ -1,4 +1,4 @@
-import { DRIVERS_VIEW_COLUMNS_LAYOUT } from "#/constants/driver/drivers-table-constants";
+import { DRIVERS_VIEW_COLUMNS_LAYOUT } from "#/features/drivers/components/View/public/DriversTable/driversTable.constants";
 import {
   HOVER_BACKGROUND_NORMAL_COLOR,
   HOVER_BORDER_B_NORMAL_COLOR,

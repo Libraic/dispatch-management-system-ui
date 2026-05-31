@@ -23,7 +23,7 @@ import { CompanyRegistrationForm } from "#/components/Company/Registration/publi
 import type { RegistrationContextData } from "#/features/drivers/context/context.types";
 import { saveCompany } from "#/features/companies/api/companies.api";
 
-export const CompanyRegistrationPage = () => {
+export const RegistrationPage = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
     useState<CompanyRegistrationData>(getBlankCompanyRegistrationData());
   const [companyRegistrationErrors, setCompanyRegistrationErrors] =
