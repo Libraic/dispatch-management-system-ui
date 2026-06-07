@@ -1,9 +1,9 @@
-import axios from "axios";
 import type { SearchCriteria } from "#/types/api/common/api-query-types";
 import { LIKE_CLAUSE } from "#/shared/api/constants/apiQuery.constants";
 import { BLANK_STRING, COLON } from "#/constants/common/global-constants";
 import type { ApiError, Page, Result } from "#/shared/types/api.types";
 import { getApiError } from "#/shared/api/utils/api.utils";
+import api from "#/shared/api/client/apiClient";
 
 export const getContent = async <T>(
   endpoint: string,
@@ -19,7 +19,7 @@ export const getContent = async <T>(
     customSearchCriteria,
   );
   try {
-    const response = await axios.get(endpoint, {
+    const response = await api.get(endpoint, {
       params: searchCriteria,
     });
     return {

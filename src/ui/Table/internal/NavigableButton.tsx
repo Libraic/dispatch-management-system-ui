@@ -26,7 +26,7 @@ export const NavigableButton: React.FC<NavigableButtonProps> = ({
       <div>
         <GoogleIcon code={iconCode} size={1.62} fontColor="#fff" />
       </div>
-      <p>{label}</p>
+      <p className="font-bold">{label}</p>
     </div>
   );
 };

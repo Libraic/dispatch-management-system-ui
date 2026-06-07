@@ -2,14 +2,14 @@ import { type FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleIcon } from "#/ui/GoogleIcon/GoogleIcon";
 
-type CompanySidebarItemDataProps = {
+type ExpandedItemProps = {
   label: string;
   hasSubmenu: boolean;
   route?: string;
   iconCode?: string;
 };
 
-export const ExpandedItem: FC<CompanySidebarItemDataProps> = ({
+export const ExpandedItem: FC<ExpandedItemProps> = ({
   label,
   hasSubmenu,
   route,

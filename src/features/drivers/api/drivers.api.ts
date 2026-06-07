@@ -4,7 +4,6 @@ import type {
   Page,
   Result,
 } from "#/shared/types/api.types";
-import axios from "axios";
 import { DRIVERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";
 import { createCreateDriverRequestFromDriverRegistrationData } from "#/features/drivers/mappers/driverRegistration.mapper";
@@ -18,6 +17,7 @@ import {
 import { COLON } from "#/constants/common/global-constants";
 import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
 import type { DriverData } from "#/features/drivers/api/api.types";
+import api from "#/shared/api/client/apiClient";
 
 export const saveDriver = async (
   driverRegistrationData: DriverRegistrationData,
@@ -30,7 +30,7 @@ export const saveDriver = async (
     );
 
   try {
-    const response = await axios.post(DRIVERS_BASE_URL, createDriverRequest);
+    const response = await api.post(DRIVERS_BASE_URL, createDriverRequest);
     return {
       ok: true,
       data: response.data,
@@ -50,7 +50,7 @@ export const getDrivers = async (
       [SIZE]: DEFAULT_PAGE_SIZE,
       ...(page !== undefined && { [PAGE]: page }),
     };
-    const response = await axios.get(DRIVERS_BASE_URL, {
+    const response = await api.get(DRIVERS_BASE_URL, {
       params: params,
     });
     return {
@@ -66,7 +66,7 @@ export const deleteDriverById = async (
   driverId: string,
 ): Promise<Result<NoContentResponse, ApiError>> => {
   try {
-    const response = await axios.delete(DRIVERS_BASE_URL + `/${driverId}`);
+    const response = await api.delete(DRIVERS_BASE_URL + `/${driverId}`);
     return {
       ok: true,
       data: response.data,

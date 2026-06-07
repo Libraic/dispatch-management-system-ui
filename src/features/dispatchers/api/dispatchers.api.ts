@@ -3,9 +3,9 @@ import type { ApiError, Result } from "#/shared/types/api.types";
 import type { UpsertLoadResponse } from "#/features/planner/types/load.api.types";
 import type { CreateDispatcherRequest } from "#/types/api/dispatcher/dispatcher-api-request-types";
 import { cleanPhoneNumber } from "#/shared/utils/inputField.utils";
-import axios from "axios";
 import { DISPATCHERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";
+import api from "#/shared/api/client/apiClient";
 
 export const saveDispatcher = async (
   dispatcherData: DispatcherRegistrationData,
@@ -18,7 +18,7 @@ export const saveDispatcher = async (
   };
 
   try {
-    const response = await axios.post(DISPATCHERS_BASE_URL, request);
+    const response = await api.post(DISPATCHERS_BASE_URL, request);
     return {
       ok: true,
       data: response.data,

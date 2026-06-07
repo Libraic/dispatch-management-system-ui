@@ -19,12 +19,12 @@ import {
 import { type FC } from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 
-type CompanySidebarFeaturesProps = {
+type SidebarPrimaryActionsProps = {
   sidebarState: SidebarState;
   baseRoute: string;
 };
 
-export const SidebarPrimaryActions: FC<CompanySidebarFeaturesProps> = ({
+export const SidebarPrimaryActions: FC<SidebarPrimaryActionsProps> = ({
   sidebarState,
   baseRoute,
 }) => {

@@ -1,9 +1,9 @@
 import type { ApiError, Result } from "#/shared/types/api.types";
 import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
-import axios from "axios";
 import { PLANNING_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import { COMPANY_ID_QUERY_PARAM } from "#/shared/api/constants/apiQuery.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";
+import api from "#/shared/api/client/apiClient";
 
 const getStartAndEndDate = (week: string[]) => {
   const startDate = week[0];
@@ -23,7 +23,7 @@ export const getSchedulableDataByCompanyUuidAndStartAndEndDate = async (
 ): Promise<Result<GetDispatchingDataResponse[], ApiError>> => {
   const { startDate, endDate } = getStartAndEndDate(week);
   try {
-    const response = await axios.get(PLANNING_BASE_URL, {
+    const response = await api.get(PLANNING_BASE_URL, {
       params: {
         [COMPANY_ID_QUERY_PARAM]: companyUuid,
         startDate,

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import type {
   LoginData,
   LoginError,
-} from "#/features/authentication/components/Login.types";
+} from "#/features/authentication/components/Login/Login.types";
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { PasswordInputField } from "#/ui/InputField/components/public/PasswordInputField";
 import { SubmitButton } from "#/ui/Buttons/SubmitButton";
@@ -14,18 +14,33 @@ import {
   HOVER_BORDER_SOLID_COLOR,
 } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { ErrorContainer } from "#/ui/ErrorContainer/ErrorContainer";
-import { authenticateUser } from "#/features/authentication/components/login.api";
+import { authenticate } from "#/features/authentication/api/login.api";
 import { ToastContext } from "#/ui/Toast/context/ToastContext";
 import { handleApiError } from "#/shared/api/utils/api.utils";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "#/shared/routes/routes";
-import { validateLoginData } from "#/features/authentication/components/Login.validation";
+import { DASHBOARD } from "#/shared/routes/routes";
+import { validateLoginData } from "#/features/authentication/components/Login/Login.validation";
+import { jwtDecode } from "jwt-decode";
+import type { JwtPayload } from "#/features/authentication/api/api.types";
+import type { ApiError } from "#/shared/types/api.types";
 
 export const Login = () => {
   const [loginData, setLoginData] = useState<LoginData>({});
   const [loginErrors, setLoginErrors] = useState<LoginError>({});
   const { showToast } = useContext(ToastContext);
   const navigate = useNavigate();
+
+  const authenticationFailedToast = () => {
+    const error = {
+      message: "Authentication failed.",
+      type: "GENERAL",
+    } as ApiError;
+    handleApiError({
+      error: error,
+      setFieldErrors: setLoginErrors,
+      showToast,
+    });
+  };
 
   const login = async () => {
     const errors = validateLoginData(loginData);
@@ -34,7 +49,7 @@ export const Login = () => {
       return;
     }
 
-    const response = await authenticateUser(loginData);
+    const response = await authenticate(loginData);
     if (!response.ok) {
       const error = response.error;
       handleApiError({
@@ -45,7 +60,20 @@ export const Login = () => {
       return;
     }
 
-    navigate(HOME);
+    if (!response.data.token) {
+      authenticationFailedToast();
+      return;
+    }
+
+    const token = response.data.token;
+    const jwtPayload = jwtDecode<JwtPayload>(token);
+    if (!jwtPayload.authorityId) {
+      authenticationFailedToast();
+      return;
+    }
+
+    localStorage.setItem("token", token);
+    navigate(`/${encodeURIComponent(jwtPayload.authorityId)}${DASHBOARD}`);
   };
 
   return (
@@ -55,7 +83,7 @@ export const Login = () => {
       </div>
       <div className="flex flex-col w-[15rem] gap-y-[2rem]">
         <TextualInputField
-          label="Username"
+          label="Email"
           placeholder="username@domain.com"
           inputFieldValue={loginData.username || BLANK_STRING}
           saveInputData={(username: string) =>

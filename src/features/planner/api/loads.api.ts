@@ -7,7 +7,6 @@ import type {
   GetLoadStartingPointResponse,
   UpsertLoadResponse,
 } from "#/features/planner/types/load.api.types";
-import axios from "axios";
 import {
   LOADS_BASE_URL,
   LOADS_COLUMNS,
@@ -31,6 +30,7 @@ import {
 import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
 import type { Load } from "#/features/loads/components/View/view.types";
 import type { Column } from "#/shared/types/view.types";
+import api from "#/shared/api/client/apiClient";
 
 export const upsertLoad = async (
   loadData: LoadData,
@@ -43,7 +43,7 @@ export const upsertLoad = async (
   }
 
   try {
-    const response = await axios.put(LOADS_BASE_URL, upsertRequest);
+    const response = await api.put(LOADS_BASE_URL, upsertRequest);
     return {
       ok: true,
       data: response.data,
@@ -57,7 +57,7 @@ export const deleteLoadByUuid = async (
   loadUuid: string,
 ): Promise<Result<NoContentResponse, ApiError>> => {
   try {
-    const response = await axios.delete(LOADS_BASE_URL + `/${loadUuid}`);
+    const response = await api.delete(LOADS_BASE_URL + `/${loadUuid}`);
     return {
       ok: true,
       data: response.data,
@@ -78,7 +78,7 @@ export const getLoadData = async (
     endDate,
   };
   try {
-    const response = await axios.get(url, {
+    const response = await api.get(url, {
       params: params,
     });
     return {
@@ -96,7 +96,7 @@ export const ingestDocument = async (
   const formData = new FormData();
   formData.append("file", file);
   try {
-    const ingestResponse = await axios.post(LOADS_DOCUMENTS, formData);
+    const ingestResponse = await api.post(LOADS_DOCUMENTS, formData);
     return {
       ok: true,
       data: ingestResponse.data,
@@ -116,7 +116,7 @@ export const getStartingPointLocation = async (
     date,
   };
   try {
-    const response = await axios.get(url, {
+    const response = await api.get(url, {
       params: params,
     });
     return {
@@ -139,7 +139,7 @@ export const getLoads = async (
   };
 
   try {
-    const response = await axios.get(LOADS_BASE_URL, {
+    const response = await api.get(LOADS_BASE_URL, {
       params: params,
     });
     return {
@@ -155,7 +155,7 @@ export const getLoadsColumns = async (): Promise<
   Result<Column[], ApiError>
 > => {
   try {
-    const response = await axios.get(LOADS_COLUMNS);
+    const response = await api.get(LOADS_COLUMNS);
     return {
       ok: true,
       data: response.data,

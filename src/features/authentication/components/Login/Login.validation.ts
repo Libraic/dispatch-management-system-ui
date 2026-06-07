@@ -1,7 +1,7 @@
 import type {
   LoginData,
   LoginError,
-} from "#/features/authentication/components/Login.types";
+} from "#/features/authentication/components/Login/Login.types";
 
 export const validateLoginData = (loginData: LoginData) => {
   const errors: LoginError = {};

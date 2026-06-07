@@ -1,4 +1,3 @@
-import axios from "axios";
 import { TRAILERS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
 import {
@@ -13,6 +12,7 @@ import type { ApiError, Page, Result } from "#/shared/types/api.types";
 import { getApiError } from "#/shared/api/utils/api.utils";
 import type { TrailerRegistrationData } from "#/types/internal/trailer/trailer-registration-types";
 import { getCreateTrailerRequest } from "#/utils/trailer/trailer-utils";
+import api from "#/shared/api/client/apiClient";
 
 export const saveTrailer = async (
   trailerData: TrailerRegistrationData,
@@ -23,7 +23,7 @@ export const saveTrailer = async (
     companyUuid!!,
   );
   try {
-    const response = await axios.post(TRAILERS_BASE_URL, createTrailerRequest);
+    const response = await api.post(TRAILERS_BASE_URL, createTrailerRequest);
     return {
       ok: true,
       data: response.data,
@@ -43,7 +43,7 @@ export const getTrailers = async (
       [SIZE]: DEFAULT_SIZE,
       ...(page !== undefined && { [PAGE]: page }),
     };
-    const response = await axios.get(TRAILERS_BASE_URL, {
+    const response = await api.get(TRAILERS_BASE_URL, {
       params: params,
     });
     return {

@@ -9,7 +9,6 @@ import type {
   GetCompanySettingsResponse,
   UpdateCompanySettingsRequest,
 } from "#/features/companies/api/api.types";
-import axios from "axios";
 import {
   COMPANIES_BASE_URL,
   COMPANIES_SETTINGS_URL,
@@ -20,6 +19,7 @@ import { createCreateCompanyRequestFromCompanyRegistrationData } from "#/utils/c
 import type { CompanyRegistrationData } from "#/types/internal/company/company-registration-data";
 import { PAGE, SIZE } from "#/shared/api/constants/apiQuery.constants";
 import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
+import api from "#/shared/api/client/apiClient";
 
 export const getCompanies = async (
   page?: number,
@@ -29,7 +29,7 @@ export const getCompanies = async (
       [SIZE]: DEFAULT_PAGE_SIZE,
       ...(page !== undefined && { [PAGE]: page }),
     };
-    const response = await axios.get(COMPANIES_BASE_URL, {
+    const response = await api.get(COMPANIES_BASE_URL, {
       params: params,
     });
     return {
@@ -46,7 +46,7 @@ export const getCompanyByUuid = async (
 ): Promise<Result<CompanyData, ApiError>> => {
   try {
     const url = `${COMPANIES_BASE_URL}/${companyUuid}`;
-    const response = await axios.get(url);
+    const response = await api.get(url);
     return {
       ok: true,
       data: response.data,
@@ -64,7 +64,7 @@ export const saveCompany = async (
       companyRegistrationData,
     );
   try {
-    const response = await axios.post(COMPANIES_BASE_URL, createCompanyRequest);
+    const response = await api.post(COMPANIES_BASE_URL, createCompanyRequest);
     return {
       ok: true,
       data: response.data,
@@ -84,7 +84,7 @@ export const changeSettings = async (
 
   const url = getCompanySettingsUrl(companyId);
   try {
-    const response = await axios.put(url, request);
+    const response = await api.put(url, request);
     return {
       ok: true,
       data: response.data,
@@ -99,7 +99,7 @@ export const getSettings = async (
 ): Promise<Result<GetCompanySettingsResponse, ApiError>> => {
   const url = getCompanySettingsUrl(companyId);
   try {
-    const response = await axios.get(url);
+    const response = await api.get(url);
     return {
       ok: true,
       data: response.data,

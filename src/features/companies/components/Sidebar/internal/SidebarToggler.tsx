@@ -7,14 +7,14 @@ import React from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 import { useCompanyName } from "#/features/companies/components/Sidebar/hooks/useCompanyName";
 
-type CompanySidebarTogglerProps = {
+type SidebarTogglerProps = {
   sidebarState: SidebarState;
   setSidebarState: React.Dispatch<React.SetStateAction<SidebarState>>;
   sidebarLabel: string;
   setSidebarLabel: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const CompanySidebarToggler: React.FC<CompanySidebarTogglerProps> = ({
+export const SidebarToggler: React.FC<SidebarTogglerProps> = ({
   sidebarState,
   setSidebarState,
   sidebarLabel,

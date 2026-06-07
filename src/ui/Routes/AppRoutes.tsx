@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RegistrationPage } from "#/features/companies/pages/RegistrationPage";
 import {
-  COMPANIES_LIST,
   COMPANY_BASE_ROUTE,
   COMPANY_REGISTRATION,
   DASHBOARD,
@@ -19,7 +18,6 @@ import {
   TRUCK_REGISTRATION,
   TRUCKS,
 } from "#/shared/routes/routes";
-import { CompaniesPage } from "#/features/companies/pages/CompaniesPage";
 import { DashboardPage } from "#/features/companies/pages/DashboardPage";
 import { DriverRegistrationPage } from "#/features/drivers/pages/DriverRegistrationPage";
 import { DriversPage } from "#/features/drivers/pages/DriversPage";
@@ -42,7 +40,6 @@ export const AppRoutes = () => {
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={HOME} element={<HomePage />} />
         <Route path={COMPANY_REGISTRATION} element={<RegistrationPage />} />
-        <Route path={COMPANIES_LIST} element={<CompaniesPage />} />
 
         <Route element={<AppLayout />}>
           <Route

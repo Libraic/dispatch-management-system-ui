@@ -1,4 +1,4 @@
-import React, { type FC, useState } from "react";
+import React, { type FC, useCallback, useMemo, useState } from "react";
 import { Toast } from "#/ui/Toast/ToastComponent/Toast";
 import type { ToastType } from "#/ui/Toast/types";
 import { ToastContext } from "./context/ToastContext";
@@ -16,16 +16,18 @@ type ToastProviderProps = {
 export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
   const [toast, setToast] = useState<ToastData>(null);
 
-  const showToast = (message: string, type?: ToastType) => {
+  const showToast = useCallback((message: string, type?: ToastType) => {
     setToast({
       message,
       type: type ?? "ERROR",
       id: Date.now(),
     });
-  };
+  }, []);
+
+  const contextValue = useMemo(() => ({ showToast }), [showToast]);
 
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       {toast && (
         <Toast key={toast.id} message={toast.message} type={toast.type} />

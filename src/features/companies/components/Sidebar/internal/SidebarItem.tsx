@@ -9,7 +9,7 @@ import type {
 import { BLANK_STRING } from "#/constants/common/global-constants";
 import { ContractedItem } from "#/features/companies/components/Sidebar/internal/ContractedItem";
 
-type CompanySidebarItemProps = {
+type SidebarItemProps = {
   label: string;
   iconCode: string;
   sidebarState: SidebarState;
@@ -17,7 +17,7 @@ type CompanySidebarItemProps = {
   submenuData?: SubmenuData[];
 };
 
-export const SidebarItem: FC<CompanySidebarItemProps> = ({
+export const SidebarItem: FC<SidebarItemProps> = ({
   label,
   iconCode,
   sidebarState,

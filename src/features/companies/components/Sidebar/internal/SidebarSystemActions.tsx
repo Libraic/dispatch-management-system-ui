@@ -7,23 +7,29 @@ import {
 import { COMPANIES_LIST, LANDING, SETTINGS } from "#/shared/routes/routes";
 import React from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
+import { hasPlatformAdminRole } from "#/shared/utils/jwt.utils";
 
-type CompanySidebarOperationalOptionsProps = {
+type SidebarSystemActionsProps = {
   sidebarState: SidebarState;
   baseRoute: string;
 };
 
-export const CompanySidebarSystemActions: React.FC<
-  CompanySidebarOperationalOptionsProps
-> = ({ sidebarState, baseRoute }) => {
+export const SidebarSystemActions: React.FC<SidebarSystemActionsProps> = ({
+  sidebarState,
+  baseRoute,
+}) => {
+  const shouldShowCompanies = hasPlatformAdminRole();
+
   return (
     <div>
-      <SidebarItem
-        label="Companies"
-        iconCode={COMPANIES_ICON_CODE}
-        route={COMPANIES_LIST}
-        sidebarState={sidebarState}
-      />
+      {shouldShowCompanies && (
+        <SidebarItem
+          label="Companies"
+          iconCode={COMPANIES_ICON_CODE}
+          route={COMPANIES_LIST}
+          sidebarState={sidebarState}
+        />
+      )}
       <SidebarItem
         label="Settings"
         iconCode={SETTINGS_ICON_CODE}

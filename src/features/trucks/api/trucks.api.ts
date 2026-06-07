@@ -1,4 +1,3 @@
-import axios from "axios";
 import { TRUCKS_BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 import type { TruckData } from "#/types/api/truck/truck-api-response-types";
 import {
@@ -13,6 +12,7 @@ import type { ApiError, Page, Result } from "#/shared/types/api.types";
 import { getCreateTruckRequest } from "#/utils/truck/truck-utils";
 import type { TruckRegistrationData } from "#/types/internal/truck/truck-registration-types";
 import { getApiError } from "#/shared/api/utils/api.utils";
+import api from "#/shared/api/client/apiClient";
 
 export const saveTruck = async (
   truckRegistrationData: TruckRegistrationData,
@@ -23,7 +23,7 @@ export const saveTruck = async (
     companyUuid,
   );
   try {
-    const response = await axios.post(TRUCKS_BASE_URL, createTruckRequest);
+    const response = await api.post(TRUCKS_BASE_URL, createTruckRequest);
     return {
       data: response.data,
       ok: true,
@@ -43,7 +43,7 @@ export const getTrucks = async (
       [SIZE]: DEFAULT_SIZE,
       ...(page !== undefined && { [PAGE]: page }),
     };
-    const response = await axios.get(TRUCKS_BASE_URL, {
+    const response = await api.get(TRUCKS_BASE_URL, {
       params: params,
     });
     return {

@@ -1,5 +1,4 @@
 import type { Error } from "#/types/api/common/api-errors-types";
-import axios from "axios";
 import {
   VEHICLE_MAINTENANCE_BASE_URL,
   VEHICLE_MAINTENANCE_RELATIONS_URL,
@@ -12,12 +11,13 @@ import type {
 } from "#/types/api/vehicle-maintenance/vehicle-maintenance-api-response-types";
 import type { GetDispatchingDataResponse } from "#/features/planner/types/load.api.types";
 import type { ApiResponse, NoContentResponse } from "#/shared/types/api.types";
+import api from "#/shared/api/client/apiClient";
 
 export const upsertVehicleMaintenanceRecord = async (
   request: UpsertVehicleMaintenanceRecordRequest,
 ): Promise<ApiResponse<UpsertVehicleMaintenanceRecordResponse, Error>> => {
   try {
-    const response = await axios.put(VEHICLE_MAINTENANCE_BASE_URL, request);
+    const response = await api.put(VEHICLE_MAINTENANCE_BASE_URL, request);
     return response.data;
   } catch (error: any) {
     return handleApiErrors(error);
@@ -35,7 +35,7 @@ export const getVehicleMaintenanceData = async (
     endDate,
   };
   try {
-    const response = await axios.get(url, {
+    const response = await api.get(url, {
       params: params,
     });
     return response.data;
@@ -48,7 +48,7 @@ export const deleteVehicleMaintenanceRecordByUuid = async (
   vehicleMaintenanceRecordUuid: string,
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
-    const response = await axios.delete<
+    const response = await api.delete<
       ApiResponse<GetDispatchingDataResponse[], Error>
     >(VEHICLE_MAINTENANCE_BASE_URL + `/${vehicleMaintenanceRecordUuid}`);
     return response.data;

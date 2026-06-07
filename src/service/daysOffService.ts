@@ -1,5 +1,4 @@
 import type { Error } from "#/types/api/common/api-errors-types";
-import axios from "axios";
 import {
   DAYS_OFF_BASE_URL,
   DAYS_OFF_RELATIONS_URL,
@@ -12,12 +11,13 @@ import type {
   UpsertDaysOffPeriodResponse,
 } from "#/types/api/days-off/days-off-api-response-types";
 import type { ApiResponse, NoContentResponse } from "#/shared/types/api.types";
+import api from "#/shared/api/client/apiClient";
 
 export const upsertDaysOffPeriod = async (
   request: UpsertDayOffPeriodRequest,
 ): Promise<ApiResponse<UpsertDaysOffPeriodResponse, Error>> => {
   try {
-    const response = await axios.put(DAYS_OFF_BASE_URL, request);
+    const response = await api.put(DAYS_OFF_BASE_URL, request);
     return response.data;
   } catch (error: any) {
     return handleApiErrors(error);
@@ -35,7 +35,7 @@ export const getDaysOffPeriodData = async (
     endDate,
   };
   try {
-    const response = await axios.get(url, {
+    const response = await api.get(url, {
       params: params,
     });
     return response.data;
@@ -48,7 +48,7 @@ export const deleteDaysOffPeriodByUuid = async (
   daysOffPeriodUuid: string,
 ): Promise<ApiResponse<NoContentResponse, Error>> => {
   try {
-    const response = await axios.delete<
+    const response = await api.delete<
       ApiResponse<GetDispatchingDataResponse[], Error>
     >(DAYS_OFF_BASE_URL + `/${daysOffPeriodUuid}`);
     return response.data;

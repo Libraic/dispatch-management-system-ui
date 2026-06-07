@@ -4,8 +4,8 @@ import { type FC, useState } from "react";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
 import { SIDEBAR_OPENER_ICON_CODE } from "#/features/companies/constants/sidebar.constants";
 import { SidebarPrimaryActions } from "#/features/companies/components/Sidebar/internal/SidebarPrimaryActions";
-import { CompanySidebarSystemActions } from "#/features/companies/components/Sidebar/internal/CompanySidebarSystemActions";
-import { CompanySidebarToggler } from "#/features/companies/components/Sidebar/internal/CompanySidebarToggler";
+import { SidebarSystemActions } from "#/features/companies/components/Sidebar/internal/SidebarSystemActions";
+import { SidebarToggler } from "#/features/companies/components/Sidebar/internal/SidebarToggler";
 
 type SidebarProps = {
   sidebarState: SidebarState;
@@ -29,7 +29,7 @@ export const Sidebar: FC<SidebarProps> = ({
       `}
     >
       <div>
-        <CompanySidebarToggler
+        <SidebarToggler
           sidebarState={sidebarState}
           setSidebarState={setSidebarState}
           setSidebarLabel={setSidebarLabel}
@@ -41,10 +41,7 @@ export const Sidebar: FC<SidebarProps> = ({
         />
       </div>
 
-      <CompanySidebarSystemActions
-        sidebarState={sidebarState}
-        baseRoute={baseRoute}
-      />
+      <SidebarSystemActions sidebarState={sidebarState} baseRoute={baseRoute} />
     </div>
   );
 };
