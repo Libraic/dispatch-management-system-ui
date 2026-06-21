@@ -9,6 +9,8 @@ export const BASE_URL = HOST + "/api";
  */
 export const COMPANIES_BASE_URL = BASE_URL + "/companies";
 export const COMPANIES_SETTINGS_URL = "/settings";
+export const COMPANY_TOKEN_REGISTRATION_VALIDATION =
+  BASE_URL + "/company-invitations/validate";
 
 /**
  * Driver-related API paths.

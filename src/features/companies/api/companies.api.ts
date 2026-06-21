@@ -12,6 +12,7 @@ import type {
 import {
   COMPANIES_BASE_URL,
   COMPANIES_SETTINGS_URL,
+  COMPANY_TOKEN_REGISTRATION_VALIDATION,
 } from "#/shared/api/constants/apiPaths.constants";
 import { getApiError } from "#/shared/api/utils/api.utils";
 import type { CompanyData } from "#/types/api/company/company-api-response-types";
@@ -103,6 +104,22 @@ export const getSettings = async (
   const url = getCompanySettingsUrl(companyId);
   try {
     const response = await api.get(url);
+    return {
+      ok: true,
+      data: response.data,
+    };
+  } catch (error: unknown) {
+    return getApiError(error);
+  }
+};
+
+export const validateToken = async (
+  token?: string | null,
+): Promise<Result<NoContentResponse, ApiError>> => {
+  try {
+    const response = await api.get(COMPANY_TOKEN_REGISTRATION_VALIDATION, {
+      params: { token },
+    });
     return {
       ok: true,
       data: response.data,

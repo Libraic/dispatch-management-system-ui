@@ -22,6 +22,7 @@ import type { ApiError } from "#/shared/types/api.types";
 import { handleApiError } from "#/shared/api/utils/api.utils";
 import { jwtDecode } from "jwt-decode";
 import type { JwtPayload } from "#/features/authentication/api/api.types";
+import { useInvitationTokenValidation } from "#/features/companies/hooks/useInvitationTokenValidation";
 
 export const CompanyRegistrationPage = () => {
   const [companyRegistrationData, setCompanyRegistrationData] =
@@ -41,6 +42,10 @@ export const CompanyRegistrationPage = () => {
   const [searchParams] = useSearchParams();
   const invitationToken = searchParams.get("token");
   const { showToast } = useContext(ToastContext);
+  const isInvitationTokenValid = useInvitationTokenValidation(
+    invitationToken,
+    showToast,
+  );
 
   const createCompany = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +96,10 @@ export const CompanyRegistrationPage = () => {
       showToast,
     });
   };
+
+  if (!isInvitationTokenValid) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col h-screen">
