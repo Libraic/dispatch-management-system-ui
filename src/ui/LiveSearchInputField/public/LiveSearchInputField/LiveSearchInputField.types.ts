@@ -3,7 +3,7 @@ import {
   Entity,
   type SearchCriteria,
 } from "#/types/api/common/api-query-types";
-import { HOST } from "#/shared/api/constants/apiPaths.constants";
+import { BASE_URL } from "#/shared/api/constants/apiPaths.constants";
 
 export type LiveSearchEndpointConfig = {
   endpoint: string;
@@ -12,23 +12,23 @@ export type LiveSearchEndpointConfig = {
 
 export const LIVE_SEARCH_ENDPOINTS: Record<Entity, LiveSearchEndpointConfig> = {
   Driver: {
-    endpoint: `${HOST}/api/drivers`,
+    endpoint: `${BASE_URL}/drivers`,
     searchField: "fullName",
   },
   Truck: {
-    endpoint: `${HOST}/api/trucks`,
+    endpoint: `${BASE_URL}/trucks`,
     searchField: "truckNumber",
   },
   Trailer: {
-    endpoint: `${HOST}/api/trailers`,
+    endpoint: `${BASE_URL}/trailers`,
     searchField: "trailerNumber",
   },
   Dispatcher: {
-    endpoint: `${HOST}/api/dispatchers`,
+    endpoint: `${BASE_URL}/dispatchers`,
     searchField: "name",
   },
   City: {
-    endpoint: `${HOST}/api/cities`,
+    endpoint: `${BASE_URL}/cities`,
     searchField: "prefix",
   },
 } as const;

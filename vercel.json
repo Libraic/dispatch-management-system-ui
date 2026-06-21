@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "http://trucks-management-system-core-env.eba-anfptw9c.eu-north-1.elasticbeanstalk.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
