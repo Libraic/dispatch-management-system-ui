@@ -117,6 +117,7 @@ export const validateToken = async (
   token?: string | null,
 ): Promise<Result<NoContentResponse, ApiError>> => {
   try {
+    console.log(COMPANY_TOKEN_REGISTRATION_VALIDATION);
     const response = await api.get(COMPANY_TOKEN_REGISTRATION_VALIDATION, {
       params: { token },
     });
