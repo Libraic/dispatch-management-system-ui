@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RegistrationPage } from "#/features/companies/pages/RegistrationPage";
+import { CompanyRegistrationPage } from "#/features/companies/pages/CompanyRegistrationPage";
 import {
   COMPANY_BASE_ROUTE,
   COMPANY_REGISTRATION,
@@ -39,7 +39,10 @@ export const AppRoutes = () => {
         <Route path={LANDING} element={<LandingPage />} />
         <Route path={LOGIN} element={<LoginPage />} />
         <Route path={HOME} element={<HomePage />} />
-        <Route path={COMPANY_REGISTRATION} element={<RegistrationPage />} />
+        <Route
+          path={COMPANY_REGISTRATION}
+          element={<CompanyRegistrationPage />}
+        />
 
         <Route element={<AppLayout />}>
           <Route
@@ -72,7 +75,7 @@ export const AppRoutes = () => {
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRUCK_REGISTRATION}`}
-            element={<RegistrationPage />}
+            element={<CompanyRegistrationPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRAILERS}`}
@@ -80,7 +83,7 @@ export const AppRoutes = () => {
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRAILER_REGISTRATION}`}
-            element={<RegistrationPage />}
+            element={<CompanyRegistrationPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${SETTINGS}`}

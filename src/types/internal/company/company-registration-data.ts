@@ -25,4 +25,5 @@ export type CreateCompanyRequest = {
   serviceDate: string | null;
   startDate: string;
   timezone: string;
+  invitationToken?: string;
 };

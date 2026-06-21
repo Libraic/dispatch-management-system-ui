@@ -33,6 +33,7 @@ export const setCompanyStringField = (
 
 export const createCreateCompanyRequestFromCompanyRegistrationData = (
   companyRegistrationData: CompanyRegistrationData,
+  invitationToken?: string,
 ): CreateCompanyRequest => {
   return {
     name: companyRegistrationData.name,
@@ -43,5 +44,6 @@ export const createCreateCompanyRequestFromCompanyRegistrationData = (
     serviceDate: companyRegistrationData.serviceDate,
     startDate: companyRegistrationData.startDate,
     timezone: DEFAULT_TIMEZONE_DATA.value,
+    invitationToken,
   };
 };

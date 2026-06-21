@@ -20,6 +20,7 @@ import type { CompanyRegistrationData } from "#/types/internal/company/company-r
 import { PAGE, SIZE } from "#/shared/api/constants/apiQuery.constants";
 import { DEFAULT_PAGE_SIZE } from "#/shared/api/constants/api.constants";
 import api from "#/shared/api/client/apiClient";
+import type { AuthenticationResponse } from "#/features/authentication/api/api.types";
 
 export const getCompanies = async (
   page?: number,
@@ -58,10 +59,12 @@ export const getCompanyByUuid = async (
 
 export const saveCompany = async (
   companyRegistrationData: CompanyRegistrationData,
-): Promise<Result<CompanyData, ApiError>> => {
+  invitationToken?: string,
+): Promise<Result<AuthenticationResponse, ApiError>> => {
   const createCompanyRequest =
     createCreateCompanyRequestFromCompanyRegistrationData(
       companyRegistrationData,
+      invitationToken,
     );
   try {
     const response = await api.post(COMPANIES_BASE_URL, createCompanyRequest);
