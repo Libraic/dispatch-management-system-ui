@@ -6,19 +6,6 @@ import type {
 } from "#/types/internal/truck/truck-registration-types";
 import type { CreateTruckRequest } from "#/types/api/truck/truck-api-request-types";
 
-export const getBlankTruckRegistrationData = () => {
-  return {
-    truckNumber: BLANK_STRING,
-    vinNumber: BLANK_STRING,
-    model: BLANK_STRING,
-    truckYear: new Date().getFullYear(),
-    truckMake: BLANK_STRING,
-    fuelType: BLANK_STRING,
-    color: BLANK_STRING,
-    weight: 1,
-  };
-};
-
 export const getBlankTruckRegistrationErrors = (): TruckRegistrationError => {
   return {
     truckNumber: BLANK_STRING,

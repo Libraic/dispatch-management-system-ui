@@ -3,10 +3,7 @@ import {
   type TrailerRegistrationData,
   type TrailerRegistrationError,
 } from "#/types/internal/trailer/trailer-registration-types";
-import {
-  getBlankTrailerRegistrationData,
-  getBlankTrailerRegistrationErrors,
-} from "#/utils/trailer/trailer-utils";
+import { getBlankTrailerRegistrationErrors } from "#/utils/trailer/trailer-utils";
 import { TrailerRegistrationFormInputData } from "#/components/Trailer/Registration/TrailerRegistrationFormInputData";
 import { TRAILER_CREATION_HEADER } from "#/constants/common/header-constants";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
@@ -20,15 +17,13 @@ import { useToast } from "#/ui/Toast/useToast";
 import { useNavigate, useParams } from "react-router-dom";
 import { TRAILERS } from "#/shared/routes/routes";
 
-export const RegistrationPage = () => {
+export const TrailerRegistrationPage = () => {
   const [trailerErrorData, setTrailerErrorData] =
     useState<TrailerRegistrationError>(getBlankTrailerRegistrationErrors());
-  const [trailerData, setTrailerData] = useState<TrailerRegistrationData>(
-    getBlankTrailerRegistrationData(),
-  );
+  const [trailerData, setTrailerData] = useState<TrailerRegistrationData>({});
   const toastData = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `/dashboard/${companyUuid}${TRAILERS}`;
+  const baseRoute = `/${companyUuid}${TRAILERS}`;
   const navigate = useNavigate();
 
   return (
@@ -58,12 +53,10 @@ export const RegistrationPage = () => {
             );
             if (errors === null) {
               setTrailerErrorData(getBlankTrailerRegistrationErrors());
-              setTrailerData(getBlankTrailerRegistrationData());
-              toastData.withSuccessMessage(
-                "The trailer was successfully created.",
-              );
+              setTrailerData({});
+              navigate(baseRoute);
             } else if ("message" in errors) {
-              setTrailerData(getBlankTrailerRegistrationData());
+              setTrailerData({});
               toastData.withErrorMessage(errors.message);
             } else if (!Array.isArray(errors)) {
               setTrailerErrorData(errors as TrailerRegistrationError);

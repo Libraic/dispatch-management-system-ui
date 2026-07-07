@@ -2,7 +2,7 @@
  * General API paths.
  */
 export const HOST = import.meta.env.VITE_API_HOST;
-export const BASE_URL = "/api";
+export const BASE_URL = HOST ? HOST + "/api" : "/api";
 
 /**
  * Company-related API paths.

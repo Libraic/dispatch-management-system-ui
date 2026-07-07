@@ -9,4 +9,4 @@ export const TRAILERS_VIEW_COLUMNS: Column[] = [
 ];
 
 export const TRAILERS_VIEW_COLUMNS_LAYOUT =
-  "grid-cols-[minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(12rem,1fr)_minmax(20rem,2fr)_5rem]";
+  "grid-cols-[minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(20rem,2fr)_1rem]";

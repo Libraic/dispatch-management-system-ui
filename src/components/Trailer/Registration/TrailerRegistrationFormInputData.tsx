@@ -38,7 +38,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         <TextualInputField
           label="Trailer Year"
           placeholder="2020"
-          inputFieldValue={trailerData.trailerYear.toString()}
+          inputFieldValue={trailerData.trailerYear}
           isMandatory={false}
           errorMessage={trailerErrorData.trailerYear}
           saveInputData={(trailerYear: string) =>
@@ -74,7 +74,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         <TextualInputField
           label="Equipment Size (ft)"
           placeholder="48"
-          inputFieldValue={trailerData.equipmentSize.toString()}
+          inputFieldValue={trailerData.equipmentSize}
           isMandatory={true}
           errorMessage={trailerErrorData.equipmentSize}
           saveInputData={(equipmentSize: string) =>
@@ -90,7 +90,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         <TextualInputField
           label="Pallet Capacity"
           placeholder="24"
-          inputFieldValue={trailerData.palletCapacity.toString()}
+          inputFieldValue={trailerData.palletCapacity}
           isMandatory={false}
           errorMessage={trailerErrorData.palletCapacity}
           saveInputData={(palletCapacity: string) =>
@@ -104,7 +104,7 @@ export const TrailerRegistrationFormInputData: React.FC<{
         <TextualInputField
           label="Max Weight (lbs)"
           placeholder="10000"
-          inputFieldValue={trailerData.maxWeight.toString()}
+          inputFieldValue={trailerData.maxWeight}
           isMandatory={true}
           errorMessage={trailerErrorData.maxWeight}
           saveInputData={(maxWeight: string) =>

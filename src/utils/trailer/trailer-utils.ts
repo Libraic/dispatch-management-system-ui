@@ -6,20 +6,6 @@ import {
 } from "#/types/internal/trailer/trailer-registration-types";
 import type { CreateTrailerRequest } from "#/types/api/trailer/trailer-api-request-types";
 
-export const getBlankTrailerRegistrationData = () => {
-  return {
-    trailerNumber: BLANK_STRING,
-    vinNumber: BLANK_STRING,
-    trailerYear: new Date().getFullYear(),
-    trailerMake: BLANK_STRING,
-    equipmentType: BLANK_STRING,
-    equipmentSize: 1,
-    palletCapacity: 1,
-    maxWeight: 1,
-    tireSize: BLANK_STRING,
-  };
-};
-
 export const getBlankTrailerRegistrationErrors =
   (): TrailerRegistrationError => {
     return {

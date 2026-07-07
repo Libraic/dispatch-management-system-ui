@@ -31,6 +31,8 @@ import { SettingsPage } from "#/features/companies/pages/SettingsPage";
 import { AppLayout } from "#/templates/AppLayout";
 import { LoginPage } from "#/features/authentication/pages/LoginPage";
 import { LoadsPage } from "#/features/loads/pages/LoadsPage";
+import { TruckRegistrationPage } from "#/features/trucks/pages/TruckRegistrationPage";
+import { TrailerRegistrationPage } from "#/features/trailers/pages/TrailerRegistrationPage";
 
 export const AppRoutes = () => {
   return (
@@ -75,7 +77,7 @@ export const AppRoutes = () => {
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRUCK_REGISTRATION}`}
-            element={<CompanyRegistrationPage />}
+            element={<TruckRegistrationPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRAILERS}`}
@@ -83,7 +85,7 @@ export const AppRoutes = () => {
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${TRAILER_REGISTRATION}`}
-            element={<CompanyRegistrationPage />}
+            element={<TrailerRegistrationPage />}
           />
           <Route
             path={`${COMPANY_BASE_ROUTE}${SETTINGS}`}

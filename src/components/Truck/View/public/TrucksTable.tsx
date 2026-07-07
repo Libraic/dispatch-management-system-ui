@@ -12,8 +12,8 @@ export const TrucksTable: React.FC<{ trucks: Page<TruckData> }> = ({
   trucks,
 }) => {
   return (
-    <div className="h-[30rem]">
-      <div className="flex flex-col text-solid-black">
+    <div className="overflow-x-auto h-[30rem]">
+      <div className="text-solid-black">
         <TableHead
           layout={TRUCKS_VIEW_COLUMNS_LAYOUT}
           columns={TRUCKS_VIEW_COLUMNS}

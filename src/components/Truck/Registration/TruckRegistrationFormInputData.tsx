@@ -51,7 +51,7 @@ export const TruckRegistrationFormInputData: React.FC<{
           <TextualInputField
             label="Truck Year"
             placeholder="2025"
-            inputFieldValue={truckData.truckYear.toString()}
+            inputFieldValue={truckData.truckYear}
             isMandatory={false}
             errorMessage={truckErrorData.truckYear}
             saveInputData={(truckYear: string) =>
@@ -94,7 +94,7 @@ export const TruckRegistrationFormInputData: React.FC<{
           <TextualInputField
             label="Weight (lbs)"
             placeholder="10000"
-            inputFieldValue={truckData.weight.toString()}
+            inputFieldValue={truckData.weight}
             isMandatory={false}
             errorMessage={truckErrorData.weight}
             saveInputData={(weight: string) =>

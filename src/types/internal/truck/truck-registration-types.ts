@@ -1,12 +1,12 @@
 export type TruckRegistrationData = {
-  truckNumber: string;
-  vinNumber: string;
-  model: string;
-  truckYear: number;
-  truckMake: string;
-  fuelType: string;
-  color: string;
-  weight: number;
+  truckNumber?: string;
+  vinNumber?: string;
+  model?: string;
+  truckYear?: string;
+  truckMake?: string;
+  fuelType?: string;
+  color?: string;
+  weight?: string;
 };
 
 export type TruckRegistrationError = {

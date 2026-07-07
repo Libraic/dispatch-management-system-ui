@@ -7,8 +7,8 @@ import {
 
 export const DriversTable = () => {
   return (
-    <div className="h-[30rem]">
-      <div className="flex flex-col text-solid-black">
+    <div className="overflow-x-auto h-[30rem]">
+      <div className="text-solid-black">
         <TableHead
           layout={DRIVERS_VIEW_COLUMNS_LAYOUT}
           columns={DRIVERS_VIEW_COLUMNS}

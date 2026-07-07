@@ -1,7 +1,4 @@
-import {
-  getBlankTruckRegistrationData,
-  getBlankTruckRegistrationErrors,
-} from "#/utils/truck/truck-utils";
+import { getBlankTruckRegistrationErrors } from "#/utils/truck/truck-utils";
 import { useState } from "react";
 import { TRUCK_CREATION_HEADER } from "#/constants/common/header-constants";
 import { PageHeader } from "#/ui/PageHeader/PageHeader";
@@ -18,18 +15,16 @@ import type {
   TruckRegistrationData,
   TruckRegistrationError,
 } from "#/types/internal/truck/truck-registration-types";
-import { DASHBOARD, TRUCKS } from "#/shared/routes/routes";
+import { TRUCKS } from "#/shared/routes/routes";
 
-export const RegistrationPage = () => {
-  const [truckData, setTruckData] = useState<TruckRegistrationData>(
-    getBlankTruckRegistrationData(),
-  );
+export const TruckRegistrationPage = () => {
+  const [truckData, setTruckData] = useState<TruckRegistrationData>({});
   const [truckErrorData, setTruckErrorData] = useState<TruckRegistrationError>(
     getBlankTruckRegistrationErrors(),
   );
   const toastData = useToast();
   const { companyUuid } = useParams();
-  const baseRoute = `${DASHBOARD}/${companyUuid}${TRUCKS}`;
+  const baseRoute = `/${companyUuid}${TRUCKS}`;
   const navigate = useNavigate();
   return (
     <>
@@ -57,10 +52,8 @@ export const RegistrationPage = () => {
             );
             if (errors === null) {
               setTruckErrorData(getBlankTruckRegistrationErrors());
-              setTruckData(getBlankTruckRegistrationData());
-              toastData.withSuccessMessage(
-                "The planner was successfully created.",
-              );
+              setTruckData({});
+              navigate(baseRoute);
             } else if ("message" in errors) {
               setTruckErrorData(getBlankTruckRegistrationErrors());
               toastData.withErrorMessage(errors.message);
