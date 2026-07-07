@@ -23,6 +23,8 @@ export const setTruckDataField = (
   setTruckData((prev) => ({ ...prev, [field]: value }));
 };
 
+// TODO: asdase
+
 export const getCreateTruckRequest = (
   truckData: TruckRegistrationData,
   companyUuid: string,
