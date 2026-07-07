@@ -29,7 +29,7 @@ export const validateTrailerRegistrationData = (
     wasErrorFound = true;
   }
 
-  if (data.trailerYear <= 0) {
+  if (data.trailerYear && parseInt(data.trailerYear) <= 0) {
     errors.trailerYear = TRAILER_YEAR_INVALID;
     wasErrorFound = true;
   }
@@ -39,17 +39,17 @@ export const validateTrailerRegistrationData = (
     wasErrorFound = true;
   }
 
-  if (data.equipmentSize <= 0) {
+  if (data.equipmentSize && parseInt(data.equipmentSize) <= 0) {
     errors.equipmentSize = EQUIPMENT_SIZE_INVALID;
     wasErrorFound = true;
   }
 
-  if (data.palletCapacity <= 0) {
+  if (data.palletCapacity && parseInt(data.palletCapacity) <= 0) {
     errors.palletCapacity = PALLET_CAPACITY_INVALID;
     wasErrorFound = true;
   }
 
-  if (data.maxWeight <= 0) {
+  if (data.maxWeight && parseInt(data.maxWeight) <= 0) {
     errors.maxWeight = MAX_WEIGHT_INVALID;
     wasErrorFound = true;
   }

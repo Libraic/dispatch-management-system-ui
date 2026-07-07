@@ -26,12 +26,12 @@ export const validateTruckRegistrationData = (
     wasErrorFound = true;
   }
 
-  if (data.truckYear <= 0) {
+  if (data.truckYear && parseInt(data.truckYear) <= 0) {
     errors.truckYear = TRUCK_YEAR_INVALID;
     wasErrorFound = true;
   }
 
-  if (data.weight <= 0) {
+  if (data.weight && parseInt(data.weight) <= 0) {
     errors.weight = TRUCK_WEIGHT_INVALID;
     wasErrorFound = true;
   }

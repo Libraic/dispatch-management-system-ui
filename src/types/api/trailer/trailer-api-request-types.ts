@@ -2,11 +2,11 @@ export type CreateTrailerRequest = {
   companyUuid?: string;
   trailerNumber?: string;
   vinNumber?: string;
-  trailerYear?: number;
+  trailerYear?: string;
   trailerMake?: string;
   equipmentType?: string;
-  equipmentSize?: number;
-  palletCapacity?: number;
-  maxWeight?: number;
+  equipmentSize?: string;
+  palletCapacity?: string;
+  maxWeight?: string;
   tireSize?: string;
 };
