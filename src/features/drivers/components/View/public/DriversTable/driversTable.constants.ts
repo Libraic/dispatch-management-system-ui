@@ -9,4 +9,4 @@ export const DRIVERS_VIEW_COLUMNS: Column[] = [
 ];
 
 export const DRIVERS_VIEW_COLUMNS_LAYOUT =
-  "grid-cols-[minmax(15rem,1fr)_minmax(15rem,1fr)_minmax(15rem,1fr)_minmax(15rem,1fr)_minmax(18rem,2fr)_1rem]";
+  "grid-cols-[minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(16rem,1fr)_minmax(18rem,2fr)_1rem]";
