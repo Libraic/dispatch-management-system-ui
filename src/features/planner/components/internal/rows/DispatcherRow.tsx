@@ -42,7 +42,7 @@ export const DispatcherRow: React.FC<{
         <GoogleIcon code={iconLabel} size={1.5} />
       </div>
       <div
-        className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-gray-200/85`}
+        className={`grid ${PLANNER_GRID_LAYOUT} ${PLANNER_TEXT_SIZE} items-center ${PLANNER_ROW_HEIGHT} border-b-1 ${TABLE_BORDER_BASE_COLOR} bg-[#f1f3f5]`}
       >
         <div
           className={`flex flex-col items-center justify-center font-light h-full border-x-1 ${TABLE_BORDER_BASE_COLOR} hover:cursor-pointer select-none`}

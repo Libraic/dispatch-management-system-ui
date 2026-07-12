@@ -11,7 +11,28 @@ export const CancelButton: React.FC<CancelButtonProps> = ({
 }) => {
   return (
     <button
-      className={`min-w-[5rem] border-1 border-[#212327] rounded-3xl text-black bg-color-[#F7F7F7] text-[1rem] py-[0.2rem] px-[0.4rem] hover:border-[#212327] hover:text-white hover:bg-[#212327] hover:cursor-pointer font-normal transition-all ease-in duration-150`}
+      type="button"
+      className="
+        min-w-20
+        rounded-lg
+        border
+        border-[#212327]
+        px-3
+        py-1
+        text-base
+        font-normal
+        text-[#212327]
+        cursor-pointer
+        transition-colors
+        duration-150
+        ease-in-out
+        hover:bg-[#212327]
+        hover:text-white
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[#212327]
+        focus-visible:ring-offset-2
+      "
       onClick={action}
     >
       {actionText}
