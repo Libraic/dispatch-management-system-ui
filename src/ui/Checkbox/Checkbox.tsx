@@ -16,7 +16,7 @@ export const Checkbox: FC<CheckboxProps> = ({
   return (
     <label
       className={`
-        inline-flex items-center gap-2 
+        inline-flex items-center gap-2 w-fit
         ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
       `}
     >
@@ -25,7 +25,7 @@ export const Checkbox: FC<CheckboxProps> = ({
         checked={checked}
         disabled={disabled}
         onChange={(event) => onChange(event.target.checked)}
-        className="h-4 w-4 rounded border-gray-300 text-solid-blue focus:ring-light-blue"
+        className="h-4 w-4 rounded border-gray-300 text-solid-blue focus:ring-light-blue hover:cursor-pointer"
       />
       {label && <span>{label}</span>}
     </label>
