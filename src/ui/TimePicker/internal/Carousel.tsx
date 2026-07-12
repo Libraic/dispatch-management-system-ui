@@ -20,6 +20,9 @@ export const Carousel: FC<DrumProps> = ({ items, selected, onChange }) => {
   const lastY = useRef<number>(0);
   const lastTime = useRef<number>(0);
   const isTeleporting = useRef<boolean>(false);
+  const scrollSnapTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   const count = items.length;
   const drumHeight = ITEM_HEIGHT * VISIBLE_ITEMS;
@@ -64,10 +67,53 @@ export const Carousel: FC<DrumProps> = ({ items, selected, onChange }) => {
     [middleScrollTop],
   );
 
+  const clearScrollSnapTimeout = useCallback((): void => {
+    if (scrollSnapTimeoutRef.current === null) {
+      return;
+    }
+
+    clearTimeout(scrollSnapTimeoutRef.current);
+    scrollSnapTimeoutRef.current = null;
+  }, []);
+
+  const snapToClosestItem = useCallback((): void => {
+    const el = containerRef.current;
+    if (!el) {
+      return;
+    }
+
+    const flatIndex = scrollTopToIndex(el.scrollTop);
+    const logicalIndex = ((flatIndex % count) + count) % count;
+    scrollToLogical(logicalIndex);
+
+    if (items[logicalIndex] !== selected) {
+      onChange(items[logicalIndex]);
+    }
+
+    setTimeout(recenterIfNeeded, 320);
+  }, [count, items, onChange, recenterIfNeeded, scrollToLogical, selected]);
+
+  const scheduleScrollSnap = useCallback((): void => {
+    clearScrollSnapTimeout();
+    scrollSnapTimeoutRef.current = setTimeout(() => {
+      scrollSnapTimeoutRef.current = null;
+      snapToClosestItem();
+    }, 120);
+  }, [clearScrollSnapTimeout, snapToClosestItem]);
+
   useEffect(() => {
     scrollToLogical(selectedIndex, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    return (): void => {
+      clearScrollSnapTimeout();
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [clearScrollSnapTimeout]);
 
   const handleScroll = (): void => {
     const el = containerRef.current;
@@ -91,9 +137,11 @@ export const Carousel: FC<DrumProps> = ({ items, selected, onChange }) => {
     }
 
     recenterIfNeeded();
+    scheduleScrollSnap();
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
+    clearScrollSnapTimeout();
     isDragging.current = true;
     startY.current = e.clientY;
     lastY.current = e.clientY;
