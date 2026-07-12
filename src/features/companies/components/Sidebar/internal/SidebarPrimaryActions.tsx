@@ -6,6 +6,8 @@ import {
   DRIVERS_ICON_CODE,
   LOADS_ICON_CODE,
   PLANNER_ICON_CODE,
+  TRAILERS_ICON_CODE,
+  TRUCKS_ICON_CODE,
 } from "#/features/companies/constants/sidebar.constants";
 import {
   DASHBOARD,
@@ -75,6 +77,22 @@ export const SidebarPrimaryActions: FC<SidebarPrimaryActionsProps> = ({
               route: `${baseRoute}${TRAILERS}`,
             },
           ]}
+        />
+      )}
+      {sidebarState === "closed" && (
+        <SidebarItem
+          label="Trucks"
+          iconCode={TRUCKS_ICON_CODE}
+          route={`${baseRoute}${TRUCKS}`}
+          sidebarState={sidebarState}
+        />
+      )}
+      {sidebarState === "closed" && (
+        <SidebarItem
+          label="Trailers"
+          iconCode={TRAILERS_ICON_CODE}
+          route={`${baseRoute}${TRAILERS}`}
+          sidebarState={sidebarState}
         />
       )}
     </div>
