@@ -32,7 +32,6 @@ export const DriversPage = () => {
       <TableHeader
         companyUuid={companyUuid!!}
         headerData={DRIVERS_PAGE_HEADER}
-        iconCode="badge"
         buttonSubroute={DRIVER_REGISTRATION}
         buttonLabel="Add Driver"
       />

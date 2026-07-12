@@ -48,7 +48,6 @@ export const LoadsPage = () => {
       <TableHeader
         companyUuid={companyUuid!!}
         headerData={LOADS_PAGE_HEADER}
-        iconCode="badge"
         buttonSubroute={PLANNER}
         buttonLabel="Add Load"
       />

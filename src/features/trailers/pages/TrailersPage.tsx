@@ -5,7 +5,6 @@ import { PaginationBar } from "#/ui/PaginationBar/public/PaginationBar";
 import type { TrailerData } from "#/types/api/trailer/trailer-api-response-types";
 import { TrailersTable } from "#/components/Trailer/View/public/TrailersTable";
 import { TRAILERS_PAGE_HEADER } from "#/constants/common/header-constants";
-import { TRAILERS_CODE } from "#/features/trailers/constants/ui.constants";
 import { usePagination } from "#/shared/hooks/usePagination";
 import { usePage } from "#/shared/hooks/usePage";
 import { getTrailers } from "#/features/trailers/api/trailers.api";
@@ -26,7 +25,6 @@ export const TrailersPage = () => {
       <TableHeader
         companyUuid={companyUuid!!}
         headerData={TRAILERS_PAGE_HEADER}
-        iconCode={TRAILERS_CODE}
         buttonSubroute={TRAILER_REGISTRATION}
         buttonLabel="Add Trailer"
       />

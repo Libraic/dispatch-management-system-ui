@@ -24,7 +24,6 @@ export const TrucksPage = () => {
       <TableHeader
         companyUuid={companyUuid!!}
         headerData={TRUCKS_PAGE_HEADER}
-        iconCode={"local_shipping"}
         buttonSubroute={TRUCK_REGISTRATION}
         buttonLabel="Add Truck"
       />

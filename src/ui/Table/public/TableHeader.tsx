@@ -6,7 +6,6 @@ import { NavigableButton } from "#/ui/Table/internal/NavigableButton";
 type TableHeaderProps = {
   companyUuid: string;
   headerData: PageHeaderData;
-  iconCode: string;
   buttonSubroute?: string;
   buttonLabel?: string;
 };
@@ -14,13 +13,12 @@ type TableHeaderProps = {
 export const TableHeader: React.FC<TableHeaderProps> = ({
   companyUuid,
   headerData,
-  iconCode,
   buttonSubroute,
   buttonLabel,
 }) => {
   return (
-    <div className="flex items-center justify-between flex-row">
-      <TableName headerData={headerData} iconCode={iconCode} />
+    <div className="flex items-center justify-between flex-row mt-10">
+      <TableName headerData={headerData} />
       {buttonSubroute && buttonLabel && (
         <NavigableButton
           navigationAddress={`/${companyUuid}${buttonSubroute}`}
