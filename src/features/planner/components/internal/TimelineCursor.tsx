@@ -4,7 +4,7 @@ import {
   METADATA_WIDTH,
 } from "#/constants/planner/planner-constants";
 import { BLANK_SPACE } from "#/constants/common/global-constants";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_2 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { getDayProgress, getZonedIsoDate } from "#/shared/utils/timezone.utils";
 
 type TimelineCursorProps = {
@@ -46,7 +46,7 @@ export const TimelineCursor: FC<TimelineCursorProps> = ({ days, timeZone }) => {
   return (
     <div
       ref={lineRef}
-      className={`absolute top-0 h-full w-0.5 bg-red-500/70 pointer-events-none ${Z_INDEX_NORMAL_PRECEDENCE}`}
+      className={`absolute top-0 h-full w-0.5 bg-red-500/70 pointer-events-none ${Z_INDEX_2}`}
     />
   );
 };

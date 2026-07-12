@@ -2,7 +2,7 @@ import React from "react";
 import { TABLE_BORDER_BASE_COLOR } from "#/shared/constants/tailwind/tailwindColors.constants";
 import { PLANNER_GRID_LAYOUT } from "#/constants/planner/planner-constants";
 import { BLANK_STRING } from "#/constants/common/global-constants";
-import { Z_INDEX_LOW_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_3 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { isoDaysToPlannerHeaderDays } from "#/features/planner/components/public/PlannerHeader/PlannerHeader.utils";
 
 type PlannerHeaderProps = {
@@ -14,7 +14,7 @@ export const PlannerHeader: React.FC<PlannerHeaderProps> = ({ days }) => {
   const columns = ["Role", "Revenue", "Miles", "RPM", ...updatedDays];
   return (
     <div
-      className={`sticky top-0 ${Z_INDEX_LOW_PRECEDENCE} flex-shrink-0 bg-pale-blue grid ${PLANNER_GRID_LAYOUT} items-center w-fit h-[3.5rem] font-bold text-[0.85rem]`}
+      className={`sticky top-0 ${Z_INDEX_3} flex-shrink-0 bg-pale-blue grid ${PLANNER_GRID_LAYOUT} items-center w-fit h-[3.5rem] font-bold text-[0.85rem]`}
     >
       {columns.map((column, index) => (
         <div

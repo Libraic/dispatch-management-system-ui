@@ -2,7 +2,7 @@ import { Carousel } from "./Carousel";
 import { PeriodButton } from "./PeriodButton";
 import { type FC, type RefObject, useState } from "react";
 import { createPortal } from "react-dom";
-import { Z_INDEX_HIGH_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_6 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import type { Period, Time } from "#/types/internal/planner/planner-types";
 
 const HOURS: string[] = Array.from({ length: 12 }, (_, i) =>
@@ -45,7 +45,7 @@ export const TimeSelector: FC<{
       ref={popoverRef}
       role="dialog"
       aria-label="Time picker"
-      className={`fixed ${Z_INDEX_HIGH_PRECEDENCE} w-[260px] rounded-[20px] px-4 pt-5 pb-[18px] backdrop-blur-2xl shadow-[0_2px_10px_rgba(0,0,0,0.6)]`}
+      className={`fixed ${Z_INDEX_6} w-[260px] rounded-[20px] px-4 pt-5 pb-[18px] backdrop-blur-2xl shadow-[0_2px_10px_rgba(0,0,0,0.6)]`}
       style={{
         top: anchorRect.bottom + 10,
         left: anchorRect.left + anchorRect.width / 2,

@@ -1,7 +1,7 @@
 import React, { type ReactNode, useState } from "react";
 import { Sidebar } from "#/features/companies/components/Sidebar/public/Sidebar";
 import type { SidebarState } from "#/types/internal/sidebar/sidebar-types";
-import { Z_INDEX_NORMAL_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_4 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 
 export const SidebarWrapper: React.FC<{ children: ReactNode }> = ({
   children,
@@ -20,7 +20,7 @@ export const SidebarWrapper: React.FC<{ children: ReactNode }> = ({
           ease-[cubic-bezier(0.4,0,0.2,1)]
           will-change-[width]
           
-          ${Z_INDEX_NORMAL_PRECEDENCE}
+          ${Z_INDEX_4}
         `}
       >
         <Sidebar

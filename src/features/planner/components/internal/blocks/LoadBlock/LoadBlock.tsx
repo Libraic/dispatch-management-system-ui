@@ -17,7 +17,7 @@ import {
   getFirstPickUpLocation,
   getLastDeliveryLocation,
 } from "#/features/planner/utils/loads.utils";
-import { Z_INDEX_LOW_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_1 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { useMode } from "#/features/planner/components/internal/blocks/LoadBlock/useMode";
 import type { LoadBlockProps } from "#/features/planner/components/internal/blocks/LoadBlock/LoadBlock.types";
 import { LoadBlockTooltipRenderer } from "#/features/planner/components/internal/blocks/LoadBlockTooltip/LoadBlockTooltipRenderer";
@@ -104,7 +104,7 @@ export const LoadBlock: React.FC<LoadBlockProps> = ({
           flex items-center justify-between shadow-sm
           cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis
           font-normal text-[0.8rem]
-          ${isExpanded ? Z_INDEX_LOW_PRECEDENCE : "z-0"}
+          ${isExpanded ? Z_INDEX_1 : "z-0"}
           border-l-3 ${LOAD_STATUS_COLORS[load.loadStatus].borderColor}
         `}
       >

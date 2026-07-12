@@ -16,7 +16,7 @@ import {
 import { BLANK_STRING, PIPE } from "#/constants/common/global-constants";
 import { VehicleMaintenanceForm } from "./VehicleMaintenanceForm";
 import { DaysOffForm } from "./DaysOffForm";
-import { Z_INDEX_MEDIUM_PRECEDENCE } from "#/shared/constants/tailwind/tailwindLayout.constants";
+import { Z_INDEX_5 } from "#/shared/constants/tailwind/tailwindLayout.constants";
 import { Spinner } from "#/ui/Spinner/Spinner";
 import { useModalEffect } from "#/features/planner/hooks/useModalEffect";
 import { useSchedulableParams } from "#/features/planner/hooks/useSchedulableParams";
@@ -43,7 +43,7 @@ export const SchedulableModal: React.FC<{
       onDoubleClick={(e) => e.stopPropagation()}
       className={`
         flex w-screen h-screen items-start justify-center overflow-y-auto py-[2.5rem] 
-        ${Z_INDEX_MEDIUM_PRECEDENCE} 
+        ${Z_INDEX_5} 
         inset-0 fixed backdrop-blur-lg
       `}
     >
