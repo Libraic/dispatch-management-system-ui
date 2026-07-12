@@ -28,7 +28,7 @@ export const SidebarToggler: React.FC<SidebarTogglerProps> = ({
         <p className={`pl-1 font-light tracking-wide`}>{companyName}</p>
       )}
       <div
-        className="hover:bg-gray-200 rounded-[0.5rem] w-8 h-8 hover:cursor-pointer"
+        className="flex items-center hover:bg-gray-200 rounded-[0.5rem] w-8 h-8 pl-[0.06rem] pb-1 hover:cursor-pointer"
         onClick={() => {
           setSidebarState((prev) => (prev === "open" ? "closed" : "open"));
           setSidebarLabel((prev) =>
