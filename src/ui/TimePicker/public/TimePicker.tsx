@@ -112,7 +112,7 @@ export const TimePicker: FC<TimePickerProps> = ({ time, setTime, label }) => {
             onClick={() => enterInlineEditing()}
             onDoubleClick={() => openSelector()}
             onKeyDown={handleInlineKeyDown}
-            className="py-[1rem] flex items-center gap-2.5 px-5 rounded-[2rem] cursor-pointer w-[200px] backdrop-blur-md border-2 border-light-gray focus:border-solid-blue group"
+            className="py-[1rem] flex items-center gap-2.5 px-5 rounded-[1.2rem] cursor-pointer w-[200px] backdrop-blur-md border-2 border-light-gray focus:border-solid-blue group"
           >
             <svg
               width={18}

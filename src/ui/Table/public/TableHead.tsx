@@ -12,7 +12,7 @@ export const TableHead: FC<TableHeadProps> = ({ columns, layout }) => {
   return (
     <Fragment>
       <div
-        className={`grid ${layout ?? BLANK_STRING} h-[2.75rem] bg-[#f4f4fb] font-bold text-[0.85rem] px-[2rem] rounded-t-[0.3rem] tracking-wide w-fit`}
+        className={`grid ${layout ?? BLANK_STRING} h-[2.75rem] bg-[#f4f4fb] font-black text-[0.85rem] px-[2rem] rounded-t-[0.3rem] tracking-wide w-fit`}
         style={
           !layout
             ? {
@@ -27,7 +27,7 @@ export const TableHead: FC<TableHeadProps> = ({ columns, layout }) => {
       >
         {columns.map((column) => (
           <div
-            className="flex items-center text-gray-500 w-fit"
+            className="flex items-center text-gray-600 w-fit"
             key={column.label}
           >
             {column.label}

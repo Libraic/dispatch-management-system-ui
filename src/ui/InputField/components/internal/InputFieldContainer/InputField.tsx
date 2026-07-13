@@ -64,7 +64,7 @@ export const InputField = forwardRef<HTMLDivElement, InputFieldContainerProps>(
         <div
           ref={ref}
           className={`
-            relative px-5 border-2 bg-white rounded-[2rem] 
+            relative px-5 border-2 bg-white rounded-[1.2rem] 
             ${tailwindProperties?.width || "max-w-[20rem]"} 
             ${borderColor}
           `}

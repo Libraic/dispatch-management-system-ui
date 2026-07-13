@@ -44,7 +44,7 @@ export const DateSelectorField: React.FC<DateSelectorFieldProps> = ({
               sx: {
                 width: 280,
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: "25px",
+                  borderRadius: "18px",
                   "& fieldset": {
                     borderColor: "#f2f2f2",
                     borderWidth: "2px",
